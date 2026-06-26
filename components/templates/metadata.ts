@@ -88,11 +88,99 @@ export const pastelMeta: TemplateMeta = {
   },
 };
 
+export const auroraMeta: TemplateMeta = {
+  id: "aurora",
+  name: "Aurora Scroll",
+  description:
+    "A scroll-choreographed wedding journey — the page transforms as you move, with a sideways photo reel and parallax names. Our most interactive template.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["cinematic", "interactive", "modern", "luxurious", "romantic", "cool", "bold"],
+  previewImage:
+    "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage:
+      "Scroll with us through the story that brought us here — and the day we say forever.",
+    tagline: "A love, unfolding.",
+    accentColor: "#22d3ee",
+    heroImage:
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every scroll is a chapter — the first hello, the long way round, and the moment we both knew. Keep going; the best part is still ahead.",
+  },
+};
+
+export const botanicalMeta: TemplateMeta = {
+  id: "botanical",
+  name: "Botanical Garden",
+  description:
+    "Editorial, organic and modern — arched frames, a hand-set monogram and warm sage tones for a garden wedding.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["botanical", "editorial", "romantic", "elegant", "decent", "appealing"],
+  previewImage:
+    "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage:
+      "Under open skies and good company, we'd love to gather the people we love.",
+    tagline: "Grow together.",
+    accentColor: "#6f7d54",
+    heroImage:
+      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "We're the kind of couple who plans the whole evening around the garden light. Come share a long table, slow conversation and one very good sunset.",
+  },
+};
+
+export const fiestaMeta: TemplateMeta = {
+  id: "fiesta",
+  name: "Neon Fiesta",
+  description:
+    "After-dark party energy — glowing type, an animated gradient and tap-to-celebrate confetti. Built for milestone and grown-up birthdays.",
+  eventTypes: ["birthday", "engagement"],
+  tags: ["neon", "vibrant", "bold", "festive", "playful", "cool", "interactive"],
+  previewImage:
+    "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage:
+      "Clear your Saturday. We're turning the lights down and the music up.",
+    tagline: "Let's glow.",
+    accentColor: "#ff2e9a",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "One night, your favorite people, a playlist that has no business being this good. Come dressed to be photographed.",
+  },
+};
+
+export const storybookMeta: TemplateMeta = {
+  id: "storybook",
+  name: "Storybook",
+  description:
+    "A bright, illustrated kids' party page — bunting, floating balloons and a pop-for-confetti surprise. Playful, warm and impossible to resist.",
+  eventTypes: ["birthday"],
+  tags: ["whimsical", "playful", "festive", "vibrant", "appealing", "interactive"],
+  previewImage:
+    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage:
+      "There will be cake, there will be games, and there will absolutely be too much sugar. Come play!",
+    tagline: "Hip hip hooray!",
+    accentColor: "#3aaed8",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Our favorite little human is leveling up. Expect balloons, a bouncy castle's worth of energy, and a birthday wish made at exactly the right moment.",
+  },
+};
+
 export const TEMPLATES_META: TemplateMeta[] = [
+  auroraMeta,
   royalMeta,
+  botanicalMeta,
   minimalMeta,
   modernMeta,
+  fiestaMeta,
   vibrantMeta,
+  storybookMeta,
   pastelMeta,
 ];
 
@@ -132,4 +220,10 @@ export const TAG_LABELS: Record<TemplateTag, string> = {
   monochrome: "Monochrome",
   pastel: "Pastel",
   bold: "Bold",
+  cinematic: "Cinematic",
+  interactive: "Interactive",
+  botanical: "Botanical",
+  editorial: "Editorial",
+  neon: "Neon",
+  whimsical: "Whimsical",
 };

@@ -23,7 +23,13 @@ export type TemplateTag =
   | "festive"
   | "monochrome"
   | "pastel"
-  | "bold";
+  | "bold"
+  | "cinematic"
+  | "interactive"
+  | "botanical"
+  | "editorial"
+  | "neon"
+  | "whimsical";
 
 export type EventData = {
   eventCode: string;
