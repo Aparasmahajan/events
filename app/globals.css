@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Great+Vibes&display=swap");
+
+:root {
+  --accent: #a3792c;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+/* Ensure no horizontal scroll on small screens by default */
+html,
+body {
+  overflow-x: hidden;
+}
