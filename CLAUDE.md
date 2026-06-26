@@ -153,7 +153,14 @@ Columns 1–14 identical to Enquiries (copied on approval; CRM cols 15–22 are 
 
 **Main venue:** `Venue Name`, `Venue Address`, `Map Link`, `Latitude`, `Longitude`
 **Public contact:** `Contact Name`, `Contact Phone`, `Contact Email`, `Instagram/Social Link`
-**RSVP:** `RSVP Enabled` (TRUE/FALSE), `RSVP Link/Contact`
+**RSVP:** `RSVP Enabled` (TRUE/FALSE), `RSVP Link/Contact`, `RSVP Type`
+
+| `RSVP Type` value | How `RSVP Link/Contact` is rendered |
+|---|---|
+| `url` (default if value starts with `http`) | Button: "RSVP now" → opens URL in a new tab |
+| `email` | Button: "RSVP — name@…" → opens `mailto:` |
+| `phone` | Button: "RSVP — +91-…" → opens `tel:` |
+| `text` | Plain text block (no link) — for free-form instructions like "Call Anita at +91-…" |
 
 ### Tab: `SubEvents` (1 row per sub-event, joined by Event Code)
 `Event Code | Order | Sub-event Name | Date | Start Time | End Time | Venue Name | Venue Address | Map Link | Latitude | Longitude | Dress Code | Description | Icon`
@@ -298,11 +305,11 @@ Each text field has a "clear" affordance — clearing a non-required field is ho
 Hidden sections also drop out of the sticky nav. To "remove a column" the customer just flips the toggle.
 
 **Sub-events** — full CRUD on the `SubEvents` tab for this Event Code:
-- Add a new row (defaults: next `Order`, blank fields).
-- Edit any column (name, date, start/end time, venue, dress code, description, icon, lat/long).
-- **Reorder** via drag-and-drop — the UI writes the new `Order` value to each affected row.
+- **Add** a new row via the "+ Add sub-event" button (defaults: next `Order`, name "New event", blank everything else).
+- Edit any column (name, date, start/end time, venue, dress code, description, icon, **map link**, **latitude/longitude**) — each sub-event can have its own venue and map pin, so Haldi at the courtyard and Wedding at the lake render with distinct embedded maps + "Get directions" links.
+- **Reorder** via the up/down arrows in each row header (drag-and-drop is a future enhancement) — the UI renumbers `Order` to stay contiguous.
 - Clear an individual field (e.g. just the Dress Code) — the template auto-hides empty fields.
-- Delete a sub-event row entirely.
+- Delete a sub-event row entirely; remaining rows are renumbered.
 
 **Media** — full CRUD on the `Media` tab for this Event Code:
 - Upload via `/api/manage/[token]/upload` → Drive `{EventCode}/{section}/` → row appended to `Media` with `Public URL`, `Sort Order` = next.
@@ -313,7 +320,9 @@ Hidden sections also drop out of the sticky nav. To "remove a column" the custom
 
 **Look** — accent color picker (writes `Theme/Accent Color` hex). Optional background music URL.
 
-**Template switcher** — shown only if `Can Change Template = TRUE`; lists templates whose `eventTypes` include this event's type. Switching updates `Template ID` only — all content + media + sub-events carry over because templates are pure presentational components (§7).
+**Template switcher** — shown only if `Can Change Template = TRUE`; lists templates whose `eventTypes` include this event's type (each rendered as a thumbnail card). Switching POSTs to `/api/manage/[token]/template` which validates the new template supports the event type, updates `Template ID`, and revalidates the public site. All content + media + sub-events carry over because templates are pure presentational components (§7).
+
+**Site status (Stop / Resume)** — the customer can flip `Is Active` from their panel without needing admin intervention. The same operation that powers the admin's `/admin/events` Stop/Resume buttons, but exposed in `/manage` as a single toggle pill. Useful when a customer needs to take the page down temporarily without losing the data. The PATCH applies immediately (not batched with other saves) so the public site goes dark / re-appears the second they click.
 
 ### Save / publish / edit-window
 

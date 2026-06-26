@@ -100,7 +100,7 @@ export const PastelTemplate: TemplateComponent = ({ event, subEvents, media }) =
       {event.rsvpEnabled && (
         <section id="rsvp" className="py-20 px-6 max-w-3xl mx-auto">
           <ScrollReveal>
-            <RSVP enabled={event.rsvpEnabled} linkOrContact={event.rsvpLinkOrContact} contactName={event.contactName} />
+            <RSVP enabled={event.rsvpEnabled} linkOrContact={event.rsvpLinkOrContact} contactName={event.contactName} type={event.rsvpType} />
           </ScrollReveal>
         </section>
       )}

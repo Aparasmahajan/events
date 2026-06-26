@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { EventData, SubEvent } from "@/lib/types";
+import type { EventData, EventType, SubEvent } from "@/lib/types";
 import type { EditableData } from "./EditableShell";
+import { TEMPLATES_META } from "@/components/templates/metadata";
 
 type Props = {
   data: EditableData;
@@ -20,6 +21,13 @@ type Props = {
   /** When set, "Reset" calls this URL to restore template defaults on the
    *  server (instead of just clearing the local draft). */
   resetEndpoint?: string;
+  /** When set, the template switcher section is shown. POSTs the chosen
+   *  templateId to this URL. */
+  templateSwitchEndpoint?: string;
+  /** Current template ID — used to highlight the active option in the switcher. */
+  currentTemplateId?: string;
+  /** Event type — used to filter templates the switcher offers. */
+  eventType?: EventType;
   /** Called after a successful save (e.g. to clear localStorage). */
   onAfterSave?: () => void;
 };
@@ -39,6 +47,9 @@ export function EditPanel({
   topOffset = 0,
   saveEndpoint,
   resetEndpoint,
+  templateSwitchEndpoint,
+  currentTemplateId,
+  eventType,
   onAfterSave,
 }: Props) {
   const [open, setOpen] = useState(true);
@@ -83,6 +94,61 @@ export function EditPanel({
     }
   };
 
+  const switchTemplate = async (templateId: string) => {
+    if (!templateSwitchEndpoint || templateId === currentTemplateId) return;
+    if (!window.confirm(
+      "Switch to this template?\n\n" +
+      "Your content (title, names, dates, sub-events, RSVP) is preserved. " +
+      "The new template will re-render with your data — accent colors and " +
+      "tagline may change to fit the new look.",
+    )) return;
+    try {
+      const res = await fetch(templateSwitchEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ templateId }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error ?? "Switch failed");
+      onReset();
+      window.location.reload();
+    } catch (e) {
+      setSaveState({
+        kind: "err",
+        message: e instanceof Error ? e.message : "Switch failed",
+      });
+    }
+  };
+
+  /** Stop/Resume fires a focused PATCH (just isActive) and updates locally so
+   *  the button reflects state instantly — admin Stop/Resume works the same. */
+  const toggleActive = async () => {
+    if (!saveEndpoint) {
+      patchEvent({ isActive: !data.event.isActive });
+      return;
+    }
+    const next = !data.event.isActive;
+    patchEvent({ isActive: next });
+    setSaveState({ kind: "saving" });
+    try {
+      const res = await fetch(saveEndpoint, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ event: { isActive: next } }),
+      });
+      if (!res.ok) throw new Error("Failed");
+      setSaveState({ kind: "ok", published: next });
+      setTimeout(() => setSaveState({ kind: "idle" }), 3000);
+    } catch (e) {
+      // Roll back the local toggle on failure.
+      patchEvent({ isActive: !next });
+      setSaveState({
+        kind: "err",
+        message: e instanceof Error ? e.message : "Failed",
+      });
+    }
+  };
+
   const save = async () => {
     if (!saveEndpoint) return;
     setSaveState({ kind: "saving" });
@@ -123,7 +189,39 @@ export function EditPanel({
     });
 
   const deleteSubEvent = (index: number) =>
-    onChange({ ...data, subEvents: data.subEvents.filter((_, i) => i !== index) });
+    onChange({
+      ...data,
+      subEvents: data.subEvents
+        .filter((_, i) => i !== index)
+        // Re-number remaining sub-events so Order stays 1..N contiguous.
+        .map((s, i) => ({ ...s, order: i + 1 })),
+    });
+
+  const addSubEvent = () =>
+    onChange({
+      ...data,
+      subEvents: [
+        ...data.subEvents,
+        {
+          eventCode: data.event.eventCode,
+          order: data.subEvents.length + 1,
+          name: "New event",
+          icon: "•",
+        },
+      ],
+    });
+
+  const moveSubEvent = (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= data.subEvents.length) return;
+    const next = [...data.subEvents];
+    [next[index], next[target]] = [next[target], next[index]];
+    onChange({
+      ...data,
+      // Re-number to keep Order contiguous regardless of array position.
+      subEvents: next.map((s, i) => ({ ...s, order: i + 1 })),
+    });
+  };
 
   const exitEdit = () => {
     if (typeof window === "undefined") return;
@@ -202,6 +300,39 @@ export function EditPanel({
             </header>
 
             <div className="overflow-y-auto p-5 space-y-6 font-sans text-sm">
+              {saveEndpoint && (
+                <section className="rounded-xl border border-black/10 p-4 flex items-center justify-between gap-3 bg-white">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.3em] opacity-60">
+                      Site status
+                    </p>
+                    <p className="text-sm mt-1">
+                      {data.event.isActive ? (
+                        <span className="text-green-700 font-medium">Live on /e/{eventCode}</span>
+                      ) : (
+                        <span className="opacity-70">Stopped — not visible to guests</span>
+                      )}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={toggleActive}
+                    disabled={saveState.kind === "saving"}
+                    className={`text-xs px-4 py-2 rounded-full font-medium transition disabled:opacity-50 ${
+                      data.event.isActive
+                        ? "bg-red-50 text-red-700 border border-red-200 hover:bg-red-100"
+                        : "bg-green-700 text-white hover:bg-green-800"
+                    }`}
+                  >
+                    {saveState.kind === "saving"
+                      ? "…"
+                      : data.event.isActive
+                        ? "Stop"
+                        : "Resume"}
+                  </button>
+                </section>
+              )}
+
               {saveEndpoint && (
                 <section className="rounded-xl border border-black/10 bg-neutral-50 p-4">
                   <div className="flex items-center justify-between gap-3 mb-2">
@@ -341,7 +472,57 @@ export function EditPanel({
 
               <Section title="RSVP & contact">
                 <Field label="Contact name (public)" value={data.event.contactName ?? ""} onChange={(v) => patchEvent({ contactName: v })} />
-                <Field label="RSVP link or contact" value={data.event.rsvpLinkOrContact ?? ""} onChange={(v) => patchEvent({ rsvpLinkOrContact: v })} />
+                <div>
+                  <span className="block text-xs opacity-70 mb-2">RSVP type</span>
+                  <div className="grid grid-cols-4 gap-1">
+                    {(
+                      [
+                        { key: "url", label: "Link" },
+                        { key: "email", label: "Email" },
+                        { key: "phone", label: "Phone" },
+                        { key: "text", label: "Text" },
+                      ] as const
+                    ).map((opt) => {
+                      const active = (data.event.rsvpType ?? "url") === opt.key;
+                      return (
+                        <button
+                          key={opt.key}
+                          type="button"
+                          onClick={() => patchEvent({ rsvpType: opt.key })}
+                          className={`text-xs px-2 py-1.5 rounded-md border transition ${
+                            active
+                              ? "bg-neutral-900 text-white border-neutral-900"
+                              : "bg-white border-black/15 hover:border-black/40"
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <Field
+                  label={
+                    data.event.rsvpType === "email"
+                      ? "RSVP email"
+                      : data.event.rsvpType === "phone"
+                        ? "RSVP phone number"
+                        : data.event.rsvpType === "text"
+                          ? "RSVP instructions (plain text)"
+                          : "RSVP link"
+                  }
+                  value={data.event.rsvpLinkOrContact ?? ""}
+                  onChange={(v) => patchEvent({ rsvpLinkOrContact: v })}
+                  placeholder={
+                    data.event.rsvpType === "email"
+                      ? "rsvp@example.com"
+                      : data.event.rsvpType === "phone"
+                        ? "+91-98xxxxxxx"
+                        : data.event.rsvpType === "text"
+                          ? "Call Anita at +91-..."
+                          : "https://forms.example/rsvp"
+                  }
+                />
               </Section>
 
               <Section
@@ -358,23 +539,75 @@ export function EditPanel({
                 resetTitle="Replace with template demo sub-events"
               >
                 {data.subEvents.length === 0 && (
-                  <p className="text-xs opacity-60">No sub-events. Use Reset to bring them back.</p>
+                  <p className="text-xs opacity-60">
+                    No sub-events. Add one below, or use Reset to bring back the template demo.
+                  </p>
                 )}
                 <div className="space-y-3">
                   {data.subEvents.map((s, i) => (
                     <SubEventEditor
                       key={`${s.eventCode}-${i}`}
                       sub={s}
+                      index={i}
+                      total={data.subEvents.length}
                       onChange={(patch) => patchSubEvent(i, patch)}
                       onDelete={() => deleteSubEvent(i)}
+                      onMove={(dir) => moveSubEvent(i, dir)}
                     />
                   ))}
                 </div>
+                <button
+                  onClick={addSubEvent}
+                  className="mt-3 w-full text-sm px-3 py-2 rounded-lg border border-dashed border-black/20 hover:border-black/40 hover:bg-black/[0.02] transition"
+                >
+                  + Add sub-event
+                </button>
               </Section>
 
+              {templateSwitchEndpoint && eventType && (
+                <Section title="Switch template">
+                  <p className="text-xs opacity-70">
+                    Your content stays. Only the look changes.
+                  </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {TEMPLATES_META.filter((t) => t.eventTypes.includes(eventType)).map(
+                      (t) => {
+                        const active = t.id === currentTemplateId;
+                        return (
+                          <button
+                            key={t.id}
+                            onClick={() => switchTemplate(t.id)}
+                            disabled={active}
+                            className={`text-left rounded-lg border overflow-hidden transition ${
+                              active
+                                ? "border-neutral-900 ring-2 ring-neutral-900/10 cursor-default"
+                                : "border-black/10 hover:border-black/40"
+                            }`}
+                          >
+                            <div
+                              className="aspect-[4/3] bg-cover bg-center"
+                              style={{ backgroundImage: `url('${t.previewImage}')` }}
+                            />
+                            <div className="px-3 py-2">
+                              <p className="text-sm font-medium truncate">{t.name}</p>
+                              {active && (
+                                <p className="text-[10px] uppercase tracking-widest opacity-60 mt-0.5">
+                                  Current
+                                </p>
+                              )}
+                            </div>
+                          </button>
+                        );
+                      },
+                    )}
+                  </div>
+                </Section>
+              )}
+
               <p className="text-[11px] opacity-50 pt-4 border-t border-black/5">
-                Edits are saved to this browser only. They never reach the server.
-                Use <strong>Reset</strong> to restore the original.
+                {saveEndpoint
+                  ? "Use Save and publish to push changes to your public site."
+                  : "Edits are saved to this browser only. Use Reset to restore the original."}
               </p>
             </div>
           </motion.aside>
@@ -549,28 +782,52 @@ function Toggle({
 
 function SubEventEditor({
   sub,
+  index,
+  total,
   onChange,
   onDelete,
+  onMove,
 }: {
   sub: SubEvent;
+  index: number;
+  total: number;
   onChange: (patch: Partial<SubEvent>) => void;
   onDelete: () => void;
+  onMove: (direction: -1 | 1) => void;
 }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="rounded-lg border border-black/10 overflow-hidden">
-      <div className="flex items-center justify-between px-3 py-2 bg-black/[0.02]">
+      <div className="flex items-center justify-between px-2 py-1.5 bg-black/[0.02] gap-2">
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => onMove(-1)}
+            disabled={index === 0}
+            title="Move up"
+            className="w-6 h-6 rounded hover:bg-black/5 disabled:opacity-30 disabled:cursor-not-allowed text-xs"
+          >
+            ↑
+          </button>
+          <button
+            onClick={() => onMove(1)}
+            disabled={index === total - 1}
+            title="Move down"
+            className="w-6 h-6 rounded hover:bg-black/5 disabled:opacity-30 disabled:cursor-not-allowed text-xs"
+          >
+            ↓
+          </button>
+        </div>
         <button
           onClick={() => setOpen((o) => !o)}
-          className="flex items-center gap-2 text-left flex-1"
+          className="flex items-center gap-2 text-left flex-1 min-w-0"
         >
-          <span className="text-base">{sub.icon || "•"}</span>
-          <span className="font-medium">{sub.name || "(unnamed)"}</span>
-          <span className="text-[10px] opacity-50 ml-1">{open ? "▲" : "▼"}</span>
+          <span className="text-base flex-none">{sub.icon || "•"}</span>
+          <span className="font-medium truncate">{sub.name || "(unnamed)"}</span>
+          <span className="text-[10px] opacity-50 ml-1 flex-none">{open ? "▲" : "▼"}</span>
         </button>
         <button
           onClick={onDelete}
-          className="text-xs text-red-600 hover:text-red-700 hover:underline"
+          className="text-xs text-red-600 hover:text-red-700 hover:underline flex-none"
           title="Delete this sub-event"
         >
           Delete
@@ -589,6 +846,26 @@ function SubEventEditor({
           </Row>
           <Field label="Venue name" value={sub.venueName ?? ""} onChange={(v) => onChange({ venueName: v })} />
           <Field label="Venue address" value={sub.venueAddress ?? ""} onChange={(v) => onChange({ venueAddress: v })} />
+          <Field
+            label="Map link (Google Maps URL)"
+            value={sub.mapLink ?? ""}
+            onChange={(v) => onChange({ mapLink: v })}
+            placeholder="https://maps.google.com/?q=…"
+          />
+          <Row>
+            <Field
+              label="Latitude"
+              value={sub.latitude != null ? String(sub.latitude) : ""}
+              onChange={(v) => onChange({ latitude: v ? Number(v) : undefined })}
+              placeholder="24.5854"
+            />
+            <Field
+              label="Longitude"
+              value={sub.longitude != null ? String(sub.longitude) : ""}
+              onChange={(v) => onChange({ longitude: v ? Number(v) : undefined })}
+              placeholder="73.6818"
+            />
+          </Row>
           <Field label="Dress code" value={sub.dressCode ?? ""} onChange={(v) => onChange({ dressCode: v })} />
           <Textarea label="Description" value={sub.description ?? ""} onChange={(v) => onChange({ description: v })} />
         </div>

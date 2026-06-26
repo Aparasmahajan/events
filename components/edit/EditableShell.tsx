@@ -27,6 +27,9 @@ type Props = EditableData & {
   /** When provided, the Reset button POSTs here to restore template defaults
    *  on the server (instead of just clearing the local draft). */
   resetEndpoint?: string;
+  /** When provided, the panel exposes a template switcher that POSTs to this
+   *  URL. Only set this if the admin granted Can Change Template = TRUE. */
+  templateSwitchEndpoint?: string;
 };
 
 const storageKey = (code: string) => `event-edit:${code}`;
@@ -40,6 +43,7 @@ export function EditableShell({
   topOffset = 0,
   saveEndpoint,
   resetEndpoint,
+  templateSwitchEndpoint,
 }: Props) {
   const searchParams = useSearchParams();
   const editParam = forceEdit || searchParams?.get("edit") === "1";
@@ -106,6 +110,9 @@ export function EditableShell({
           topOffset={topOffset}
           saveEndpoint={saveEndpoint}
           resetEndpoint={resetEndpoint}
+          templateSwitchEndpoint={templateSwitchEndpoint}
+          currentTemplateId={templateId}
+          eventType={event.eventType}
           onAfterSave={() => {
             // Server is now the source of truth — drop the local override so a
             // refresh pulls fresh data, not stale localStorage.
