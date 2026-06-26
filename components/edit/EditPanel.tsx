@@ -431,8 +431,8 @@ export function EditPanel({
                   <Field label="Start time" type="time" value={data.event.mainStartTime ?? ""} onChange={(v) => patchEvent({ mainStartTime: v })} />
                   <Field label="End time" type="time" value={data.event.mainEndTime ?? ""} onChange={(v) => patchEvent({ mainEndTime: v })} />
                 </Row>
-                <Field
-                  label="Accent color (hex)"
+                <ColorField
+                  label="Accent color"
                   value={data.event.themeAccentColor ?? ""}
                   onChange={(v) => patchEvent({ themeAccentColor: v })}
                   placeholder="#a3792c"
@@ -712,6 +712,92 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         className="w-full rounded-md border border-black/15 bg-white px-3 py-2 text-sm focus:outline-none focus:border-black/40"
       />
+    </label>
+  );
+}
+
+const PRESETS = [
+  "#a3792c", // gold (royal)
+  "#111111", // mono (minimal)
+  "#7c3aed", // purple (modern)
+  "#ff5fa2", // pink (vibrant)
+  "#e8a0a0", // pastel (pastel)
+  "#22d3ee", // cyan (aurora)
+  "#6f7d54", // sage (botanical)
+  "#ff2e9a", // neon (fiesta)
+  "#3aaed8", // sky (storybook)
+];
+
+function ColorField({
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) {
+  // The native color input needs a valid 6-char hex. Fall back to black when
+  // the user's typed value isn't a valid hex (yet) so the picker still renders.
+  const valid = /^#[0-9a-fA-F]{6}$/.test(value);
+  const safe = valid ? value : "#000000";
+
+  return (
+    <label className="block">
+      <span className="block text-xs opacity-70 mb-1 flex items-center justify-between">
+        {label}
+        {value && (
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            className="text-[10px] underline opacity-60 hover:opacity-100"
+          >
+            clear
+          </button>
+        )}
+      </span>
+      <div className="flex items-center gap-2">
+        <div className="relative">
+          <input
+            type="color"
+            value={safe}
+            onChange={(e) => onChange(e.target.value)}
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            aria-label={`${label} color picker`}
+          />
+          <div
+            className="w-10 h-10 rounded-md border border-black/15"
+            style={{ background: valid ? value : "transparent" }}
+          />
+        </div>
+        <input
+          type="text"
+          value={value}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+          className="flex-1 rounded-md border border-black/15 bg-white px-3 py-2 text-sm font-mono focus:outline-none focus:border-black/40"
+          maxLength={7}
+        />
+      </div>
+      <div className="flex flex-wrap gap-1.5 mt-2">
+        {PRESETS.map((hex) => (
+          <button
+            key={hex}
+            type="button"
+            onClick={() => onChange(hex)}
+            title={hex}
+            className={`w-5 h-5 rounded-full border transition ${
+              value.toLowerCase() === hex
+                ? "border-neutral-900 ring-2 ring-neutral-900/20"
+                : "border-black/15 hover:border-black/40"
+            }`}
+            style={{ background: hex }}
+            aria-label={`Use ${hex}`}
+          />
+        ))}
+      </div>
     </label>
   );
 }
