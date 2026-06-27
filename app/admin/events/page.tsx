@@ -37,7 +37,6 @@ export default async function LiveEventsPage() {
                 <Th>Template</Th>
                 <Th>Main date</Th>
                 <Th>State</Th>
-                <Th />
               </tr>
             </thead>
             <tbody>

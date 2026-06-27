@@ -94,9 +94,10 @@ export const LIVE_COL = {
   OTP_EXPIRES_AT: 53,
   OTP_ATTEMPTS: 54,
   OTP_LOCKED_UNTIL: 55,
+  RSVP_TYPE: 56,
 } as const;
 
-const LIVE_LAST_COL = LIVE_COL.OTP_LOCKED_UNTIL;
+const LIVE_LAST_COL = LIVE_COL.RSVP_TYPE;
 const LIVE_RANGE_FULL = `Live!A2:${colLetter(LIVE_LAST_COL)}`;
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -325,6 +326,9 @@ function liveRowToEvent(r: string[]): EventData {
 
     rsvpEnabled: boolish(get(LIVE_COL.RSVP_ENABLED)),
     rsvpLinkOrContact: get(LIVE_COL.RSVP_LINK) || undefined,
+    rsvpType:
+      (get(LIVE_COL.RSVP_TYPE) as EventData["rsvpType"]) ||
+      undefined,
 
     hideStory: boolish(get(LIVE_COL.HIDE_STORY)),
     hideEvents: boolish(get(LIVE_COL.HIDE_EVENTS)),

@@ -20,6 +20,7 @@ type Body = {
 const EVENT_TO_COL: Partial<
   Record<keyof EventData, keyof typeof LIVE_COL>
 > = {
+  isActive: "IS_ACTIVE",
   eventTitle: "EVENT_TITLE",
   person1Name: "PERSON_1",
   person2Name: "PERSON_2",
@@ -45,6 +46,7 @@ const EVENT_TO_COL: Partial<
   socialLink: "SOCIAL_LINK",
   rsvpEnabled: "RSVP_ENABLED",
   rsvpLinkOrContact: "RSVP_LINK",
+  rsvpType: "RSVP_TYPE",
   hideStory: "HIDE_STORY",
   hideEvents: "HIDE_EVENTS",
   hideGallery: "HIDE_GALLERY",
@@ -52,6 +54,7 @@ const EVENT_TO_COL: Partial<
 };
 
 const BOOL_COLS = new Set<keyof typeof LIVE_COL>([
+  "IS_ACTIVE",
   "RSVP_ENABLED",
   "HIDE_STORY",
   "HIDE_EVENTS",
@@ -72,6 +75,11 @@ export async function PATCH(req: Request, ctx: { params: { token: string } }) {
     return NextResponse.json({ error: "Unknown event" }, { status: 404 });
   }
   const code = found.code;
+
+  // If the customer explicitly set isActive in this PATCH, the post-save
+  // auto-publish below should not contradict them (e.g. they hit Stop while
+  // required fields were still complete — we'd flip back to active otherwise).
+  const explicitIsActive = body.event && "isActive" in body.event;
 
   /* ── 1. event fields → Live row ── */
   if (body.event && typeof body.event === "object") {
@@ -101,7 +109,7 @@ export async function PATCH(req: Request, ctx: { params: { token: string } }) {
   // Re-read the row to evaluate required fields against what's now in Sheets.
   const fresh = await getLiveEvent(code);
   let published = false;
-  if (fresh && !fresh.isActive) {
+  if (fresh && !fresh.isActive && !explicitIsActive) {
     const ready =
       !!fresh.eventTitle?.trim() &&
       !!fresh.mainDate?.trim() &&

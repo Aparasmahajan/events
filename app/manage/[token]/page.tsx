@@ -38,6 +38,11 @@ export default async function ManagePage({
         topOffset={48}
         saveEndpoint={`/api/manage/${params.token}`}
         resetEndpoint={`/api/manage/${params.token}/reset`}
+        templateSwitchEndpoint={
+          found.auth.canChangeTemplate
+            ? `/api/manage/${params.token}/template`
+            : undefined
+        }
       />
     </>
   );
