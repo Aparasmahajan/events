@@ -9,7 +9,7 @@ This file is written for **Claude Code**. Build in the phase order at the bottom
 ## 0. Assumptions (change any and tell Claude Code)
 
 - **Data store:** Google Sheets (recommended). Exports to `.xlsx` anytime. _A local Excel file would change the whole data layer — say so if that's a hard requirement._
-- **Media:** Google Drive for MVP, **host-agnostic** — the site only reads URLs from the Media sheet, so Cloudinary can replace Drive by changing one column.
+- **Media:** **Cloudinary** for storage + CDN delivery. Google Drive was the original MVP plan but service accounts on personal Google accounts have zero storage quota (only Workspace + Shared Drives works around this), so we moved to Cloudinary. The site only reads `Public URL` from the Media sheet, so any other host (S3, Vercel Blob, etc.) is still a one-function swap inside `lib/media.ts`.
 - **v1 event types:** Wedding (flagship — build first), Birthday, Engagement/Anniversary, Corporate/Conference. Schema supports any type.
 - **Maps:** `react-leaflet` (no API key). Swap to a Google Maps embed if preferred.
 - **Customer access:** magic-link tokens (no customer accounts). Admin approval generates a secret link. _If you'd rather have email+password customer logins, say so._
@@ -101,7 +101,7 @@ Shared columns 1–14, then admin-managed operational columns:
 | 6 | Event Type | Drives conditional fields + which templates show |
 | 7 | Event Sub-type | Optional |
 | 8 | Template ID | Chosen template |
-| 9 | Event Title | Public title (e.g. "Rahul weds Priya") |
+| 9 | Event Title | Public title (e.g. "Celebration Title") |
 | 10 | Person 1 Name | Groom / host / celebrant |
 | 11 | Person 2 Name | Bride / partner (blank if N/A) |
 | 12 | Tentative Date | From enquiry |
@@ -160,7 +160,7 @@ Columns 1–14 identical to Enquiries (copied on approval; CRM cols 15–22 are 
 | `url` (default if value starts with `http`) | Button: "RSVP now" → opens URL in a new tab |
 | `email` | Button: "RSVP — name@…" → opens `mailto:` |
 | `phone` | Button: "RSVP — +91-…" → opens `tel:` |
-| `text` | Plain text block (no link) — for free-form instructions like "Call Anita at +91-…" |
+| `text` | Plain text block (no link) — for free-form instructions like "Call Person at +91-…" |
 
 ### Tab: `SubEvents` (1 row per sub-event, joined by Event Code)
 `Event Code | Order | Sub-event Name | Date | Start Time | End Time | Venue Name | Venue Address | Map Link | Latitude | Longitude | Dress Code | Description | Icon`
@@ -358,19 +358,33 @@ If the customer wants to "add anything" beyond the schema (a custom callout, an 
 
 ## 12. Media handling
 
-### Upload pipeline
+### Upload pipeline (Cloudinary)
 
-- `POST /api/manage/[token]/upload` (customer) and `POST /api/admin/media` (admin) → `EventSites/{EventCode}/{section}/` on Drive → append a row to `Media` with `Public URL`, `Width`, `Height`, `Duration` (videos), `File Size`, `Sort Order`.
-- Folder layout on Drive:
+- Inline uploads from the customer editor (`/manage/[token]`) — hover any image / video on the rendered template, click "Replace", or click the trailing "+ Add" tile in the gallery → file goes straight to Cloudinary via signed upload from the server route.
+- Endpoint: `POST /api/manage/[token]/upload` (multipart). Body fields:
+  - `file` — the binary
+  - `section` — `hero` / `gallery` / `couple` / `about` / `videos` / `sub-event:<name>`
+  - `replaceFileName?` — when present, the existing Media row with that filename is overwritten in place (same `Sort Order`, caption, etc.)
+- Folder structure on Cloudinary: `EventSites/{EventCode}/{section}/`. Cloudinary auto-creates folders on first upload.
 
-```
-EventSites/
-└── WED-2026-0001/
-    ├── hero/  ├── gallery/  ├── videos/
-    └── sub-events/{mehndi,haldi,reception}/
-```
+### Behavior per section
 
-- Drive is **not** a CDN and its public direct-links are unreliable for a polished site. Keep `lib/media.ts` host-agnostic so Cloudinary can replace Drive by only changing how `Public URL` is produced.
+- **Hero** (`section=hero`) — file uploads to Cloudinary, then the route updates `Live.HERO_IMAGE_URL` (image) or `Live.HERO_VIDEO_URL` (video) directly. No Media-sheet row is written for hero, because templates read hero from the Live row, not the Media tab.
+- **Gallery / other sections** — a row is appended to (or, with `replaceFileName`, replaced in) the `Media` tab. `Public URL` is the Cloudinary `secure_url`. `Drive File ID` column now stores Cloudinary's `public_id` (rename when we drop Drive everywhere).
+
+### Caps + auto-fit
+
+- Image: 12 MB max. Video: 100 MB max. Enforced in the upload route before the file leaves the server.
+- All images render with CSS `object-cover`, so a portrait dropped into a landscape hero or vice versa fills the slot without distortion — Cloudinary stores the original; the cropping happens at render time.
+- Future polish: pass a Cloudinary transformation suffix to the URL (`f_auto,q_auto,w_2400,c_fill`) to serve already-optimized assets per device. Doesn't require a code change to add later — just template-level URL composition.
+
+### Reordering / captions / autoplay / delete
+
+All non-upload edits are handled inside the EditPanel (caption, section reassignment, drag-up/down sort, autoplay toggle for videos, delete) and batched into the next **Save and publish** via `PATCH /api/manage/[token]` (handled by `replaceMediaForCode` in `lib/sheets.ts`).
+
+### Original Drive notes (kept for historical context)
+
+We initially planned Google Drive for media. It didn't work because service accounts on personal Google accounts have zero storage quota — every upload returns 403 `storageQuotaExceeded`. Workspace + Shared Drives solves that but requires a paid plan. Switching to Cloudinary was less effort and gives us a real CDN.
 
 ### Per-section size + dimension rules
 
@@ -402,11 +416,15 @@ Implementation notes:
 ## 13. Environment variables
 
 ```
-# --- Google ---
+# --- Google Sheets (data store) ---
 GOOGLE_SHEETS_ID=
 GOOGLE_SERVICE_ACCOUNT_EMAIL=
 GOOGLE_PRIVATE_KEY=
-GOOGLE_DRIVE_ROOT_FOLDER_ID=
+
+# --- Cloudinary (media host) ---
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 
 # --- Auth ---
 ADMIN_EMAIL=                       # single admin v1; CSV-ready for multi

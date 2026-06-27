@@ -108,7 +108,7 @@ export function EnquiryForm({ eventType, templateId, person1Label, person2Label,
           </select>
         </div>
       )}
-      <Field label="Event title (shown publicly)" name="eventTitle" placeholder="Rahul weds Priya" required />
+      <Field label="Event title (shown publicly)" name="eventTitle" placeholder="Celebration Title" required />
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label={person1Label} name="person1Name" required />
         {showPerson2 && person2Label && <Field label={person2Label} name="person2Name" />}

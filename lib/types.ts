@@ -113,6 +113,10 @@ export type MediaItem = {
   caption?: string;
   sortOrder: number;
   uploadedAt?: string;
+  /** Videos only. When true, the video plays inline muted on loop (instagram-
+   *  style). When false/undefined, the template renders a play-controls
+   *  player that opens on click. Hero videos always autoplay regardless. */
+  autoplay?: boolean;
 };
 
 export type TemplateDefaults = {

@@ -260,7 +260,7 @@ export async function getMedia(code: string): Promise<MediaItem[]> {
     const sheets = await getSheets();
     const res = await sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId(),
-      range: "Media!A2:I",
+      range: "Media!A2:N",
     });
     const rows = res.data.values ?? [];
     const found = rows.filter((r) => (r[0] ?? "").trim() === code);
@@ -276,6 +276,7 @@ export async function getMedia(code: string): Promise<MediaItem[]> {
         caption: r[6] || undefined,
         sortOrder: Number(r[7]) || 0,
         uploadedAt: r[8] || undefined,
+        autoplay: boolish(r[13]),
       }))
       .sort((a, b) => a.sortOrder - b.sortOrder);
   } catch (err) {
@@ -750,6 +751,88 @@ export async function applyTemplateStarter(
   }
 
   return true;
+}
+
+/** Append a single Media row. Used by /api/manage/[token]/upload right after
+ *  the Drive upload returns. Order column N is Autoplay (col 14). */
+export async function appendMediaRow(item: MediaItem): Promise<void> {
+  if (!HAS_SHEETS_CONFIG) return;
+  const sheets = await getSheets();
+  const row: (string | number | boolean)[] = [
+    item.eventCode,
+    item.mediaType,
+    item.section,
+    item.fileName,
+    item.driveFileId ?? "",
+    item.publicUrl,
+    item.caption ?? "",
+    item.sortOrder,
+    item.uploadedAt ?? new Date().toISOString(),
+    "", // Width  — reserved for future sharp resize
+    "", // Height — reserved for future sharp resize
+    "", // Duration
+    "", // File Size
+    item.autoplay ? "TRUE" : "FALSE",
+  ];
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: spreadsheetId(),
+    range: "Media!A2",
+    valueInputOption: "USER_ENTERED",
+    requestBody: { values: [row] },
+  });
+}
+
+/** Replace all Media rows for a code with the given array (overwrite-in-place,
+ *  same pattern as replaceSubEventsForCode). Drive files are NOT deleted —
+ *  leftover orphans are acceptable for v1. */
+export async function replaceMediaForCode(
+  code: string,
+  media: MediaItem[],
+): Promise<void> {
+  if (!HAS_SHEETS_CONFIG) return;
+  const sheets = await getSheets();
+  const existing = await findRowNumbersByCode("Media", code);
+
+  const toRow = (m: MediaItem): (string | number | boolean)[] => [
+    code,
+    m.mediaType,
+    m.section,
+    m.fileName,
+    m.driveFileId ?? "",
+    m.publicUrl,
+    m.caption ?? "",
+    m.sortOrder,
+    m.uploadedAt ?? new Date().toISOString(),
+    "", "", "", "", // Width/Height/Duration/Size — future
+    m.autoplay ? "TRUE" : "FALSE",
+  ];
+
+  const newRows = media.map(toRow);
+  const blank = Array(14).fill("");
+  const data: { range: string; values: (string | number | boolean)[][] }[] = [];
+
+  for (let i = 0; i < existing.length; i++) {
+    const rowNum = existing[i];
+    data.push({
+      range: `Media!A${rowNum}:N${rowNum}`,
+      values: [i < newRows.length ? newRows[i] : blank],
+    });
+  }
+  if (data.length > 0) {
+    await sheets.spreadsheets.values.batchUpdate({
+      spreadsheetId: spreadsheetId(),
+      requestBody: { valueInputOption: "USER_ENTERED", data },
+    });
+  }
+  if (newRows.length > existing.length) {
+    const extras = newRows.slice(existing.length);
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: spreadsheetId(),
+      range: "Media!A2",
+      valueInputOption: "USER_ENTERED",
+      requestBody: { values: extras },
+    });
+  }
 }
 
 /** Replace all SubEvents for a code with the given array (in-place overwrite

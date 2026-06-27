@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { appendEnquiry, getNextSequence } from "@/lib/sheets";
-import { ensureEventFolder } from "@/lib/media";
 import { generateEventCode } from "@/lib/eventCode";
 import { getEventTypeConfig } from "@/config/eventTypes";
 import { getTemplateMeta } from "@/components/templates/metadata";
@@ -84,11 +83,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to save enquiry" }, { status: 500 });
   }
 
-  try {
-    await ensureEventFolder(eventCode);
-  } catch (err) {
-    console.warn("ensureEventFolder failed (non-fatal)", err);
-  }
+  // Note: media host (Cloudinary) creates folders on-demand at first upload,
+  // so no pre-provisioning step is needed at approval/enquiry time.
 
   return NextResponse.json({ ok: true, eventCode });
 }

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { TemplateRouter } from "@/components/templates/TemplateRouter";
 import { EditPanel } from "./EditPanel";
+import { EditProvider } from "./EditContext";
 import type { EventData, MediaItem, SubEvent } from "@/lib/types";
 
 export type EditableData = {
@@ -30,6 +31,9 @@ type Props = EditableData & {
   /** When provided, the panel exposes a template switcher that POSTs to this
    *  URL. Only set this if the admin granted Can Change Template = TRUE. */
   templateSwitchEndpoint?: string;
+  /** When provided, the Media section shows upload buttons that POST multipart
+   *  form data to this URL. */
+  uploadEndpoint?: string;
 };
 
 const storageKey = (code: string) => `event-edit:${code}`;
@@ -44,6 +48,7 @@ export function EditableShell({
   saveEndpoint,
   resetEndpoint,
   templateSwitchEndpoint,
+  uploadEndpoint,
 }: Props) {
   const searchParams = useSearchParams();
   const editParam = forceEdit || searchParams?.get("edit") === "1";
@@ -95,8 +100,73 @@ export function EditableShell({
     setData(initial);
   };
 
+  const updateMedia = (assetId: string, patch: Partial<MediaItem>) => {
+    setData((d) => ({
+      ...d,
+      media: d.media.map((m) =>
+        m.driveFileId === assetId ? { ...m, ...patch } : m,
+      ),
+    }));
+  };
+
+  const deleteMedia = (assetId: string) => {
+    setData((d) => ({
+      ...d,
+      media: d.media
+        .filter((m) => m.driveFileId !== assetId)
+        .map((m, i) => ({ ...m, sortOrder: i + 1 })),
+    }));
+  };
+
+  const addMedia = (item: MediaItem) => {
+    setData((d) => {
+      const sameSectionCount = d.media.filter((m) => m.section === item.section).length;
+      const withOrder: MediaItem = { ...item, sortOrder: sameSectionCount + 1 };
+      return { ...d, media: [...d.media, withOrder] };
+    });
+  };
+
+  const replaceMedia = (oldAssetId: string, next: MediaItem) => {
+    setData((d) => ({
+      ...d,
+      media: d.media.map((m) => {
+        if (m.driveFileId !== oldAssetId) return m;
+        // Preserve the existing item's user-set metadata so a Replace doesn't
+        // wipe the customer's caption / section choice / autoplay flag.
+        return {
+          ...next,
+          caption: m.caption,
+          section: m.section,
+          autoplay: m.autoplay,
+          sortOrder: m.sortOrder,
+        };
+      }),
+    }));
+  };
+
+  const updateEvent = (patch: Partial<EventData>) => {
+    setData((d) => ({ ...d, event: { ...d.event, ...patch } }));
+  };
+
+  const clearDraft = () => {
+    try {
+      window.localStorage.removeItem(storageKey(event.eventCode));
+    } catch {
+      // ignore quota / private-mode errors
+    }
+  };
+
   return (
-    <>
+    <EditProvider
+      enabled={!!editParam && !!uploadEndpoint}
+      uploadEndpoint={uploadEndpoint ?? ""}
+      addMedia={addMedia}
+      replaceMedia={replaceMedia}
+      updateMedia={updateMedia}
+      deleteMedia={deleteMedia}
+      updateEvent={updateEvent}
+      clearDraft={clearDraft}
+    >
       <TemplateRouter
         templateId={templateId}
         event={data.event}
@@ -117,6 +187,7 @@ export function EditableShell({
           templateSwitchEndpoint={templateSwitchEndpoint}
           currentTemplateId={templateId}
           eventType={event.eventType}
+          uploadEndpoint={uploadEndpoint}
           onAfterSave={() => {
             // Server is now the source of truth — drop the local override so a
             // refresh pulls fresh data, not stale localStorage.
@@ -126,6 +197,6 @@ export function EditableShell({
           }}
         />
       )}
-    </>
+    </EditProvider>
   );
 }

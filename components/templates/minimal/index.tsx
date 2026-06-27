@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { Countdown } from "@/components/ui/Countdown";
 import { Gallery } from "@/components/ui/Gallery";
+import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { RSVP } from "@/components/ui/RSVP";
@@ -55,8 +55,12 @@ export const MinimalTemplate: TemplateComponent = ({ event, subEvents, media }) 
             )}
           </div>
         </div>
-        <div className="relative min-h-[400px] lg:min-h-full">
-          <Image src={hero} alt={event.eventTitle} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+        <div className="relative min-h-[400px] lg:min-h-full overflow-hidden">
+          <HeroMedia
+            imageSrc={hero}
+            videoSrc={event.heroVideoUrl}
+            alt={event.eventTitle}
+          />
         </div>
       </section>
 

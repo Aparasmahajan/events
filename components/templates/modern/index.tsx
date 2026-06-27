@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Countdown } from "@/components/ui/Countdown";
 import { Gallery } from "@/components/ui/Gallery";
+import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { RSVP } from "@/components/ui/RSVP";
@@ -32,7 +32,12 @@ export const ModernTemplate: TemplateComponent = ({ event, subEvents, media }) =
   return (
     <div className="font-sans text-white bg-neutral-950" style={{ "--accent": accent } as React.CSSProperties}>
       <section id="top" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
-        <Image src={hero} alt={event.eventTitle} fill priority sizes="100vw" className="object-cover opacity-50" />
+        <HeroMedia
+          imageSrc={hero}
+          videoSrc={event.heroVideoUrl}
+          alt={event.eventTitle}
+          className="opacity-50"
+        />
         <div
           className="absolute inset-0"
           style={{

@@ -25,8 +25,8 @@ const LOCKOUT_MIN = 15;
  * stricter limits move these to a Redis / Upstash-backed store later.
  * ──────────────────────────────────────────────────────────────────── */
 
-const IP_LIMIT = 5;
-const IP_WINDOW_MS = 60 * 60 * 1000; // 5 OTP requests per IP per hour
+const IP_LIMIT = Math.max(1, Number(process.env.LOGIN_IP_LIMIT_PER_HOUR ?? 5));
+const IP_WINDOW_MS = 60 * 60 * 1000; // OTP requests per IP per hour (count = IP_LIMIT)
 const ipBuckets = new Map<string, { count: number; resetAt: number }>();
 
 const ALERT_THROTTLE_MS = 60 * 60 * 1000; // 1 alert per event per hour

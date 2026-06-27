@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { EventData, EventType, SubEvent } from "@/lib/types";
+import type { EventData, EventType, MediaItem, SubEvent } from "@/lib/types";
 import type { EditableData } from "./EditableShell";
 import { TEMPLATES_META } from "@/components/templates/metadata";
 
@@ -28,6 +28,9 @@ type Props = {
   currentTemplateId?: string;
   /** Event type — used to filter templates the switcher offers. */
   eventType?: EventType;
+  /** When set, the Media section is shown with upload buttons that POST
+   *  multipart form data to this URL. */
+  uploadEndpoint?: string;
   /** Called after a successful save (e.g. to clear localStorage). */
   onAfterSave?: () => void;
 };
@@ -50,6 +53,7 @@ export function EditPanel({
   templateSwitchEndpoint,
   currentTemplateId,
   eventType,
+  uploadEndpoint,
   onAfterSave,
 }: Props) {
   const [open, setOpen] = useState(true);
@@ -156,7 +160,11 @@ export function EditPanel({
       const res = await fetch(saveEndpoint, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ event: data.event, subEvents: data.subEvents }),
+        body: JSON.stringify({
+          event: data.event,
+          subEvents: data.subEvents,
+          media: data.media,
+        }),
       });
       const body = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(body.error ?? "Save failed");
@@ -170,6 +178,20 @@ export function EditPanel({
         message: e instanceof Error ? e.message : "Save failed",
       });
     }
+  };
+
+  const discardChanges = () => {
+    if (
+      !window.confirm(
+        "Discard all unsaved changes and reload?\n\n" +
+          "This reverts any text edits, sub-event tweaks, media uploads or " +
+          "swaps that you haven't pushed live yet. Already-published content " +
+          "stays as-is.",
+      )
+    )
+      return;
+    onReset(); // clears localStorage
+    window.location.reload();
   };
 
   const required = {
@@ -222,6 +244,36 @@ export function EditPanel({
       subEvents: next.map((s, i) => ({ ...s, order: i + 1 })),
     });
   };
+
+  /* ── Media helpers (local-state — actual writes via Save and publish). ── */
+  const patchMedia = (index: number, patch: Partial<MediaItem>) =>
+    onChange({
+      ...data,
+      media: data.media.map((m, i) => (i === index ? { ...m, ...patch } : m)),
+    });
+
+  const deleteMedia = (index: number) =>
+    onChange({
+      ...data,
+      media: data.media
+        .filter((_, i) => i !== index)
+        .map((m, i) => ({ ...m, sortOrder: i + 1 })),
+    });
+
+  const moveMedia = (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= data.media.length) return;
+    const next = [...data.media];
+    [next[index], next[target]] = [next[target], next[index]];
+    onChange({
+      ...data,
+      media: next.map((m, i) => ({ ...m, sortOrder: i + 1 })),
+    });
+  };
+
+  // Uploads now happen inline on the rendered template (click any photo /
+  // video / "+ add" tile in the page itself). The panel only handles
+  // caption / sort order / autoplay / delete on existing items.
 
   const exitEdit = () => {
     if (typeof window === "undefined") return;
@@ -351,6 +403,13 @@ export function EditPanel({
                       : readyToPublish
                         ? "Save and publish"
                         : "Save draft"}
+                  </button>
+                  <button
+                    onClick={discardChanges}
+                    disabled={saveState.kind === "saving"}
+                    className="w-full mt-2 px-4 py-2 rounded-full border border-black/15 text-neutral-700 text-xs hover:bg-black/5 transition disabled:opacity-50"
+                  >
+                    ↩ Discard unsaved changes
                   </button>
                   {!readyToPublish && (
                     <p className="text-[11px] opacity-70 mt-2 leading-snug">
@@ -519,11 +578,40 @@ export function EditPanel({
                       : data.event.rsvpType === "phone"
                         ? "+91-98xxxxxxx"
                         : data.event.rsvpType === "text"
-                          ? "Call Anita at +91-..."
+                          ? "Call Person at +91-..."
                           : "https://forms.example/rsvp"
                   }
                 />
               </Section>
+
+              {data.media.length > 0 && (
+                <Section title={`Manage media (${data.media.length})`}>
+                  <p className="text-xs opacity-70">
+                    To <strong>add</strong> or <strong>replace</strong> an image or video,
+                    hover any photo on the page itself and click — it&apos;s easier than
+                    going through this list. Use this section to rename captions, reorder,
+                    toggle video autoplay, or delete.
+                  </p>
+
+                  <div className="space-y-2">
+                    {data.media.map((m, i) => (
+                      <MediaEditor
+                        key={`${m.fileName}-${i}`}
+                        item={m}
+                        index={i}
+                        total={data.media.length}
+                        onChange={(patch) => patchMedia(i, patch)}
+                        onDelete={() => deleteMedia(i)}
+                        onMove={(dir) => moveMedia(i, dir)}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-[11px] opacity-60 mt-2 leading-snug">
+                    Caption / reorder / autoplay changes save with the next Save and publish.
+                    Delete is also batched. Uploads happen instantly inline.
+                  </p>
+                </Section>
+              )}
 
               <Section
                 title={`Sub-events (${data.subEvents.length})`}
@@ -863,6 +951,133 @@ function Toggle({
         />
       </button>
     </label>
+  );
+}
+
+const MEDIA_SECTIONS = ["hero", "gallery", "couple", "about", "videos"] as const;
+
+function MediaEditor({
+  item,
+  index,
+  total,
+  onChange,
+  onDelete,
+  onMove,
+}: {
+  item: MediaItem;
+  index: number;
+  total: number;
+  onChange: (patch: Partial<MediaItem>) => void;
+  onDelete: () => void;
+  onMove: (direction: -1 | 1) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const isVideo = item.mediaType === "video";
+
+  return (
+    <div className="rounded-lg border border-black/10 overflow-hidden">
+      <div className="flex items-center gap-2 px-2 py-2 bg-black/[0.02]">
+        <div className="flex flex-col gap-0.5">
+          <button
+            onClick={() => onMove(-1)}
+            disabled={index === 0}
+            title="Move up"
+            className="w-5 h-4 rounded hover:bg-black/5 disabled:opacity-30 disabled:cursor-not-allowed text-[10px]"
+          >
+            ▲
+          </button>
+          <button
+            onClick={() => onMove(1)}
+            disabled={index === total - 1}
+            title="Move down"
+            className="w-5 h-4 rounded hover:bg-black/5 disabled:opacity-30 disabled:cursor-not-allowed text-[10px]"
+          >
+            ▼
+          </button>
+        </div>
+        {isVideo ? (
+          <div className="w-12 h-12 rounded bg-black flex items-center justify-center text-white text-lg flex-none">
+            ▶
+          </div>
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={item.publicUrl}
+            alt={item.caption ?? item.fileName}
+            className="w-12 h-12 rounded object-cover flex-none"
+          />
+        )}
+        <button
+          onClick={() => setOpen((o) => !o)}
+          className="flex-1 text-left min-w-0"
+        >
+          <p className="text-sm font-medium truncate">{item.caption || item.fileName}</p>
+          <p className="text-[10px] uppercase tracking-widest opacity-60">
+            {item.section} · {item.mediaType}
+            {isVideo && item.autoplay ? " · autoplay" : ""}
+          </p>
+        </button>
+        <button
+          onClick={onDelete}
+          className="text-xs text-red-600 hover:text-red-700 hover:underline flex-none"
+          title="Remove from this event (file stays on Drive)"
+        >
+          Delete
+        </button>
+      </div>
+      {open && (
+        <div className="p-3 space-y-3">
+          <Field
+            label="Caption"
+            value={item.caption ?? ""}
+            onChange={(v) => onChange({ caption: v })}
+            placeholder="First look, mandap, etc."
+          />
+          <label className="block">
+            <span className="block text-xs opacity-70 mb-1">Section</span>
+            <select
+              value={item.section}
+              onChange={(e) => onChange({ section: e.target.value })}
+              className="w-full rounded-md border border-black/15 bg-white px-3 py-2 text-sm focus:outline-none focus:border-black/40"
+            >
+              {MEDIA_SECTIONS.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </label>
+          {isVideo && (
+            <label className="flex items-center justify-between gap-3 cursor-pointer py-1">
+              <span className="text-sm">
+                Autoplay (silent, looped)
+                <span className="block text-[11px] opacity-60">
+                  Off = press-to-play with controls.
+                </span>
+              </span>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={!!item.autoplay}
+                onClick={() => onChange({ autoplay: !item.autoplay })}
+                className={`relative w-10 h-6 rounded-full transition-colors ${
+                  item.autoplay ? "bg-neutral-900" : "bg-neutral-300"
+                }`}
+              >
+                <span
+                  className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${
+                    item.autoplay ? "translate-x-4" : ""
+                  }`}
+                />
+              </button>
+            </label>
+          )}
+          <p className="text-[11px] opacity-60 break-all">
+            <span className="opacity-70">URL:</span> {item.publicUrl}
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
 

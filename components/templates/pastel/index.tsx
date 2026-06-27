@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { Countdown } from "@/components/ui/Countdown";
 import { Gallery } from "@/components/ui/Gallery";
+import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { RSVP } from "@/components/ui/RSVP";
@@ -33,7 +33,12 @@ export const PastelTemplate: TemplateComponent = ({ event, subEvents, media }) =
     <div className="font-serif text-neutral-800" style={{ "--accent": accent, background: `${accent}10` } as React.CSSProperties}>
       <section id="top" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0" style={{ background: `linear-gradient(160deg, ${accent}22, #ffffff 60%, ${accent}15)` }} />
-        <Image src={hero} alt="" fill priority sizes="100vw" className="object-cover opacity-40 mix-blend-multiply" />
+        <HeroMedia
+          imageSrc={hero}
+          videoSrc={event.heroVideoUrl}
+          alt=""
+          className="opacity-40 mix-blend-multiply"
+        />
         <div className="relative z-10 text-center max-w-3xl px-4">
           <p className="font-script text-4xl sm:text-6xl mb-2" style={{ color: accent }}>{tagline}</p>
           <h1 className="font-display text-5xl sm:text-7xl text-neutral-800">{event.eventTitle}</h1>

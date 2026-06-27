@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Countdown } from "@/components/ui/Countdown";
 import { Gallery } from "@/components/ui/Gallery";
+import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { RSVP } from "@/components/ui/RSVP";
@@ -40,7 +40,12 @@ export const VibrantTemplate: TemplateComponent = ({ event, subEvents, media }) 
         }}
       >
         <div className="absolute inset-0 opacity-20">
-          <Image src={hero} alt="" fill priority sizes="100vw" className="object-cover mix-blend-overlay" />
+          <HeroMedia
+            imageSrc={hero}
+            videoSrc={event.heroVideoUrl}
+            alt=""
+            className="mix-blend-overlay"
+          />
         </div>
         {/* Floating confetti shapes */}
         <div className="absolute inset-0 pointer-events-none">
