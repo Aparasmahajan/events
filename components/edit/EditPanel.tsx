@@ -284,9 +284,11 @@ export function EditPanel({
 
   return (
     <>
-      {/* Floating "reopen" toggle only when the panel isn't locked open */}
+      {/* Floating "reopen" toggle whenever the panel is collapsed — available
+          even when locked (on /manage) so the customer can preview their page
+          full-width and bring the editor back. */}
       <AnimatePresence>
-        {!open && !locked && (
+        {!open && (
           <motion.button
             key="reopen"
             initial={{ opacity: 0, x: 80 }}
@@ -331,22 +333,24 @@ export function EditPanel({
                 >
                   {resetting ? "…" : "Reset all"}
                 </button>
+                {/* Collapse the panel — always available, including on the
+                    locked /manage editor, so edit mode can be closed to preview. */}
+                <button
+                  onClick={() => setOpen(false)}
+                  className="text-xs px-3 py-1.5 rounded-full hover:bg-black/5"
+                  aria-label="Close edit panel"
+                >
+                  Close
+                </button>
+                {/* "Exit" strips ?edit=1; only meaningful on the preview, not on
+                    the locked /manage page (where you leave by signing out). */}
                 {!locked && (
-                  <>
-                    <button
-                      onClick={() => setOpen(false)}
-                      className="text-xs px-3 py-1.5 rounded-full hover:bg-black/5"
-                      aria-label="Collapse"
-                    >
-                      Hide
-                    </button>
-                    <button
-                      onClick={exitEdit}
-                      className="text-xs px-3 py-1.5 rounded-full bg-neutral-900 text-white hover:bg-neutral-800"
-                    >
-                      Exit
-                    </button>
-                  </>
+                  <button
+                    onClick={exitEdit}
+                    className="text-xs px-3 py-1.5 rounded-full bg-neutral-900 text-white hover:bg-neutral-800"
+                  >
+                    Exit
+                  </button>
                 )}
               </div>
             </header>

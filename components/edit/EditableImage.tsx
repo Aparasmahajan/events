@@ -3,16 +3,15 @@
 import Image, { type ImageProps } from "next/image";
 import { useRef, useState } from "react";
 import { useEditMode } from "./EditContext";
+import type { MediaItem } from "@/lib/types";
 
 type Props = Omit<ImageProps, "src"> & {
   src: string;
   /** Where the upload should be stored — `hero`, `gallery`, `couple`, etc. */
   section: string;
-  /** If set, the upload replaces the Media row whose `driveFileId` matches.
-   *  Leave blank to append a new row (use this for "+ Add" tiles). */
+  /** If set, the upload replaces the media item whose `driveFileId` (Cloudinary
+   *  public_id) matches. Leave blank to append a new item (for "+ Add" tiles). */
   replaceAssetId?: string;
-  /** Backwards-compat fallback when no asset id is available. */
-  replaceFileName?: string;
   /** Show as a square-ish placeholder with a "+" affordance instead of an
    *  image. Used for the trailing "add a new gallery item" tile. */
   asAddTile?: boolean;
@@ -23,12 +22,12 @@ type Props = Omit<ImageProps, "src"> & {
 /**
  * Editable image / "+ add" tile. Renders a plain <Image> when no EditContext
  * is present (i.e. on the public /e/[code] page). In edit mode (/manage/...)
- * it shows a hover overlay; click → file picker → upload → page reload.
+ * it shows a hover overlay; click → file picker → upload → the new media is
+ * staged into the local draft (shown immediately, committed on Save and publish).
  */
 export function EditableImage({
   section,
   replaceAssetId,
-  replaceFileName,
   asAddTile = false,
   accept = "image/*",
   alt,
@@ -55,14 +54,43 @@ export function EditableImage({
       const fd = new FormData();
       fd.append("file", file);
       fd.append("section", section);
-      if (replaceAssetId) fd.append("replaceAssetId", replaceAssetId);
-      else if (replaceFileName) fd.append("replaceFileName", replaceFileName);
       const res = await fetch(ctx.uploadEndpoint, { method: "POST", body: fd });
-      const body = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(body.error ?? "Upload failed");
-      window.location.reload();
+      const body = (await res.json().catch(() => ({}))) as
+        | { ok: true; item: MediaItem }
+        | { error: string };
+      if (!res.ok || !("item" in body)) {
+        const message =
+          "error" in body ? body.error : `Upload failed (${res.status})`;
+        console.error("[upload] EditableImage failed", res.status, body);
+        throw new Error(message);
+      }
+
+      // The upload route is staging-only: it returns the new MediaItem (with a
+      // Cloudinary URL) but does NOT touch the Media sheet. We must fold the
+      // result into the local draft via the EditContext callbacks — exactly
+      // like HeroMedia / Gallery do — so it shows immediately and survives
+      // until "Save and publish". A reload here would discard the upload.
+      const item = body.item;
+      if (section === "hero") {
+        if (item.mediaType === "video") {
+          ctx.updateEvent?.({ heroVideoUrl: item.publicUrl });
+        } else {
+          // Clear any prior hero video so the new image actually renders
+          // (video takes precedence in HeroMedia).
+          ctx.updateEvent?.({ heroImageUrl: item.publicUrl, heroVideoUrl: "" });
+        }
+      } else if (replaceAssetId) {
+        ctx.replaceMedia?.(replaceAssetId, item);
+      } else {
+        ctx.addMedia?.(item);
+      }
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Upload failed");
+      const message = e instanceof Error ? e.message : "Upload failed";
+      setErr(message);
+      window.alert(`Couldn't upload this image:\n\n${message}`);
+    } finally {
+      // Reset the input so picking the same file again still fires onChange.
+      if (inputRef.current) inputRef.current.value = "";
       setBusy(false);
     }
   };

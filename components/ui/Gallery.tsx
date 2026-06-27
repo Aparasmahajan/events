@@ -4,13 +4,18 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MediaItem } from "@/lib/types";
 import { useEditMode } from "@/components/edit/EditContext";
+import { ImageEditor } from "@/components/edit/ImageEditor";
 
 type Props = { items: MediaItem[]; columns?: 2 | 3 | 4 };
 
 export function Gallery({ items, columns = 3 }: Props) {
   const [open, setOpen] = useState<number | null>(null);
+  // Index (within `imageItems`) of the photo open in the crop editor.
+  const [cropIndex, setCropIndex] = useState<number | null>(null);
   const editCtx = useEditMode();
   const editing = !!editCtx?.enabled;
+  // Only still images can be cropped; the editor navigates among these.
+  const imageItems = items.filter((m) => m.mediaType === "image");
 
   const close = useCallback(() => setOpen(null), []);
   const next = useCallback(
@@ -52,6 +57,11 @@ export function Gallery({ items, columns = 3 }: Props) {
             key={`${item.fileName}-${i}`}
             item={item}
             onOpen={() => setOpen(i)}
+            onEditImage={
+              item.mediaType === "image"
+                ? () => setCropIndex(imageItems.indexOf(item))
+                : undefined
+            }
           />
         ))}
         {editing && <AddTile />}
@@ -65,11 +75,33 @@ export function Gallery({ items, columns = 3 }: Props) {
           onPrev={prev}
         />
       )}
+
+      {cropIndex !== null && imageItems[cropIndex] && (
+        <ImageEditor
+          items={imageItems}
+          index={cropIndex}
+          onClose={() => setCropIndex(null)}
+          onNavigate={setCropIndex}
+          onUploaded={(uploaded, original) => {
+            if (original.driveFileId) editCtx?.replaceMedia?.(original.driveFileId, uploaded);
+            else editCtx?.addMedia?.(uploaded);
+          }}
+        />
+      )}
     </>
   );
 }
 
-function GalleryTile({ item, onOpen }: { item: MediaItem; onOpen: () => void }) {
+function GalleryTile({
+  item,
+  onOpen,
+  onEditImage,
+}: {
+  item: MediaItem;
+  onOpen: () => void;
+  /** Open the crop/zoom editor. Provided for images only. */
+  onEditImage?: () => void;
+}) {
   const editCtx = useEditMode();
   const editing = !!editCtx?.enabled;
   const [menuOpen, setMenuOpen] = useState(false);
@@ -200,6 +232,14 @@ function GalleryTile({ item, onOpen }: { item: MediaItem; onOpen: () => void }) 
           onClose={() => setMenuOpen(false)}
           onView={() => { setMenuOpen(false); onOpen(); }}
           onEditDetails={() => { setMenuOpen(false); setEditing(true); }}
+          onEditImage={
+            onEditImage
+              ? () => {
+                  setMenuOpen(false);
+                  onEditImage();
+                }
+              : undefined
+          }
         />
       )}
       {editing_ && (
@@ -245,12 +285,15 @@ function TileActionMenu({
   onClose,
   onView,
   onEditDetails,
+  onEditImage,
 }: {
   item: MediaItem;
   accept: string;
   onClose: () => void;
   onView: () => void;
   onEditDetails: () => void;
+  /** Open the crop/zoom editor (images only). */
+  onEditImage?: () => void;
 }) {
   const ctx = useEditMode();
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -337,6 +380,17 @@ function TileActionMenu({
             caption{item.mediaType === "video" ? ", autoplay" : ""}
           </span>
         </button>
+        {onEditImage && (
+          <button
+            onClick={onEditImage}
+            className="text-left text-sm px-3 py-2 rounded-md hover:bg-black/[0.04] flex items-center gap-2.5"
+          >
+            <span aria-hidden>✂️</span> Crop &amp; adjust
+            <span className="ml-auto text-[10px] uppercase tracking-widest opacity-50">
+              zoom
+            </span>
+          </button>
+        )}
         <button
           onClick={pickReplacement}
           disabled={busy}

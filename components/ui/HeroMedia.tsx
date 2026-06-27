@@ -3,6 +3,8 @@
 import Image, { type ImageProps } from "next/image";
 import { useRef, useState } from "react";
 import { useEditMode } from "@/components/edit/EditContext";
+import { ImageEditor } from "@/components/edit/ImageEditor";
+import type { MediaItem } from "@/lib/types";
 
 type Props = {
   imageSrc: string;
@@ -35,6 +37,9 @@ export function HeroMedia({
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [editing, setEditing] = useState(false);
+  // Cropping applies to a still hero image only (not a hero video).
+  const canCrop = editable && !videoSrc && !!imageSrc;
 
   const pick = () => {
     if (!editable || busy) return;
@@ -109,18 +114,29 @@ export function HeroMedia({
 
       {editable && (
         <>
-          <button
-            onClick={pick}
-            disabled={busy}
-            className="absolute inset-0 z-20 group flex items-end justify-end p-5 sm:p-8"
-            aria-label="Replace hero media"
-          >
+          <div className="absolute inset-0 z-20 group flex items-end justify-end p-5 sm:p-8">
             <span className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition pointer-events-none" />
-            <span className="relative bg-white text-neutral-900 text-xs font-medium uppercase tracking-widest px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2 opacity-80 group-hover:opacity-100 transition">
-              <span aria-hidden>📷</span>
-              {busy ? "Uploading…" : "Replace hero"}
-            </span>
-          </button>
+            <div className="relative flex items-center gap-2 opacity-80 group-hover:opacity-100 transition">
+              {canCrop && (
+                <button
+                  onClick={() => setEditing(true)}
+                  disabled={busy}
+                  className="bg-white text-neutral-900 text-xs font-medium uppercase tracking-widest px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-white/90 disabled:opacity-50"
+                >
+                  <span aria-hidden>✂️</span> Crop
+                </button>
+              )}
+              <button
+                onClick={pick}
+                disabled={busy}
+                aria-label="Replace hero media"
+                className="bg-white text-neutral-900 text-xs font-medium uppercase tracking-widest px-3.5 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-white/90 disabled:opacity-50"
+              >
+                <span aria-hidden>📷</span>
+                {busy ? "Uploading…" : "Replace hero"}
+              </button>
+            </div>
+          </div>
           <input
             ref={fileRef}
             type="file"
@@ -134,6 +150,30 @@ export function HeroMedia({
             </div>
           )}
         </>
+      )}
+
+      {editing && (
+        <ImageEditor
+          items={[
+            {
+              eventCode: "",
+              mediaType: "image",
+              section: "hero",
+              fileName: "hero.jpg",
+              publicUrl: imageSrc,
+              sortOrder: 0,
+            } satisfies MediaItem,
+          ]}
+          index={0}
+          onClose={() => setEditing(false)}
+          onNavigate={() => {}}
+          onUploaded={(uploaded) =>
+            ctx?.updateEvent?.({
+              heroImageUrl: uploaded.publicUrl,
+              heroVideoUrl: "",
+            })
+          }
+        />
       )}
     </>
   );

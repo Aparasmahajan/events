@@ -88,7 +88,10 @@ export async function uploadToEvent(
   const form = new FormData();
   form.append(
     "file",
-    new Blob([file.buffer], { type: file.mimeType }),
+    // Copy into a Uint8Array<ArrayBuffer> so it's a valid BlobPart — a Node
+    // Buffer's underlying store is ArrayBufferLike (possibly SharedArrayBuffer),
+    // which the Blob/BlobPart types reject.
+    new Blob([new Uint8Array(file.buffer)], { type: file.mimeType }),
     file.name,
   );
   form.append("api_key", apiKey);
