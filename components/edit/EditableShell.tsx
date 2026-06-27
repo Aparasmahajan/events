@@ -58,29 +58,33 @@ export function EditableShell({
 
   const [data, setData] = useState<EditableData>(initial);
 
-  // Load from localStorage on mount.
+  // Mark mounted (still needed to defer rendering the panel until after hydration).
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // localStorage is *only* used when the shell is actually being edited.
+  // Without this guard, opening the public /e/[code] page in the same browser
+  // that previously edited via /manage would surface the customer's unsaved
+  // draft on the public preview — a real "did I publish?" foot-gun.
+  useEffect(() => {
+    if (!editParam) return;
     try {
       const raw = window.localStorage.getItem(storageKey(event.eventCode));
-      if (raw) {
-        const saved = JSON.parse(raw) as EditableData;
-        setData(saved);
-      }
+      if (raw) setData(JSON.parse(raw) as EditableData);
     } catch {
       // Ignore corrupt JSON.
     }
-  }, [event.eventCode]);
+  }, [event.eventCode, editParam]);
 
-  // Persist on every change.
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !editParam) return;
     try {
       window.localStorage.setItem(storageKey(event.eventCode), JSON.stringify(data));
     } catch {
       // Quota or private-mode failure — silent.
     }
-  }, [data, event.eventCode, mounted]);
+  }, [data, event.eventCode, mounted, editParam]);
 
   const reset = () => {
     try {
