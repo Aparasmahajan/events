@@ -10,6 +10,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { StickyNav } from "@/components/ui/StickyNav";
 import { Timeline } from "@/components/ui/Timeline";
 import { pastelMeta } from "@/components/templates/metadata";
+import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent } from "@/lib/types";
 
 const defaults = pastelMeta.defaults;
@@ -20,11 +21,14 @@ export const PastelTemplate: TemplateComponent = ({ event, subEvents, media }) =
   const tagline = event.tagline?.trim() || defaults.tagline;
   const invitationMessage = event.invitationMessage?.trim() || defaults.invitationMessage;
   const galleryItems = media.filter((m) => m.section === "gallery");
+  // In edit mode, show the gallery section even when empty so the customer has
+  // a "+ Add photos" entry to upload the first images into.
+  const editing = !!useEditMode()?.enabled;
 
   const navItems = [
     ...(!event.hideStory ? [{ id: "intro", label: "Invitation" }] : []),
     ...(!event.hideEvents && subEvents.length ? [{ id: "events", label: "Events" }] : []),
-    ...(!event.hideGallery && galleryItems.length ? [{ id: "gallery", label: "Memories" }] : []),
+    ...(!event.hideGallery && (galleryItems.length || editing) ? [{ id: "gallery", label: "Memories" }] : []),
     ...(!event.hideVenue ? [{ id: "venue", label: "Venue" }] : []),
     ...(event.rsvpEnabled ? [{ id: "rsvp", label: "RSVP" }] : []),
   ];
@@ -78,7 +82,7 @@ export const PastelTemplate: TemplateComponent = ({ event, subEvents, media }) =
         </section>
       )}
 
-      {!event.hideGallery && galleryItems.length > 0 && (
+      {!event.hideGallery && (galleryItems.length > 0 || editing) && (
         <section id="gallery" className="py-20 px-6 max-w-6xl mx-auto">
           <ScrollReveal>
             <h2 className="font-display text-3xl sm:text-4xl text-center mb-10">Memories</h2>

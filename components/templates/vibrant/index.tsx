@@ -11,6 +11,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { StickyNav } from "@/components/ui/StickyNav";
 import { Timeline } from "@/components/ui/Timeline";
 import { vibrantMeta } from "@/components/templates/metadata";
+import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent } from "@/lib/types";
 
 const defaults = vibrantMeta.defaults;
@@ -21,11 +22,14 @@ export const VibrantTemplate: TemplateComponent = ({ event, subEvents, media }) 
   const tagline = event.tagline?.trim() || defaults.tagline;
   const invitationMessage = event.invitationMessage?.trim() || defaults.invitationMessage;
   const galleryItems = media.filter((m) => m.section === "gallery");
+  // In edit mode, show the gallery section even when empty so the customer has
+  // a "+ Add photos" entry to upload the first images into.
+  const editing = !!useEditMode()?.enabled;
 
   const navItems = [
     ...(!event.hideStory ? [{ id: "intro", label: "What's up" }] : []),
     ...(!event.hideEvents && subEvents.length ? [{ id: "schedule", label: "Plan" }] : []),
-    ...(!event.hideGallery && galleryItems.length ? [{ id: "gallery", label: "Pics" }] : []),
+    ...(!event.hideGallery && (galleryItems.length || editing) ? [{ id: "gallery", label: "Pics" }] : []),
     ...(!event.hideVenue ? [{ id: "venue", label: "Where" }] : []),
     ...(event.rsvpEnabled ? [{ id: "rsvp", label: "RSVP" }] : []),
   ];
@@ -110,7 +114,7 @@ export const VibrantTemplate: TemplateComponent = ({ event, subEvents, media }) 
         </section>
       )}
 
-      {!event.hideGallery && galleryItems.length > 0 && (
+      {!event.hideGallery && (galleryItems.length > 0 || editing) && (
         <section id="gallery" className="py-20 px-6 max-w-6xl mx-auto">
           <ScrollReveal>
             <h2 className="font-display text-3xl sm:text-4xl mb-10 text-center">Highlights</h2>

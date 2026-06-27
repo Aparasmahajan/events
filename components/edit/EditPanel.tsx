@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { EventData, EventType, MediaItem, SubEvent } from "@/lib/types";
 import type { EditableData } from "./EditableShell";
 import { TEMPLATES_META } from "@/components/templates/metadata";
+import { AddPhotosModal } from "./AddPhotosModal";
 
 type Props = {
   data: EditableData;
@@ -65,6 +66,7 @@ export function EditPanel({
   const [openInternal, setOpenInternal] = useState(true);
   const open = openProp ?? openInternal;
   const setOpen = onOpenChange ?? setOpenInternal;
+  const [addingPhotos, setAddingPhotos] = useState(false);
   const [saveState, setSaveState] = useState<SaveState>({ kind: "idle" });
   const [resetting, setResetting] = useState(false);
 
@@ -620,6 +622,22 @@ export function EditPanel({
                 />
               </Section>
 
+              {uploadEndpoint && (
+                <Section title="Photos & gallery">
+                  <p className="text-xs opacity-70">
+                    Add photos or videos to your gallery — pick several at once and
+                    give each a description. You can also click any photo on the page
+                    to crop, replace, or edit it.
+                  </p>
+                  <button
+                    onClick={() => setAddingPhotos(true)}
+                    className="w-full text-sm px-4 py-2.5 rounded-full bg-neutral-900 text-white font-medium hover:bg-neutral-800 transition"
+                  >
+                    + Add photos
+                  </button>
+                </Section>
+              )}
+
               {data.media.length > 0 && (
                 <Section title={`Manage media (${data.media.length})`}>
                   <p className="text-xs opacity-70">
@@ -737,6 +755,8 @@ export function EditPanel({
           </motion.aside>
         )}
       </AnimatePresence>
+
+      {addingPhotos && <AddPhotosModal onClose={() => setAddingPhotos(false)} />}
     </>
   );
 }

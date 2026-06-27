@@ -171,6 +171,7 @@ export function EditableShell({
       clearDraft={clearDraft}
     >
       <div
+        style={{ paddingTop: topOffset || undefined }}
         className={`transition-[padding] duration-300 ${
           editParam && mounted && panelOpen ? "sm:pr-[420px]" : ""
         }`}

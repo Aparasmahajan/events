@@ -11,6 +11,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { StickyNav } from "@/components/ui/StickyNav";
 import { Timeline } from "@/components/ui/Timeline";
 import { modernMeta } from "@/components/templates/metadata";
+import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent } from "@/lib/types";
 
 const defaults = modernMeta.defaults;
@@ -20,11 +21,14 @@ export const ModernTemplate: TemplateComponent = ({ event, subEvents, media }) =
   const hero = event.heroImageUrl || defaults.heroImage;
   const invitationMessage = event.invitationMessage?.trim() || defaults.invitationMessage;
   const galleryItems = media.filter((m) => m.section === "gallery");
+  // In edit mode, show the gallery section even when empty so the customer has
+  // a "+ Add photos" entry to upload the first images into.
+  const editing = !!useEditMode()?.enabled;
 
   const navItems = [
     ...(!event.hideStory ? [{ id: "intro", label: "Intro" }] : []),
     ...(!event.hideEvents && subEvents.length ? [{ id: "schedule", label: "Schedule" }] : []),
-    ...(!event.hideGallery && galleryItems.length ? [{ id: "gallery", label: "Gallery" }] : []),
+    ...(!event.hideGallery && (galleryItems.length || editing) ? [{ id: "gallery", label: "Gallery" }] : []),
     ...(!event.hideVenue ? [{ id: "venue", label: "Venue" }] : []),
     ...(event.rsvpEnabled ? [{ id: "rsvp", label: "RSVP" }] : []),
   ];
@@ -97,7 +101,7 @@ export const ModernTemplate: TemplateComponent = ({ event, subEvents, media }) =
           </section>
         )}
 
-        {!event.hideGallery && galleryItems.length > 0 && (
+        {!event.hideGallery && (galleryItems.length > 0 || editing) && (
           <section id="gallery" className="py-24 px-6 max-w-6xl mx-auto">
             <ScrollReveal>
               <h2 className="font-display text-3xl sm:text-4xl mb-10">Gallery</h2>
