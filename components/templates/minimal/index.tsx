@@ -108,7 +108,7 @@ export const MinimalTemplate: TemplateComponent = ({ event, subEvents, media }) 
       {event.rsvpEnabled && (
         <section id="rsvp" className="py-24 px-6 max-w-3xl mx-auto border-t border-black/5">
           <ScrollReveal>
-            <RSVP enabled={event.rsvpEnabled} linkOrContact={event.rsvpLinkOrContact} contactName={event.contactName} />
+            <RSVP enabled={event.rsvpEnabled} linkOrContact={event.rsvpLinkOrContact} contactName={event.contactName} type={event.rsvpType} />
           </ScrollReveal>
         </section>
       )}

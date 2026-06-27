@@ -23,7 +23,13 @@ export type TemplateTag =
   | "festive"
   | "monochrome"
   | "pastel"
-  | "bold";
+  | "bold"
+  | "cinematic"
+  | "interactive"
+  | "botanical"
+  | "editorial"
+  | "neon"
+  | "whimsical";
 
 export type EventData = {
   eventCode: string;
@@ -65,6 +71,13 @@ export type EventData = {
 
   rsvpEnabled?: boolean;
   rsvpLinkOrContact?: string;
+  /** How the value in rsvpLinkOrContact should be rendered:
+   *  - "email": wrap in mailto: link, show "RSVP — email@…"
+   *  - "phone": wrap in tel: link, show "RSVP — +91-…"
+   *  - "url": full external link, button reads "RSVP now"
+   *  - "text": plain text (default — no link)
+   *  Defaults to "url" if rsvpLinkOrContact starts with http, otherwise "text". */
+  rsvpType?: "email" | "phone" | "url" | "text";
 
   // Section visibility overrides (set true to hide). Default is to show.
   hideStory?: boolean;

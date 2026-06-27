@@ -131,19 +131,50 @@ Columns 1–14 identical to Enquiries (copied on approval; CRM cols 15–22 are 
 | Go Live Date | When first published |
 | Active Until | Defaults to Main Date (+ optional grace). After this: editing locks and the site may auto-stop |
 
+**Section visibility** (all default FALSE = visible; customer toggles in editor)
+| Column | Notes |
+|---|---|
+| Hide Story | TRUE → drop the invitation / about block + nav item |
+| Hide Events | TRUE → drop the sub-events timeline + nav item |
+| Hide Gallery | TRUE → drop the gallery + nav item |
+| Hide Venue | TRUE → drop the venue card + map + nav item |
+
+(RSVP visibility uses the existing `RSVP Enabled`.)
+
+**Customer-auth state** (written/cleared by the login route — never edited by hand)
+| Column | Notes |
+|---|---|
+| OTP Hash | bcrypt of the currently-issued 6-digit code; cleared on success |
+| OTP Expires At | ISO timestamp; OTP rejected after this |
+| OTP Attempts | Integer; resets to 0 on success or on a new OTP request |
+| OTP Locked Until | ISO timestamp; while in the future, login rejects with "try again later" |
+
 **Content** (drives the template, all editable by the customer): `Hero Image URL`, `Hero Video URL`, `Tagline/Hashtag`, **`Invitation Message`**, `About/Story`, `Main Date`, `Main Start Time`, `Main End Time`, `Theme/Accent Color` (hex), `Background Music URL`
 
 **Main venue:** `Venue Name`, `Venue Address`, `Map Link`, `Latitude`, `Longitude`
 **Public contact:** `Contact Name`, `Contact Phone`, `Contact Email`, `Instagram/Social Link`
-**RSVP:** `RSVP Enabled` (TRUE/FALSE), `RSVP Link/Contact`
+**RSVP:** `RSVP Enabled` (TRUE/FALSE), `RSVP Link/Contact`, `RSVP Type`
+
+| `RSVP Type` value | How `RSVP Link/Contact` is rendered |
+|---|---|
+| `url` (default if value starts with `http`) | Button: "RSVP now" → opens URL in a new tab |
+| `email` | Button: "RSVP — name@…" → opens `mailto:` |
+| `phone` | Button: "RSVP — +91-…" → opens `tel:` |
+| `text` | Plain text block (no link) — for free-form instructions like "Call Anita at +91-…" |
 
 ### Tab: `SubEvents` (1 row per sub-event, joined by Event Code)
 `Event Code | Order | Sub-event Name | Date | Start Time | End Time | Venue Name | Venue Address | Map Link | Latitude | Longitude | Dress Code | Description | Icon`
 (Mehndi / Haldi / Sangeet / Reception, or Day 1 / Day 2 sessions.)
 
 ### Tab: `Media` (1 row per file, joined by Event Code)
-`Event Code | Media Type (image/video) | Section (hero/gallery/couple/sub-event:<name>) | File Name | Drive File ID | Public URL | Caption | Sort Order | Uploaded At`
-The site reads `Public URL` only — the host-agnostic seam.
+`Event Code | Media Type (image/video) | Section (hero/gallery/couple/sub-event:<name>) | File Name | Drive File ID | Public URL | Caption | Sort Order | Uploaded At | Width | Height | Duration | File Size`
+
+The site reads `Public URL` only — the host-agnostic seam. `Width`/`Height` (px) and `Duration` (seconds, videos) and `File Size` (bytes) are written by the upload pipeline (§12) and used by `next/image` for layout stability and by the customer editor to show "1200×1500 · 480 KB" alongside each item.
+
+### Tab: `CustomBlocks` (optional, post-MVP) — 1 row per custom block
+`Event Code | Section ID | Type | Title | Body | Sort Order | Visible`
+
+For customers who want to add content beyond the schema (an extra story, a quote, a third venue, etc.). `Type` ∈ {`rich-text`, `image-row`, `quote`, `cta`}. Templates render any blocks they recognize (sorted by `Sort Order`) and ignore unknown `Type`s. Adding/removing blocks is fully managed in `/manage/[token]`.
 
 ---
 
@@ -155,7 +186,9 @@ The site reads `Public URL` only — the host-agnostic seam.
 3. **Approve** (admin) — allowed when `Interested = Yes` and `Payment Status = Paid`:
    - copy shared cols 1–14 into `Live`,
    - set `Approved = TRUE`, generate a random `Access Token`, set `Can Change Template` per admin choice,
-   - surface/email the link `/manage/<token>`, set `Status = Approved`.
+   - set `Status = Approved`, and **surface two links to the customer** (admin UI shows both, copy-to-clipboard, plus an email-send button):
+     - **Edit link:** `/manage/<token>` — private, token-gated, customer's editing portal.
+     - **Live link:** `/e/<code>` — public end portal. Stays a "preparing your site" placeholder until `Is Active = TRUE`, then renders the template. The URL itself is stable from approval onwards, so customers can share it ahead of go-live.
 4. **Customer editor** (`/manage/<token>`): editable only if `Approved = TRUE`. Customer fills content, sub-events, media. When the **required fields** are present (`Event Title`, `Main Date`, `Venue Name`), publishing sets `Is Active = TRUE` and the end portal goes live at `/e/<code>` (call revalidate).
 5. **Editing window:** customer may keep editing until `Active Until` (the event date). Template switching only if `Can Change Template = TRUE`. After `Active Until`, editor locks; site can auto-stop or show an "event concluded" state.
 6. **Admin control:** the `/admin/events` view lists Active events with **Stop** (`Is Active = FALSE`) and **Resume** (`Is Active = TRUE`), each followed by revalidate. A stopped `/e/<code>` renders a friendly "not currently available" page.
@@ -237,18 +270,84 @@ All client-side, zero server cost. Each must work at **375 / 768 / 1280** px:
 
 ## 10. Customer editor — "after-enquiry page" (`/manage/[token]`)
 
-- **Gate:** validate `token` server-side against `Live.Access Token`; require `Approved = TRUE`. Reject expired/unknown tokens with a clear message.
-- **Sections:** Basics (title, names, hashtag), Story (Invitation Message + About), When & Where (main date/time, venue + map pin, lat/long), Sub-events (add/reorder/delete rows), Media (upload hero + gallery; per-section), Look (accent color), Contact + RSVP.
-- **Template switcher:** shown only if `Can Change Template = TRUE`; lists templates for this event type; switching updates `Template ID` and re-renders the end portal with existing data.
-- **Save = publish:** saving with required fields present sets `Is Active = TRUE` and revalidates `/e/[code]`. A "Preview" link opens the end portal.
-- **Edit window:** fully editable until `Active Until`; after that the form is read-only and shows the live link.
+The customer's own editing portal. Every change here updates the `Live` row (or `SubEvents` / `Media`) and triggers `/api/revalidate /e/[code]` so the public site reflects edits within seconds — no admin in the loop.
+
+### Auth — token + email OTP (two-factor)
+
+A magic-link token alone isn't enough — URLs leak (browser history on a shared laptop, screenshots, WhatsApp). Layer an email OTP on top so the visitor must also prove they're the person who filed the enquiry.
+
+- **Token (`/manage/<token>`)** = addressing key. Identifies which event. Validates against `Live.Access Token`; must be present and `Approved = TRUE`. Token alone never grants edit access.
+- **OTP** = proof of identity. On first visit (or expired session), `/manage/<token>` renders a small login form. The customer enters the **email they enquired with**. Backend looks up `Enquiries.Email` for this Event Code, generates a 6-digit OTP, emails it (Resend / SMTP), and stores `OTP Hash` + `OTP Expires At` on the `Live` row. Customer enters the code; on match, server clears the OTP fields and sets a signed HTTP-only session cookie (`cust_session_<code>`) with a 30-day TTL.
+- **Session check** runs in `middleware.ts` for `/manage/[token]/*` and `/api/manage/[token]/*`. Missing/invalid session → redirect to login. Cookie is scoped per event code so a logged-in customer for event A can't open event B without a fresh OTP.
+- **Rate limit**: max 5 OTP requests per email per hour; max 5 wrong codes per session before lockout (15 min). Store counters in-memory with a small persistent fallback (`Live` row columns are fine for v1).
+- **Sign out** button clears the cookie. **Admin rotate**: admin button regenerates `Access Token` and invalidates any existing session (forces fresh login).
+- **Dev mode:** if no email provider is configured, log the OTP to the server console with a clear `[DEV OTP] 482301` line so the spec is testable locally.
+
+### What the customer can do
+
+**Text** — inline-editable fields for every public string:
+- Title, tagline/hashtag, person 1/2 names
+- Invitation message, about/story
+- Main date, start time, end time, city
+- Venue name, address, map link, lat/long
+- Contact name, contact phone, contact email, social link
+- RSVP link / contact
+
+Each text field has a "clear" affordance — clearing a non-required field is how the customer "removes" it from the page. Templates already render every optional field as `{value && (...)}`, so a cleared field disappears from the live site automatically.
+
+**Sections** — show/hide whole blocks via toggles backed by sheet columns (§4):
+- `Hide Story` (the invitation/about block)
+- `Hide Events` (the sub-events timeline)
+- `Hide Gallery`
+- `Hide Venue` (venue card + embedded map)
+- `RSVP Enabled` (the existing RSVP toggle)
+
+Hidden sections also drop out of the sticky nav. To "remove a column" the customer just flips the toggle.
+
+**Sub-events** — full CRUD on the `SubEvents` tab for this Event Code:
+- **Add** a new row via the "+ Add sub-event" button (defaults: next `Order`, name "New event", blank everything else).
+- Edit any column (name, date, start/end time, venue, dress code, description, icon, **map link**, **latitude/longitude**) — each sub-event can have its own venue and map pin, so Haldi at the courtyard and Wedding at the lake render with distinct embedded maps + "Get directions" links.
+- **Reorder** via the up/down arrows in each row header (drag-and-drop is a future enhancement) — the UI renumbers `Order` to stay contiguous.
+- Clear an individual field (e.g. just the Dress Code) — the template auto-hides empty fields.
+- Delete a sub-event row entirely; remaining rows are renumbered.
+
+**Media** — full CRUD on the `Media` tab for this Event Code:
+- Upload via `/api/manage/[token]/upload` → Drive `{EventCode}/{section}/` → row appended to `Media` with `Public URL`, `Sort Order` = next.
+- Reorder gallery items via drag-and-drop (writes `Sort Order`).
+- Edit `Caption` inline. Set `Section` (hero / gallery / sub-event:{name} / etc.).
+- Delete: removes the Media row and (best-effort) the Drive file. See §12 for size + dimension rules.
+- Replace hero image/video by uploading a new file into the `hero` section.
+
+**Look** — accent color picker (writes `Theme/Accent Color` hex). Optional background music URL.
+
+**Template switcher** — shown only if `Can Change Template = TRUE`; lists templates whose `eventTypes` include this event's type (each rendered as a thumbnail card). Switching POSTs to `/api/manage/[token]/template` which validates the new template supports the event type, updates `Template ID`, and revalidates the public site. All content + media + sub-events carry over because templates are pure presentational components (§7).
+
+**Site status (Stop / Resume)** — the customer can flip `Is Active` from their panel without needing admin intervention. The same operation that powers the admin's `/admin/events` Stop/Resume buttons, but exposed in `/manage` as a single toggle pill. Useful when a customer needs to take the page down temporarily without losing the data. The PATCH applies immediately (not batched with other saves) so the public site goes dark / re-appears the second they click.
+
+### Save / publish / edit-window
+
+- **Auto-save** on each successful field commit (debounced). The current `Live` row is the source of truth.
+- **Publish-on-complete:** the first save where the required fields are present (`Event Title`, `Main Date`, `Venue Name`) sets `Is Active = TRUE` and revalidates `/e/[code]`.
+- **Manual republish:** explicit "Save and publish" button that forces a revalidate — useful after an admin Stop.
+- **Edit window:** editable until `Active Until` (defaults to `Main Date` + grace). After that the editor is read-only and shows the live link.
 - Use active-voice labels: "Save and publish", toast "Published"; "Stopped" matches the admin Stop action.
+
+### Add custom content blocks (optional, post-MVP)
+
+If the customer wants to "add anything" beyond the schema (a custom callout, an extra story section), use the `CustomBlocks` tab (§4) — one row per block, with `Section ID`, `Type` (rich-text / image-row / quote), `Title`, `Body`, `Sort Order`, `Visible`. Templates render any blocks they recognize for their layout, sorted by `Sort Order`. Ignore unknown types gracefully.
 
 ---
 
 ## 11. Admin portal (`/admin`)
 
-- **Auth:** credentials/session; `middleware.ts` protects `/admin/*` and `/api/admin/*`. Single admin for v1 (env password) — upgradeable.
+### Auth
+
+- **Login at `/admin/login`.** Email + password, credentials checked against env (`ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`). Single admin for v1; the allow-list format (CSV of `email:bcrypt` pairs) is upgrade-ready for multi-admin without code changes.
+- Successful login sets a signed HTTP-only session cookie (`admin_session`) with an 8-hour TTL (re-login required after that — admin sessions are deliberately shorter than customer sessions).
+- **`middleware.ts`** protects all `/admin/*` pages and `/api/admin/*` routes. Missing/expired session → redirect to `/admin/login?next=<original>`.
+- **Rate limit:** 5 failed login attempts per email per 15 min → lockout. Log every failed attempt with IP for review.
+- **Sign out** button on every admin page; also fired automatically on Stop/Resume if the session was about to expire (extends the cookie).
+- No password reset flow in v1 — admin rotates by updating the env var. Document this in the runbook.
 - **Dashboard:** counts by Status (New / Contacted / Approved / Not Interested) and live state (Active / Stopped / Expired); total Paid Amount; recent enquiries.
 - **Enquiries** (`/admin/enquiries`): table (Code, Name, Type, Template, Date, Status, Interested, Paid Amount); filter by Status/Interested; search by name/code/mobile.
 - **Enquiry detail** (`/admin/enquiries/[code]`): view all fields; edit `Query Addressed`, `Interested`, `Paid Amount`, `Payment Status`, `Payment Date`, `Internal Notes`. Actions: **Mark Not Interested** (Interested=No, Status=Not Interested) and **Approve** (Interested=Yes + Paid) -> copies to Live, generates Access Token + `Can Change Template` choice, shows/sends the `/manage/<token>` link.
@@ -259,32 +358,77 @@ All client-side, zero server cost. Each must work at **375 / 768 / 1280** px:
 
 ## 12. Media handling
 
-- `POST /api/manage/[token]/upload` -> `EventSites/{EventCode}/{section}/` on Drive -> append to `Media` with the resulting `Public URL`.
+### Upload pipeline
+
+- `POST /api/manage/[token]/upload` (customer) and `POST /api/admin/media` (admin) → `EventSites/{EventCode}/{section}/` on Drive → append a row to `Media` with `Public URL`, `Width`, `Height`, `Duration` (videos), `File Size`, `Sort Order`.
+- Folder layout on Drive:
+
 ```
 EventSites/
 └── WED-2026-0001/
     ├── hero/  ├── gallery/  ├── videos/
     └── sub-events/{mehndi,haldi,reception}/
 ```
+
 - Drive is **not** a CDN and its public direct-links are unreliable for a polished site. Keep `lib/media.ts` host-agnostic so Cloudinary can replace Drive by only changing how `Public URL` is produced.
+
+### Per-section size + dimension rules
+
+The upload route validates and (for images) server-side resizes via `sharp` so the live site always loads sane assets. Reject anything over the cap with a clear error.
+
+| Section | Type | Target aspect | Resize to (longest edge) | Max file | Notes |
+|---|---|---|---|---|---|
+| `hero` (image) | image | 16:9 (landscape) or 9:16 (portrait, for portrait-hero templates) | 2400 px | 12 MB | Generate a `_blur` placeholder for `next/image` blur-up |
+| `hero` (video) | video | 16:9 | 1080p, ≤ 30 s, ≤ 8 Mbps | 60 MB | Auto-mute by default; show poster from first frame |
+| `gallery` | image | 4:5 portrait recommended; any allowed | 1800 px | 10 MB | Sorted by `Sort Order` in `Media` |
+| `couple` / `about` | image | square or 4:5 | 1600 px | 10 MB | |
+| `sub-event:{name}` | image | 4:5 portrait | 1600 px | 10 MB | Joined to sub-event row by `Section` |
+| `videos` | video | 16:9 | 1080p, ≤ 60 s, ≤ 12 Mbps | 100 MB | |
+
+Implementation notes:
+- **Images:** server-side via `sharp` — strip EXIF, convert to JPEG (≥ 80% quality) or WebP/AVIF, resize keeping aspect, write `Width`/`Height` back into the `Media` row.
+- **Videos (MVP):** accept as-is within the caps, store the file. Optional later: ffmpeg transcode to mp4/h264 + generate poster image.
+- **Client-side guard:** show the limits in the upload UI and validate before POSTing so users don't wait for a 413.
+- **Display:** all `<Image>` calls use the recorded `Width`/`Height` (or known section ratios) so layout is stable; gallery uses `next/image` with `sizes` matching the column count.
+
+### Reordering
+
+- `Media.Sort Order` (number) is the canonical order — gallery is sorted ascending.
+- Customer editor exposes drag-and-drop; on drop, PATCH the affected rows' `Sort Order` in one batch call.
+- Same pattern for `SubEvents.Order`.
 
 ---
 
 ## 13. Environment variables
 
 ```
+# --- Google ---
 GOOGLE_SHEETS_ID=
 GOOGLE_SERVICE_ACCOUNT_EMAIL=
 GOOGLE_PRIVATE_KEY=
 GOOGLE_DRIVE_ROOT_FOLDER_ID=
-ADMIN_PASSWORD=            # admin login (v1)
-AUTH_SECRET=              # session + token signing
-TOKEN_SALT=               # for generating Access Tokens
+
+# --- Auth ---
+ADMIN_EMAIL=                       # single admin v1; CSV-ready for multi
+ADMIN_PASSWORD_HASH=               # bcrypt of the admin password
+AUTH_SECRET=                       # signs admin + customer session cookies, JWT-style
+TOKEN_SALT=                        # for generating Access Tokens (Live.Access Token)
+OTP_TTL_MIN=10                     # customer OTP lifetime
+SESSION_TTL_CUSTOMER_DAYS=30
+SESSION_TTL_ADMIN_HOURS=8
+
+# --- Email (for customer OTP delivery) ---
+RESEND_API_KEY=                    # Resend is the recommended provider
+MAIL_FROM=Event Platform <no-reply@example.com>
+# DEV: if RESEND_API_KEY is empty, the OTP is logged to the server console as
+# [DEV OTP] <code> so local testing works without a mail account.
+
+# --- Misc ---
 REVALIDATE_SECRET=
 NEXT_PUBLIC_SITE_URL=
 # Later (Cloudinary): CLOUDINARY_URL=
 ```
-Ship a committed `.env.example` listing every key.
+Ship a committed `.env.example` listing every key. Generate `ADMIN_PASSWORD_HASH` with `node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 12))" 'your-password'`.
 
 ---
 
@@ -336,6 +480,7 @@ Ship a committed `.env.example` listing every key.
   /(marketing)/events/[type]/page.tsx
   /enquiry/page.tsx
   /enquiry/thanks/page.tsx
+  /manage/[token]/login/page.tsx      # email + OTP login (customer)
   /manage/[token]/page.tsx            # customer editor ("after-enquiry page")
   /e/[code]/page.tsx                  # END PORTAL (ISR)
   /admin/login/page.tsx
@@ -345,13 +490,18 @@ Ship a committed `.env.example` listing every key.
   /admin/events/page.tsx              # active / stop control
   /admin/events/[code]/page.tsx       # admin override editor (content + SubEvents + Media)
   /api/enquiry/route.ts
+  /api/manage/[token]/login/route.ts        # request OTP (POST email) + verify OTP (POST code)
+  /api/manage/[token]/logout/route.ts
   /api/manage/[token]/route.ts
   /api/manage/[token]/upload/route.ts
   /api/manage/[token]/template/route.ts
+  /api/admin/login/route.ts
+  /api/admin/logout/route.ts
   /api/admin/enquiries/route.ts
   /api/admin/enquiries/[code]/route.ts
   /api/admin/approve/route.ts
   /api/admin/active/route.ts
+  /api/admin/rotate-token/route.ts          # regenerate Live.Access Token, invalidate customer sessions
   /api/admin/events/[code]/route.ts   # GET/PATCH Live row
   /api/admin/subevents/route.ts       # CRUD SubEvents rows by Event Code
   /api/admin/media/route.ts           # CRUD Media rows by Event Code (also wraps Drive ops)

@@ -12,13 +12,41 @@ export type EditableData = {
   media: MediaItem[];
 };
 
-type Props = EditableData & { templateId: string };
+type Props = EditableData & {
+  templateId: string;
+  /** When true, the EditPanel is always shown and the user can't dismiss it
+   *  via the panel chrome — used on /manage/[token] where the page is the
+   *  editor. The only "exit" path is signing out via the page header. */
+  forceEdit?: boolean;
+  /** When set, the panel reserves vertical space at the top so it doesn't
+   *  overlap a fixed header rendered above it (e.g. ManageHeader). px. */
+  topOffset?: number;
+  /** When provided, the panel renders a "Save and publish" button that
+   *  PATCHes the current state to this endpoint. Used on /manage/[token]. */
+  saveEndpoint?: string;
+  /** When provided, the Reset button POSTs here to restore template defaults
+   *  on the server (instead of just clearing the local draft). */
+  resetEndpoint?: string;
+  /** When provided, the panel exposes a template switcher that POSTs to this
+   *  URL. Only set this if the admin granted Can Change Template = TRUE. */
+  templateSwitchEndpoint?: string;
+};
 
 const storageKey = (code: string) => `event-edit:${code}`;
 
-export function EditableShell({ templateId, event, subEvents, media }: Props) {
+export function EditableShell({
+  templateId,
+  event,
+  subEvents,
+  media,
+  forceEdit = false,
+  topOffset = 0,
+  saveEndpoint,
+  resetEndpoint,
+  templateSwitchEndpoint,
+}: Props) {
   const searchParams = useSearchParams();
-  const editParam = searchParams?.get("edit") === "1";
+  const editParam = forceEdit || searchParams?.get("edit") === "1";
   const [mounted, setMounted] = useState(false);
 
   const initial = useMemo<EditableData>(
@@ -78,6 +106,20 @@ export function EditableShell({ templateId, event, subEvents, media }: Props) {
           onChange={setData}
           onReset={reset}
           eventCode={event.eventCode}
+          locked={forceEdit}
+          topOffset={topOffset}
+          saveEndpoint={saveEndpoint}
+          resetEndpoint={resetEndpoint}
+          templateSwitchEndpoint={templateSwitchEndpoint}
+          currentTemplateId={templateId}
+          eventType={event.eventType}
+          onAfterSave={() => {
+            // Server is now the source of truth — drop the local override so a
+            // refresh pulls fresh data, not stale localStorage.
+            try {
+              window.localStorage.removeItem(storageKey(event.eventCode));
+            } catch {}
+          }}
         />
       )}
     </>
