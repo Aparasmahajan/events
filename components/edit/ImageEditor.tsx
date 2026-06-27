@@ -13,9 +13,14 @@ const ASPECTS = [
   { key: "16:9", label: "16:9", ratio: 16 / 9 },
 ] as const;
 
-const MAX_OUTPUT_EDGE = 1600; // cap the exported crop's longest side
+const MAX_OUTPUT_EDGE = 1600; // cap the *baked* crop's longest side
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 6;
+
+/** What the editor produces on Apply. */
+export type EditResult =
+  | { mode: "transform"; publicUrl: string } // non-destructive: Cloudinary URL, original kept
+  | { mode: "upload"; item: MediaItem }; //      destructive: a new baked-crop asset
 
 type Props = {
   /** All editable (image) items, in display order — used for prev/next. */
@@ -25,21 +30,48 @@ type Props = {
   onClose: () => void;
   /** Switch which photo is open (prev/next, keyboard). */
   onNavigate: (nextIndex: number) => void;
-  /** Commit the freshly-uploaded crop into the draft. The caller decides how:
-   *  the gallery replaces/appends a Media item; the hero writes heroImageUrl. */
-  onUploaded: (uploaded: MediaItem, original: MediaItem) => void;
+  /** Commit the edit into the draft. The caller decides how to apply each mode
+   *  (gallery patches/replaces a Media item; the hero writes heroImageUrl). */
+  onApply: (result: EditResult, original: MediaItem) => void;
 };
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
+const isCloudinaryUrl = (u: string) =>
+  /\/(?:image|video)\/upload\//.test(u) || u.includes("res.cloudinary.com");
+
+/** Strip any leading Cloudinary transformation segment(s) so we always edit
+ *  from the untouched original (and a re-crop starts from the full photo). */
+function cloudinaryBase(url: string): string {
+  const marker = "/upload/";
+  const i = url.indexOf(marker);
+  if (i === -1) return url;
+  const head = url.slice(0, i + marker.length);
+  const segs = url.slice(i + marker.length).split("/");
+  // A transform segment looks like "c_crop,x_..,w_.." or "a_90" — it carries a
+  // "xx_" param prefix and is never a version ("v123") or the public_id path.
+  while (segs.length > 1 && /(?:^|,)[a-z]+_/i.test(segs[0]) && !/^v\d+$/.test(segs[0])) {
+    segs.shift();
+  }
+  return head + segs.join("/");
+}
+
+/** Insert a transformation right after `/upload/`. */
+function withTransform(baseUrl: string, transform: string): string {
+  return baseUrl.replace("/upload/", `/upload/${transform}/`);
+}
+
 /**
- * Full-screen crop / zoom / rotate editor. Scroll to zoom, drag to pan, pick an
- * aspect, rotate in 90° steps, then Apply: the visible crop is rendered to a
- * canvas, re-uploaded through the staging upload endpoint, and handed to
- * `onUploaded` so the caller folds it into the local draft (shown immediately,
- * committed on "Save and publish"). Prev/Next moves between photos.
+ * Full-screen crop / zoom / rotate editor.
+ *
+ * Two save modes:
+ *  - **Keep full photo** (default for Cloudinary images): the crop is stored as
+ *    a Cloudinary transformation on the *original* asset, so nothing is thrown
+ *    away — the complete image is preserved and you can re-crop later.
+ *  - **Bake the crop** (the only option for non-Cloudinary images): the visible
+ *    region is rendered to a canvas and uploaded as a new flattened image.
  */
-export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: Props) {
+export function ImageEditor({ items, index, onClose, onNavigate, onApply }: Props) {
   const ctx = useEditMode();
   const item = items[index];
 
@@ -56,27 +88,25 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
+  const isCloud = isCloudinaryUrl(item.publicUrl);
+  const [keepFull, setKeepFull] = useState(isCloud);
+
   const ratio = ASPECTS.find((a) => a.key === aspectKey)?.ratio ?? null;
 
-  // Load the original under a distinct URL (extra query param) so the browser
-  // fetches a fresh CORS-enabled copy instead of reusing the gallery's cached
-  // non-CORS response — otherwise the canvas taints and the crop can't export.
+  // Always edit from the untouched original (strip any prior crop transform).
+  const originalUrl = isCloud ? cloudinaryBase(item.publicUrl) : item.publicUrl;
+  // Load under a distinct URL so the browser fetches a CORS-enabled copy rather
+  // than reusing the gallery's cached non-CORS response (which taints canvas).
   const editSrc =
-    item.publicUrl + (item.publicUrl.includes("?") ? "&" : "?") + "xcors=1";
+    originalUrl + (originalUrl.includes("?") ? "&" : "?") + "xcors=1";
 
-  // The original, CORS-clean image element — kept separately so rotation always
-  // composes from the source (not from an already-rotated copy).
   const [baseImg, setBaseImg] = useState<HTMLImageElement | null>(null);
-  // What the <img> actually shows: the original at rotation 0, or a rotated
-  // data: URL (same-origin → canvas-safe) at 90/180/270.
   const [displaySrc, setDisplaySrc] = useState("");
 
-  // cover-scale so the image always fills the crop frame, then user zoom on top
   const baseScale =
     nat.w && nat.h && vp.w && vp.h ? Math.max(vp.w / nat.w, vp.h / nat.h) : 1;
   const scale = baseScale * zoom;
 
-  // Latest geometry for use inside imperative event handlers (avoids stale closures).
   const live = useRef({ scale, vpW: vp.w, vpH: vp.h, natW: nat.w, natH: nat.h });
   live.current = { scale, vpW: vp.w, vpH: vp.h, natW: nat.w, natH: nat.h };
 
@@ -89,7 +119,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
     return { x: clamp(x, -maxX, maxX), y: clamp(y, -maxY, maxY) };
   }, []);
 
-  // Load the source image (CORS-enabled) for rotation composition.
+  // Load the original (CORS-enabled) for rotation composition / baked export.
   useEffect(() => {
     const img = new window.Image();
     img.crossOrigin = "anonymous";
@@ -102,7 +132,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
     };
   }, [editSrc]);
 
-  // Produce the displayed src for the current rotation.
+  // Displayed src for the current rotation.
   useEffect(() => {
     if (rotation % 360 === 0) {
       setDisplaySrc(editSrc);
@@ -112,14 +142,12 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
     const w = baseImg.naturalWidth;
     const h = baseImg.naturalHeight;
     const swap = rotation % 180 !== 0;
-    const cw = swap ? h : w;
-    const ch = swap ? w : h;
     const cv = document.createElement("canvas");
-    cv.width = cw;
-    cv.height = ch;
+    cv.width = swap ? h : w;
+    cv.height = swap ? w : h;
     const c = cv.getContext("2d");
     if (!c) return;
-    c.translate(cw / 2, ch / 2);
+    c.translate(cv.width / 2, cv.height / 2);
     c.rotate((rotation * Math.PI) / 180);
     c.drawImage(baseImg, -w / 2, -h / 2);
     try {
@@ -129,20 +157,19 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
     }
   }, [baseImg, rotation, editSrc]);
 
-  // Reset transform when the photo changes (navigation).
+  // Reset everything when the photo changes (navigation).
   useEffect(() => {
     setRotation(0);
     setAspectKey("orig");
-  }, [item.publicUrl]);
+    setKeepFull(isCloud);
+  }, [item.publicUrl, isCloud]);
 
-  // Reset zoom/pan when the photo, aspect, or rotation changes.
   useEffect(() => {
     setZoom(1);
     setPan({ x: 0, y: 0 });
     setErr(null);
   }, [item.publicUrl, aspectKey, rotation]);
 
-  // Re-clamp pan after a zoom / viewport change so we never reveal gaps.
   useEffect(() => {
     setPan((p) => clampPan(p.x, p.y));
   }, [zoom, vp.w, vp.h, nat.w, nat.h, clampPan]);
@@ -179,7 +206,6 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
     return () => el.removeEventListener("wheel", onWheel);
   }, []);
 
-  // Keyboard: Esc closes, ←/→ navigate photos.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -207,30 +233,52 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
     dragRef.current = null;
   };
 
-  const apply = () => {
-    const img = imgRef.current;
-    if (!img || !ctx?.uploadEndpoint) return;
+  /** Visible crop rectangle in the displayed image's natural pixels. */
+  const cropRect = () => {
     const { scale: s, vpW, vpH, natW, natH } = live.current;
-    if (!s || !natW || !natH) return;
-
     const dispW = natW * s;
     const dispH = natH * s;
     const imgLeft = (vpW - dispW) / 2 + pan.x;
     const imgTop = (vpH - dispH) / 2 + pan.y;
+    let x = -imgLeft / s;
+    let y = -imgTop / s;
+    let w = vpW / s;
+    let h = vpH / s;
+    x = clamp(x, 0, Math.max(0, natW - 1));
+    y = clamp(y, 0, Math.max(0, natH - 1));
+    w = Math.min(w, natW - x);
+    h = Math.min(h, natH - y);
+    return { x, y, w, h, s, natW, natH };
+  };
 
-    let srcX = -imgLeft / s;
-    let srcY = -imgTop / s;
-    let srcW = vpW / s;
-    let srcH = vpH / s;
-    srcX = clamp(srcX, 0, Math.max(0, natW - 1));
-    srcY = clamp(srcY, 0, Math.max(0, natH - 1));
-    srcW = Math.min(srcW, natW - srcX);
-    srcH = Math.min(srcH, natH - srcY);
+  const apply = () => {
+    const img = imgRef.current;
+    if (!img) return;
+    const r = cropRect();
+    if (!r.s || !r.natW || !r.natH) return;
 
-    const outScale = Math.min(1, MAX_OUTPUT_EDGE / Math.max(srcW, srcH));
-    const outW = Math.max(1, Math.round(srcW * outScale));
-    const outH = Math.max(1, Math.round(srcH * outScale));
+    // ── Non-destructive: store the crop as a Cloudinary transformation. ──
+    if (keepFull && isCloud) {
+      const parts: string[] = [];
+      if (rotation % 360 !== 0) parts.push(`a_${rotation}`);
+      parts.push(
+        `c_crop,x_${Math.round(r.x)},y_${Math.round(r.y)},w_${Math.round(
+          r.w,
+        )},h_${Math.round(r.h)}`,
+      );
+      onApply({ mode: "transform", publicUrl: withTransform(originalUrl, parts.join("/")) }, item);
+      onClose();
+      return;
+    }
 
+    // ── Destructive: render the crop to a canvas and upload a flat copy. ──
+    if (!ctx?.uploadEndpoint) {
+      setErr("Uploading isn't available here.");
+      return;
+    }
+    const outScale = Math.min(1, MAX_OUTPUT_EDGE / Math.max(r.w, r.h));
+    const outW = Math.max(1, Math.round(r.w * outScale));
+    const outH = Math.max(1, Math.round(r.h * outScale));
     const canvas = document.createElement("canvas");
     canvas.width = outW;
     canvas.height = outH;
@@ -244,7 +292,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
     setBusy(true);
     setErr(null);
     try {
-      c.drawImage(img, srcX, srcY, srcW, srcH, 0, 0, outW, outH);
+      c.drawImage(img, r.x, r.y, r.w, r.h, 0, 0, outW, outH);
       canvas.toBlob(
         (blob) => {
           void (async () => {
@@ -266,7 +314,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
                   "error" in body ? body.error : `Upload failed (${res.status})`,
                 );
               }
-              onUploaded(body.item, item);
+              onApply({ mode: "upload", item: body.item }, item);
               onClose();
             } catch (e) {
               setErr(e instanceof Error ? e.message : "Save failed.");
@@ -279,10 +327,9 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
         0.9,
       );
     } catch {
-      // Tainted canvas (cross-origin image without CORS headers).
       setBusy(false);
       setErr(
-        "This image can't be cropped here (it's hosted without cross-origin access). Re-upload it, then crop.",
+        "This image can't be baked here (it's hosted without cross-origin access). Use “Keep full photo”, or re-upload it.",
       );
     }
   };
@@ -320,7 +367,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
             </button>
           ))}
           <button
-            onClick={() => setRotation((r) => (r + 90) % 360)}
+            onClick={() => setRotation((rot) => (rot + 90) % 360)}
             className="text-xs px-2.5 py-1.5 rounded-full border border-white/25 hover:border-white/60 text-white flex items-center gap-1.5"
             aria-label="Rotate 90 degrees"
           >
@@ -391,7 +438,6 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
                   maxWidth: "none",
                 }}
               />
-              {/* rule-of-thirds guides */}
               <div className="pointer-events-none absolute inset-0">
                 <div className="absolute top-1/3 inset-x-0 h-px bg-white/30" />
                 <div className="absolute top-2/3 inset-x-0 h-px bg-white/30" />
@@ -410,7 +456,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
       {/* Controls */}
       <div className="px-4 py-3 border-t border-white/10 text-white">
         {err && <p className="text-xs text-red-300 mb-2 text-center">{err}</p>}
-        <div className="flex items-center gap-4 max-w-xl mx-auto">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 max-w-2xl mx-auto">
           <span className="text-xs opacity-70 w-12">Zoom</span>
           <input
             type="range"
@@ -419,9 +465,23 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
             step={0.01}
             value={zoom}
             onChange={(e) => setZoom(Number(e.target.value))}
-            className="flex-1 accent-[var(--accent)]"
+            className="flex-1 min-w-[120px] accent-[var(--accent)]"
             aria-label="Zoom"
           />
+          {isCloud && (
+            <label
+              className="flex items-center gap-2 text-xs cursor-pointer"
+              title="Save the crop as a non-destructive transformation — the full original photo is kept and you can re-crop later."
+            >
+              <input
+                type="checkbox"
+                checked={keepFull}
+                onChange={(e) => setKeepFull(e.target.checked)}
+                className="accent-[var(--accent)]"
+              />
+              Keep full photo
+            </label>
+          )}
           <button
             onClick={onClose}
             disabled={busy}
@@ -439,8 +499,11 @@ export function ImageEditor({ items, index, onClose, onNavigate, onUploaded }: P
         </div>
         <p className="text-[11px] opacity-50 text-center mt-2">
           Scroll to zoom · drag to reposition · ⟳ to rotate
-          {items.length > 1 ? " · ← / → to switch photos" : ""}. Saves to your
-          draft and commits on Save and publish.
+          {items.length > 1 ? " · ← / → to switch photos" : ""}.{" "}
+          {isCloud && keepFull
+            ? "Your full photo is kept — only the displayed crop changes."
+            : "This bakes the crop into a new image."}{" "}
+          Commits on Save and publish.
         </p>
       </div>
     </div>

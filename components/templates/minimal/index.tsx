@@ -30,7 +30,7 @@ export const MinimalTemplate: TemplateComponent = ({ event, subEvents, media }) 
   ];
 
   return (
-    <div className="font-sans text-neutral-900 bg-white" style={{ "--accent": accent } as React.CSSProperties}>
+    <div className="font-sans text-neutral-900 bg-white overflow-x-clip" style={{ "--accent": accent } as React.CSSProperties}>
       <section id="top" className="grid lg:grid-cols-2 min-h-[100svh]">
         <div className="flex items-center px-6 sm:px-12 lg:px-20 py-16">
           <div className="max-w-md">

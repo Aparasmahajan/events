@@ -31,7 +31,7 @@ export const VibrantTemplate: TemplateComponent = ({ event, subEvents, media }) 
   ];
 
   return (
-    <div className="font-sans text-neutral-900" style={{ "--accent": accent } as React.CSSProperties}>
+    <div className="font-sans text-neutral-900 overflow-x-clip" style={{ "--accent": accent } as React.CSSProperties}>
       <section
         id="top"
         className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"

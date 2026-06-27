@@ -167,9 +167,10 @@ export function HeroMedia({
           index={0}
           onClose={() => setEditing(false)}
           onNavigate={() => {}}
-          onUploaded={(uploaded) =>
+          onApply={(result) =>
             ctx?.updateEvent?.({
-              heroImageUrl: uploaded.publicUrl,
+              heroImageUrl:
+                result.mode === "transform" ? result.publicUrl : result.item.publicUrl,
               heroVideoUrl: "",
             })
           }

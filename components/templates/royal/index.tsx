@@ -33,7 +33,7 @@ export const RoyalTemplate: TemplateComponent = ({ event, subEvents, media }) =>
   ];
 
   return (
-    <div className="font-serif text-neutral-900 overflow-x-hidden" style={{ "--accent": accent } as React.CSSProperties}>
+    <div className="font-serif text-neutral-900 overflow-x-clip" style={{ "--accent": accent } as React.CSSProperties}>
       <section id="top" className="relative h-[100svh] min-h-[600px] flex items-center justify-center text-white overflow-hidden">
         <HeroMedia
           imageSrc={hero}

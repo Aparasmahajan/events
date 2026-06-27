@@ -30,7 +30,7 @@ export const ModernTemplate: TemplateComponent = ({ event, subEvents, media }) =
   ];
 
   return (
-    <div className="font-sans text-white bg-neutral-950" style={{ "--accent": accent } as React.CSSProperties}>
+    <div className="font-sans text-white bg-neutral-950 overflow-x-clip" style={{ "--accent": accent } as React.CSSProperties}>
       <section id="top" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
         <HeroMedia
           imageSrc={hero}

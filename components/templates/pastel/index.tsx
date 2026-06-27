@@ -30,7 +30,7 @@ export const PastelTemplate: TemplateComponent = ({ event, subEvents, media }) =
   ];
 
   return (
-    <div className="font-serif text-neutral-800" style={{ "--accent": accent, background: `${accent}10` } as React.CSSProperties}>
+    <div className="font-serif text-neutral-800 overflow-x-clip" style={{ "--accent": accent, background: `${accent}10` } as React.CSSProperties}>
       <section id="top" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0" style={{ background: `linear-gradient(160deg, ${accent}22, #ffffff 60%, ${accent}15)` }} />
         <HeroMedia

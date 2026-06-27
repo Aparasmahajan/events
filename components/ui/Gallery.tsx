@@ -82,9 +82,16 @@ export function Gallery({ items, columns = 3 }: Props) {
           index={cropIndex}
           onClose={() => setCropIndex(null)}
           onNavigate={setCropIndex}
-          onUploaded={(uploaded, original) => {
-            if (original.driveFileId) editCtx?.replaceMedia?.(original.driveFileId, uploaded);
-            else editCtx?.addMedia?.(uploaded);
+          onApply={(result, original) => {
+            if (result.mode === "transform") {
+              // Non-destructive: same asset, just a cropped delivery URL.
+              if (original.driveFileId)
+                editCtx?.updateMedia?.(original.driveFileId, { publicUrl: result.publicUrl });
+            } else if (original.driveFileId) {
+              editCtx?.replaceMedia?.(original.driveFileId, result.item);
+            } else {
+              editCtx?.addMedia?.(result.item);
+            }
           }}
         />
       )}
