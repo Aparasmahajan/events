@@ -33,6 +33,9 @@ type Props = {
   /** Commit the edit into the draft. The caller decides how to apply each mode
    *  (gallery patches/replaces a Media item; the hero writes heroImageUrl). */
   onApply: (result: EditResult, original: MediaItem) => void;
+  /** The aspect this template actually displays the image at, offered as a
+   *  default-selected "Best fit" chip. The user can still pick another. */
+  recommended?: { ratio: number; label: string };
 };
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
@@ -71,9 +74,22 @@ function withTransform(baseUrl: string, transform: string): string {
  *  - **Bake the crop** (the only option for non-Cloudinary images): the visible
  *    region is rendered to a canvas and uploaded as a new flattened image.
  */
-export function ImageEditor({ items, index, onClose, onNavigate, onApply }: Props) {
+export function ImageEditor({
+  items,
+  index,
+  onClose,
+  onNavigate,
+  onApply,
+  recommended,
+}: Props) {
   const ctx = useEditMode();
   const item = items[index];
+
+  // Offer the template's display ratio as a "Best fit" chip, ahead of the presets.
+  const aspects: { key: string; label: string; ratio: number | null }[] = recommended
+    ? [{ key: "fit", label: `Best fit (${recommended.label})`, ratio: recommended.ratio }, ...ASPECTS]
+    : [...ASPECTS];
+  const defaultAspect = recommended ? "fit" : "orig";
 
   const vpRef = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -81,7 +97,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onApply }: Prop
 
   const [nat, setNat] = useState({ w: 0, h: 0 });
   const [vp, setVp] = useState({ w: 0, h: 0 });
-  const [aspectKey, setAspectKey] = useState<(typeof ASPECTS)[number]["key"]>("orig");
+  const [aspectKey, setAspectKey] = useState<string>(defaultAspect);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0); // 0 | 90 | 180 | 270
@@ -91,7 +107,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onApply }: Prop
   const isCloud = isCloudinaryUrl(item.publicUrl);
   const [keepFull, setKeepFull] = useState(isCloud);
 
-  const ratio = ASPECTS.find((a) => a.key === aspectKey)?.ratio ?? null;
+  const ratio = aspects.find((a) => a.key === aspectKey)?.ratio ?? null;
 
   // Always edit from the untouched original (strip any prior crop transform).
   const originalUrl = isCloud ? cloudinaryBase(item.publicUrl) : item.publicUrl;
@@ -160,7 +176,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onApply }: Prop
   // Reset everything when the photo changes (navigation).
   useEffect(() => {
     setRotation(0);
-    setAspectKey("orig");
+    setAspectKey(defaultAspect);
     setKeepFull(isCloud);
   }, [item.publicUrl, isCloud]);
 
@@ -353,7 +369,7 @@ export function ImageEditor({ items, index, onClose, onNavigate, onApply }: Prop
           <p className="text-sm truncate max-w-[40vw]">{item.fileName}</p>
         </div>
         <div className="flex flex-wrap items-center justify-end gap-1.5">
-          {ASPECTS.map((a) => (
+          {aspects.map((a) => (
             <button
               key={a.key}
               onClick={() => setAspectKey(a.key)}

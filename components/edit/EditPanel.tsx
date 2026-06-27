@@ -33,6 +33,10 @@ type Props = {
   uploadEndpoint?: string;
   /** Called after a successful save (e.g. to clear localStorage). */
   onAfterSave?: () => void;
+  /** Controlled open/collapsed state. When provided, the shell owns it so it
+   *  can reserve page width for the panel. Falls back to internal state. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 type SaveState =
@@ -55,8 +59,12 @@ export function EditPanel({
   eventType,
   uploadEndpoint,
   onAfterSave,
+  open: openProp,
+  onOpenChange,
 }: Props) {
-  const [open, setOpen] = useState(true);
+  const [openInternal, setOpenInternal] = useState(true);
+  const open = openProp ?? openInternal;
+  const setOpen = onOpenChange ?? setOpenInternal;
   const [saveState, setSaveState] = useState<SaveState>({ kind: "idle" });
   const [resetting, setResetting] = useState(false);
 
@@ -530,7 +538,31 @@ export function EditPanel({
               <Section title="Venue">
                 <Field label="Venue name" value={data.event.venueName ?? ""} onChange={(v) => patchEvent({ venueName: v })} />
                 <Field label="Address" value={data.event.venueAddress ?? ""} onChange={(v) => patchEvent({ venueAddress: v })} />
-                <Field label="Map link (override)" value={data.event.mapLink ?? ""} onChange={(v) => patchEvent({ mapLink: v })} />
+                <Field
+                  label="Map link (Google Maps URL)"
+                  value={data.event.mapLink ?? ""}
+                  onChange={(v) => patchEvent({ mapLink: v })}
+                  placeholder="https://maps.google.com/?q=…"
+                />
+                <Row>
+                  <Field
+                    label="Latitude"
+                    value={data.event.latitude != null ? String(data.event.latitude) : ""}
+                    onChange={(v) => patchEvent({ latitude: v ? Number(v) : undefined })}
+                    placeholder="24.5854"
+                  />
+                  <Field
+                    label="Longitude"
+                    value={data.event.longitude != null ? String(data.event.longitude) : ""}
+                    onChange={(v) => patchEvent({ longitude: v ? Number(v) : undefined })}
+                    placeholder="73.6818"
+                  />
+                </Row>
+                <p className="text-[11px] opacity-60 leading-snug">
+                  Paste a Google Maps link and the map usually pins itself. For an
+                  exact pin (or a short maps.app.goo.gl link), open the place in
+                  Google Maps, right-click it → copy the lat, long numbers here.
+                </p>
               </Section>
 
               <Section title="RSVP & contact">

@@ -62,6 +62,9 @@ export function EditableShell({
   );
 
   const [data, setData] = useState<EditableData>(initial);
+  // Owned here so the content area can reserve width for the (fixed) panel and
+  // the template never renders underneath it.
+  const [panelOpen, setPanelOpen] = useState(true);
 
   // Mark mounted (still needed to defer rendering the panel until after hydration).
   useEffect(() => {
@@ -167,12 +170,18 @@ export function EditableShell({
       updateEvent={updateEvent}
       clearDraft={clearDraft}
     >
-      <TemplateRouter
-        templateId={templateId}
-        event={data.event}
-        subEvents={data.subEvents}
-        media={data.media}
-      />
+      <div
+        className={`transition-[padding] duration-300 ${
+          editParam && mounted && panelOpen ? "sm:pr-[420px]" : ""
+        }`}
+      >
+        <TemplateRouter
+          templateId={templateId}
+          event={data.event}
+          subEvents={data.subEvents}
+          media={data.media}
+        />
+      </div>
 
       {editParam && mounted && (
         <EditPanel
@@ -182,6 +191,8 @@ export function EditableShell({
           eventCode={event.eventCode}
           locked={forceEdit}
           topOffset={topOffset}
+          open={panelOpen}
+          onOpenChange={setPanelOpen}
           saveEndpoint={saveEndpoint}
           resetEndpoint={resetEndpoint}
           templateSwitchEndpoint={templateSwitchEndpoint}

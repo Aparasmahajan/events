@@ -165,6 +165,7 @@ export function HeroMedia({
             } satisfies MediaItem,
           ]}
           index={0}
+          recommended={{ ratio: 16 / 9, label: "wide hero" }}
           onClose={() => setEditing(false)}
           onNavigate={() => {}}
           onApply={(result) =>
