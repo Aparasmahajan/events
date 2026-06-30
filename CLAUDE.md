@@ -259,7 +259,7 @@ All client-side, zero server cost. Each must work at **375 / 768 / 1280** px:
 - **Countdown** to `Main Date`
 - **Gallery** lightbox + lazy-loaded `next/image` with blur-up
 - **Sub-events timeline** (ordered from the SubEvents tab)
-- **Embedded map** + "Get Directions" (lat/long + Map Link)
+- **Embedded map** + "Get Directions" — pins from explicit lat/long *or* coordinates parsed out of a pasted Google Maps link (`@lat,lng`, `q=/ll=/destination=lat,lng`, `!3d..!4d..`); short links with no coordinates fall back to a directions-only button (`parseLatLng` in `components/ui/MapEmbed.tsx`)
 - Sticky nav with scroll-spy
 - Optional **background-music** toggle (off by default; respects autoplay rules)
 - Scroll-reveal (Framer Motion)
@@ -311,18 +311,26 @@ Hidden sections also drop out of the sticky nav. To "remove a column" the custom
 - Clear an individual field (e.g. just the Dress Code) — the template auto-hides empty fields.
 - Delete a sub-event row entirely; remaining rows are renumbered.
 
-**Media** — full CRUD on the `Media` tab for this Event Code:
-- Upload via `/api/manage/[token]/upload` → Drive `{EventCode}/{section}/` → row appended to `Media` with `Public URL`, `Sort Order` = next.
-- Reorder gallery items via drag-and-drop (writes `Sort Order`).
-- Edit `Caption` inline. Set `Section` (hero / gallery / sub-event:{name} / etc.).
-- Delete: removes the Media row and (best-effort) the Drive file. See §12 for size + dimension rules.
-- Replace hero image/video by uploading a new file into the `hero` section.
+**Media** — managed mostly inline on the rendered page (the EditPanel keeps a "Manage media" list for fine edits). See §12 for the full pipeline.
+- **Add photos/videos** — the gallery's **"+ Add photos"** tile *or* the side panel's **Photos & gallery → + Add photos** button opens a modal (`AddPhotosModal`) to pick **several files at once, each with its own description**, and upload them together. The gallery section renders in edit mode even when empty (templates read `useEditMode().enabled`), so there's always somewhere to add the first photo.
+- **Edit / crop a photo** — click any photo for its menu: View · Edit details (caption / section / video autoplay) · **Crop & adjust** · Replace · Delete. The crop editor (`components/edit/ImageEditor.tsx`) does scroll-to-zoom, drag-to-pan, 90° **rotate**, aspect presets, and a default **"Best fit"** chip set to the ratio the current template displays that slot at (overridable — it's only a suggestion).
+- **Non-destructive crop** — for Cloudinary assets, **"Keep full photo"** (on by default) saves the crop as a Cloudinary *transformation on the original*, so the complete image is preserved and can be re-cropped later; turning it off bakes a flattened copy. Demo/placeholder (non-Cloudinary) images only support the baked path.
+- **Hero** — hover the hero → **Replace** (image/video) or **✂️ Crop** (image only); writes `Live.HERO_IMAGE_URL` / `HERO_VIDEO_URL`.
+- **Reorder / caption / autoplay / delete** existing items from the panel's "Manage media" list (up/down arrows for order).
+- **Staging:** every upload/crop/replace stages into the local draft and shows immediately; nothing reaches the `Media` sheet or the public site until **Save and publish**.
 
 **Look** — accent color picker (writes `Theme/Accent Color` hex). Optional background music URL.
 
 **Template switcher** — shown only if `Can Change Template = TRUE`; lists templates whose `eventTypes` include this event's type (each rendered as a thumbnail card). Switching POSTs to `/api/manage/[token]/template` which validates the new template supports the event type, updates `Template ID`, and revalidates the public site. All content + media + sub-events carry over because templates are pure presentational components (§7).
 
 **Site status (Stop / Resume)** — the customer can flip `Is Active` from their panel without needing admin intervention. The same operation that powers the admin's `/admin/events` Stop/Resume buttons, but exposed in `/manage` as a single toggle pill. Useful when a customer needs to take the page down temporarily without losing the data. The PATCH applies immediately (not batched with other saves) so the public site goes dark / re-appears the second they click.
+
+### Editor canvas & panel layout
+
+The editor (`EditableShell`) owns the panel's open/collapsed state so the page never renders under the chrome:
+- While the panel is open, the template canvas is inset on desktop (`sm:pr-[420px]`) so nothing — map, gallery, hero — sits behind the fixed side panel; on mobile the panel is a full-screen overlay.
+- The canvas also reserves the fixed top bar's height (`paddingTop: topOffset`, 48px on `/manage`).
+- **Close** collapses the panel (works even on the locked `/manage` editor) for a full-width preview; a floating **✎ Edit** button reopens it. (`?edit=1` previews additionally get **Exit**, which drops the query param.)
 
 ### Save / publish / edit-window
 
@@ -358,19 +366,23 @@ If the customer wants to "add anything" beyond the schema (a custom callout, an 
 
 ## 12. Media handling
 
-### Upload pipeline (Cloudinary)
+### Upload pipeline (Cloudinary) — staging model
 
-- Inline uploads from the customer editor (`/manage/[token]`) — hover any image / video on the rendered template, click "Replace", or click the trailing "+ Add" tile in the gallery → file goes straight to Cloudinary via signed upload from the server route.
-- Endpoint: `POST /api/manage/[token]/upload` (multipart). Body fields:
-  - `file` — the binary
-  - `section` — `hero` / `gallery` / `couple` / `about` / `videos` / `sub-event:<name>`
-  - `replaceFileName?` — when present, the existing Media row with that filename is overwritten in place (same `Sort Order`, caption, etc.)
-- Folder structure on Cloudinary: `EventSites/{EventCode}/{section}/`. Cloudinary auto-creates folders on first upload.
+Uploads are **staging-only**. `POST /api/manage/[token]/upload` (multipart: `file` + `section`) pushes the file to Cloudinary via a signed server upload and returns `{ ok, item }` — a ready-to-stage `MediaItem` with the `secure_url` and `public_id`. It does **not** write the `Live` row or `Media` sheet, and does **not** revalidate. The client folds the returned item into its local draft (so it shows immediately) and everything commits together on **Save and publish** (`PATCH /api/manage/[token]` → `replaceMediaForCode` + `updateLiveFields`, which then revalidates).
 
-### Behavior per section
+Why: a previous version published instantly, so guests on `/e/<code>` saw unsaved uploads and "Discard changes" couldn't undo media. Trade-off: files uploaded but never saved are orphaned on Cloudinary — fine for v1 (a periodic sweep can reclaim them).
 
-- **Hero** (`section=hero`) — file uploads to Cloudinary, then the route updates `Live.HERO_IMAGE_URL` (image) or `Live.HERO_VIDEO_URL` (video) directly. No Media-sheet row is written for hero, because templates read hero from the Live row, not the Media tab.
-- **Gallery / other sections** — a row is appended to (or, with `replaceFileName`, replaced in) the `Media` tab. `Public URL` is the Cloudinary `secure_url`. `Drive File ID` column now stores Cloudinary's `public_id` (rename when we drop Drive everywhere).
+Entry points — all stage via `EditContext` callbacks, none reload the page:
+- Gallery **"+ Add photos"** tile / panel **Photos & gallery** button → `AddPhotosModal` (multi-file, per-file caption) → `addMedia` per item.
+- Click a gallery photo → **Replace** → `replaceMedia`; **Crop & adjust** → image editor (below).
+- Hero hover → **Replace** / **Crop** → `updateEvent({ heroImageUrl | heroVideoUrl })` (hero lives on the `Live` row, not the Media tab; no Media row is written for hero).
+- Folder structure on Cloudinary: `EventSites/{EventCode}/{section}/`. `Public URL` = `secure_url`; the `Drive File ID` column stores Cloudinary's `public_id`.
+
+### Image editor (`components/edit/ImageEditor.tsx`)
+
+Crop / zoom / pan / 90° **rotate**, opened from a gallery photo's "Crop & adjust" or the hero's "Crop". Shows a default **"Best fit"** aspect chip equal to the slot's display ratio (gallery 4:5, hero 16:9), passed in by the caller and overridable. Two save modes, surfaced as a "Keep full photo" toggle:
+- **Non-destructive** (default for Cloudinary) — the crop is encoded as a Cloudinary transform (`/upload/a_<deg>/c_crop,x_,y_,w_,h_/…`) on the **original** asset. The full image is preserved; re-opening the editor strips the transform and crops from the full photo again. Only `Public URL` changes; `public_id` stays.
+- **Baked** — renders the visible region to a canvas and uploads a new flat image. Used when the toggle is off, and the only option for non-Cloudinary/demo images (those have no `/upload/` transform support).
 
 ### Caps + auto-fit
 
