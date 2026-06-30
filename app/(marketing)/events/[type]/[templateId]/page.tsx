@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EVENT_TYPES, getEventTypeConfig } from "@/config/eventTypes";
 import { getTemplateMeta } from "@/components/templates/metadata";
-import { getDemoCodeForTemplate } from "@/lib/dummyData";
 import { EnquiryForm } from "./EnquiryForm";
 import type { EventType } from "@/lib/types";
 
@@ -16,7 +15,6 @@ export default function EnquiryPage({ params }: { params: Params }) {
   if (!template || !template.eventTypes.includes(eventType)) notFound();
 
   const config = getEventTypeConfig(eventType);
-  const demoCode = getDemoCodeForTemplate(template.id);
 
   return (
     <main className="min-h-screen">
@@ -46,14 +44,15 @@ export default function EnquiryPage({ params }: { params: Params }) {
               className="aspect-[4/3] mt-6 rounded-2xl bg-cover bg-center"
               style={{ backgroundImage: `url('${template.previewImage}')` }}
             />
-            {demoCode && (
-              <p className="text-xs opacity-60 mt-3">
-                Preview this template:{" "}
-                <Link href={`/e/${demoCode}`} target="_blank" className="underline">
-                  /e/{demoCode} ↗
-                </Link>
-              </p>
-            )}
+            <p className="text-xs opacity-60 mt-3">
+              <Link
+                href={`/events/${eventType}/${template.id}/preview`}
+                target="_blank"
+                className="underline"
+              >
+                Preview this template with a {config.label.toLowerCase()} demo ↗
+              </Link>
+            </p>
           </div>
 
           <div>
