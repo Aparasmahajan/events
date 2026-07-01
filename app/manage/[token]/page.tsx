@@ -43,6 +43,7 @@ export default async function ManagePage({
             ? `/api/manage/${params.token}/template`
             : undefined
         }
+        uploadEndpoint={`/api/manage/${params.token}/upload`}
       />
     </>
   );

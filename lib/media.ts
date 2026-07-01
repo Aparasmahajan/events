@@ -1,91 +1,127 @@
-import { Readable } from "stream";
+import { createHash } from "crypto";
 
-const HAS_DRIVE_CONFIG =
-  !!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
-  !!process.env.GOOGLE_PRIVATE_KEY &&
-  !!process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID;
+/**
+ * Media uploads now go to Cloudinary instead of Google Drive.
+ *
+ * Why: service accounts on personal Google accounts have zero Drive quota,
+ * making Drive uploads impossible without Workspace + Shared Drives. Cloudinary
+ * has a free tier, real CDN delivery, on-the-fly transformations, and works
+ * the same on every Google account.
+ *
+ * The exported `uploadToEvent` keeps the same signature it had under Drive, so
+ * the rest of the app (upload route, Media sheet writes) is unchanged. The
+ * `driveFileId` field on `UploadedMedia` now stores Cloudinary's `public_id`
+ * — same role (vendor-specific asset reference), different vendor.
+ */
+
+const HAS_CLOUDINARY_CONFIG =
+  !!process.env.CLOUDINARY_CLOUD_NAME &&
+  !!process.env.CLOUDINARY_API_KEY &&
+  !!process.env.CLOUDINARY_API_SECRET;
 
 export type UploadedMedia = {
+  /** Cloudinary public_id. Stored in the Media sheet's "Drive File ID" column
+   *  for now (rename when we drop Drive completely). */
   driveFileId: string;
+  /** secure_url from Cloudinary — https-only, CDN-backed. */
   publicUrl: string;
   fileName: string;
+  /** Cloudinary's `resource_type` — "image", "video", or "raw". */
+  resourceType?: "image" | "video" | "raw";
+  width?: number;
+  height?: number;
+  duration?: number;
+  bytes?: number;
 };
 
-async function getDrive() {
-  const { google } = await import("googleapis");
-  const auth = new google.auth.JWT({
-    email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    key: (process.env.GOOGLE_PRIVATE_KEY ?? "").replace(/\\n/g, "\n"),
-    scopes: ["https://www.googleapis.com/auth/drive"],
-  });
-  return google.drive({ version: "v3", auth });
+type CloudinaryResponse = {
+  public_id: string;
+  secure_url: string;
+  resource_type: "image" | "video" | "raw";
+  width?: number;
+  height?: number;
+  duration?: number;
+  bytes?: number;
+  format?: string;
+  original_filename?: string;
+};
+
+/** Cloudinary signed-upload signature: SHA-1 of sorted form params + api_secret. */
+function signParams(params: Record<string, string>, apiSecret: string): string {
+  const toSign = Object.keys(params)
+    .sort()
+    .map((k) => `${k}=${params[k]}`)
+    .join("&");
+  return createHash("sha1").update(toSign + apiSecret).digest("hex");
 }
 
-export async function ensureEventFolder(eventCode: string): Promise<string | null> {
-  if (!HAS_DRIVE_CONFIG) return null;
-  const drive = await getDrive();
-  const rootId = process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID!;
-  const q = `mimeType='application/vnd.google-apps.folder' and name='${eventCode}' and '${rootId}' in parents and trashed=false`;
-  const existing = await drive.files.list({ q, fields: "files(id, name)" });
-  if (existing.data.files && existing.data.files.length > 0) return existing.data.files[0].id ?? null;
-  const created = await drive.files.create({
-    requestBody: {
-      name: eventCode,
-      mimeType: "application/vnd.google-apps.folder",
-      parents: [rootId],
-    },
-    fields: "id",
-  });
-  return created.data.id ?? null;
-}
-
+/**
+ * Upload a single file to Cloudinary under `EventSites/{eventCode}/{section}/`.
+ *
+ * Returns null if Cloudinary isn't configured (so the upload route can return
+ * a clean 503 instead of crashing).
+ */
 export async function uploadToEvent(
   eventCode: string,
   section: string,
   file: { name: string; mimeType: string; buffer: Buffer },
 ): Promise<UploadedMedia | null> {
-  if (!HAS_DRIVE_CONFIG) return null;
-  const drive = await getDrive();
-  const folderId = await ensureEventFolder(eventCode);
-  if (!folderId) return null;
+  if (!HAS_CLOUDINARY_CONFIG) return null;
 
-  // section sub-folder
-  const subQ = `mimeType='application/vnd.google-apps.folder' and name='${section}' and '${folderId}' in parents and trashed=false`;
-  const subList = await drive.files.list({ q: subQ, fields: "files(id)" });
-  let subId = subList.data.files?.[0]?.id ?? null;
-  if (!subId) {
-    const sub = await drive.files.create({
-      requestBody: {
-        name: section,
-        mimeType: "application/vnd.google-apps.folder",
-        parents: [folderId],
-      },
-      fields: "id",
-    });
-    subId = sub.data.id ?? null;
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME!;
+  const apiKey = process.env.CLOUDINARY_API_KEY!;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET!;
+
+  const folder = `EventSites/${eventCode}/${section}`;
+  const timestamp = String(Math.floor(Date.now() / 1000));
+
+  // Cloudinary signs over the params it actually receives (minus file,
+  // signature, api_key, resource_type). For our minimal payload that's:
+  //   folder, timestamp
+  // If we ever add more (tags, context, public_id), include them here too.
+  const signed = { folder, timestamp };
+  const signature = signParams(signed, apiSecret);
+
+  // `auto` lets Cloudinary detect image vs video from the file's content type.
+  const url = `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`;
+
+  const form = new FormData();
+  form.append(
+    "file",
+    // Copy into a Uint8Array<ArrayBuffer> so it's a valid BlobPart — a Node
+    // Buffer's underlying store is ArrayBufferLike (possibly SharedArrayBuffer),
+    // which the Blob/BlobPart types reject.
+    new Blob([new Uint8Array(file.buffer)], { type: file.mimeType }),
+    file.name,
+  );
+  form.append("api_key", apiKey);
+  form.append("timestamp", timestamp);
+  form.append("folder", folder);
+  form.append("signature", signature);
+
+  let res: Response;
+  try {
+    res = await fetch(url, { method: "POST", body: form });
+  } catch (err) {
+    console.error("[cloudinary] network error:", err);
+    return null;
   }
-  if (!subId) return null;
 
-  const created = await drive.files.create({
-    requestBody: { name: file.name, parents: [subId] },
-    media: { mimeType: file.mimeType, body: bufferToStream(file.buffer) },
-    fields: "id",
-  });
-  const fileId = created.data.id;
-  if (!fileId) return null;
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    console.error("[cloudinary] upload failed:", res.status, body);
+    return null;
+  }
 
-  await drive.permissions.create({
-    fileId,
-    requestBody: { role: "reader", type: "anyone" },
-  });
-
+  const json = (await res.json()) as CloudinaryResponse;
   return {
-    driveFileId: fileId,
-    publicUrl: `https://drive.google.com/uc?id=${fileId}`,
+    driveFileId: json.public_id,
+    publicUrl: json.secure_url,
     fileName: file.name,
+    resourceType: json.resource_type,
+    width: json.width,
+    height: json.height,
+    duration: json.duration,
+    bytes: json.bytes,
   };
-}
-
-function bufferToStream(buf: Buffer) {
-  return Readable.from(buf);
 }

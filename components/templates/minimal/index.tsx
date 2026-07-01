@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { Countdown } from "@/components/ui/Countdown";
 import { Gallery } from "@/components/ui/Gallery";
+import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { RSVP } from "@/components/ui/RSVP";
@@ -10,6 +10,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { StickyNav } from "@/components/ui/StickyNav";
 import { Timeline } from "@/components/ui/Timeline";
 import { minimalMeta } from "@/components/templates/metadata";
+import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent } from "@/lib/types";
 
 const defaults = minimalMeta.defaults;
@@ -20,17 +21,20 @@ export const MinimalTemplate: TemplateComponent = ({ event, subEvents, media }) 
   const tagline = event.tagline?.trim() || defaults.tagline;
   const invitationMessage = event.invitationMessage?.trim() || defaults.invitationMessage;
   const galleryItems = media.filter((m) => m.section === "gallery");
+  // In edit mode, show the gallery section even when empty so the customer has
+  // a "+ Add photos" entry to upload the first images into.
+  const editing = !!useEditMode()?.enabled;
 
   const navItems = [
     ...(!event.hideStory ? [{ id: "about", label: "About" }] : []),
     ...(!event.hideEvents && subEvents.length ? [{ id: "events", label: "Schedule" }] : []),
-    ...(!event.hideGallery && galleryItems.length ? [{ id: "gallery", label: "Gallery" }] : []),
+    ...(!event.hideGallery && (galleryItems.length || editing) ? [{ id: "gallery", label: "Gallery" }] : []),
     ...(!event.hideVenue ? [{ id: "venue", label: "Venue" }] : []),
     ...(event.rsvpEnabled ? [{ id: "rsvp", label: "RSVP" }] : []),
   ];
 
   return (
-    <div className="font-sans text-neutral-900 bg-white" style={{ "--accent": accent } as React.CSSProperties}>
+    <div className="font-sans text-neutral-900 bg-white overflow-x-clip" style={{ "--accent": accent } as React.CSSProperties}>
       <section id="top" className="grid lg:grid-cols-2 min-h-[100svh]">
         <div className="flex items-center px-6 sm:px-12 lg:px-20 py-16">
           <div className="max-w-md">
@@ -55,8 +59,12 @@ export const MinimalTemplate: TemplateComponent = ({ event, subEvents, media }) 
             )}
           </div>
         </div>
-        <div className="relative min-h-[400px] lg:min-h-full">
-          <Image src={hero} alt={event.eventTitle} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+        <div className="relative min-h-[400px] lg:min-h-full overflow-hidden">
+          <HeroMedia
+            imageSrc={hero}
+            videoSrc={event.heroVideoUrl}
+            alt={event.eventTitle}
+          />
         </div>
       </section>
 
@@ -81,7 +89,7 @@ export const MinimalTemplate: TemplateComponent = ({ event, subEvents, media }) 
         </section>
       )}
 
-      {!event.hideGallery && galleryItems.length > 0 && (
+      {!event.hideGallery && (galleryItems.length > 0 || editing) && (
         <section id="gallery" className="py-24 px-6 max-w-6xl mx-auto border-t border-black/5">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-[0.3em] opacity-60 mb-8">Gallery</p>

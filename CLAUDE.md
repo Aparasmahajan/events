@@ -9,7 +9,7 @@ This file is written for **Claude Code**. Build in the phase order at the bottom
 ## 0. Assumptions (change any and tell Claude Code)
 
 - **Data store:** Google Sheets (recommended). Exports to `.xlsx` anytime. _A local Excel file would change the whole data layer — say so if that's a hard requirement._
-- **Media:** Google Drive for MVP, **host-agnostic** — the site only reads URLs from the Media sheet, so Cloudinary can replace Drive by changing one column.
+- **Media:** **Cloudinary** for storage + CDN delivery. Google Drive was the original MVP plan but service accounts on personal Google accounts have zero storage quota (only Workspace + Shared Drives works around this), so we moved to Cloudinary. The site only reads `Public URL` from the Media sheet, so any other host (S3, Vercel Blob, etc.) is still a one-function swap inside `lib/media.ts`.
 - **v1 event types:** Wedding (flagship — build first), Birthday, Engagement/Anniversary, Corporate/Conference. Schema supports any type.
 - **Maps:** `react-leaflet` (no API key). Swap to a Google Maps embed if preferred.
 - **Customer access:** magic-link tokens (no customer accounts). Admin approval generates a secret link. _If you'd rather have email+password customer logins, say so._
@@ -101,7 +101,7 @@ Shared columns 1–14, then admin-managed operational columns:
 | 6 | Event Type | Drives conditional fields + which templates show |
 | 7 | Event Sub-type | Optional |
 | 8 | Template ID | Chosen template |
-| 9 | Event Title | Public title (e.g. "Rahul weds Priya") |
+| 9 | Event Title | Public title (e.g. "Celebration Title") |
 | 10 | Person 1 Name | Groom / host / celebrant |
 | 11 | Person 2 Name | Bride / partner (blank if N/A) |
 | 12 | Tentative Date | From enquiry |
@@ -160,7 +160,7 @@ Columns 1–14 identical to Enquiries (copied on approval; CRM cols 15–22 are 
 | `url` (default if value starts with `http`) | Button: "RSVP now" → opens URL in a new tab |
 | `email` | Button: "RSVP — name@…" → opens `mailto:` |
 | `phone` | Button: "RSVP — +91-…" → opens `tel:` |
-| `text` | Plain text block (no link) — for free-form instructions like "Call Anita at +91-…" |
+| `text` | Plain text block (no link) — for free-form instructions like "Call Person at +91-…" |
 
 ### Tab: `SubEvents` (1 row per sub-event, joined by Event Code)
 `Event Code | Order | Sub-event Name | Date | Start Time | End Time | Venue Name | Venue Address | Map Link | Latitude | Longitude | Dress Code | Description | Icon`
@@ -259,7 +259,7 @@ All client-side, zero server cost. Each must work at **375 / 768 / 1280** px:
 - **Countdown** to `Main Date`
 - **Gallery** lightbox + lazy-loaded `next/image` with blur-up
 - **Sub-events timeline** (ordered from the SubEvents tab)
-- **Embedded map** + "Get Directions" (lat/long + Map Link)
+- **Embedded map** + "Get Directions" — pins from explicit lat/long *or* coordinates parsed out of a pasted Google Maps link (`@lat,lng`, `q=/ll=/destination=lat,lng`, `!3d..!4d..`); short links with no coordinates fall back to a directions-only button (`parseLatLng` in `components/ui/MapEmbed.tsx`)
 - Sticky nav with scroll-spy
 - Optional **background-music** toggle (off by default; respects autoplay rules)
 - Scroll-reveal (Framer Motion)
@@ -311,18 +311,26 @@ Hidden sections also drop out of the sticky nav. To "remove a column" the custom
 - Clear an individual field (e.g. just the Dress Code) — the template auto-hides empty fields.
 - Delete a sub-event row entirely; remaining rows are renumbered.
 
-**Media** — full CRUD on the `Media` tab for this Event Code:
-- Upload via `/api/manage/[token]/upload` → Drive `{EventCode}/{section}/` → row appended to `Media` with `Public URL`, `Sort Order` = next.
-- Reorder gallery items via drag-and-drop (writes `Sort Order`).
-- Edit `Caption` inline. Set `Section` (hero / gallery / sub-event:{name} / etc.).
-- Delete: removes the Media row and (best-effort) the Drive file. See §12 for size + dimension rules.
-- Replace hero image/video by uploading a new file into the `hero` section.
+**Media** — managed mostly inline on the rendered page (the EditPanel keeps a "Manage media" list for fine edits). See §12 for the full pipeline.
+- **Add photos/videos** — the gallery's **"+ Add photos"** tile *or* the side panel's **Photos & gallery → + Add photos** button opens a modal (`AddPhotosModal`) to pick **several files at once, each with its own description**, and upload them together. The gallery section renders in edit mode even when empty (templates read `useEditMode().enabled`), so there's always somewhere to add the first photo.
+- **Edit / crop a photo** — click any photo for its menu: View · Edit details (caption / section / video autoplay) · **Crop & adjust** · Replace · Delete. The crop editor (`components/edit/ImageEditor.tsx`) does scroll-to-zoom, drag-to-pan, 90° **rotate**, aspect presets, and a default **"Best fit"** chip set to the ratio the current template displays that slot at (overridable — it's only a suggestion).
+- **Non-destructive crop** — for Cloudinary assets, **"Keep full photo"** (on by default) saves the crop as a Cloudinary *transformation on the original*, so the complete image is preserved and can be re-cropped later; turning it off bakes a flattened copy. Demo/placeholder (non-Cloudinary) images only support the baked path.
+- **Hero** — hover the hero → **Replace** (image/video) or **✂️ Crop** (image only); writes `Live.HERO_IMAGE_URL` / `HERO_VIDEO_URL`.
+- **Reorder / caption / autoplay / delete** existing items from the panel's "Manage media" list (up/down arrows for order).
+- **Staging:** every upload/crop/replace stages into the local draft and shows immediately; nothing reaches the `Media` sheet or the public site until **Save and publish**.
 
 **Look** — accent color picker (writes `Theme/Accent Color` hex). Optional background music URL.
 
 **Template switcher** — shown only if `Can Change Template = TRUE`; lists templates whose `eventTypes` include this event's type (each rendered as a thumbnail card). Switching POSTs to `/api/manage/[token]/template` which validates the new template supports the event type, updates `Template ID`, and revalidates the public site. All content + media + sub-events carry over because templates are pure presentational components (§7).
 
 **Site status (Stop / Resume)** — the customer can flip `Is Active` from their panel without needing admin intervention. The same operation that powers the admin's `/admin/events` Stop/Resume buttons, but exposed in `/manage` as a single toggle pill. Useful when a customer needs to take the page down temporarily without losing the data. The PATCH applies immediately (not batched with other saves) so the public site goes dark / re-appears the second they click.
+
+### Editor canvas & panel layout
+
+The editor (`EditableShell`) owns the panel's open/collapsed state so the page never renders under the chrome:
+- While the panel is open, the template canvas is inset on desktop (`sm:pr-[420px]`) so nothing — map, gallery, hero — sits behind the fixed side panel; on mobile the panel is a full-screen overlay.
+- The canvas also reserves the fixed top bar's height (`paddingTop: topOffset`, 48px on `/manage`).
+- **Close** collapses the panel (works even on the locked `/manage` editor) for a full-width preview; a floating **✎ Edit** button reopens it. (`?edit=1` previews additionally get **Exit**, which drops the query param.)
 
 ### Save / publish / edit-window
 
@@ -358,19 +366,37 @@ If the customer wants to "add anything" beyond the schema (a custom callout, an 
 
 ## 12. Media handling
 
-### Upload pipeline
+### Upload pipeline (Cloudinary) — staging model
 
-- `POST /api/manage/[token]/upload` (customer) and `POST /api/admin/media` (admin) → `EventSites/{EventCode}/{section}/` on Drive → append a row to `Media` with `Public URL`, `Width`, `Height`, `Duration` (videos), `File Size`, `Sort Order`.
-- Folder layout on Drive:
+Uploads are **staging-only**. `POST /api/manage/[token]/upload` (multipart: `file` + `section`) pushes the file to Cloudinary via a signed server upload and returns `{ ok, item }` — a ready-to-stage `MediaItem` with the `secure_url` and `public_id`. It does **not** write the `Live` row or `Media` sheet, and does **not** revalidate. The client folds the returned item into its local draft (so it shows immediately) and everything commits together on **Save and publish** (`PATCH /api/manage/[token]` → `replaceMediaForCode` + `updateLiveFields`, which then revalidates).
 
-```
-EventSites/
-└── WED-2026-0001/
-    ├── hero/  ├── gallery/  ├── videos/
-    └── sub-events/{mehndi,haldi,reception}/
-```
+Why: a previous version published instantly, so guests on `/e/<code>` saw unsaved uploads and "Discard changes" couldn't undo media. Trade-off: files uploaded but never saved are orphaned on Cloudinary — fine for v1 (a periodic sweep can reclaim them).
 
-- Drive is **not** a CDN and its public direct-links are unreliable for a polished site. Keep `lib/media.ts` host-agnostic so Cloudinary can replace Drive by only changing how `Public URL` is produced.
+Entry points — all stage via `EditContext` callbacks, none reload the page:
+- Gallery **"+ Add photos"** tile / panel **Photos & gallery** button → `AddPhotosModal` (multi-file, per-file caption) → `addMedia` per item.
+- Click a gallery photo → **Replace** → `replaceMedia`; **Crop & adjust** → image editor (below).
+- Hero hover → **Replace** / **Crop** → `updateEvent({ heroImageUrl | heroVideoUrl })` (hero lives on the `Live` row, not the Media tab; no Media row is written for hero).
+- Folder structure on Cloudinary: `EventSites/{EventCode}/{section}/`. `Public URL` = `secure_url`; the `Drive File ID` column stores Cloudinary's `public_id`.
+
+### Image editor (`components/edit/ImageEditor.tsx`)
+
+Crop / zoom / pan / 90° **rotate**, opened from a gallery photo's "Crop & adjust" or the hero's "Crop". Shows a default **"Best fit"** aspect chip equal to the slot's display ratio (gallery 4:5, hero 16:9), passed in by the caller and overridable. Two save modes, surfaced as a "Keep full photo" toggle:
+- **Non-destructive** (default for Cloudinary) — the crop is encoded as a Cloudinary transform (`/upload/a_<deg>/c_crop,x_,y_,w_,h_/…`) on the **original** asset. The full image is preserved; re-opening the editor strips the transform and crops from the full photo again. Only `Public URL` changes; `public_id` stays.
+- **Baked** — renders the visible region to a canvas and uploads a new flat image. Used when the toggle is off, and the only option for non-Cloudinary/demo images (those have no `/upload/` transform support).
+
+### Caps + auto-fit
+
+- Image: 12 MB max. Video: 100 MB max. Enforced in the upload route before the file leaves the server.
+- All images render with CSS `object-cover`, so a portrait dropped into a landscape hero or vice versa fills the slot without distortion — Cloudinary stores the original; the cropping happens at render time.
+- Future polish: pass a Cloudinary transformation suffix to the URL (`f_auto,q_auto,w_2400,c_fill`) to serve already-optimized assets per device. Doesn't require a code change to add later — just template-level URL composition.
+
+### Reordering / captions / autoplay / delete
+
+All non-upload edits are handled inside the EditPanel (caption, section reassignment, drag-up/down sort, autoplay toggle for videos, delete) and batched into the next **Save and publish** via `PATCH /api/manage/[token]` (handled by `replaceMediaForCode` in `lib/sheets.ts`).
+
+### Original Drive notes (kept for historical context)
+
+We initially planned Google Drive for media. It didn't work because service accounts on personal Google accounts have zero storage quota — every upload returns 403 `storageQuotaExceeded`. Workspace + Shared Drives solves that but requires a paid plan. Switching to Cloudinary was less effort and gives us a real CDN.
 
 ### Per-section size + dimension rules
 
@@ -402,11 +428,15 @@ Implementation notes:
 ## 13. Environment variables
 
 ```
-# --- Google ---
+# --- Google Sheets (data store) ---
 GOOGLE_SHEETS_ID=
 GOOGLE_SERVICE_ACCOUNT_EMAIL=
 GOOGLE_PRIVATE_KEY=
-GOOGLE_DRIVE_ROOT_FOLDER_ID=
+
+# --- Cloudinary (media host) ---
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 
 # --- Auth ---
 ADMIN_EMAIL=                       # single admin v1; CSV-ready for multi

@@ -314,6 +314,167 @@ const pastel: DemoBundle = {
   ],
 };
 
+// ---------- AURORA — WED-2026-0003 ----------
+
+const AURORA_CODE = "WED-2026-0003";
+const aurora: DemoBundle = {
+  event: {
+    eventCode: AURORA_CODE,
+    eventType: "wedding",
+    templateId: "aurora",
+    eventTitle: "Arjun & Meera",
+    person1Name: "Arjun",
+    person2Name: "Meera",
+    tentativeDate: "2026-12-20",
+    city: "Udaipur",
+    isActive: true,
+    slug: AURORA_CODE,
+    heroImageUrl: UNSPLASH("photo-1606216794074-735e91aa2c92"),
+    tagline: "Two orbits, one light.",
+    invitationMessage:
+      "Beneath a sky we'll never forget, we ask you to witness the night two stories become one.",
+    aboutStory:
+      "It began as a small gravity — a glance that bent the evening. Years later the pull is a certainty, and we'd like the people we love around us when we name it out loud.",
+    mainDate: "2026-12-20",
+    mainStartTime: "19:00",
+    mainEndTime: "23:59",
+    themeAccentColor: "#d8b46a",
+    venueName: "Sajjangarh Pavilion",
+    venueAddress: "Aravalli Ridge, Udaipur, Rajasthan",
+    mapLink: "https://maps.google.com/?q=Sajjangarh+Udaipur",
+    latitude: 24.5979,
+    longitude: 73.6716,
+    contactName: "Arjun & Meera",
+    socialLink: "https://instagram.com/",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://forms.example/aurora-rsvp",
+  },
+  subEvents: [
+    { eventCode: AURORA_CODE, order: 1, name: "Moonrise Mehndi", date: "2026-12-18", startTime: "16:00", endTime: "20:00", venueName: "The Lake Terrace", venueAddress: "Udaipur", dressCode: "Dusk emerald", description: "Henna, qawwali and the first lights over the water.", icon: "🌙" },
+    { eventCode: AURORA_CODE, order: 2, name: "The Sangeet", date: "2026-12-19", startTime: "20:00", endTime: "00:00", venueName: "Mirror Hall", venueAddress: "Udaipur", dressCode: "Midnight & metallics", description: "An evening choreographed like a film — music, mischief, family.", icon: "✦" },
+    { eventCode: AURORA_CODE, order: 3, name: "The Vow", date: "2026-12-20", startTime: "19:00", endTime: "21:00", venueName: "Sajjangarh Pavilion", venueAddress: "Aravalli Ridge, Udaipur", dressCode: "Black-tie / traditional formal", description: "Under the open sky, the moment everything has been moving toward.", icon: "♾" },
+    { eventCode: AURORA_CODE, order: 4, name: "Aurora Reception", date: "2026-12-20", startTime: "21:00", endTime: "23:59", venueName: "Skyfield Lawn", venueAddress: "Udaipur", dressCode: "Cocktail", description: "Champagne, light installations and dancing until the stars give up.", icon: "🥂" },
+  ],
+  media: [
+    hero(AURORA_CODE, "photo-1606216794074-735e91aa2c92"),
+    ...gallery(AURORA_CODE, [
+      { url: SAMPLES.coupleBehind, caption: "The long way round" },
+      { url: SAMPLES.coupleEmbrace, caption: "Certainty" },
+      { url: SAMPLES.coupleSunset, caption: "Golden hour" },
+      { url: SAMPLES.weddingScene, caption: "The pavilion" },
+      { url: SAMPLES.ringsClose, caption: "The promise" },
+      { url: SAMPLES.coupleHands, caption: "Held" },
+      { url: SAMPLES.bouquet, caption: "Bloom" },
+      { url: SAMPLES.pinkFlowers, caption: "After" },
+    ]),
+  ],
+};
+
+// ---------- OBSIDIAN — WED-2026-0004 ----------
+
+const OBSIDIAN_CODE = "WED-2026-0004";
+const obsidian: DemoBundle = {
+  event: {
+    eventCode: OBSIDIAN_CODE,
+    eventType: "wedding",
+    templateId: "obsidian",
+    eventTitle: "Kabir & Saira",
+    person1Name: "Kabir",
+    person2Name: "Saira",
+    tentativeDate: "2026-11-21",
+    city: "Mumbai",
+    isActive: true,
+    slug: OBSIDIAN_CODE,
+    heroImageUrl: UNSPLASH("photo-1519225421980-715cb0215aed"),
+    tagline: "An evening, in acts.",
+    invitationMessage:
+      "No grand announcement. Only the people who matter, in a room that will remember the night.",
+    aboutStory:
+      "We are not for spectacle. We are for the long table, the low light, the last song — and the few who'll still be dancing when it plays.",
+    mainDate: "2026-11-21",
+    mainStartTime: "19:30",
+    mainEndTime: "23:59",
+    themeAccentColor: "#b5763a",
+    venueName: "The Foundry",
+    venueAddress: "Ballard Estate, Mumbai",
+    mapLink: "https://maps.google.com/?q=Ballard+Estate+Mumbai",
+    latitude: 18.9387,
+    longitude: 72.8419,
+    contactName: "Kabir & Saira",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://forms.example/obsidian-rsvp",
+  },
+  subEvents: [
+    { eventCode: OBSIDIAN_CODE, order: 1, name: "Cocktail Hour", date: "2026-11-21", startTime: "19:30", endTime: "20:30", venueName: "The Mezzanine", description: "Smoke, brass, a negroni cart.", icon: "🥃" },
+    { eventCode: OBSIDIAN_CODE, order: 2, name: "The Ceremony", date: "2026-11-21", startTime: "20:30", endTime: "21:15", venueName: "The Foundry Floor", dressCode: "Black tie", description: "Short, exact, unforgettable.", icon: "◆" },
+    { eventCode: OBSIDIAN_CODE, order: 3, name: "Dinner & Speeches", date: "2026-11-21", startTime: "21:15", endTime: "22:30", venueName: "Long Table", description: "Seven courses, four toasts, one cry.", icon: "✦" },
+    { eventCode: OBSIDIAN_CODE, order: 4, name: "After Dark", date: "2026-11-21", startTime: "22:30", endTime: "23:59", venueName: "The Vault", description: "The lights drop. The room opens.", icon: "♫" },
+  ],
+  media: [
+    hero(OBSIDIAN_CODE, "photo-1519225421980-715cb0215aed"),
+    ...gallery(OBSIDIAN_CODE, [
+      { url: SAMPLES.coupleEmbrace, caption: "01 — The look" },
+      { url: SAMPLES.weddingScene, caption: "02 — The room" },
+      { url: SAMPLES.coupleBehind, caption: "03 — The exit" },
+      { url: SAMPLES.ringsClose, caption: "04 — The vow" },
+      { url: SAMPLES.coupleHands, caption: "05 — Held" },
+      { url: SAMPLES.coupleSunset, caption: "06 — After" },
+    ]),
+  ],
+};
+
+// ---------- CELESTIA — WED-2026-0005 ----------
+
+const CELESTIA_CODE = "WED-2026-0005";
+const celestia: DemoBundle = {
+  event: {
+    eventCode: CELESTIA_CODE,
+    eventType: "wedding",
+    templateId: "celestia",
+    eventTitle: "Ishaan & Noor",
+    person1Name: "Ishaan",
+    person2Name: "Noor",
+    tentativeDate: "2026-10-04",
+    city: "Pondicherry",
+    isActive: true,
+    slug: CELESTIA_CODE,
+    heroImageUrl: UNSPLASH("photo-1465495976277-4387d4b0b4c6"),
+    tagline: "Written in the stars.",
+    invitationMessage:
+      "Somewhere between a wish and a certainty, we found each other — and we'd love you there when we make it real.",
+    aboutStory:
+      "A slow orbit of small coincidences that stopped feeling like coincidence. This is the part where two paths quietly become one.",
+    mainDate: "2026-10-04",
+    mainStartTime: "17:00",
+    mainEndTime: "22:00",
+    themeAccentColor: "#7c6bb0",
+    venueName: "Maison de la Mer",
+    venueAddress: "White Town, Pondicherry",
+    mapLink: "https://maps.google.com/?q=White+Town+Pondicherry",
+    latitude: 11.9338,
+    longitude: 79.8367,
+    contactName: "Ishaan & Noor",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://forms.example/celestia-rsvp",
+  },
+  subEvents: [
+    { eventCode: CELESTIA_CODE, order: 1, name: "Seaside Welcome", date: "2026-10-03", startTime: "18:00", endTime: "21:00", venueName: "The Pier", dressCode: "Linen & pastels", description: "Sundowners as the tide comes in.", icon: "🌊" },
+    { eventCode: CELESTIA_CODE, order: 2, name: "The Vows", date: "2026-10-04", startTime: "17:00", endTime: "18:00", venueName: "Garden of Maison de la Mer", description: "Golden hour, barefoot, a circle of the people we love.", icon: "✦" },
+    { eventCode: CELESTIA_CODE, order: 3, name: "Dinner Under Stars", date: "2026-10-04", startTime: "19:00", endTime: "22:00", venueName: "Courtyard", description: "Long tables, fairy lights, a sky full of reasons.", icon: "✧" },
+  ],
+  media: [
+    hero(CELESTIA_CODE, "photo-1465495976277-4387d4b0b4c6"),
+    ...gallery(CELESTIA_CODE, [
+      { url: SAMPLES.pinkFlowers, caption: "Bloom" },
+      { url: SAMPLES.coupleSunset, caption: "Orbit" },
+      { url: SAMPLES.bouquet, caption: "Gather" },
+      { url: SAMPLES.coupleEmbrace, caption: "Certainty" },
+      { url: SAMPLES.weddingRings, caption: "Promise" },
+      { url: SAMPLES.coupleHands, caption: "Held" },
+    ]),
+  ],
+};
+
 // ---------- registry ----------
 
 export const DEMO_EVENTS: Record<string, DemoBundle> = {
@@ -322,6 +483,9 @@ export const DEMO_EVENTS: Record<string, DemoBundle> = {
   [MODERN_CODE]: modern,
   [VIBRANT_CODE]: vibrant,
   [PASTEL_CODE]: pastel,
+  [AURORA_CODE]: aurora,
+  [OBSIDIAN_CODE]: obsidian,
+  [CELESTIA_CODE]: celestia,
 };
 
 export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
@@ -330,6 +494,9 @@ export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
   modern: MODERN_CODE,
   vibrant: VIBRANT_CODE,
   pastel: PASTEL_CODE,
+  aurora: AURORA_CODE,
+  obsidian: OBSIDIAN_CODE,
+  celestia: CELESTIA_CODE,
 };
 
 export function getDemoBundle(code: string): DemoBundle | undefined {

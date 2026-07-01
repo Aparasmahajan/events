@@ -90,97 +90,75 @@ export const pastelMeta: TemplateMeta = {
 
 export const auroraMeta: TemplateMeta = {
   id: "aurora",
-  name: "Aurora Scroll",
+  name: "Aurora",
   description:
-    "A scroll-choreographed wedding journey — the page transforms as you move, with a sideways photo reel and parallax names. Our most interactive template.",
+    "A futuristic luxury wedding rendered as a cinematic experience — a hero that recedes into an editorial plate, names that letter-reveal under a moonlight beam, a sideways album of moments, and events as floating islands. Midnight, aurora light, champagne.",
   eventTypes: ["wedding", "engagement", "anniversary"],
-  tags: ["cinematic", "interactive", "modern", "luxurious", "romantic", "cool", "bold"],
+  tags: ["cinematic", "interactive", "luxurious", "modern", "romantic", "bold", "cool"],
   previewImage:
     "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&q=80",
   defaults: {
     invitationMessage:
-      "Scroll with us through the story that brought us here — and the day we say forever.",
-    tagline: "A love, unfolding.",
-    accentColor: "#22d3ee",
+      "Beneath a sky we'll never forget, we ask you to witness the night two stories become one.",
+    tagline: "Two orbits, one light.",
+    accentColor: "#d8b46a",
     heroImage:
       "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
     aboutStory:
-      "Every scroll is a chapter — the first hello, the long way round, and the moment we both knew. Keep going; the best part is still ahead.",
+      "It began as a small gravity — a glance that bent the evening. Years later the pull is a certainty, and we'd like the people we love around us when we name it out loud.",
   },
 };
 
-export const botanicalMeta: TemplateMeta = {
-  id: "botanical",
-  name: "Botanical Garden",
+export const obsidianMeta: TemplateMeta = {
+  id: "obsidian",
+  name: "Obsidian",
   description:
-    "Editorial, organic and modern — arched frames, a hand-set monogram and warm sage tones for a garden wedding.",
+    "A cinematic film in burnt bronze on black — acts that slide over one another, sliced kinetic typography and clip-path photo reveals. Editorial, architectural, restrained.",
   eventTypes: ["wedding", "engagement", "anniversary"],
-  tags: ["botanical", "editorial", "romantic", "elegant", "decent", "appealing"],
+  tags: ["cinematic", "editorial", "luxurious", "bold", "modern", "cool"],
   previewImage:
-    "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
   defaults: {
     invitationMessage:
-      "Under open skies and good company, we'd love to gather the people we love.",
-    tagline: "Grow together.",
-    accentColor: "#6f7d54",
+      "No grand announcement. Only the people who matter, in a room that will remember the night.",
+    tagline: "An evening, in acts.",
+    accentColor: "#b5763a",
     heroImage:
-      "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
     aboutStory:
-      "We're the kind of couple who plans the whole evening around the garden light. Come share a long table, slow conversation and one very good sunset.",
+      "We are not for spectacle. We are for the long table, the low light, the last song — and the few who'll still be dancing when it plays.",
   },
 };
 
-export const fiestaMeta: TemplateMeta = {
-  id: "fiesta",
-  name: "Neon Fiesta",
+export const celestiaMeta: TemplateMeta = {
+  id: "celestia",
+  name: "Celestia",
   description:
-    "After-dark party energy — glowing type, an animated gradient and tap-to-celebrate confetti. Built for milestone and grown-up birthdays.",
-  eventTypes: ["birthday", "engagement"],
-  tags: ["neon", "vibrant", "bold", "festive", "playful", "cool", "interactive"],
-  previewImage:
-    "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80",
-  defaults: {
-    invitationMessage:
-      "Clear your Saturday. We're turning the lights down and the music up.",
-    tagline: "Let's glow.",
-    accentColor: "#ff2e9a",
-    heroImage:
-      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
-    aboutStory:
-      "One night, your favorite people, a playlist that has no business being this good. Come dressed to be photographed.",
-  },
-};
-
-export const storybookMeta: TemplateMeta = {
-  id: "storybook",
-  name: "Storybook",
-  description:
-    "A bright, illustrated kids' party page — bunting, floating balloons and a pop-for-confetti surprise. Playful, warm and impossible to resist.",
-  eventTypes: ["birthday"],
-  tags: ["whimsical", "playful", "festive", "vibrant", "appealing", "interactive"],
+    "Ethereal and weightless — a glass orb that turns as you scroll, photographs that float, and a ribbon that threads the day together. Dusty lavender, ice blue, pearl.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["elegant", "romantic", "luxurious", "cinematic", "cool", "appealing"],
   previewImage:
     "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
   defaults: {
     invitationMessage:
-      "There will be cake, there will be games, and there will absolutely be too much sugar. Come play!",
-    tagline: "Hip hip hooray!",
-    accentColor: "#3aaed8",
+      "Somewhere between a wish and a certainty, we found each other — and we'd love you there when we make it real.",
+    tagline: "Written in the stars.",
+    accentColor: "#7c6bb0",
     heroImage:
       "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
     aboutStory:
-      "Our favorite little human is leveling up. Expect balloons, a bouncy castle's worth of energy, and a birthday wish made at exactly the right moment.",
+      "A slow orbit of small coincidences that stopped feeling like coincidence. This is the part where two paths quietly become one.",
   },
 };
 
 export const TEMPLATES_META: TemplateMeta[] = [
   auroraMeta,
+  obsidianMeta,
+  celestiaMeta,
   royalMeta,
-  botanicalMeta,
   minimalMeta,
   modernMeta,
-  fiestaMeta,
   vibrantMeta,
-  storybookMeta,
   pastelMeta,
 ];
 

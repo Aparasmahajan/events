@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Countdown } from "@/components/ui/Countdown";
 import { Gallery } from "@/components/ui/Gallery";
+import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { RSVP } from "@/components/ui/RSVP";
@@ -11,6 +11,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { StickyNav } from "@/components/ui/StickyNav";
 import { Timeline } from "@/components/ui/Timeline";
 import { vibrantMeta } from "@/components/templates/metadata";
+import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent } from "@/lib/types";
 
 const defaults = vibrantMeta.defaults;
@@ -21,17 +22,20 @@ export const VibrantTemplate: TemplateComponent = ({ event, subEvents, media }) 
   const tagline = event.tagline?.trim() || defaults.tagline;
   const invitationMessage = event.invitationMessage?.trim() || defaults.invitationMessage;
   const galleryItems = media.filter((m) => m.section === "gallery");
+  // In edit mode, show the gallery section even when empty so the customer has
+  // a "+ Add photos" entry to upload the first images into.
+  const editing = !!useEditMode()?.enabled;
 
   const navItems = [
     ...(!event.hideStory ? [{ id: "intro", label: "What's up" }] : []),
     ...(!event.hideEvents && subEvents.length ? [{ id: "schedule", label: "Plan" }] : []),
-    ...(!event.hideGallery && galleryItems.length ? [{ id: "gallery", label: "Pics" }] : []),
+    ...(!event.hideGallery && (galleryItems.length || editing) ? [{ id: "gallery", label: "Pics" }] : []),
     ...(!event.hideVenue ? [{ id: "venue", label: "Where" }] : []),
     ...(event.rsvpEnabled ? [{ id: "rsvp", label: "RSVP" }] : []),
   ];
 
   return (
-    <div className="font-sans text-neutral-900" style={{ "--accent": accent } as React.CSSProperties}>
+    <div className="font-sans text-neutral-900 overflow-x-clip" style={{ "--accent": accent } as React.CSSProperties}>
       <section
         id="top"
         className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
@@ -40,7 +44,12 @@ export const VibrantTemplate: TemplateComponent = ({ event, subEvents, media }) 
         }}
       >
         <div className="absolute inset-0 opacity-20">
-          <Image src={hero} alt="" fill priority sizes="100vw" className="object-cover mix-blend-overlay" />
+          <HeroMedia
+            imageSrc={hero}
+            videoSrc={event.heroVideoUrl}
+            alt=""
+            className="mix-blend-overlay"
+          />
         </div>
         {/* Floating confetti shapes */}
         <div className="absolute inset-0 pointer-events-none">
@@ -105,7 +114,7 @@ export const VibrantTemplate: TemplateComponent = ({ event, subEvents, media }) 
         </section>
       )}
 
-      {!event.hideGallery && galleryItems.length > 0 && (
+      {!event.hideGallery && (galleryItems.length > 0 || editing) && (
         <section id="gallery" className="py-20 px-6 max-w-6xl mx-auto">
           <ScrollReveal>
             <h2 className="font-display text-3xl sm:text-4xl mb-10 text-center">Highlights</h2>
