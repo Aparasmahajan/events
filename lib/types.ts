@@ -5,7 +5,11 @@ export type EventType =
   | "birthday"
   | "engagement"
   | "anniversary"
-  | "corporate";
+  | "corporate"
+  | "product-launch"
+  | "award-ceremony"
+  | "networking-event"
+  | "party";
 
 export type TemplateTag =
   | "cool"
@@ -29,7 +33,15 @@ export type TemplateTag =
   | "botanical"
   | "editorial"
   | "neon"
-  | "whimsical";
+  | "whimsical"
+  | "cyberpunk"
+  | "glass"
+  | "premium"
+  | "organic"
+  | "celestial"
+  | "architectural"
+  | "tech"
+  | "artistic";
 
 export type EventData = {
   eventCode: string;

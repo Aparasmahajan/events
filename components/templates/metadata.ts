@@ -151,7 +151,112 @@ export const celestiaMeta: TemplateMeta = {
   },
 };
 
+export const nexusMeta: TemplateMeta = {
+  id: "nexus",
+  name: "Nexus",
+  description:
+    "A futuristic product reveal rendered as a cyberpunk experience — particles coalesce into meaning, a circuit-board timeline maps the roadmap, and features float as holographic glass cards. Midnight void, neon cyan, electric violet.",
+  eventTypes: ["product-launch", "corporate"],
+  tags: ["cyberpunk", "tech", "bold", "modern", "cinematic", "interactive"],
+  previewImage:
+    "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage: "The future isn't waiting. Neither should you.",
+    tagline: "The future is arriving.",
+    accentColor: "#00f0ff",
+    heroImage:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every great product begins with a question. We asked ours. The answer changed everything we thought possible — and we're ready to share it.",
+  },
+};
+
+export const pinnacleMeta: TemplateMeta = {
+  id: "pinnacle",
+  name: "Pinnacle",
+  description:
+    "Where leaders ascend — a glass-and-light summit experience. Crystal whites, deep navy, warm gold. Elevated typography, a climb-through agenda, and the light of a mountain peak at sunrise.",
+  eventTypes: ["corporate"],
+  tags: ["premium", "glass", "architectural", "minimal", "elegant", "modern"],
+  previewImage:
+    "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage: "Join the brightest minds at the peak of industry conversation.",
+    tagline: "Where leaders ascend.",
+    accentColor: "#d4a853",
+    heroImage:
+      "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A gathering of pioneers, builders, and visionaries — three days of conversations that will define the next decade.",
+  },
+};
+
+export const luminaryMeta: TemplateMeta = {
+  id: "luminary",
+  name: "Luminary",
+  description:
+    "Celestial glamour meets Hollywood's golden age — constellations form from award categories, portraits float in dark velvet, and every scroll reveals another star. Midnight velvet, celestial gold, rose glow.",
+  eventTypes: ["award-ceremony", "corporate"],
+  tags: ["celestial", "premium", "luxurious", "cinematic", "elegant", "artistic"],
+  previewImage:
+    "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage: "A night among the stars — celebrating those who dare to shine brightest.",
+    tagline: "A night among the stars.",
+    accentColor: "#f0cf7a",
+    heroImage:
+      "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every year, we gather to honour the visionaries, the risk-takers, the ones who refuse to blend in. This year, the constellation grows brighter still.",
+  },
+};
+
+export const afterMeta: TemplateMeta = {
+  id: "after",
+  name: "After",
+  description:
+    "Underground club meets digital art — a nightlife template that breathes. Laser beams sweep across a void canvas, neon typography pulses to an imaginary beat, and the night unfolds in waves. Void black, electric pink, UV purple.",
+  eventTypes: ["party", "birthday"],
+  tags: ["neon", "bold", "vibrant", "festive", "playful", "modern"],
+  previewImage:
+    "https://images.unsplash.com/photo-1578645635737-6a88f7060a3e?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage: "The address is in your phone. The vibe is in your head. The rest is up to the night.",
+    tagline: "The night is yours.",
+    accentColor: "#ff2d78",
+    heroImage:
+      "https://images.unsplash.com/photo-1578645635737-6a88f7060a3e?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "No dress code but confidence. No entry policy but good energy. The music finds the level it needs to be. The rest is chemistry.",
+  },
+};
+
+export const convergeMeta: TemplateMeta = {
+  id: "converge",
+  name: "Converge",
+  description:
+    "Organic, warm, alive — a networking experience that feels like a living organism. Amber blobs drift in cream space, floating dots pulse like a neural network, and connection cards glow with warmth.",
+  eventTypes: ["networking-event", "corporate"],
+  tags: ["organic", "artistic", "modern", "appealing", "cool", "playful"],
+  previewImage:
+    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage: "Come as you are. Leave with a network that believes in what you build.",
+    tagline: "Where connections find their moment.",
+    accentColor: "#f5a623",
+    heroImage:
+      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "An evening designed for serendipity. No name tags, no awkward icebreakers. Just the right people, in the right room, at the right moment.",
+  },
+};
+
 export const TEMPLATES_META: TemplateMeta[] = [
+  nexusMeta,
+  pinnacleMeta,
+  luminaryMeta,
+  convergeMeta,
+  afterMeta,
   auroraMeta,
   obsidianMeta,
   celestiaMeta,
@@ -204,4 +309,12 @@ export const TAG_LABELS: Record<TemplateTag, string> = {
   editorial: "Editorial",
   neon: "Neon",
   whimsical: "Whimsical",
+  cyberpunk: "Cyberpunk",
+  glass: "Glass",
+  premium: "Premium",
+  organic: "Organic",
+  celestial: "Celestial",
+  architectural: "Architectural",
+  tech: "Tech",
+  artistic: "Artistic",
 };

@@ -475,9 +475,224 @@ const celestia: DemoBundle = {
   ],
 };
 
+// ---------- NEXUS — LCH-2026-0001 ----------
+
+const NEXUS_CODE = "LCH-2026-0001";
+const nexus: DemoBundle = {
+  event: {
+    eventCode: NEXUS_CODE,
+    eventType: "product-launch",
+    templateId: "nexus",
+    eventTitle: "Orion OS v3",
+    person1Name: "Orion Technologies",
+    tentativeDate: "2026-10-15",
+    city: "San Francisco",
+    isActive: true,
+    slug: NEXUS_CODE,
+    heroImageUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=1600&q=80",
+    tagline: "The future is arriving.",
+    invitationMessage: "Witness the dawn of a new paradigm in operating intelligence.",
+    aboutStory: "Three years of silent engineering. A thousand prototypes. One moment that changes everything. We invite you to be the first to see what's next.",
+    mainDate: "2026-10-15",
+    mainStartTime: "10:00",
+    mainEndTime: "18:00",
+    themeAccentColor: "#00f0ff",
+    venueName: "The War Memorial Opera House",
+    venueAddress: "301 Van Ness Ave, San Francisco, CA",
+    mapLink: "https://maps.google.com/?q=War+Memorial+Opera+House+San+Francisco",
+    latitude: 37.7793,
+    longitude: -122.4192,
+    contactName: "Orion Events",
+    contactEmail: "events@orion.io",
+    socialLink: "https://twitter.com/",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://events.orion.io/launch",
+  },
+  subEvents: [
+    { eventCode: NEXUS_CODE, order: 1, name: "Check-in & Immersion", date: "2026-10-15", startTime: "09:00", endTime: "10:00", venueName: "Grand Foyer", description: "Augmented-reality welcome. Grab your badge and step into the experience.", icon: "◆" },
+    { eventCode: NEXUS_CODE, order: 2, name: "The Reveal", date: "2026-10-15", startTime: "10:00", endTime: "11:30", venueName: "Main Auditorium", description: "Keynote: the story behind Orion OS v3 and a live demonstration that will redefine expectations.", icon: "✦" },
+    { eventCode: NEXUS_CODE, order: 3, name: "Deep Dive Labs", date: "2026-10-15", startTime: "13:00", endTime: "16:00", venueName: "Innovation Hall", description: "Hands-on sessions with the engineering team. Bring your questions.", icon: "⚡" },
+    { eventCode: NEXUS_CODE, order: 4, name: "Launch Gala", date: "2026-10-15", startTime: "19:00", endTime: "23:00", venueName: "Skyline Terrace", dressCode: "Cocktail / cyber-formal", description: "Celebrate with the team. Live music, immersive installations, and a view of the bay.", icon: "★" },
+  ],
+  media: [],
+};
+
+// ---------- PINNACLE — SMT-2026-0001 ----------
+
+const PINNACLE_CODE = "SMT-2026-0001";
+const pinnacle: DemoBundle = {
+  event: {
+    eventCode: PINNACLE_CODE,
+    eventType: "corporate",
+    templateId: "pinnacle",
+    eventTitle: "Apex Global Summit",
+    person1Name: "Apex Leadership Forum",
+    tentativeDate: "2026-11-03",
+    city: "Zurich",
+    isActive: true,
+    slug: PINNACLE_CODE,
+    heroImageUrl: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=80",
+    tagline: "Where leaders ascend.",
+    invitationMessage: "Three days that will reshape how you lead, build, and think about the future.",
+    aboutStory: "Apex brings together 800 decision-makers from the world's most influential companies. No booths. No pitches. Only conversations that move industries forward.",
+    mainDate: "2026-11-03",
+    mainStartTime: "08:00",
+    mainEndTime: "18:30",
+    themeAccentColor: "#d4a853",
+    venueName: "The Dolder Grand",
+    venueAddress: "Kurhausstrasse 65, 8032 Zurich, Switzerland",
+    mapLink: "https://maps.google.com/?q=The+Dolder+Grand+Zurich",
+    latitude: 47.3723,
+    longitude: 8.5809,
+    contactName: "Apex Secretariat",
+    contactEmail: "summit@apexforum.com",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://apexforum.com/register",
+  },
+  subEvents: [
+    { eventCode: PINNACLE_CODE, order: 1, name: "Opening Address", date: "2026-11-03", startTime: "08:30", endTime: "09:30", venueName: "Grand Hall", description: "State of the world — a fireside with the CEO of Apex.", icon: "✦" },
+    { eventCode: PINNACLE_CODE, order: 2, name: "Breakout: AI & Ethics", date: "2026-11-03", startTime: "10:00", endTime: "11:30", venueName: "Alpine Room", description: "How to lead responsibly in the age of autonomous systems.", icon: "◇" },
+    { eventCode: PINNACLE_CODE, order: 3, name: "Roundtable: The New Global Supply Chain", date: "2026-11-03", startTime: "14:00", endTime: "15:30", venueName: "Crystal Room", description: "Closed-door conversation with 30 industry heads.", icon: "◎" },
+    { eventCode: PINNACLE_CODE, order: 4, name: "Summit Gala Dinner", date: "2026-11-03", startTime: "19:30", endTime: "23:00", venueName: "The Rooftop", dressCode: "Black tie", description: "An evening of connection under the Swiss stars.", icon: "★" },
+  ],
+  media: [],
+};
+
+// ---------- LUMINARY — AWD-2026-0001 ----------
+
+const LUMINARY_CODE = "AWD-2026-0001";
+const luminary: DemoBundle = {
+  event: {
+    eventCode: LUMINARY_CODE,
+    eventType: "award-ceremony",
+    templateId: "luminary",
+    eventTitle: "The Luminary Awards",
+    person1Name: "The Luminary Foundation",
+    tentativeDate: "2026-12-08",
+    city: "London",
+    isActive: true,
+    slug: LUMINARY_CODE,
+    heroImageUrl: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1600&q=80",
+    tagline: "A night among the stars.",
+    invitationMessage: "An extraordinary evening celebrating those who dare to shine the brightest.",
+    aboutStory: "The Luminary Awards honour the innovators, creators, and changemakers whose work has illuminated the year. Join us for a black-tie ceremony at the Royal Albert Hall.",
+    mainDate: "2026-12-08",
+    mainStartTime: "19:00",
+    mainEndTime: "23:30",
+    themeAccentColor: "#f0cf7a",
+    venueName: "Royal Albert Hall",
+    venueAddress: "Kensington Gore, South Kensington, London SW7 2AP",
+    mapLink: "https://maps.google.com/?q=Royal+Albert+Hall+London",
+    latitude: 51.5008,
+    longitude: -0.1774,
+    contactName: "Awards Secretariat",
+    contactEmail: "awards@luminaryfoundation.org",
+    socialLink: "https://instagram.com/",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://luminaryfoundation.org/tickets",
+  },
+  subEvents: [
+    { eventCode: LUMINARY_CODE, order: 1, name: "Red Carpet Arrivals", date: "2026-12-08", startTime: "18:00", endTime: "19:00", venueName: "Royal Albert Hall Steps", dressCode: "Black tie", description: "Photography, champagne, the anticipation of a room about to witness greatness.", icon: "✦" },
+    { eventCode: LUMINARY_CODE, order: 2, name: "Opening Act", date: "2026-12-08", startTime: "19:00", endTime: "19:30", venueName: "Main Hall", description: "A cinematic tribute to the year's most remarkable achievements.", icon: "◇" },
+    { eventCode: LUMINARY_CODE, order: 3, name: "Award Presentations", date: "2026-12-08", startTime: "19:30", endTime: "22:00", venueName: "Main Hall", description: "12 categories. 12 moments that define excellence.", icon: "★" },
+    { eventCode: LUMINARY_CODE, order: 4, name: "Afterparty", date: "2026-12-08", startTime: "22:30", endTime: "01:00", venueName: "The Conservatory", dressCode: "Black tie", description: "DJ, champagne tower, and the conversations everyone's been waiting for.", icon: "♫" },
+  ],
+  media: [],
+};
+
+// ---------- CONVERGE — NET-2026-0001 ----------
+
+const CONVERGE_CODE = "NET-2026-0001";
+const converge: DemoBundle = {
+  event: {
+    eventCode: CONVERGE_CODE,
+    eventType: "networking-event",
+    templateId: "converge",
+    eventTitle: "Converge: Founders & Friends",
+    person1Name: "Converge Network",
+    tentativeDate: "2026-09-16",
+    city: "Berlin",
+    isActive: true,
+    slug: CONVERGE_CODE,
+    heroImageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1600&q=80",
+    tagline: "Where connections find their moment.",
+    invitationMessage: "An evening for founders, investors, and the people building tomorrow — no pitches, just people.",
+    aboutStory: "Converge is Berlin's most intentional networking evening. 150 carefully curated founders, operators, and investors. Warm lighting, good wine, better conversations. No stage. No agenda. Only connection.",
+    mainDate: "2026-09-16",
+    mainStartTime: "18:30",
+    mainEndTime: "22:00",
+    themeAccentColor: "#f5a623",
+    venueName: "Soho House Berlin",
+    venueAddress: "Torstrasse 1, 10119 Berlin, Germany",
+    mapLink: "https://maps.google.com/?q=Soho+House+Berlin",
+    latitude: 52.5295,
+    longitude: 13.4074,
+    contactName: "Converge Team",
+    contactEmail: "hello@converge.network",
+    socialLink: "https://linkedin.com/",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://converge.network/rsvp",
+  },
+  subEvents: [
+    { eventCode: CONVERGE_CODE, order: 1, name: "Welcome Hour", date: "2026-09-16", startTime: "18:30", endTime: "19:30", venueName: "The Library Bar", description: "Arrive, check your coat, grab a drink. The evening begins exactly as it means to go on — easy.", icon: "○" },
+    { eventCode: CONVERGE_CODE, order: 2, name: "Free Flow Conversations", date: "2026-09-16", startTime: "19:30", endTime: "21:00", venueName: "Throughout the House", description: "No name tags. No icebreakers. Just warm rooms full of interesting people.", icon: "◇" },
+    { eventCode: CONVERGE_CODE, order: 3, name: "Late Lounge", date: "2026-09-16", startTime: "21:00", endTime: "22:00", venueName: "Rooftop Terrace", description: "The conversation continues under the Berlin sky. The best connections are the ones you didn't plan.", icon: "◎" },
+  ],
+  media: [],
+};
+
+// ---------- AFTER — PAR-2026-0001 ----------
+
+const AFTER_CODE = "PAR-2026-0001";
+const after: DemoBundle = {
+  event: {
+    eventCode: AFTER_CODE,
+    eventType: "party",
+    templateId: "after",
+    eventTitle: "AFTER: Midnight Society",
+    person1Name: "Midnight Collective",
+    tentativeDate: "2026-11-28",
+    city: "Berlin",
+    isActive: true,
+    slug: AFTER_CODE,
+    heroImageUrl: "https://images.unsplash.com/photo-1578645635737-6a88f7060a3e?auto=format&fit=crop&w=1600&q=80",
+    tagline: "The night is yours.",
+    invitationMessage: "The address drops at 11. The dress code is confidence. The rest is up to the night.",
+    aboutStory: "Midnight Society is a roaming party for the insomniacs, the dancers, and the ones who find themselves in the dark. Each edition is a new location, a new sound, a new memory.",
+    mainDate: "2026-11-28",
+    mainStartTime: "23:00",
+    mainEndTime: "05:00",
+    themeAccentColor: "#ff2d78",
+    venueName: "://aboutblank",
+    venueAddress: "Markgrafendamm 24c, 10245 Berlin, Germany",
+    mapLink: "https://maps.google.com/?q=://aboutblank+Berlin",
+    latitude: 52.5036,
+    longitude: 13.4598,
+    contactName: "Midnight Collective",
+    socialLink: "https://instagram.com/",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://ra.co/events/berlin",
+  },
+  subEvents: [
+    { eventCode: AFTER_CODE, order: 1, name: "Door Opens", date: "2026-11-28", startTime: "23:00", endTime: "23:59", venueName: "://aboutblank", dressCode: "All black / UV ready", description: "The queue is part of the experience. Warm-up begins.", icon: "◈" },
+    { eventCode: AFTER_CODE, order: 2, name: "Warm-Up Set", date: "2026-11-28", startTime: "23:59", endTime: "01:30", venueName: "Room 1", description: "Deep house and slow burners. The room finds its rhythm.", icon: "◇" },
+    { eventCode: AFTER_CODE, order: 3, name: "Headliner", date: "2026-11-29", startTime: "01:30", endTime: "03:30", venueName: "Main Room", description: "The peak. Lights drop. The room becomes one organism.", icon: "✦" },
+    { eventCode: AFTER_CODE, order: 4, name: "Afterglow", date: "2026-11-29", startTime: "03:30", endTime: "05:00", venueName: "Lounge", description: "The comedown. Good conversation, low lights, last drinks.", icon: "◎" },
+  ],
+  media: [],
+};
+
 // ---------- registry ----------
 
 export const DEMO_EVENTS: Record<string, DemoBundle> = {
+  [NEXUS_CODE]: nexus,
+  [PINNACLE_CODE]: pinnacle,
+  [LUMINARY_CODE]: luminary,
+  [CONVERGE_CODE]: converge,
+  [AFTER_CODE]: after,
+  [PINNACLE_CODE]: pinnacle,
+  [LUMINARY_CODE]: luminary,
+  [CONVERGE_CODE]: converge,
   [ROYAL_CODE]: royal,
   [MINIMAL_CODE]: minimal,
   [MODERN_CODE]: modern,
@@ -489,6 +704,11 @@ export const DEMO_EVENTS: Record<string, DemoBundle> = {
 };
 
 export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
+  nexus: NEXUS_CODE,
+  pinnacle: PINNACLE_CODE,
+  luminary: LUMINARY_CODE,
+  converge: CONVERGE_CODE,
+  after: AFTER_CODE,
   royal: ROYAL_CODE,
   minimal: MINIMAL_CODE,
   modern: MODERN_CODE,
