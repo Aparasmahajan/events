@@ -19,6 +19,13 @@ const FEATURED_TAGS: TemplateTag[] = [
   "luxurious",
   "playful",
   "bold",
+  "cinematic",
+  "cyberpunk",
+  "premium",
+  "celestial",
+  "organic",
+  "tech",
+  "artistic",
 ];
 
 export function LandingTemplates() {
