@@ -140,6 +140,13 @@ export type TemplateDefaults = {
   galleryImages?: string[];
 };
 
+export type TemplateVibe = {
+  /** Human-readable category label, e.g. "Night Luxe", "Vintage Royal" */
+  label: string;
+  /** Color used for the vibe dot on template cards */
+  color: string;
+};
+
 export type TemplateMeta = {
   id: string;
   name: string;
@@ -148,6 +155,10 @@ export type TemplateMeta = {
   tags: TemplateTag[];
   previewImage: string;
   defaults: TemplateDefaults;
+  /** Emoji / symbol for the template card visual */
+  icon: string;
+  /** Vibe category shown as a colored dot on template tiles */
+  vibe: TemplateVibe;
 };
 
 export type TemplateProps = {

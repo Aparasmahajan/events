@@ -344,9 +344,9 @@ function UltimateBar({ onDeactivate }: { onDeactivate: () => void }) {
       <span className="text-[10px] uppercase tracking-[0.4em] text-[#00f0ff]/80">Ultimate Mode</span>
       <button
         onClick={onDeactivate}
-        className="ml-4 rounded px-2 py-0.5 text-[9px] uppercase tracking-[0.3em] text-white/40 transition-colors hover:text-white/80"
+        className="ml-4 rounded px-2.5 py-0.5 text-[9px] uppercase tracking-[0.3em] text-[#ff2d78]/60 transition-colors hover:text-[#ff2d78] hover:bg-[#ff2d78]/10 border border-[#ff2d78]/20 hover:border-[#ff2d78]/50"
       >
-        Exit
+        ✕ Exit
       </button>
     </motion.div>
   );
@@ -370,19 +370,28 @@ export function UltimateModeWrapper({ children }: { children: React.ReactNode })
 
       {/* Re-trigger if already active — show a mini toggle */}
       {active && (
-        <div className="fixed bottom-6 right-6 z-[100]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="fixed bottom-6 right-6 z-[100]"
+        >
           <motion.button
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => { deactivate(); }}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#ff2d78]/40 bg-black/60 text-xs backdrop-blur-xl transition-all hover:border-[#ff2d78]"
+            className="group flex items-center gap-2 rounded-full border border-[#ff2d78]/50 bg-[#0a0a12]/90 px-4 py-2.5 text-xs backdrop-blur-xl transition-all hover:border-[#ff2d78] hover:bg-[#ff2d78]/10 hover:shadow-[0_0_24px_-4px_#ff2d78]"
             aria-label="Deactivate ultimate mode"
           >
-            ✕
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ff2d78] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#ff2d78]" />
+            </span>
+            <span className="font-medium tracking-wide text-[#ff2d78]/90 group-hover:text-[#ff2d78]">
+              Exit Ultimate
+            </span>
+            <span className="text-[#ff2d78]/60 text-base leading-none group-hover:text-[#ff2d78]">✕</span>
           </motion.button>
-        </div>
+        </motion.div>
       )}
 
       <AnimatePresence>
@@ -486,6 +495,17 @@ function UltimateStyles() {
       .ultimate-active .group:hover .group-hover\\:gap-2,
       .ultimate-active .group:hover span {
         transition: all 0.3s ease;
+      }
+      /* Ensure flex children fill space properly in ultimate mode */
+      .ultimate-active .flex-1 {
+        min-height: 0;
+      }
+      .ultimate-active .grid {
+        align-items: stretch;
+      }
+      .ultimate-active .grid > * {
+        display: flex;
+        flex-direction: column;
       }
       @keyframes ultimate-glitch {
         0% { transform: translate(0); }

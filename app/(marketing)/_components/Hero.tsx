@@ -102,7 +102,7 @@ export function Hero({ demoCode }: { demoCode: string }) {
           transition={{ duration: 0.6 }}
           className="text-xs uppercase tracking-[0.4em] opacity-60 mb-4"
         >
-          A site for your big day
+          Every event deserves a celebration
         </motion.p>
 
         <motion.h1
@@ -138,7 +138,7 @@ export function Hero({ demoCode }: { demoCode: string }) {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="mt-6 max-w-2xl mx-auto text-lg opacity-80"
         >
-          Pick an event type, choose a template, send us your details. We&apos;ll handle the rest.
+          Pick your moment, choose a template that matches its soul, and we&apos;ll bring it to life — a live event site in minutes, no code needed.
         </motion.p>
 
         <motion.div

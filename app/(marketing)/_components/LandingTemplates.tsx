@@ -75,12 +75,18 @@ export function LandingTemplates() {
                 </Link>
                 <div className="p-5 flex-1 flex flex-col">
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-display text-2xl">{t.name}</h3>
-                    <div
-                      className="w-3 h-3 rounded-full flex-none mt-2"
-                      style={{ background: t.defaults.accentColor }}
-                      title="Accent color"
-                    />
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-xl flex-none" aria-hidden>{t.icon}</span>
+                      <h3 className="font-display text-2xl truncate">{t.name}</h3>
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-none mt-1.5">
+                      <div
+                        className="w-2.5 h-2.5 rounded-full flex-none"
+                        style={{ background: t.vibe.color }}
+                        title={t.vibe.label}
+                      />
+                      <span className="text-[9px] uppercase tracking-wider opacity-60 hidden sm:inline">{t.vibe.label}</span>
+                    </div>
                   </div>
                   <p className="opacity-70 text-sm mt-1">{t.description}</p>
                   <div className="flex flex-wrap gap-1.5 mt-3">

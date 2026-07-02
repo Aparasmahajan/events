@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { uploadToEvent } from "@/lib/media";
+import { uploadToEvent, HAS_CLOUDINARY_CONFIG } from "@/lib/media";
 import { getLiveByToken } from "@/lib/sheets";
 import type { MediaItem } from "@/lib/types";
 
@@ -78,11 +78,15 @@ export async function POST(req: Request, ctx: { params: { token: string } }) {
     return NextResponse.json(
       {
         error:
-          "Media host isn't configured. Set CLOUDINARY_CLOUD_NAME + CLOUDINARY_API_KEY + CLOUDINARY_API_SECRET in .env.local and restart the dev server.",
+          "No storage backend available. Tried Cloudinary (not configured) and local disk (failed). Check server logs.",
       },
       { status: 503 },
     );
   }
+
+  const warning = HAS_CLOUDINARY_CONFIG
+    ? undefined
+    : "Using local file storage (no Cloudinary config). Files are not backed up.";
 
   const item: MediaItem = {
     eventCode: code,
@@ -95,5 +99,5 @@ export async function POST(req: Request, ctx: { params: { token: string } }) {
     uploadedAt: new Date().toISOString(),
   };
 
-  return NextResponse.json({ ok: true, item });
+  return NextResponse.json({ ok: true, item, warning });
 }

@@ -6,6 +6,8 @@ export const royalMeta: TemplateMeta = {
   description: "Ornate, luxurious, traditional — built for grand Indian weddings.",
   eventTypes: ["wedding", "engagement", "anniversary"],
   tags: ["royal", "elegant", "luxurious", "traditional", "appealing", "romantic"],
+  icon: "👑",
+  vibe: { label: "Vintage Royal", color: "#a3792c" },
   previewImage:
     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -26,6 +28,8 @@ export const minimalMeta: TemplateMeta = {
   description: "Clean, editorial, whitespace-led — equally at home for weddings or corporate.",
   eventTypes: ["wedding", "corporate", "anniversary", "engagement"],
   tags: ["minimal", "decent", "modern", "elegant", "monochrome"],
+  icon: "◇",
+  vibe: { label: "Modern Minimal", color: "#555555" },
   previewImage:
     "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -43,6 +47,8 @@ export const modernMeta: TemplateMeta = {
   description: "Dark, cinematic and design-forward. For events that want to feel like an album drop.",
   eventTypes: ["wedding", "birthday", "corporate", "engagement"],
   tags: ["modern", "cool", "appealing", "bold"],
+  icon: "★",
+  vibe: { label: "Avant-Garde", color: "#7c3aed" },
   previewImage:
     "https://images.unsplash.com/photo-1513279014891-1d6cccc6a0a4?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -60,6 +66,8 @@ export const vibrantMeta: TemplateMeta = {
   description: "Bright, playful and full of confetti energy. Perfect for birthdays and engagements.",
   eventTypes: ["birthday", "engagement", "anniversary"],
   tags: ["vibrant", "cool", "appealing", "playful", "festive", "bold"],
+  icon: "🎉",
+  vibe: { label: "Festive", color: "#ff5fa2" },
   previewImage:
     "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -77,6 +85,8 @@ export const pastelMeta: TemplateMeta = {
   description: "Soft palette and gentle typography — romantic without being heavy.",
   eventTypes: ["wedding", "engagement", "anniversary", "birthday"],
   tags: ["romantic", "pastel", "elegant", "decent", "appealing"],
+  icon: "🌸",
+  vibe: { label: "Soft Romance", color: "#e8a0a0" },
   previewImage:
     "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -95,6 +105,8 @@ export const auroraMeta: TemplateMeta = {
     "A futuristic luxury wedding rendered as a cinematic experience — a hero that recedes into an editorial plate, names that letter-reveal under a moonlight beam, a sideways album of moments, and events as floating islands. Midnight, aurora light, champagne.",
   eventTypes: ["wedding", "engagement", "anniversary"],
   tags: ["cinematic", "interactive", "luxurious", "modern", "romantic", "bold", "cool"],
+  icon: "🌌",
+  vibe: { label: "Celestial", color: "#6b4e9b" },
   previewImage:
     "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -116,6 +128,8 @@ export const obsidianMeta: TemplateMeta = {
     "A cinematic film in burnt bronze on black — acts that slide over one another, sliced kinetic typography and clip-path photo reveals. Editorial, architectural, restrained.",
   eventTypes: ["wedding", "engagement", "anniversary"],
   tags: ["cinematic", "editorial", "luxurious", "bold", "modern", "cool"],
+  icon: "🔥",
+  vibe: { label: "Night Luxe", color: "#b5763a" },
   previewImage:
     "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -137,6 +151,8 @@ export const celestiaMeta: TemplateMeta = {
     "Ethereal and weightless — a glass orb that turns as you scroll, photographs that float, and a ribbon that threads the day together. Dusty lavender, ice blue, pearl.",
   eventTypes: ["wedding", "engagement", "anniversary"],
   tags: ["elegant", "romantic", "luxurious", "cinematic", "cool", "appealing"],
+  icon: "✦",
+  vibe: { label: "Ethereal", color: "#7c6bb0" },
   previewImage:
     "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -158,6 +174,8 @@ export const nexusMeta: TemplateMeta = {
     "A futuristic product reveal rendered as a cyberpunk experience — particles coalesce into meaning, a circuit-board timeline maps the roadmap, and features float as holographic glass cards. Midnight void, neon cyan, electric violet.",
   eventTypes: ["product-launch", "corporate"],
   tags: ["cyberpunk", "tech", "bold", "modern", "cinematic", "interactive"],
+  icon: "◆",
+  vibe: { label: "Cyber", color: "#00f0ff" },
   previewImage:
     "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -178,6 +196,8 @@ export const pinnacleMeta: TemplateMeta = {
     "Where leaders ascend — a glass-and-light summit experience. Crystal whites, deep navy, warm gold. Elevated typography, a climb-through agenda, and the light of a mountain peak at sunrise.",
   eventTypes: ["corporate"],
   tags: ["premium", "glass", "architectural", "minimal", "elegant", "modern"],
+  icon: "⛰",
+  vibe: { label: "Executive", color: "#1e3a5f" },
   previewImage:
     "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -198,6 +218,8 @@ export const luminaryMeta: TemplateMeta = {
     "Celestial glamour meets Hollywood's golden age — constellations form from award categories, portraits float in dark velvet, and every scroll reveals another star. Midnight velvet, celestial gold, rose glow.",
   eventTypes: ["award-ceremony", "corporate"],
   tags: ["celestial", "premium", "luxurious", "cinematic", "elegant", "artistic"],
+  icon: "⭐",
+  vibe: { label: "Gala", color: "#f0cf7a" },
   previewImage:
     "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -218,6 +240,8 @@ export const afterMeta: TemplateMeta = {
     "Underground club meets digital art — a nightlife template that breathes. Laser beams sweep across a void canvas, neon typography pulses to an imaginary beat, and the night unfolds in waves. Void black, electric pink, UV purple.",
   eventTypes: ["party", "birthday"],
   tags: ["neon", "bold", "vibrant", "festive", "playful", "modern"],
+  icon: "💫",
+  vibe: { label: "Nightlife", color: "#ff2d78" },
   previewImage:
     "https://images.unsplash.com/photo-1578645635737-6a88f7060a3e?auto=format&fit=crop&w=800&q=80",
   defaults: {
@@ -238,6 +262,8 @@ export const convergeMeta: TemplateMeta = {
     "Organic, warm, alive — a networking experience that feels like a living organism. Amber blobs drift in cream space, floating dots pulse like a neural network, and connection cards glow with warmth.",
   eventTypes: ["networking-event", "corporate"],
   tags: ["organic", "artistic", "modern", "appealing", "cool", "playful"],
+  icon: "🌀",
+  vibe: { label: "Organic", color: "#f5a623" },
   previewImage:
     "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
   defaults: {
