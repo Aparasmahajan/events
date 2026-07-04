@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const c=require\\('crypto'\\);const s=c.randomBytes\\(16\\).toString\\('hex'\\);c.scrypt\\('iPhone@2002',s,64,\\(_,h\\)=>console.log\\(s+':'+h.toString\\('hex'\\)\\)\\)\")",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' 'https://images.unsplash.com/photo-__TRACKED_VAR__?auto=format&fit=crop&w=200&q=60')",
+      "Bash(npm install *)",
+      "Bash(npx playwright *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 5 http://localhost:3000/)",
+      "Bash(npm run *)",
+      "Bash(node -e ' *)",
+      "Bash(node scripts/_rename-demo-codes.mjs)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 5 http://localhost:3000/e/DEMO-CELESTIA)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 30 http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 60 http://localhost:3000/e/DEMO-CELESTIA)",
+      "Bash(node --experimental-vm-modules -e ' *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 60 http://localhost:3000/events/wedding)"
+    ]
+  }
+}
