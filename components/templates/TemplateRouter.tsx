@@ -8,12 +8,27 @@ import { PastelTemplate } from "./pastel";
 import { AuroraTemplate } from "./aurora";
 import { ObsidianTemplate } from "./obsidian";
 import { CelestiaTemplate } from "./celestia";
+import { NexusTemplate } from "./nexus";
+import { PinnacleTemplate } from "./pinnacle";
+import { LuminaryTemplate } from "./luminary";
+import { ConvergeTemplate } from "./converge";
+import { AfterTemplate } from "./after";
 import type { TemplateProps } from "@/lib/types";
 
 type Props = TemplateProps & { templateId: string };
 
 export function TemplateRouter({ templateId, ...rest }: Props) {
   switch (templateId) {
+    case "nexus":
+      return <NexusTemplate {...rest} />;
+    case "pinnacle":
+      return <PinnacleTemplate {...rest} />;
+    case "luminary":
+      return <LuminaryTemplate {...rest} />;
+    case "converge":
+      return <ConvergeTemplate {...rest} />;
+    case "after":
+      return <AfterTemplate {...rest} />;
     case "minimal":
       return <MinimalTemplate {...rest} />;
     case "modern":

@@ -77,6 +77,51 @@ export const EVENT_TYPES: EventTypeConfig[] = [
     },
     subtypes: ["Launch", "Conference", "Summit", "Gala", "Townhall"],
   },
+  {
+    id: "product-launch",
+    label: "Product Launch",
+    codePrefix: "LCH",
+    description: "Reveal something the world hasn't seen before.",
+    emoji: "🚀",
+    conditionalFields: {
+      showPerson2: false,
+      person1Label: "Company / Brand",
+    },
+  },
+  {
+    id: "award-ceremony",
+    label: "Award Ceremony",
+    codePrefix: "AWD",
+    description: "Honouring excellence under the spotlight.",
+    emoji: "⭐",
+    conditionalFields: {
+      showPerson2: false,
+      person1Label: "Host / Organization",
+    },
+  },
+  {
+    id: "networking-event",
+    label: "Networking Event",
+    codePrefix: "NET",
+    description: "Where meaningful connections find their moment.",
+    emoji: "🌐",
+    conditionalFields: {
+      showPerson2: false,
+      person1Label: "Host / Organizer",
+    },
+  },
+  {
+    id: "party",
+    label: "Party / Nightlife",
+    codePrefix: "PAR",
+    description: "Club nights, after-parties, and unforgettable nights out.",
+    emoji: "🎉",
+    conditionalFields: {
+      showPerson2: false,
+      person1Label: "Host / DJ",
+    },
+    subtypes: ["Club Night", "Afterparty", "House Party", "Cocktail Evening", "Rave", "Private Event"],
+  },
 ];
 
 export function getEventTypeConfig(id: EventType): EventTypeConfig {

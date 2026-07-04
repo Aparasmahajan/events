@@ -34,12 +34,14 @@ export function HowItWorks() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.55, delay: i * 0.12, ease: "easeOut" }}
-          className="relative p-6 rounded-2xl border border-black/10 bg-white overflow-hidden"
+          className="relative p-6 rounded-2xl border border-black/10 bg-white overflow-hidden group"
         >
           <div
             className="absolute -top-12 -left-12 w-32 h-32 rounded-full opacity-25"
             style={{ background: `radial-gradient(circle, ${s.color}, transparent 70%)` }}
           />
+          {/* Ultimate mode ring */}
+          <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 data-[ultimate]:opacity-100" />
           <div
             className="relative h-12 w-12 rounded-full flex items-center justify-center font-display text-xl text-white mb-4"
             style={{ background: s.color }}

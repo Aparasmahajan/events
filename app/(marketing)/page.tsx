@@ -6,9 +6,11 @@ import { LandingTemplates } from "./_components/LandingTemplates";
 import { EventTypeCard } from "./_components/EventTypeCard";
 import { HowItWorks } from "./_components/HowItWorks";
 import { TEMPLATES_META } from "@/components/templates/metadata";
+import { UltimateModeWrapper } from "./_components/UltimateMode";
 
 export default function LandingPage() {
   return (
+    <UltimateModeWrapper>
     <main className="min-h-screen">
       <Hero demoCode="WED-2026-0001" />
 
@@ -108,5 +110,6 @@ export default function LandingPage() {
         <p>Event Platform · MVP build</p>
       </footer>
     </main>
+    </UltimateModeWrapper>
   );
 }
