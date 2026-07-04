@@ -50,13 +50,13 @@ export const modernMeta: TemplateMeta = {
   icon: "★",
   vibe: { label: "Avant-Garde", color: "#7c3aed" },
   previewImage:
-    "https://images.unsplash.com/photo-1513279014891-1d6cccc6a0a4?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1494203484021-3c454daf695d?auto=format&fit=crop&w=800&q=80",
   defaults: {
     invitationMessage: "Some moments deserve a soundtrack. This is one of them.",
     tagline: "It's happening.",
     accentColor: "#7c3aed",
     heroImage:
-      "https://images.unsplash.com/photo-1513279014891-1d6cccc6a0a4?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1494203484021-3c454daf695d?auto=format&fit=crop&w=1600&q=80",
   },
 };
 
@@ -243,13 +243,13 @@ export const afterMeta: TemplateMeta = {
   icon: "💫",
   vibe: { label: "Nightlife", color: "#ff2d78" },
   previewImage:
-    "https://images.unsplash.com/photo-1578645635737-6a88f7060a3e?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80",
   defaults: {
     invitationMessage: "The address is in your phone. The vibe is in your head. The rest is up to the night.",
     tagline: "The night is yours.",
     accentColor: "#ff2d78",
     heroImage:
-      "https://images.unsplash.com/photo-1578645635737-6a88f7060a3e?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80",
     aboutStory:
       "No dress code but confidence. No entry policy but good energy. The music finds the level it needs to be. The rest is chemistry.",
   },
