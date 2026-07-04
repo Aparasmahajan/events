@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { TAG_LABELS } from "@/components/templates/metadata";
-import { getDemoCodeForTemplate } from "@/lib/dummyData";
 import type { EventType, TemplateMeta, TemplateTag } from "@/lib/types";
 
 type Props = {
@@ -67,7 +66,6 @@ export function TemplatePicker({ eventType, initialTemplates }: Props) {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {visible.map((t) => {
-            const demoCode = getDemoCodeForTemplate(t.id);
             return (
               <div
                 key={t.id}
@@ -98,17 +96,13 @@ export function TemplatePicker({ eventType, initialTemplates }: Props) {
                     ))}
                   </div>
                   <div className="mt-4 flex items-center justify-between gap-3">
-                    {demoCode ? (
-                      <Link
-                        href={`/e/${demoCode}`}
-                        target="_blank"
-                        className="text-sm font-medium underline hover:no-underline"
-                      >
-                        Preview demo ↗
-                      </Link>
-                    ) : (
-                      <span />
-                    )}
+                    <Link
+                      href={`/events/${eventType}/${t.id}/preview`}
+                      target="_blank"
+                      className="text-sm font-medium underline hover:no-underline"
+                    >
+                      Preview demo ↗
+                    </Link>
                     <Link
                       href={`/events/${eventType}/${t.id}`}
                       className="text-sm font-medium px-4 py-2 rounded-full bg-neutral-900 text-white hover:bg-neutral-800 transition"

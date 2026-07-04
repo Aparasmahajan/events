@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { Countdown } from "@/components/ui/Countdown";
 import { Gallery } from "@/components/ui/Gallery";
+import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { RSVP } from "@/components/ui/RSVP";
@@ -11,6 +11,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { StickyNav } from "@/components/ui/StickyNav";
 import { Timeline } from "@/components/ui/Timeline";
 import { royalMeta } from "@/components/templates/metadata";
+import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent } from "@/lib/types";
 
 const defaults = royalMeta.defaults;
@@ -23,25 +24,25 @@ export const RoyalTemplate: TemplateComponent = ({ event, subEvents, media }) =>
     event.invitationMessage?.trim() || defaults.invitationMessage;
   const aboutStory = event.aboutStory?.trim() || defaults.aboutStory!;
   const galleryItems = media.filter((m) => m.section === "gallery");
+  // In edit mode, show the gallery section even when empty so the customer has
+  // a "+ Add photos" entry to upload the first images into.
+  const editing = !!useEditMode()?.enabled;
 
   const navItems = [
     ...(!event.hideStory ? [{ id: "story", label: "Our Story" }] : []),
     ...(!event.hideEvents && subEvents.length ? [{ id: "events", label: "Events" }] : []),
-    ...(!event.hideGallery && galleryItems.length ? [{ id: "gallery", label: "Gallery" }] : []),
+    ...(!event.hideGallery && (galleryItems.length || editing) ? [{ id: "gallery", label: "Gallery" }] : []),
     ...(!event.hideVenue ? [{ id: "venue", label: "Venue" }] : []),
     ...(event.rsvpEnabled ? [{ id: "rsvp", label: "RSVP" }] : []),
   ];
 
   return (
-    <div className="font-serif text-neutral-900 overflow-x-hidden" style={{ "--accent": accent } as React.CSSProperties}>
+    <div className="font-serif text-neutral-900 overflow-x-clip" style={{ "--accent": accent } as React.CSSProperties}>
       <section id="top" className="relative h-[100svh] min-h-[600px] flex items-center justify-center text-white overflow-hidden">
-        <Image
-          src={hero}
+        <HeroMedia
+          imageSrc={hero}
+          videoSrc={event.heroVideoUrl}
           alt={event.eventTitle}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
         <motion.div
@@ -94,7 +95,7 @@ export const RoyalTemplate: TemplateComponent = ({ event, subEvents, media }) =>
         </section>
       )}
 
-      {!event.hideGallery && galleryItems.length > 0 && (
+      {!event.hideGallery && (galleryItems.length > 0 || editing) && (
         <section id="gallery" className="py-20 sm:py-28 px-4 sm:px-6 max-w-6xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-12">

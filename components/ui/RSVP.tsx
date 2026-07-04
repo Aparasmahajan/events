@@ -29,7 +29,7 @@ export function RSVP({ enabled, linkOrContact, contactName, type }: Props) {
         <RsvpAction value={value} type={resolvedType} />
       ) : (
         <p className="opacity-70 text-sm">
-          RSVP coming soon{contactName ? ` — contact ${contactName}` : ""}.
+          {/* RSVP coming soon{contactName ? ` — contact ${contactName}` : ""}. */}
         </p>
       )}
     </div>

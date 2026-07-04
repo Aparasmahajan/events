@@ -5,7 +5,7 @@ import {
   setCustomerSessionCookie,
   verifyOTP,
 } from "@/lib/auth";
-import { sendOTPEmail } from "@/lib/email";
+import { sendAccessAlertEmail, sendOTPEmail } from "@/lib/email";
 import {
   getEnquiry,
   getLiveAuthState,
@@ -17,10 +17,63 @@ const OTP_TTL_MIN = Number(process.env.OTP_TTL_MIN ?? 10);
 const MAX_OTP_ATTEMPTS = 5;
 const LOCKOUT_MIN = 15;
 
+/* ────────────────────────────────────────────────────────────────────
+ * In-memory rate limit + alert-throttle stores.
+ *
+ * In-memory is fine for this dev/MVP — on serverless cold starts the
+ * counter resets, which means a determined attacker can bypass it. For
+ * stricter limits move these to a Redis / Upstash-backed store later.
+ * ──────────────────────────────────────────────────────────────────── */
+
+const IP_LIMIT = Math.max(1, Number(process.env.LOGIN_IP_LIMIT_PER_HOUR ?? 5));
+const IP_WINDOW_MS = 60 * 60 * 1000; // OTP requests per IP per hour (count = IP_LIMIT)
+const ipBuckets = new Map<string, { count: number; resetAt: number }>();
+
+const ALERT_THROTTLE_MS = 60 * 60 * 1000; // 1 alert per event per hour
+const lastAlertAt = new Map<string, number>();
+
+function getClientIp(req: Request): string {
+  const xff = req.headers.get("x-forwarded-for");
+  if (xff) return xff.split(",")[0]!.trim();
+  const xri = req.headers.get("x-real-ip");
+  if (xri) return xri.trim();
+  return "unknown";
+}
+
+function checkIpLimit(ip: string): { ok: boolean } {
+  const now = Date.now();
+  const a = ipBuckets.get(ip);
+  if (!a || a.resetAt < now) {
+    ipBuckets.set(ip, { count: 1, resetAt: now + IP_WINDOW_MS });
+    return { ok: true };
+  }
+  if (a.count >= IP_LIMIT) return { ok: false };
+  a.count += 1;
+  return { ok: true };
+}
+
+function shouldSendAlert(eventCode: string): boolean {
+  const last = lastAlertAt.get(eventCode) ?? 0;
+  if (Date.now() - last < ALERT_THROTTLE_MS) return false;
+  lastAlertAt.set(eventCode, Date.now());
+  return true;
+}
+
 type Body = { email?: string; code?: string };
 
 export async function POST(req: Request, ctx: { params: { token: string } }) {
   const token = ctx.params.token;
+  const ip = getClientIp(req);
+
+  // Stop runaway requesters before doing any work. Applies to both the email
+  // request step AND the code-verify step — both are POSTs to this route.
+  if (!checkIpLimit(ip).ok) {
+    return NextResponse.json(
+      { error: "Too many requests from your network. Try again in an hour." },
+      { status: 429 },
+    );
+  }
+
   let body: Body = {};
   try {
     body = (await req.json()) as Body;
@@ -53,6 +106,21 @@ export async function POST(req: Request, ctx: { params: { token: string } }) {
     const submitted = body.email.trim().toLowerCase();
     if (!expected || expected !== submitted) {
       // Generic response — don't reveal whether the email is right.
+      //
+      // If there IS a registered email and someone typed a different one, the
+      // registered customer is notified — throttled to once per hour per event
+      // so we don't spam them when an attacker probes many addresses.
+      if (expected && shouldSendAlert(code)) {
+        sendAccessAlertEmail({
+          to: expected,
+          eventCode: code,
+          attemptedEmail: submitted,
+          ip,
+          userAgent: req.headers.get("user-agent") ?? undefined,
+        }).catch(() => {
+          // Notification failure shouldn't impact the response. Already logged.
+        });
+      }
       return NextResponse.json({ ok: true, sent: true });
     }
     const otp = generateOTP();

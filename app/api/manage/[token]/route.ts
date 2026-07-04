@@ -4,14 +4,16 @@ import {
   LIVE_COL,
   getLiveByToken,
   getLiveEvent,
+  replaceMediaForCode,
   replaceSubEventsForCode,
   updateLiveFields,
 } from "@/lib/sheets";
-import type { EventData, SubEvent } from "@/lib/types";
+import type { EventData, MediaItem, SubEvent } from "@/lib/types";
 
 type Body = {
   event?: Partial<EventData>;
   subEvents?: SubEvent[];
+  media?: MediaItem[];
 };
 
 /* Map EventData field names → LIVE_COL keys. Only fields a customer is allowed
@@ -103,6 +105,11 @@ export async function PATCH(req: Request, ctx: { params: { token: string } }) {
   /* ── 2. sub-events → SubEvents tab ── */
   if (Array.isArray(body.subEvents)) {
     await replaceSubEventsForCode(code, body.subEvents);
+  }
+
+  /* ── 2b. media → Media tab ── */
+  if (Array.isArray(body.media)) {
+    await replaceMediaForCode(code, body.media);
   }
 
   /* ── 3. publish-on-complete ── */
