@@ -1,11 +1,33 @@
 import type { EventType, TemplateMeta, TemplateTag } from "@/lib/types";
 
+/*  Naming convention:
+ *  - `name`      = customer-friendly, describes what it's FOR ("Royal Heritage",
+ *                  "Cinematic Wedding", "Cyberpunk Launch"). Shown big on the card.
+ *  - `codename`  = the poetic one-word identity ("Aurora", "Obsidian", "Nexus")
+ *                  we developed each template around. Shown small under the name.
+ *                  Optional — omit when the name is already the identity.
+ *  - `description` = plain English, one sentence, "who / when to use this".
+ *                    Avoid poetic filler in this field; keep that in
+ *                    `defaults.invitationMessage` where it belongs.
+ *  - `keywords`  = search terms a customer might type — synonyms, use-case
+ *                  phrases, culture / religion words. Powers relevance scoring
+ *                  in the picker search box.
+ */
+
 export const royalMeta: TemplateMeta = {
   id: "royal",
-  name: "Royal Heritage",
-  description: "Ornate, luxurious, traditional — built for grand Indian weddings.",
+  name: "Royal Wedding",
+  codename: "Royal Heritage",
+  description:
+    "The full big-fat-Indian-wedding treatment — ornate gold serifs, room for mehndi, haldi, sangeet and pheras across days.",
   eventTypes: ["wedding", "engagement", "anniversary"],
   tags: ["royal", "elegant", "luxurious", "traditional", "appealing", "romantic"],
+  keywords: [
+    "indian wedding", "hindu wedding", "punjabi wedding", "muslim wedding",
+    "shaadi", "mandap", "traditional", "gold", "big fat indian",
+    "family wedding", "ritual", "grand", "regal", "opulent", "haldi",
+    "mehndi", "sangeet", "pheras",
+  ],
   icon: "👑",
   vibe: { label: "Vintage Royal", color: "#a3792c" },
   previewImage: "/template-previews/royal.jpg",
@@ -23,10 +45,17 @@ export const royalMeta: TemplateMeta = {
 
 export const minimalMeta: TemplateMeta = {
   id: "minimal",
-  name: "Minimal Mono",
-  description: "Clean, editorial, whitespace-led — equally at home for weddings or corporate.",
+  name: "Minimal Editorial",
+  codename: "Minimal Mono",
+  description:
+    "Whitespace-heavy, black-and-white typography. When you want the day to feel quiet and precise — small weddings, corporate meetings, workshops.",
   eventTypes: ["wedding", "corporate", "anniversary", "engagement"],
   tags: ["minimal", "decent", "modern", "elegant", "monochrome"],
+  keywords: [
+    "small wedding", "intimate", "elopement", "quiet", "clean", "minimal",
+    "black and white", "editorial", "understated", "beach wedding",
+    "modern", "corporate meeting", "workshop", "town hall",
+  ],
   icon: "◇",
   vibe: { label: "Modern Minimal", color: "#555555" },
   previewImage: "/template-previews/minimal.jpg",
@@ -41,10 +70,17 @@ export const minimalMeta: TemplateMeta = {
 
 export const modernMeta: TemplateMeta = {
   id: "modern",
-  name: "Modern Noir",
-  description: "Dark, cinematic and design-forward. For events that want to feel like an album drop.",
+  name: "Modern Bold",
+  codename: "Modern Noir",
+  description:
+    "Dark, cinematic, design-forward. Feels like the announcement for a new album — for events with attitude, not tradition.",
   eventTypes: ["wedding", "birthday", "corporate", "engagement"],
   tags: ["modern", "cool", "appealing", "bold"],
+  keywords: [
+    "dark", "cinematic", "bold", "modern", "edgy", "purple", "attitude",
+    "album drop", "urban", "cool", "millennial", "gen z", "sleek",
+    "design forward",
+  ],
   icon: "★",
   vibe: { label: "Avant-Garde", color: "#7c3aed" },
   previewImage: "/template-previews/modern.jpg",
@@ -59,10 +95,17 @@ export const modernMeta: TemplateMeta = {
 
 export const vibrantMeta: TemplateMeta = {
   id: "vibrant",
-  name: "Vibrant Pop",
-  description: "Bright, playful and full of confetti energy. Perfect for birthdays and engagements.",
+  name: "Party Pop",
+  codename: "Vibrant Pop",
+  description:
+    "Bright, chaotic, joyful. Confetti energy — for birthdays, kids' parties, and small engagements that want a lot of pink.",
   eventTypes: ["birthday", "engagement", "anniversary"],
   tags: ["vibrant", "cool", "appealing", "playful", "festive", "bold"],
+  keywords: [
+    "birthday", "kids birthday", "first birthday", "party", "pink", "playful",
+    "colorful", "fun", "engagement", "confetti", "loud", "cake", "balloon",
+    "child", "children", "sweet sixteen", "milestone birthday",
+  ],
   icon: "🎉",
   vibe: { label: "Festive", color: "#ff5fa2" },
   previewImage: "/template-previews/vibrant.jpg",
@@ -77,10 +120,17 @@ export const vibrantMeta: TemplateMeta = {
 
 export const pastelMeta: TemplateMeta = {
   id: "pastel",
-  name: "Pastel Bloom",
-  description: "Soft palette and gentle typography — romantic without being heavy.",
+  name: "Pastel Wedding",
+  codename: "Pastel Bloom",
+  description:
+    "Soft palette, gentle serifs, garden-wedding energy. For couples who want the day to feel unhurried and romantic, not loud.",
   eventTypes: ["wedding", "engagement", "anniversary", "birthday"],
   tags: ["romantic", "pastel", "elegant", "decent", "appealing"],
+  keywords: [
+    "romantic", "soft", "pastel", "garden wedding", "outdoor wedding",
+    "gentle", "floral", "rose", "engagement", "spring wedding", "delicate",
+    "unhurried", "rose gold", "bridal shower",
+  ],
   icon: "🌸",
   vibe: { label: "Soft Romance", color: "#e8a0a0" },
   previewImage: "/template-previews/pastel.jpg",
@@ -95,11 +145,17 @@ export const pastelMeta: TemplateMeta = {
 
 export const auroraMeta: TemplateMeta = {
   id: "aurora",
-  name: "Aurora",
+  name: "Cinematic Wedding",
+  codename: "Aurora",
   description:
-    "A futuristic luxury wedding rendered as a cinematic experience — a hero that recedes into an editorial plate, names that letter-reveal under a moonlight beam, a sideways album of moments, and events as floating islands. Midnight, aurora light, champagne.",
+    "A wedding rendered like a film — parallax names under a moonlight beam, a sideways photo reel, floating event islands. For weddings that want to feel like a moment.",
   eventTypes: ["wedding", "engagement", "anniversary"],
   tags: ["cinematic", "interactive", "luxurious", "modern", "romantic", "bold", "cool"],
+  keywords: [
+    "cinematic", "luxury wedding", "celestial", "moonlight", "night wedding",
+    "romantic", "premium", "champagne", "midnight", "starry", "moon",
+    "poetic", "film like", "destination wedding",
+  ],
   icon: "🌌",
   vibe: { label: "Celestial", color: "#6b4e9b" },
   previewImage: "/template-previews/aurora.jpg",
@@ -117,11 +173,17 @@ export const auroraMeta: TemplateMeta = {
 
 export const obsidianMeta: TemplateMeta = {
   id: "obsidian",
-  name: "Obsidian",
+  name: "Black-Tie Wedding",
+  codename: "Obsidian",
   description:
-    "A cinematic film in burnt bronze on black — acts that slide over one another, sliced kinetic typography and clip-path photo reveals. Editorial, architectural, restrained.",
+    "Burnt bronze on black, scenes that slide over each other, sliced typography. Editorial and restrained — for couples who want a black-tie night with weight.",
   eventTypes: ["wedding", "engagement", "anniversary"],
   tags: ["cinematic", "editorial", "luxurious", "bold", "modern", "cool"],
+  keywords: [
+    "black tie", "editorial", "bronze", "luxury wedding", "cinematic",
+    "restrained", "night wedding", "moody", "premium", "dinner",
+    "long table", "architectural", "formal", "cocktail wedding",
+  ],
   icon: "🔥",
   vibe: { label: "Night Luxe", color: "#b5763a" },
   previewImage: "/template-previews/obsidian.jpg",
@@ -139,11 +201,17 @@ export const obsidianMeta: TemplateMeta = {
 
 export const celestiaMeta: TemplateMeta = {
   id: "celestia",
-  name: "Celestia",
+  name: "Ethereal Wedding",
+  codename: "Celestia",
   description:
-    "Ethereal and weightless — a glass orb that turns as you scroll, photographs that float, and a ribbon that threads the day together. Dusty lavender, ice blue, pearl.",
+    "Glass orb that turns as you scroll, floating photos, a ribbon that threads the day. Dusty lavender and ice blue — for weddings that feel weightless.",
   eventTypes: ["wedding", "engagement", "anniversary"],
   tags: ["elegant", "romantic", "luxurious", "cinematic", "cool", "appealing"],
+  keywords: [
+    "ethereal", "romantic", "celestial", "lavender", "floating", "dreamy",
+    "delicate", "wedding", "spring wedding", "pearl", "ice blue",
+    "weightless", "otherworldly", "fairy tale",
+  ],
   icon: "✦",
   vibe: { label: "Ethereal", color: "#7c6bb0" },
   previewImage: "/template-previews/celestia.jpg",
@@ -161,11 +229,17 @@ export const celestiaMeta: TemplateMeta = {
 
 export const nexusMeta: TemplateMeta = {
   id: "nexus",
-  name: "Nexus",
+  name: "Cyberpunk Launch",
+  codename: "Nexus",
   description:
-    "A futuristic product reveal rendered as a cyberpunk experience — particles coalesce into meaning, a circuit-board timeline maps the roadmap, and features float as holographic glass cards. Midnight void, neon cyan, electric violet.",
+    "Neon cyan on midnight. Particles coalesce, a circuit-board timeline, holographic feature cards. For tech product reveals and futuristic launches.",
   eventTypes: ["product-launch", "corporate"],
   tags: ["cyberpunk", "tech", "bold", "modern", "cinematic", "interactive"],
+  keywords: [
+    "product launch", "tech launch", "cyberpunk", "neon", "futuristic",
+    "startup launch", "reveal", "software launch", "hardware launch",
+    "cyan", "roadmap", "keynote", "beta", "unveiling", "release",
+  ],
   icon: "◆",
   vibe: { label: "Cyber", color: "#00f0ff" },
   previewImage: "/template-previews/nexus.jpg",
@@ -182,11 +256,17 @@ export const nexusMeta: TemplateMeta = {
 
 export const pinnacleMeta: TemplateMeta = {
   id: "pinnacle",
-  name: "Pinnacle",
+  name: "Executive Summit",
+  codename: "Pinnacle",
   description:
-    "Where leaders ascend — a glass-and-light summit experience. Crystal whites, deep navy, warm gold. Elevated typography, a climb-through agenda, and the light of a mountain peak at sunrise.",
+    "Glass, deep navy, warm gold. For C-suite conferences, invite-only summits, and premium industry gatherings.",
   eventTypes: ["corporate"],
   tags: ["premium", "glass", "architectural", "minimal", "elegant", "modern"],
+  keywords: [
+    "conference", "summit", "executive", "leadership", "ceo", "premium",
+    "corporate", "elite", "glass", "navy", "leaders", "invite only",
+    "c-suite", "board", "industry", "keynote",
+  ],
   icon: "⛰",
   vibe: { label: "Executive", color: "#1e3a5f" },
   previewImage: "/template-previews/pinnacle.jpg",
@@ -203,11 +283,17 @@ export const pinnacleMeta: TemplateMeta = {
 
 export const luminaryMeta: TemplateMeta = {
   id: "luminary",
-  name: "Luminary",
+  name: "Awards Gala",
+  codename: "Luminary",
   description:
-    "Celestial glamour meets Hollywood's golden age — constellations form from award categories, portraits float in dark velvet, and every scroll reveals another star. Midnight velvet, celestial gold, rose glow.",
+    "Celestial glamour meets Hollywood's golden age. For award ceremonies, black-tie honours, and annual recognition nights.",
   eventTypes: ["award-ceremony", "corporate"],
   tags: ["celestial", "premium", "luxurious", "cinematic", "elegant", "artistic"],
+  keywords: [
+    "awards", "gala", "black tie", "glamour", "hollywood", "red carpet",
+    "ceremony", "recognition", "celebration", "stars", "honor",
+    "annual awards", "honours", "prize", "vip",
+  ],
   icon: "⭐",
   vibe: { label: "Gala", color: "#f0cf7a" },
   previewImage: "/template-previews/luminary.jpg",
@@ -224,11 +310,17 @@ export const luminaryMeta: TemplateMeta = {
 
 export const afterMeta: TemplateMeta = {
   id: "after",
-  name: "After",
+  name: "Underground Nightlife",
+  codename: "After",
   description:
-    "Underground club meets digital art — a nightlife template that breathes. Laser beams sweep across a void canvas, neon typography pulses to an imaginary beat, and the night unfolds in waves. Void black, electric pink, UV purple.",
+    "Underground club meets digital art. Laser beams, neon typography, UV purple. For DJ nights, afterparties, and warehouse events.",
   eventTypes: ["party", "birthday"],
   tags: ["neon", "bold", "vibrant", "festive", "playful", "modern"],
+  keywords: [
+    "nightlife", "party", "club night", "dj", "afterparty", "rave",
+    "underground", "neon", "warehouse", "electronic", "techno", "house",
+    "late night", "berghain", "boiler room", "renegade",
+  ],
   icon: "💫",
   vibe: { label: "Nightlife", color: "#ff2d78" },
   previewImage: "/template-previews/after.jpg",
@@ -245,11 +337,17 @@ export const afterMeta: TemplateMeta = {
 
 export const convergeMeta: TemplateMeta = {
   id: "converge",
-  name: "Converge",
+  name: "Warm Networking",
+  codename: "Converge",
   description:
-    "Organic, warm, alive — a networking experience that feels like a living organism. Amber blobs drift in cream space, floating dots pulse like a neural network, and connection cards glow with warmth.",
+    "Organic and warm — amber blobs, floating dots that pulse like a neural network. For meetups and networking events that shouldn't feel corporate.",
   eventTypes: ["networking-event", "corporate"],
   tags: ["organic", "artistic", "modern", "appealing", "cool", "playful"],
+  keywords: [
+    "networking", "meetup", "warm", "organic", "friendly", "community",
+    "small event", "professional", "founders", "workshop", "salon",
+    "startup meetup", "coffee chat", "roundtable", "conference dinner",
+  ],
   icon: "🌀",
   vibe: { label: "Organic", color: "#f5a623" },
   previewImage: "/template-previews/converge.jpg",
@@ -297,6 +395,43 @@ export function filterTemplates(opts: {
     if (opts.tags && opts.tags.length > 0 && !opts.tags.some((tag) => t.tags.includes(tag))) return false;
     return true;
   });
+}
+
+/**
+ * Score how well a template matches a free-text query. Higher = better match.
+ * Empty query → 1 (all templates equally "match"). Zero result → template
+ * doesn't contain any query word anywhere.
+ *
+ * Weights are tuned so that:
+ *   - matching the name / codename beats matching a tag (name is stronger)
+ *   - matching a keyword phrase is worth more than a generic tag hit
+ *   - description hits are the weakest signal (lots of common English words)
+ */
+export function scoreTemplateMatch(t: TemplateMeta, query: string): number {
+  const q = query.trim().toLowerCase();
+  if (!q) return 1;
+  const tokens = q.split(/\s+/).filter(Boolean);
+  if (tokens.length === 0) return 1;
+
+  // Field bag with per-field weight.
+  const fields: { text: string; weight: number }[] = [
+    { text: t.name.toLowerCase(), weight: 5 },
+    { text: (t.codename ?? "").toLowerCase(), weight: 3 },
+    { text: t.description.toLowerCase(), weight: 2 },
+    { text: t.tags.join(" ").toLowerCase(), weight: 3 },
+    { text: (t.keywords ?? []).join(" | ").toLowerCase(), weight: 4 },
+    { text: t.vibe.label.toLowerCase(), weight: 3 },
+    { text: t.eventTypes.join(" ").toLowerCase(), weight: 3 },
+  ];
+
+  let score = 0;
+  for (const token of tokens) {
+    for (const f of fields) {
+      if (!f.text) continue;
+      if (f.text.includes(token)) score += f.weight;
+    }
+  }
+  return score;
 }
 
 export const TAG_LABELS: Record<TemplateTag, string> = {

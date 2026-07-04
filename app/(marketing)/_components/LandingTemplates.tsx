@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState } from "react";
-import { TAG_LABELS, TEMPLATES_META } from "@/components/templates/metadata";
+import { TAG_LABELS, TEMPLATES_META, scoreTemplateMatch } from "@/components/templates/metadata";
 import type { TemplateTag } from "@/lib/types";
 
 const FEATURED_TAGS: TemplateTag[] = [
@@ -31,14 +31,49 @@ const FEATURED_TAGS: TemplateTag[] = [
 export function LandingTemplates() {
   const reduce = useReducedMotion();
   const [tag, setTag] = useState<TemplateTag | "all">("all");
+  const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {
-    if (tag === "all") return TEMPLATES_META;
-    return TEMPLATES_META.filter((t) => t.tags.includes(tag));
-  }, [tag]);
+    const tagFiltered =
+      tag === "all"
+        ? TEMPLATES_META
+        : TEMPLATES_META.filter((t) => t.tags.includes(tag));
+    if (!query.trim()) return tagFiltered;
+    return tagFiltered
+      .map((t) => ({ t, score: scoreTemplateMatch(t, query) }))
+      .filter((x) => x.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((x) => x.t);
+  }, [tag, query]);
 
   return (
     <>
+      <div className="max-w-2xl mx-auto mb-8">
+        <label className="block">
+          <span className="block text-xs uppercase tracking-widest opacity-70 mb-2 text-center">
+            Describe your event
+          </span>
+          <div className="relative">
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="e.g. black-tie wedding, kids birthday, product launch, afterparty…"
+              className="w-full rounded-full border border-black/15 bg-white px-5 py-3 text-sm pr-24 focus:outline-none focus:border-black/40 shadow-sm"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-widest opacity-60 hover:opacity-100 underline"
+              >
+                clear
+              </button>
+            )}
+          </div>
+        </label>
+      </div>
+
       <div className="flex flex-wrap justify-center gap-2 mb-10">
         <FilterPill active={tag === "all"} onClick={() => setTag("all")}>
           All
@@ -75,9 +110,16 @@ export function LandingTemplates() {
                 </Link>
                 <div className="p-5 flex-1 flex flex-col">
                   <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-xl flex-none" aria-hidden>{t.icon}</span>
-                      <h3 className="font-display text-2xl truncate">{t.name}</h3>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-xl flex-none" aria-hidden>{t.icon}</span>
+                        <h3 className="font-display text-2xl truncate">{t.name}</h3>
+                      </div>
+                      {t.codename && (
+                        <p className="text-[10px] uppercase tracking-widest opacity-50 mt-1 ml-8">
+                          {t.codename}
+                        </p>
+                      )}
                     </div>
                     <div className="flex items-center gap-1.5 flex-none mt-1.5">
                       <div
@@ -88,7 +130,7 @@ export function LandingTemplates() {
                       <span className="text-[9px] uppercase tracking-wider opacity-60 hidden sm:inline">{t.vibe.label}</span>
                     </div>
                   </div>
-                  <p className="opacity-70 text-sm mt-1">{t.description}</p>
+                  <p className="opacity-70 text-sm mt-2 leading-snug">{t.description}</p>
                   <div className="flex flex-wrap gap-1.5 mt-3">
                     {t.tags.slice(0, 5).map((tg) => (
                       <span
@@ -122,7 +164,21 @@ export function LandingTemplates() {
       </motion.div>
 
       {filtered.length === 0 && (
-        <p className="text-center py-12 opacity-70">No templates with that vibe yet.</p>
+        <div className="text-center py-12">
+          <p className="opacity-70">
+            {query
+              ? `Nothing matches "${query}" yet.`
+              : "No templates with that vibe yet."}
+          </p>
+          {query && (
+            <button
+              onClick={() => setQuery("")}
+              className="text-sm underline mt-3 opacity-70 hover:opacity-100"
+            >
+              Clear search
+            </button>
+          )}
+        </div>
       )}
     </>
   );

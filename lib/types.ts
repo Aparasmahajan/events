@@ -149,10 +149,20 @@ export type TemplateVibe = {
 
 export type TemplateMeta = {
   id: string;
+  /** Customer-friendly title shown on picker cards (e.g. "Cinematic Wedding"). */
   name: string;
+  /** Optional poetic identity kept for personality (e.g. "Aurora"). Shown as
+   *  a small subtitle on cards. Falls back to nothing when unset. */
+  codename?: string;
+  /** Plain-English one-liner — "who / when to use this". */
   description: string;
   eventTypes: EventType[];
   tags: TemplateTag[];
+  /** Free-text search terms — synonyms + use-case phrases customers might
+   *  type into the picker search box (e.g. ["indian wedding", "haldi", "big
+   *  fat", "gold"]). Contributes the highest weight in relevance scoring
+   *  after the name itself. */
+  keywords?: string[];
   previewImage: string;
   defaults: TemplateDefaults;
   /** Emoji / symbol for the template card visual */
