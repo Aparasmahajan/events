@@ -56,7 +56,7 @@ function hero(code: string, id: string): MediaItem {
 
 // ---------- ROYAL — WED-2026-0001 ----------
 
-const ROYAL_CODE = "WED-2026-0001";
+const ROYAL_CODE = "DEMO-ROYAL";
 const royal: DemoBundle = {
   event: {
     eventCode: ROYAL_CODE,
@@ -115,7 +115,7 @@ const royal: DemoBundle = {
 
 // ---------- MINIMAL — WED-2026-0002 ----------
 
-const MINIMAL_CODE = "WED-2026-0002";
+const MINIMAL_CODE = "DEMO-MINIMAL";
 const minimal: DemoBundle = {
   event: {
     eventCode: MINIMAL_CODE,
@@ -165,7 +165,7 @@ const minimal: DemoBundle = {
 
 // ---------- MODERN — CORP-2026-0001 ----------
 
-const MODERN_CODE = "CORP-2026-0001";
+const MODERN_CODE = "DEMO-MODERN";
 const modern: DemoBundle = {
   event: {
     eventCode: MODERN_CODE,
@@ -216,7 +216,7 @@ const modern: DemoBundle = {
 
 // ---------- VIBRANT — BDY-2026-0001 ----------
 
-const VIBRANT_CODE = "BDY-2026-0001";
+const VIBRANT_CODE = "DEMO-VIBRANT";
 const vibrant: DemoBundle = {
   event: {
     eventCode: VIBRANT_CODE,
@@ -266,7 +266,7 @@ const vibrant: DemoBundle = {
 
 // ---------- PASTEL — ENG-2026-0001 ----------
 
-const PASTEL_CODE = "ENG-2026-0001";
+const PASTEL_CODE = "DEMO-PASTEL";
 const pastel: DemoBundle = {
   event: {
     eventCode: PASTEL_CODE,
@@ -316,7 +316,7 @@ const pastel: DemoBundle = {
 
 // ---------- AURORA — WED-2026-0003 ----------
 
-const AURORA_CODE = "WED-2026-0003";
+const AURORA_CODE = "DEMO-AURORA";
 const aurora: DemoBundle = {
   event: {
     eventCode: AURORA_CODE,
@@ -372,7 +372,7 @@ const aurora: DemoBundle = {
 
 // ---------- OBSIDIAN — WED-2026-0004 ----------
 
-const OBSIDIAN_CODE = "WED-2026-0004";
+const OBSIDIAN_CODE = "DEMO-OBSIDIAN";
 const obsidian: DemoBundle = {
   event: {
     eventCode: OBSIDIAN_CODE,
@@ -425,7 +425,7 @@ const obsidian: DemoBundle = {
 
 // ---------- CELESTIA — WED-2026-0005 ----------
 
-const CELESTIA_CODE = "WED-2026-0005";
+const CELESTIA_CODE = "DEMO-CELESTIA";
 const celestia: DemoBundle = {
   event: {
     eventCode: CELESTIA_CODE,
@@ -477,7 +477,7 @@ const celestia: DemoBundle = {
 
 // ---------- NEXUS — LCH-2026-0001 ----------
 
-const NEXUS_CODE = "LCH-2026-0001";
+const NEXUS_CODE = "DEMO-NEXUS";
 const nexus: DemoBundle = {
   event: {
     eventCode: NEXUS_CODE,
@@ -519,7 +519,7 @@ const nexus: DemoBundle = {
 
 // ---------- PINNACLE — SMT-2026-0001 ----------
 
-const PINNACLE_CODE = "SMT-2026-0001";
+const PINNACLE_CODE = "DEMO-PINNACLE";
 const pinnacle: DemoBundle = {
   event: {
     eventCode: PINNACLE_CODE,
@@ -560,7 +560,7 @@ const pinnacle: DemoBundle = {
 
 // ---------- LUMINARY — AWD-2026-0001 ----------
 
-const LUMINARY_CODE = "AWD-2026-0001";
+const LUMINARY_CODE = "DEMO-LUMINARY";
 const luminary: DemoBundle = {
   event: {
     eventCode: LUMINARY_CODE,
@@ -602,7 +602,7 @@ const luminary: DemoBundle = {
 
 // ---------- CONVERGE — NET-2026-0001 ----------
 
-const CONVERGE_CODE = "NET-2026-0001";
+const CONVERGE_CODE = "DEMO-CONVERGE";
 const converge: DemoBundle = {
   event: {
     eventCode: CONVERGE_CODE,
@@ -643,7 +643,7 @@ const converge: DemoBundle = {
 
 // ---------- AFTER — PAR-2026-0001 ----------
 
-const AFTER_CODE = "PAR-2026-0001";
+const AFTER_CODE = "DEMO-AFTER";
 const after: DemoBundle = {
   event: {
     eventCode: AFTER_CODE,

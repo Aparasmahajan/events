@@ -8,8 +8,7 @@ export const royalMeta: TemplateMeta = {
   tags: ["royal", "elegant", "luxurious", "traditional", "appealing", "romantic"],
   icon: "👑",
   vibe: { label: "Vintage Royal", color: "#a3792c" },
-  previewImage:
-    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/royal.jpg",
   defaults: {
     invitationMessage:
       "With the blessings of our families, we invite you to share in the joy of our wedding celebration.",
@@ -30,8 +29,7 @@ export const minimalMeta: TemplateMeta = {
   tags: ["minimal", "decent", "modern", "elegant", "monochrome"],
   icon: "◇",
   vibe: { label: "Modern Minimal", color: "#555555" },
-  previewImage:
-    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/minimal.jpg",
   defaults: {
     invitationMessage: "We'd be honored by your presence.",
     tagline: "A quiet kind of joy.",
@@ -49,8 +47,7 @@ export const modernMeta: TemplateMeta = {
   tags: ["modern", "cool", "appealing", "bold"],
   icon: "★",
   vibe: { label: "Avant-Garde", color: "#7c3aed" },
-  previewImage:
-    "https://images.unsplash.com/photo-1494203484021-3c454daf695d?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/modern.jpg",
   defaults: {
     invitationMessage: "Some moments deserve a soundtrack. This is one of them.",
     tagline: "It's happening.",
@@ -68,8 +65,7 @@ export const vibrantMeta: TemplateMeta = {
   tags: ["vibrant", "cool", "appealing", "playful", "festive", "bold"],
   icon: "🎉",
   vibe: { label: "Festive", color: "#ff5fa2" },
-  previewImage:
-    "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/vibrant.jpg",
   defaults: {
     invitationMessage: "Confetti, cake and chaos — you're in.",
     tagline: "Let's party!",
@@ -87,8 +83,7 @@ export const pastelMeta: TemplateMeta = {
   tags: ["romantic", "pastel", "elegant", "decent", "appealing"],
   icon: "🌸",
   vibe: { label: "Soft Romance", color: "#e8a0a0" },
-  previewImage:
-    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/pastel.jpg",
   defaults: {
     invitationMessage: "A soft hello, a warm welcome — we'd love you to be there.",
     tagline: "Soft beginnings.",
@@ -107,8 +102,7 @@ export const auroraMeta: TemplateMeta = {
   tags: ["cinematic", "interactive", "luxurious", "modern", "romantic", "bold", "cool"],
   icon: "🌌",
   vibe: { label: "Celestial", color: "#6b4e9b" },
-  previewImage:
-    "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/aurora.jpg",
   defaults: {
     invitationMessage:
       "Beneath a sky we'll never forget, we ask you to witness the night two stories become one.",
@@ -130,8 +124,7 @@ export const obsidianMeta: TemplateMeta = {
   tags: ["cinematic", "editorial", "luxurious", "bold", "modern", "cool"],
   icon: "🔥",
   vibe: { label: "Night Luxe", color: "#b5763a" },
-  previewImage:
-    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/obsidian.jpg",
   defaults: {
     invitationMessage:
       "No grand announcement. Only the people who matter, in a room that will remember the night.",
@@ -153,8 +146,7 @@ export const celestiaMeta: TemplateMeta = {
   tags: ["elegant", "romantic", "luxurious", "cinematic", "cool", "appealing"],
   icon: "✦",
   vibe: { label: "Ethereal", color: "#7c6bb0" },
-  previewImage:
-    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/celestia.jpg",
   defaults: {
     invitationMessage:
       "Somewhere between a wish and a certainty, we found each other — and we'd love you there when we make it real.",
@@ -176,8 +168,7 @@ export const nexusMeta: TemplateMeta = {
   tags: ["cyberpunk", "tech", "bold", "modern", "cinematic", "interactive"],
   icon: "◆",
   vibe: { label: "Cyber", color: "#00f0ff" },
-  previewImage:
-    "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/nexus.jpg",
   defaults: {
     invitationMessage: "The future isn't waiting. Neither should you.",
     tagline: "The future is arriving.",
@@ -198,8 +189,7 @@ export const pinnacleMeta: TemplateMeta = {
   tags: ["premium", "glass", "architectural", "minimal", "elegant", "modern"],
   icon: "⛰",
   vibe: { label: "Executive", color: "#1e3a5f" },
-  previewImage:
-    "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/pinnacle.jpg",
   defaults: {
     invitationMessage: "Join the brightest minds at the peak of industry conversation.",
     tagline: "Where leaders ascend.",
@@ -220,8 +210,7 @@ export const luminaryMeta: TemplateMeta = {
   tags: ["celestial", "premium", "luxurious", "cinematic", "elegant", "artistic"],
   icon: "⭐",
   vibe: { label: "Gala", color: "#f0cf7a" },
-  previewImage:
-    "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/luminary.jpg",
   defaults: {
     invitationMessage: "A night among the stars — celebrating those who dare to shine brightest.",
     tagline: "A night among the stars.",
@@ -242,8 +231,7 @@ export const afterMeta: TemplateMeta = {
   tags: ["neon", "bold", "vibrant", "festive", "playful", "modern"],
   icon: "💫",
   vibe: { label: "Nightlife", color: "#ff2d78" },
-  previewImage:
-    "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/after.jpg",
   defaults: {
     invitationMessage: "The address is in your phone. The vibe is in your head. The rest is up to the night.",
     tagline: "The night is yours.",
@@ -264,8 +252,7 @@ export const convergeMeta: TemplateMeta = {
   tags: ["organic", "artistic", "modern", "appealing", "cool", "playful"],
   icon: "🌀",
   vibe: { label: "Organic", color: "#f5a623" },
-  previewImage:
-    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/template-previews/converge.jpg",
   defaults: {
     invitationMessage: "Come as you are. Leave with a network that believes in what you build.",
     tagline: "Where connections find their moment.",
