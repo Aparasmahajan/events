@@ -30,6 +30,18 @@ import { GardenTemplate } from "./garden";
 import { CarnivalTemplate } from "./carnival";
 import { GenesisTemplate } from "./genesis";
 import { LibraryTemplate } from "./library";
+import { SkytempleTemplate } from "./skytemple";
+import { SymphonyTemplate } from "./symphony";
+import { InfinityTemplate } from "./infinity";
+import { LovestarsTemplate } from "./lovestars";
+import { HorizonTemplate } from "./horizon";
+import { ToyboxTemplate } from "./toybox";
+import { TimemachineTemplate } from "./timemachine";
+import { DreamfactoryTemplate } from "./dreamfactory";
+import { QuantumTemplate } from "./quantum";
+import { ImmortalsTemplate } from "./immortals";
+import { EcosystemTemplate } from "./ecosystem";
+import { InfinityclubTemplate } from "./infinityclub";
 import type { TemplateProps } from "@/lib/types";
 
 type Props = TemplateProps & { templateId: string };
@@ -98,34 +110,30 @@ export function TemplateRouter({ templateId, ...rest }: Props) {
       return <GenesisTemplate {...rest} />;
     case "library":
       return <LibraryTemplate {...rest} />;
-    // Templates below have metadata + demo bundles + preview entries, but no
-    // dedicated component yet — they fall back to the closest existing template
-    // (chosen so palette + event-type story feel right) until the real one
-    // ships. Update these cases as components land.
     case "skytemple":
-      return <CelestiaTemplate {...rest} />;
+      return <SkytempleTemplate {...rest} />;
     case "symphony":
-      return <AuroraTemplate {...rest} />;
+      return <SymphonyTemplate {...rest} />;
     case "infinity":
-      return <PromiseTemplate {...rest} />;
+      return <InfinityTemplate {...rest} />;
     case "lovestars":
-      return <ConstellaTemplate {...rest} />;
+      return <LovestarsTemplate {...rest} />;
     case "horizon":
-      return <PastelTemplate {...rest} />;
+      return <HorizonTemplate {...rest} />;
     case "toybox":
-      return <VibrantTemplate {...rest} />;
+      return <ToyboxTemplate {...rest} />;
     case "timemachine":
-      return <ChaptersTemplate {...rest} />;
+      return <TimemachineTemplate {...rest} />;
     case "dreamfactory":
-      return <VibrantTemplate {...rest} />;
+      return <DreamfactoryTemplate {...rest} />;
     case "quantum":
-      return <PinnacleTemplate {...rest} />;
+      return <QuantumTemplate {...rest} />;
     case "immortals":
-      return <OdeonTemplate {...rest} />;
+      return <ImmortalsTemplate {...rest} />;
     case "ecosystem":
-      return <ConstellaTemplate {...rest} />;
+      return <EcosystemTemplate {...rest} />;
     case "infinityclub":
-      return <MetropolisTemplate {...rest} />;
+      return <InfinityclubTemplate {...rest} />;
     case "royal":
     default:
       return <RoyalTemplate {...rest} />;
