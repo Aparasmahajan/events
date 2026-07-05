@@ -135,7 +135,7 @@ function TunnelHero({ reduce, accent }: { reduce: boolean; accent: string }) {
 }
 
 function Ticker({ text, color }: { text: string; color: string }) {
-  const reduce = useReducedMotion();
+  const reduce = !!useReducedMotion();
   const line = `${text}   //   `.repeat(6);
   return (
     <div className="relative overflow-hidden border-y" style={{ borderColor: `${color}55`, background: "#00000055" }}>
@@ -153,7 +153,7 @@ function Ticker({ text, color }: { text: string; color: string }) {
 }
 
 function Rooms({ items, accent }: { items: SubEvent[]; accent: string }) {
-  const reduce = useReducedMotion();
+  const reduce = !!useReducedMotion();
   const sorted = [...items].sort((a, b) => a.order - b.order);
   return (
     <div className="mx-auto grid max-w-6xl gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3">
