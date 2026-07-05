@@ -36,6 +36,17 @@ const TEMPLATES = [
   { id: "luminary", code: "DEMO-LUMINARY" },
   { id: "converge", code: "DEMO-CONVERGE" },
   { id: "after", code: "DEMO-AFTER" },
+  { id: "empyrean", code: "DEMO-EMPYREAN" },
+  { id: "prism", code: "DEMO-PRISM" },
+  { id: "orbit", code: "DEMO-ORBIT" },
+  { id: "arcade", code: "DEMO-ARCADE" },
+  { id: "promise", code: "DEMO-PROMISE" },
+  { id: "chapters", code: "DEMO-CHAPTERS" },
+  { id: "neural", code: "DEMO-NEURAL" },
+  { id: "unveil", code: "DEMO-UNVEIL" },
+  { id: "odeon", code: "DEMO-ODEON" },
+  { id: "constella", code: "DEMO-CONSTELLA" },
+  { id: "metropolis", code: "DEMO-METROPOLIS" },
 ];
 
 const BASE_URL = process.env.PREVIEW_BASE_URL ?? "http://localhost:3000";

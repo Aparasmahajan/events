@@ -335,6 +335,313 @@ export const afterMeta: TemplateMeta = {
   },
 };
 
+export const empyreanMeta: TemplateMeta = {
+  id: "empyrean",
+  name: "Divine Wedding",
+  codename: "Empyrean",
+  description:
+    "Alabaster marble, drifting clouds, a staircase to eternity. For weddings that want to feel sacred, otherworldly, chapel-quiet.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["luxurious", "elegant", "romantic", "celestial", "premium", "artistic"],
+  keywords: [
+    "divine", "heavenly", "chapel", "cathedral", "sacred", "marble", "clouds",
+    "alabaster", "gold leaf", "spiritual", "religious wedding", "church wedding",
+    "ivory", "grand wedding", "sky", "angel", "ethereal wedding",
+  ],
+  icon: "☁",
+  vibe: { label: "Divine", color: "#c8a460" },
+  previewImage: "/template-previews/empyrean.jpg",
+  defaults: {
+    invitationMessage:
+      "Beneath a sky that has watched every love that came before ours, we invite you to witness the one we are making now.",
+    tagline: "A love ascending.",
+    accentColor: "#c8a460",
+    heroImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Some love stories are written on paper. Ours was written in light — the kind that pours through stained glass at four in the afternoon, when nobody is watching but the room already knows.",
+  },
+};
+
+export const prismMeta: TemplateMeta = {
+  id: "prism",
+  name: "Crystal Wedding",
+  codename: "Prism",
+  description:
+    "Floating glass, prism refractions, rainbow light spilling across sapphire. For couples who want their day to feel like light itself.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["luxurious", "elegant", "modern", "glass", "cinematic", "artistic", "premium"],
+  keywords: [
+    "crystal", "prism", "glass wedding", "rainbow", "iridescent", "sapphire",
+    "diamond wedding", "modern luxury wedding", "clear", "translucent",
+    "reflective", "art wedding", "contemporary wedding",
+  ],
+  icon: "💎",
+  vibe: { label: "Crystalline", color: "#7ea8ff" },
+  previewImage: "/template-previews/prism.jpg",
+  defaults: {
+    invitationMessage:
+      "Light bends. Colors emerge. Two lives, refracted through one moment — we would love you there when it happens.",
+    tagline: "Light meets light.",
+    accentColor: "#7ea8ff",
+    heroImage:
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A prism doesn't invent color — it reveals what was always in the light. Our years together have felt exactly like that.",
+  },
+};
+
+export const orbitMeta: TemplateMeta = {
+  id: "orbit",
+  name: "Cosmic Birthday",
+  codename: "Orbit",
+  description:
+    "Balloons become planets, confetti becomes shooting stars. A playful little universe built around the birthday kid.",
+  eventTypes: ["birthday"],
+  tags: ["playful", "vibrant", "cool", "festive", "whimsical", "celestial", "bold"],
+  keywords: [
+    "kids birthday", "space birthday", "planet party", "astronaut", "rocket",
+    "cosmic", "playful", "colorful", "child", "children", "5th birthday",
+    "10th birthday", "space theme", "solar system", "stars",
+  ],
+  icon: "🪐",
+  vibe: { label: "Cosmic Play", color: "#ff6f91" },
+  previewImage: "/template-previews/orbit.jpg",
+  defaults: {
+    invitationMessage:
+      "Blast off with us — cake, chaos, and a small human who's about to become one year more important.",
+    tagline: "The birthday universe.",
+    accentColor: "#ff6f91",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every year they add a new orbit — new obsessions, new friends, new opinions on dinner. Come help us celebrate the whole galaxy of them.",
+  },
+};
+
+export const arcadeMeta: TemplateMeta = {
+  id: "arcade",
+  name: "Retro Arcade Party",
+  codename: "Arcade",
+  description:
+    "Synthwave gridlines, pixel typography, VCR scanlines and neon pink glow. For milestone birthdays that want '80s-future energy.",
+  eventTypes: ["birthday", "party"],
+  tags: ["neon", "bold", "vibrant", "playful", "cyberpunk", "cool", "modern"],
+  keywords: [
+    "80s", "retro", "synthwave", "arcade", "gaming birthday", "pixel", "neon",
+    "vaporwave", "retrowave", "nostalgic", "milestone birthday", "30th",
+    "40th", "gamer", "video game party",
+  ],
+  icon: "🕹",
+  vibe: { label: "Synthwave", color: "#ff006e" },
+  previewImage: "/template-previews/arcade.jpg",
+  defaults: {
+    invitationMessage:
+      "Insert coin, choose player one. The party is loading — hope you brought your high-score energy.",
+    tagline: "Player one is ready.",
+    accentColor: "#ff006e",
+    heroImage:
+      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A birthday where every song is a boss theme and every drink comes with a power-up. Extra life not guaranteed.",
+  },
+};
+
+export const promiseMeta: TemplateMeta = {
+  id: "promise",
+  name: "Engagement Announcement",
+  codename: "Promise",
+  description:
+    "Two lives, two typographic worlds, converging into one as the page scrolls. For engagements that want to feel like the exact moment.",
+  eventTypes: ["engagement", "anniversary"],
+  tags: ["romantic", "elegant", "cinematic", "modern", "artistic", "editorial"],
+  keywords: [
+    "engagement", "proposal", "roka", "engagement party", "just engaged",
+    "she said yes", "promise", "commitment", "vow", "propose",
+    "engagement announcement", "we're engaged",
+  ],
+  icon: "💗",
+  vibe: { label: "Convergence", color: "#c89b8c" },
+  previewImage: "/template-previews/promise.jpg",
+  defaults: {
+    invitationMessage:
+      "We said yes — to each other, and to a whole life still being written. Come stand in the room the first time we say it out loud.",
+    tagline: "The moment two become us.",
+    accentColor: "#c89b8c",
+    heroImage:
+      "https://images.unsplash.com/photo-1525258946800-98cfd641d0de?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "It wasn't a grand plan. It was a quiet Tuesday and a question that had been waiting a long time to be asked.",
+  },
+};
+
+export const chaptersMeta: TemplateMeta = {
+  id: "chapters",
+  name: "Anniversary Chronicles",
+  codename: "Chapters",
+  description:
+    "Parchment, ink serifs, a chapter-by-chapter walk through the years — with a small constellation of the moments that mattered.",
+  eventTypes: ["anniversary", "wedding"],
+  tags: ["editorial", "elegant", "romantic", "traditional", "artistic", "decent"],
+  keywords: [
+    "anniversary", "silver anniversary", "golden anniversary", "25 years",
+    "50 years", "vow renewal", "wedding anniversary", "milestone",
+    "years together", "chronicles", "journal", "memoir",
+  ],
+  icon: "📖",
+  vibe: { label: "Chronicles", color: "#a68b5b" },
+  previewImage: "/template-previews/chapters.jpg",
+  defaults: {
+    invitationMessage:
+      "A story worth its own book — and you're in almost every chapter. Come help us bind another year to the shelf.",
+    tagline: "Volume the next.",
+    accentColor: "#a68b5b",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Twenty-five years of small mornings, wrong turns, right choices, and one shared soundtrack that has somehow held it all together.",
+  },
+};
+
+export const neuralMeta: TemplateMeta = {
+  id: "neural",
+  name: "AI Summit",
+  codename: "Neural",
+  description:
+    "Nodes, edges, streaming data lines and holographic panels. For AI conferences, tech summits and research symposia.",
+  eventTypes: ["corporate", "product-launch"],
+  tags: ["tech", "modern", "cyberpunk", "bold", "cinematic", "interactive"],
+  keywords: [
+    "ai conference", "ai summit", "artificial intelligence", "ml conference",
+    "machine learning", "research", "symposium", "developer conference",
+    "devcon", "data conference", "neural", "llm", "generative ai",
+  ],
+  icon: "🧠",
+  vibe: { label: "Neural", color: "#00d4ff" },
+  previewImage: "/template-previews/neural.jpg",
+  defaults: {
+    invitationMessage:
+      "Two days at the exact point where research becomes product. Come think out loud with the people building what's next.",
+    tagline: "Where the network meets.",
+    accentColor: "#00d4ff",
+    heroImage:
+      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The room every year gets a little smaller — not because there's less interest, but because we're keeping it to the people whose work is actually shaping the field.",
+  },
+};
+
+export const unveilMeta: TemplateMeta = {
+  id: "unveil",
+  name: "Product Reveal",
+  codename: "Unveil",
+  description:
+    "Absolute black, a single spotlight, a slow deliberate reveal. For product announcements that want the room to hold its breath.",
+  eventTypes: ["product-launch", "corporate"],
+  tags: ["cinematic", "bold", "premium", "editorial", "minimal", "modern"],
+  keywords: [
+    "product launch", "product reveal", "unveiling", "keynote", "announcement",
+    "flagship", "reveal", "one more thing", "premiere", "debut", "release event",
+    "hardware launch", "unveil",
+  ],
+  icon: "🎭",
+  vibe: { label: "Reveal", color: "#ff2d55" },
+  previewImage: "/template-previews/unveil.jpg",
+  defaults: {
+    invitationMessage: "One evening. One reveal. Everything you thought about this category is about to change.",
+    tagline: "Nothing you're expecting.",
+    accentColor: "#ff2d55",
+    heroImage:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "We've been quiet for a while. That was on purpose. What we're showing you is the reason.",
+  },
+};
+
+export const odeonMeta: TemplateMeta = {
+  id: "odeon",
+  name: "Golden Awards",
+  codename: "Odeon",
+  description:
+    "Deep burgundy velvet, spotlight sweeps, gold leaf typography, a red carpet unrolling as you scroll. Hollywood-Oscars gravitas.",
+  eventTypes: ["award-ceremony", "corporate"],
+  tags: ["luxurious", "premium", "cinematic", "elegant", "artistic", "traditional"],
+  keywords: [
+    "awards", "oscars style", "gala", "red carpet", "trophy", "hollywood",
+    "black tie", "recognition", "ceremony", "honors", "gold", "prize",
+    "annual awards", "industry awards", "recognition night",
+  ],
+  icon: "🏆",
+  vibe: { label: "Hall of Legends", color: "#d4af37" },
+  previewImage: "/template-previews/odeon.jpg",
+  defaults: {
+    invitationMessage:
+      "A room built for the moments a career remembers. Join us for an evening honouring the very best of the year.",
+    tagline: "Where legends are named.",
+    accentColor: "#d4af37",
+    heroImage:
+      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every year the carpet rolls out, the lights find one face at a time, and the industry decides which stories deserved to be told louder.",
+  },
+};
+
+export const constellaMeta: TemplateMeta = {
+  id: "constella",
+  name: "Constellation Networking",
+  codename: "Constella",
+  description:
+    "Individual stars that draw connection lines to their nearest neighbors as the page scrolls — a networking event that looks like the network it makes.",
+  eventTypes: ["networking-event", "corporate"],
+  tags: ["cool", "modern", "interactive", "artistic", "celestial", "premium"],
+  keywords: [
+    "networking", "connections", "founders dinner", "operators", "meetup",
+    "professional networking", "salon", "community night", "constellation",
+    "startup networking", "alumni night", "peer group",
+  ],
+  icon: "🌟",
+  vibe: { label: "Constellation", color: "#7ff9ff" },
+  previewImage: "/template-previews/constella.jpg",
+  defaults: {
+    invitationMessage:
+      "An evening where the room is the point — and the connections you leave with are the whole return on investment.",
+    tagline: "Every star, its own line.",
+    accentColor: "#7ff9ff",
+    heroImage:
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A network isn't a list. It's a shape — a constellation you draw one conversation at a time. Tonight we add a few more lines.",
+  },
+};
+
+export const metropolisMeta: TemplateMeta = {
+  id: "metropolis",
+  name: "Neon City Party",
+  codename: "Metropolis",
+  description:
+    "Cyberpunk skyline, laser sweeps, holographic billboards, rain on chrome. For parties that want to feel like the third act of a sci-fi film.",
+  eventTypes: ["party", "birthday"],
+  tags: ["neon", "cyberpunk", "bold", "vibrant", "modern", "playful", "festive"],
+  keywords: [
+    "cyberpunk", "neon", "city party", "warehouse", "rooftop party",
+    "underground", "rave", "afterparty", "electronic", "sci-fi",
+    "futuristic party", "night city", "megaparty", "big party",
+  ],
+  icon: "🌆",
+  vibe: { label: "Cyber City", color: "#ff0080" },
+  previewImage: "/template-previews/metropolis.jpg",
+  defaults: {
+    invitationMessage:
+      "The city has a soundtrack tonight and we have the address. Doors at ten, dress code is whatever makes you unrecognisable in the morning.",
+    tagline: "Enter the city.",
+    accentColor: "#ff0080",
+    heroImage:
+      "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Ten floors, three rooms, one sound. Somewhere between the elevator and the roof, the night becomes what it wants to be.",
+  },
+};
+
 export const convergeMeta: TemplateMeta = {
   id: "converge",
   name: "Warm Networking",
@@ -363,19 +670,30 @@ export const convergeMeta: TemplateMeta = {
 };
 
 export const TEMPLATES_META: TemplateMeta[] = [
-  nexusMeta,
-  pinnacleMeta,
-  luminaryMeta,
-  convergeMeta,
-  afterMeta,
+  empyreanMeta,
+  prismMeta,
   auroraMeta,
   obsidianMeta,
   celestiaMeta,
   royalMeta,
   minimalMeta,
   modernMeta,
-  vibrantMeta,
   pastelMeta,
+  promiseMeta,
+  chaptersMeta,
+  orbitMeta,
+  arcadeMeta,
+  vibrantMeta,
+  neuralMeta,
+  unveilMeta,
+  nexusMeta,
+  pinnacleMeta,
+  odeonMeta,
+  luminaryMeta,
+  constellaMeta,
+  convergeMeta,
+  metropolisMeta,
+  afterMeta,
 ];
 
 export function getTemplateMeta(id: string): TemplateMeta | undefined {

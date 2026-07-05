@@ -682,6 +682,505 @@ const after: DemoBundle = {
   media: [],
 };
 
+// ---------- EMPYREAN — DEMO-EMPYREAN ----------
+
+const EMPYREAN_CODE = "DEMO-EMPYREAN";
+const empyrean: DemoBundle = {
+  event: {
+    eventCode: EMPYREAN_CODE,
+    eventType: "wedding",
+    templateId: "empyrean",
+    eventTitle: "Aditi & Rohan",
+    person1Name: "Aditi",
+    person2Name: "Rohan",
+    tentativeDate: "2026-11-14",
+    city: "Rome",
+    isActive: true,
+    slug: EMPYREAN_CODE,
+    heroImageUrl: SAMPLES.coupleSunset,
+    tagline: "A love ascending.",
+    invitationMessage:
+      "Beneath a sky that has watched every love that came before ours, we invite you to witness the one we are making now.",
+    aboutStory:
+      "Some love stories are written on paper. Ours was written in light — the kind that pours through stained glass at four in the afternoon, when nobody is watching but the room already knows.",
+    mainDate: "2026-11-14",
+    mainStartTime: "16:00",
+    mainEndTime: "22:00",
+    themeAccentColor: "#c8a460",
+    venueName: "Basilica di Santa Maria",
+    venueAddress: "Trastevere, Rome, Italy",
+    mapLink: "https://maps.google.com/?q=Trastevere+Rome",
+    latitude: 41.8896,
+    longitude: 12.4695,
+    contactName: "Aditi & Rohan",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://forms.example/empyrean-rsvp",
+  },
+  subEvents: [
+    { eventCode: EMPYREAN_CODE, order: 1, name: "Blessing", date: "2026-11-13", startTime: "18:00", endTime: "20:00", venueName: "Piazza Navona", description: "A quiet family blessing at sunset.", icon: "☁" },
+    { eventCode: EMPYREAN_CODE, order: 2, name: "Ceremony", date: "2026-11-14", startTime: "16:00", endTime: "17:30", venueName: "Basilica di Santa Maria", dressCode: "Ivory & gold", description: "Vows exchanged under stained glass.", icon: "✦" },
+    { eventCode: EMPYREAN_CODE, order: 3, name: "Reception", date: "2026-11-14", startTime: "19:00", endTime: "22:00", venueName: "Villa Aurelia", dressCode: "Black-tie", description: "Dinner by candlelight in the marble hall.", icon: "♛" },
+  ],
+  media: [
+    hero(EMPYREAN_CODE, "photo-1519741497674-611481863552"),
+    ...gallery(EMPYREAN_CODE, [
+      { url: SAMPLES.coupleEmbrace, caption: "The vow" },
+      { url: SAMPLES.weddingRings, caption: "The rings" },
+      { url: SAMPLES.coupleBehind, caption: "Ascension" },
+      { url: SAMPLES.coupleSunset, caption: "Golden hour" },
+      { url: SAMPLES.pinkFlowers, caption: "Marble" },
+      { url: SAMPLES.bouquet, caption: "Bouquet" },
+    ]),
+  ],
+};
+
+// ---------- PRISM — DEMO-PRISM ----------
+
+const PRISM_CODE = "DEMO-PRISM";
+const prism: DemoBundle = {
+  event: {
+    eventCode: PRISM_CODE,
+    eventType: "wedding",
+    templateId: "prism",
+    eventTitle: "Naina & Dev",
+    person1Name: "Naina",
+    person2Name: "Dev",
+    tentativeDate: "2026-09-05",
+    city: "Copenhagen",
+    isActive: true,
+    slug: PRISM_CODE,
+    heroImageUrl: SAMPLES.coupleEmbrace,
+    tagline: "Light meets light.",
+    invitationMessage:
+      "Light bends. Colors emerge. Two lives, refracted through one moment — we would love you there when it happens.",
+    aboutStory:
+      "A prism doesn't invent color — it reveals what was always in the light. Our years together have felt exactly like that.",
+    mainDate: "2026-09-05",
+    mainStartTime: "17:00",
+    mainEndTime: "23:00",
+    themeAccentColor: "#7ea8ff",
+    venueName: "The Glass Pavilion",
+    venueAddress: "Refshaleøen, Copenhagen",
+    mapLink: "https://maps.google.com/?q=Refshaleoen+Copenhagen",
+    latitude: 55.6934,
+    longitude: 12.6111,
+    contactName: "Naina & Dev",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://forms.example/prism-rsvp",
+  },
+  subEvents: [
+    { eventCode: PRISM_CODE, order: 1, name: "Prism Welcome", date: "2026-09-04", startTime: "19:00", endTime: "22:00", venueName: "The Harbour", description: "Sundowners under the glass roof.", icon: "◈" },
+    { eventCode: PRISM_CODE, order: 2, name: "The Ceremony", date: "2026-09-05", startTime: "17:00", endTime: "18:15", venueName: "Glass Pavilion", dressCode: "Modern formal", description: "Vows exchanged in a room made entirely of light.", icon: "💎" },
+    { eventCode: PRISM_CODE, order: 3, name: "Reception", date: "2026-09-05", startTime: "19:00", endTime: "23:00", venueName: "Refshaleøen", description: "A long table under rainbow-refraction lighting.", icon: "✦" },
+  ],
+  media: [
+    hero(PRISM_CODE, "photo-1519225421980-715cb0215aed"),
+    ...gallery(PRISM_CODE, [
+      { url: SAMPLES.ringsClose, caption: "Refraction" },
+      { url: SAMPLES.coupleHands, caption: "Prism" },
+      { url: SAMPLES.coupleBehind, caption: "Light bend" },
+      { url: SAMPLES.weddingRings, caption: "Facets" },
+      { url: SAMPLES.coupleSunset, caption: "Iridescence" },
+    ]),
+  ],
+};
+
+// ---------- ORBIT — DEMO-ORBIT ----------
+
+const ORBIT_CODE = "DEMO-ORBIT";
+const orbit: DemoBundle = {
+  event: {
+    eventCode: ORBIT_CODE,
+    eventType: "birthday",
+    templateId: "orbit",
+    eventTitle: "Kabir turns 7!",
+    person1Name: "Kabir",
+    tentativeDate: "2026-08-10",
+    city: "Bengaluru",
+    isActive: true,
+    slug: ORBIT_CODE,
+    heroImageUrl: SAMPLES.confetti,
+    tagline: "The birthday universe.",
+    invitationMessage: "Blast off with us — cake, chaos, and a small human who's about to become one year more important.",
+    aboutStory: "Every year they add a new orbit — new obsessions, new friends, new opinions on dinner. Come help us celebrate the whole galaxy of them.",
+    mainDate: "2026-08-10",
+    mainStartTime: "16:00",
+    mainEndTime: "19:00",
+    themeAccentColor: "#ff6f91",
+    venueName: "Planet Play",
+    venueAddress: "Indiranagar, Bengaluru",
+    mapLink: "https://maps.google.com/?q=Indiranagar+Bengaluru",
+    latitude: 12.9784,
+    longitude: 77.6408,
+    contactName: "Meera (Mum)",
+    contactPhone: "+91-98xxxxxxx",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: ORBIT_CODE, order: 1, name: "Launch Zone", date: "2026-08-10", startTime: "16:00", endTime: "16:45", venueName: "Play Cafe", description: "Face paint, alien slime, gravity-free bouncy castle.", icon: "🚀" },
+    { eventCode: ORBIT_CODE, order: 2, name: "Planet Games", date: "2026-08-10", startTime: "17:00", endTime: "17:45", venueName: "Main hall", description: "Musical planets, meteor tag and one very committed magic show.", icon: "🪐" },
+    { eventCode: ORBIT_CODE, order: 3, name: "Cake Countdown", date: "2026-08-10", startTime: "18:00", endTime: "18:30", venueName: "Cake corner", description: "3… 2… 1… cake.", icon: "🎂" },
+  ],
+  media: [
+    hero(ORBIT_CODE, "photo-1530103862676-de8c9debad1d"),
+    ...gallery(ORBIT_CODE, [
+      { url: SAMPLES.confetti, caption: "Balloons" },
+      { url: SAMPLES.pinkFlowers, caption: "Cake" },
+      { url: PICSUM(`${ORBIT_CODE}-planets`, 1200, 1500), caption: "Planets" },
+      { url: PICSUM(`${ORBIT_CODE}-stars`, 1200, 1500), caption: "Stars" },
+    ]),
+  ],
+};
+
+// ---------- ARCADE — DEMO-ARCADE ----------
+
+const ARCADE_CODE = "DEMO-ARCADE";
+const arcade: DemoBundle = {
+  event: {
+    eventCode: ARCADE_CODE,
+    eventType: "birthday",
+    templateId: "arcade",
+    eventTitle: "Vikram's 30th",
+    person1Name: "Vikram",
+    tentativeDate: "2026-10-25",
+    city: "Bangkok",
+    isActive: true,
+    slug: ARCADE_CODE,
+    heroImageUrl: UNSPLASH("photo-1511512578047-dfb367046420"),
+    tagline: "Player one is ready.",
+    invitationMessage: "Insert coin, choose player one. The party is loading — hope you brought your high-score energy.",
+    aboutStory: "A birthday where every song is a boss theme and every drink comes with a power-up. Extra life not guaranteed.",
+    mainDate: "2026-10-25",
+    mainStartTime: "21:00",
+    mainEndTime: "03:00",
+    themeAccentColor: "#ff006e",
+    venueName: "Neon Alley",
+    venueAddress: "Sukhumvit 11, Bangkok",
+    mapLink: "https://maps.google.com/?q=Sukhumvit+11+Bangkok",
+    latitude: 13.7396,
+    longitude: 100.5606,
+    contactName: "Vikram",
+    socialLink: "https://instagram.com/",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://forms.example/arcade-rsvp",
+  },
+  subEvents: [
+    { eventCode: ARCADE_CODE, order: 1, name: "Continue?", date: "2026-10-25", startTime: "21:00", endTime: "22:00", venueName: "Neon Alley", dressCode: "80s / neon", description: "Doors open. Arcade cabinets warmed up. Welcome drinks with dry-ice.", icon: "🕹" },
+    { eventCode: ARCADE_CODE, order: 2, name: "Boss Fight", date: "2026-10-25", startTime: "22:30", endTime: "00:00", venueName: "Main Floor", description: "Live synthwave set + high-score competition.", icon: "👾" },
+    { eventCode: ARCADE_CODE, order: 3, name: "Game Over", date: "2026-10-26", startTime: "00:00", endTime: "03:00", venueName: "Rooftop", description: "The afterhours part. No coins required.", icon: "✧" },
+  ],
+  media: [
+    hero(ARCADE_CODE, "photo-1511512578047-dfb367046420"),
+    ...gallery(ARCADE_CODE, [
+      { url: PICSUM(`${ARCADE_CODE}-neon`, 1200, 1500), caption: "Neon" },
+      { url: PICSUM(`${ARCADE_CODE}-arcade`, 1200, 1500), caption: "Arcade" },
+      { url: PICSUM(`${ARCADE_CODE}-crowd`, 1200, 1500), caption: "Crowd" },
+      { url: PICSUM(`${ARCADE_CODE}-lasers`, 1200, 1500), caption: "Lasers" },
+    ]),
+  ],
+};
+
+// ---------- PROMISE — DEMO-PROMISE ----------
+
+const PROMISE_CODE = "DEMO-PROMISE";
+const promise: DemoBundle = {
+  event: {
+    eventCode: PROMISE_CODE,
+    eventType: "engagement",
+    templateId: "promise",
+    eventTitle: "Riya & Karan",
+    person1Name: "Riya",
+    person2Name: "Karan",
+    tentativeDate: "2026-06-21",
+    city: "Jaipur",
+    isActive: true,
+    slug: PROMISE_CODE,
+    heroImageUrl: SAMPLES.coupleHands,
+    tagline: "The moment two become us.",
+    invitationMessage: "We said yes — to each other, and to a whole life still being written. Come stand in the room the first time we say it out loud.",
+    aboutStory: "It wasn't a grand plan. It was a quiet Tuesday and a question that had been waiting a long time to be asked.",
+    mainDate: "2026-06-21",
+    mainStartTime: "17:00",
+    mainEndTime: "22:00",
+    themeAccentColor: "#c89b8c",
+    venueName: "Rambagh Courtyard",
+    venueAddress: "Rambagh, Jaipur",
+    mapLink: "https://maps.google.com/?q=Rambagh+Jaipur",
+    latitude: 26.8969,
+    longitude: 75.8127,
+    contactName: "Riya & Karan",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://forms.example/promise-rsvp",
+  },
+  subEvents: [
+    { eventCode: PROMISE_CODE, order: 1, name: "Ring Ceremony", date: "2026-06-21", startTime: "17:30", endTime: "18:30", venueName: "Rambagh Courtyard", dressCode: "Rose gold & cream", description: "The exchange, the vow, the tears.", icon: "💗" },
+    { eventCode: PROMISE_CODE, order: 2, name: "Dinner", date: "2026-06-21", startTime: "19:00", endTime: "22:00", venueName: "Palace Terrace", description: "Long tables under jasmine and fairy lights.", icon: "✦" },
+  ],
+  media: [
+    hero(PROMISE_CODE, "photo-1525258946800-98cfd641d0de"),
+    ...gallery(PROMISE_CODE, [
+      { url: SAMPLES.coupleHands, caption: "Hands" },
+      { url: SAMPLES.ringsClose, caption: "The ring" },
+      { url: SAMPLES.coupleEmbrace, caption: "Yes" },
+      { url: SAMPLES.pinkFlowers, caption: "Petals" },
+      { url: SAMPLES.coupleSunset, caption: "Golden" },
+    ]),
+  ],
+};
+
+// ---------- CHAPTERS — DEMO-CHAPTERS ----------
+
+const CHAPTERS_CODE = "DEMO-CHAPTERS";
+const chapters: DemoBundle = {
+  event: {
+    eventCode: CHAPTERS_CODE,
+    eventType: "anniversary",
+    templateId: "chapters",
+    eventTitle: "Sanjay & Anita — 25 years",
+    person1Name: "Sanjay",
+    person2Name: "Anita",
+    tentativeDate: "2026-12-02",
+    city: "Delhi",
+    isActive: true,
+    slug: CHAPTERS_CODE,
+    heroImageUrl: SAMPLES.coupleSunset,
+    tagline: "Volume the next.",
+    invitationMessage: "A story worth its own book — and you're in almost every chapter. Come help us bind another year to the shelf.",
+    aboutStory: "Twenty-five years of small mornings, wrong turns, right choices, and one shared soundtrack that has somehow held it all together.",
+    mainDate: "2026-12-02",
+    mainStartTime: "18:00",
+    mainEndTime: "23:00",
+    themeAccentColor: "#a68b5b",
+    venueName: "The Imperial",
+    venueAddress: "Janpath, New Delhi",
+    mapLink: "https://maps.google.com/?q=The+Imperial+Delhi",
+    latitude: 28.6247,
+    longitude: 77.2187,
+    contactName: "Sanjay & Anita",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://forms.example/chapters-rsvp",
+  },
+  subEvents: [
+    { eventCode: CHAPTERS_CODE, order: 1, name: "Chapter I — The Toast", date: "2026-12-02", startTime: "18:00", endTime: "19:00", venueName: "The Library Bar", description: "Cocktails and a walk through the photo archive.", icon: "❦" },
+    { eventCode: CHAPTERS_CODE, order: 2, name: "Chapter II — The Renewal", date: "2026-12-02", startTime: "19:30", endTime: "20:30", venueName: "The Palm Court", description: "Twenty-five years, one more promise.", icon: "❧" },
+    { eventCode: CHAPTERS_CODE, order: 3, name: "Chapter III — The Dance", date: "2026-12-02", startTime: "21:00", endTime: "23:00", venueName: "The Ballroom", description: "The playlist they made in 2001. Somehow, it still works.", icon: "☙" },
+  ],
+  media: [
+    hero(CHAPTERS_CODE, "photo-1465495976277-4387d4b0b4c6"),
+    ...gallery(CHAPTERS_CODE, [
+      { url: SAMPLES.coupleSunset, caption: "2001 — First trip" },
+      { url: SAMPLES.coupleBehind, caption: "2007 — Bali" },
+      { url: SAMPLES.pinkFlowers, caption: "2012 — Home" },
+      { url: SAMPLES.coupleEmbrace, caption: "2019 — Anniversary" },
+      { url: SAMPLES.coupleHands, caption: "2026 — Still here" },
+    ]),
+  ],
+};
+
+// ---------- NEURAL — DEMO-NEURAL ----------
+
+const NEURAL_CODE = "DEMO-NEURAL";
+const neural: DemoBundle = {
+  event: {
+    eventCode: NEURAL_CODE,
+    eventType: "corporate",
+    templateId: "neural",
+    eventTitle: "Neural Summit 2026",
+    person1Name: "Neural Foundation",
+    tentativeDate: "2026-10-08",
+    city: "Singapore",
+    isActive: true,
+    slug: NEURAL_CODE,
+    heroImageUrl: UNSPLASH("photo-1620712943543-bcc4688e7485"),
+    tagline: "Where the network meets.",
+    invitationMessage: "Two days at the exact point where research becomes product. Come think out loud with the people building what's next.",
+    aboutStory: "The room every year gets a little smaller — not because there's less interest, but because we're keeping it to the people whose work is actually shaping the field.",
+    mainDate: "2026-10-08",
+    mainStartTime: "09:00",
+    mainEndTime: "18:00",
+    themeAccentColor: "#00d4ff",
+    venueName: "Marina Bay Sands Expo",
+    venueAddress: "10 Bayfront Ave, Singapore",
+    mapLink: "https://maps.google.com/?q=Marina+Bay+Sands+Expo",
+    latitude: 1.2839,
+    longitude: 103.8607,
+    contactName: "Neural Team",
+    contactEmail: "hello@neuralsummit.io",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://neuralsummit.io/register",
+  },
+  subEvents: [
+    { eventCode: NEURAL_CODE, order: 1, name: "Registration & Coffee", date: "2026-10-08", startTime: "09:00", endTime: "10:00", venueName: "Foyer", description: "Badges, breakfast and the first quiet handshakes of the day.", icon: "◇" },
+    { eventCode: NEURAL_CODE, order: 2, name: "Opening: The State of the Field", date: "2026-10-08", startTime: "10:00", endTime: "11:30", venueName: "Main Hall", description: "Where the frontier is, and where it isn't going.", icon: "◆" },
+    { eventCode: NEURAL_CODE, order: 3, name: "Deep-Dive Tracks", date: "2026-10-08", startTime: "13:00", endTime: "17:00", venueName: "Halls A / B / C", description: "Alignment, agents, infrastructure. Pick your rabbit hole.", icon: "⚡" },
+    { eventCode: NEURAL_CODE, order: 4, name: "Off-Record Dinner", date: "2026-10-08", startTime: "19:30", endTime: "22:30", venueName: "The Rooftop", dressCode: "Business casual", description: "Attendee-only, no press, no phones out.", icon: "✦" },
+  ],
+  media: [],
+};
+
+// ---------- UNVEIL — DEMO-UNVEIL ----------
+
+const UNVEIL_CODE = "DEMO-UNVEIL";
+const unveil: DemoBundle = {
+  event: {
+    eventCode: UNVEIL_CODE,
+    eventType: "product-launch",
+    templateId: "unveil",
+    eventTitle: "Onyx — Reveal",
+    person1Name: "Onyx Systems",
+    tentativeDate: "2026-09-18",
+    city: "Los Angeles",
+    isActive: true,
+    slug: UNVEIL_CODE,
+    heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"),
+    tagline: "Nothing you're expecting.",
+    invitationMessage: "One evening. One reveal. Everything you thought about this category is about to change.",
+    aboutStory: "We've been quiet for a while. That was on purpose. What we're showing you is the reason.",
+    mainDate: "2026-09-18",
+    mainStartTime: "19:00",
+    mainEndTime: "22:00",
+    themeAccentColor: "#ff2d55",
+    venueName: "Ace Theatre",
+    venueAddress: "929 S Broadway, Los Angeles, CA",
+    mapLink: "https://maps.google.com/?q=Ace+Theatre+Los+Angeles",
+    latitude: 34.0447,
+    longitude: -118.2568,
+    contactName: "Onyx Events",
+    contactEmail: "events@onyx.dev",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://onyx.dev/reveal",
+  },
+  subEvents: [
+    { eventCode: UNVEIL_CODE, order: 1, name: "Doors", date: "2026-09-18", startTime: "18:30", endTime: "19:00", venueName: "Ace Lobby", description: "Silent entry. No phones from this point.", icon: "◈" },
+    { eventCode: UNVEIL_CODE, order: 2, name: "The Reveal", date: "2026-09-18", startTime: "19:00", endTime: "20:00", venueName: "Ace Theatre — Main Stage", description: "Sixty minutes. One product. Nothing extra.", icon: "◆" },
+    { eventCode: UNVEIL_CODE, order: 3, name: "Hands-On", date: "2026-09-18", startTime: "20:00", endTime: "22:00", venueName: "Mezzanine Floor", description: "Talk to the team. Touch the thing.", icon: "✦" },
+  ],
+  media: [],
+};
+
+// ---------- ODEON — DEMO-ODEON ----------
+
+const ODEON_CODE = "DEMO-ODEON";
+const odeon: DemoBundle = {
+  event: {
+    eventCode: ODEON_CODE,
+    eventType: "award-ceremony",
+    templateId: "odeon",
+    eventTitle: "The Golden Reel Awards",
+    person1Name: "The Golden Reel Academy",
+    tentativeDate: "2026-11-22",
+    city: "New York",
+    isActive: true,
+    slug: ODEON_CODE,
+    heroImageUrl: UNSPLASH("photo-1470229722913-7c0e2dbbafd3"),
+    tagline: "Where legends are named.",
+    invitationMessage: "A room built for the moments a career remembers. Join us for an evening honouring the very best of the year.",
+    aboutStory: "Every year the carpet rolls out, the lights find one face at a time, and the industry decides which stories deserved to be told louder.",
+    mainDate: "2026-11-22",
+    mainStartTime: "19:00",
+    mainEndTime: "23:59",
+    themeAccentColor: "#d4af37",
+    venueName: "Radio City Music Hall",
+    venueAddress: "1260 Avenue of the Americas, New York, NY",
+    mapLink: "https://maps.google.com/?q=Radio+City+Music+Hall",
+    latitude: 40.7599,
+    longitude: -73.98,
+    contactName: "Academy Office",
+    contactEmail: "awards@goldenreel.org",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://goldenreel.org/tickets",
+  },
+  subEvents: [
+    { eventCode: ODEON_CODE, order: 1, name: "Red Carpet", date: "2026-11-22", startTime: "18:00", endTime: "19:00", venueName: "Radio City Steps", dressCode: "Black tie", description: "Arrivals, press wall, the wait before the walk.", icon: "◆" },
+    { eventCode: ODEON_CODE, order: 2, name: "Opening Reel", date: "2026-11-22", startTime: "19:00", endTime: "19:30", venueName: "Main Auditorium", description: "A cinematic tribute — every nominee, one frame at a time.", icon: "✦" },
+    { eventCode: ODEON_CODE, order: 3, name: "The Ceremony", date: "2026-11-22", startTime: "19:30", endTime: "22:00", venueName: "Main Auditorium", description: "Fourteen categories. Fourteen legends made in one night.", icon: "🏆" },
+    { eventCode: ODEON_CODE, order: 4, name: "Gold Room Afterparty", date: "2026-11-22", startTime: "22:30", endTime: "23:59", venueName: "Rainbow Room", dressCode: "Black tie", description: "The photograph everyone remembers.", icon: "★" },
+  ],
+  media: [],
+};
+
+// ---------- CONSTELLA — DEMO-CONSTELLA ----------
+
+const CONSTELLA_CODE = "DEMO-CONSTELLA";
+const constella: DemoBundle = {
+  event: {
+    eventCode: CONSTELLA_CODE,
+    eventType: "networking-event",
+    templateId: "constella",
+    eventTitle: "Constella Founders Night",
+    person1Name: "Constella Network",
+    tentativeDate: "2026-09-30",
+    city: "Amsterdam",
+    isActive: true,
+    slug: CONSTELLA_CODE,
+    heroImageUrl: UNSPLASH("photo-1519681393784-d120267933ba"),
+    tagline: "Every star, its own line.",
+    invitationMessage: "An evening where the room is the point — and the connections you leave with are the whole return on investment.",
+    aboutStory: "A network isn't a list. It's a shape — a constellation you draw one conversation at a time. Tonight we add a few more lines.",
+    mainDate: "2026-09-30",
+    mainStartTime: "18:30",
+    mainEndTime: "22:00",
+    themeAccentColor: "#7ff9ff",
+    venueName: "De School",
+    venueAddress: "Dr. Jan van Breemenstraat 1, Amsterdam",
+    mapLink: "https://maps.google.com/?q=De+School+Amsterdam",
+    latitude: 52.3563,
+    longitude: 4.8377,
+    contactName: "Constella Team",
+    contactEmail: "hello@constella.club",
+    socialLink: "https://linkedin.com/",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://constella.club/rsvp",
+  },
+  subEvents: [
+    { eventCode: CONSTELLA_CODE, order: 1, name: "Arrival", date: "2026-09-30", startTime: "18:30", endTime: "19:30", venueName: "The Foyer", description: "Coats off, first drinks in, first orbits form.", icon: "◇" },
+    { eventCode: CONSTELLA_CODE, order: 2, name: "Star Rounds", date: "2026-09-30", startTime: "19:30", endTime: "21:00", venueName: "The Main Room", description: "Structured five-minute one-on-ones with three people we thought you should meet.", icon: "✦" },
+    { eventCode: CONSTELLA_CODE, order: 3, name: "Late Conversation", date: "2026-09-30", startTime: "21:00", endTime: "22:00", venueName: "The Garden", description: "The unstructured hour. Where the actual work happens.", icon: "◎" },
+  ],
+  media: [],
+};
+
+// ---------- METROPOLIS — DEMO-METROPOLIS ----------
+
+const METROPOLIS_CODE = "DEMO-METROPOLIS";
+const metropolis: DemoBundle = {
+  event: {
+    eventCode: METROPOLIS_CODE,
+    eventType: "party",
+    templateId: "metropolis",
+    eventTitle: "METROPOLIS: Skyline",
+    person1Name: "Skyline Collective",
+    tentativeDate: "2026-12-13",
+    city: "Tokyo",
+    isActive: true,
+    slug: METROPOLIS_CODE,
+    heroImageUrl: UNSPLASH("photo-1519677100203-a0e668c92439"),
+    tagline: "Enter the city.",
+    invitationMessage: "The city has a soundtrack tonight and we have the address. Doors at ten, dress code is whatever makes you unrecognisable in the morning.",
+    aboutStory: "Ten floors, three rooms, one sound. Somewhere between the elevator and the roof, the night becomes what it wants to be.",
+    mainDate: "2026-12-13",
+    mainStartTime: "22:00",
+    mainEndTime: "05:00",
+    themeAccentColor: "#ff0080",
+    venueName: "Shibuya Sky Complex",
+    venueAddress: "Shibuya, Tokyo, Japan",
+    mapLink: "https://maps.google.com/?q=Shibuya+Sky+Tokyo",
+    latitude: 35.6595,
+    longitude: 139.7005,
+    contactName: "Skyline Collective",
+    socialLink: "https://instagram.com/",
+    rsvpEnabled: true,
+    rsvpLinkOrContact: "https://ra.co/events/tokyo",
+  },
+  subEvents: [
+    { eventCode: METROPOLIS_CODE, order: 1, name: "Street Level", date: "2026-12-13", startTime: "22:00", endTime: "23:30", venueName: "Ground floor", dressCode: "Cyber / streetwear", description: "Warm-up, drinks, first floor opens.", icon: "◈" },
+    { eventCode: METROPOLIS_CODE, order: 2, name: "Skyline Peak", date: "2026-12-14", startTime: "00:00", endTime: "02:30", venueName: "Rooftop", description: "Headliner set. Laser sweeps over Shibuya.", icon: "✦" },
+    { eventCode: METROPOLIS_CODE, order: 3, name: "Undercity", date: "2026-12-14", startTime: "02:30", endTime: "05:00", venueName: "Basement Level", description: "Doors keep going. So does the sound.", icon: "◆" },
+  ],
+  media: [],
+};
+
 // ---------- registry ----------
 
 export const DEMO_EVENTS: Record<string, DemoBundle> = {
@@ -698,6 +1197,17 @@ export const DEMO_EVENTS: Record<string, DemoBundle> = {
   [AURORA_CODE]: aurora,
   [OBSIDIAN_CODE]: obsidian,
   [CELESTIA_CODE]: celestia,
+  [EMPYREAN_CODE]: empyrean,
+  [PRISM_CODE]: prism,
+  [ORBIT_CODE]: orbit,
+  [ARCADE_CODE]: arcade,
+  [PROMISE_CODE]: promise,
+  [CHAPTERS_CODE]: chapters,
+  [NEURAL_CODE]: neural,
+  [UNVEIL_CODE]: unveil,
+  [ODEON_CODE]: odeon,
+  [CONSTELLA_CODE]: constella,
+  [METROPOLIS_CODE]: metropolis,
 };
 
 export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
@@ -714,6 +1224,17 @@ export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
   aurora: AURORA_CODE,
   obsidian: OBSIDIAN_CODE,
   celestia: CELESTIA_CODE,
+  empyrean: EMPYREAN_CODE,
+  prism: PRISM_CODE,
+  orbit: ORBIT_CODE,
+  arcade: ARCADE_CODE,
+  promise: PROMISE_CODE,
+  chapters: CHAPTERS_CODE,
+  neural: NEURAL_CODE,
+  unveil: UNVEIL_CODE,
+  odeon: ODEON_CODE,
+  constella: CONSTELLA_CODE,
+  metropolis: METROPOLIS_CODE,
 };
 
 export function getDemoBundle(code: string): DemoBundle | undefined {
