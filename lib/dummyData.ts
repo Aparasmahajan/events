@@ -1181,6 +1181,463 @@ const metropolis: DemoBundle = {
   media: [],
 };
 
+// ---------- 18 additional demo bundles (Moonlit, Sky Temple, etc.) ----------
+
+const MOONLIT_CODE = "DEMO-MOONLIT";
+const moonlit: DemoBundle = {
+  event: {
+    eventCode: MOONLIT_CODE, eventType: "wedding", templateId: "moonlit",
+    eventTitle: "Yuvraj & Ishika", person1Name: "Yuvraj", person2Name: "Ishika",
+    tentativeDate: "2026-11-15", city: "Jaisalmer", isActive: true, slug: MOONLIT_CODE,
+    heroImageUrl: SAMPLES.coupleEmbrace, tagline: "Under one silver sky.",
+    invitationMessage: "Beneath a moon that has lit every love before ours, and every kingdom before ours, we invite you into the night we've been walking toward.",
+    aboutStory: "Two names carved into a glowing stone gate. A pathway lit by ten thousand candles. A kingdom holding its breath for the words that turn a promise into a covenant.",
+    mainDate: "2026-11-15", mainStartTime: "19:00", mainEndTime: "23:59",
+    themeAccentColor: "#c8d4e8",
+    venueName: "Suryagarh Fort", venueAddress: "Kahala Phata, Jaisalmer, Rajasthan",
+    mapLink: "https://maps.google.com/?q=Suryagarh+Jaisalmer", latitude: 26.9091, longitude: 70.9053,
+    contactName: "Yuvraj & Ishika", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/moonlit-rsvp",
+  },
+  subEvents: [
+    { eventCode: MOONLIT_CODE, order: 1, name: "Lantern Rise", date: "2026-11-14", startTime: "19:00", endTime: "21:00", venueName: "Fort Courtyard", description: "A thousand lanterns released as the moon climbs.", icon: "🏮" },
+    { eventCode: MOONLIT_CODE, order: 2, name: "The Vow", date: "2026-11-15", startTime: "20:00", endTime: "21:30", venueName: "Moon Pavilion", dressCode: "Ivory & silver", description: "Pheras beneath a full moon.", icon: "🌕" },
+    { eventCode: MOONLIT_CODE, order: 3, name: "The Long Table", date: "2026-11-15", startTime: "22:00", endTime: "23:59", venueName: "Candle Corridor", description: "Dinner along a corridor of ten thousand candles.", icon: "🕯" },
+  ],
+  media: [hero(MOONLIT_CODE, "photo-1519741497674-611481863552"), ...gallery(MOONLIT_CODE, [
+    { url: SAMPLES.coupleEmbrace, caption: "Silver light" },
+    { url: SAMPLES.coupleBehind, caption: "The path" },
+    { url: SAMPLES.coupleSunset, caption: "Moonrise" },
+    { url: SAMPLES.weddingScene, caption: "The gate" },
+  ])],
+};
+
+const SKYTEMPLE_CODE = "DEMO-SKYTEMPLE";
+const skytemple: DemoBundle = {
+  event: {
+    eventCode: SKYTEMPLE_CODE, eventType: "wedding", templateId: "skytemple",
+    eventTitle: "Advait & Divya", person1Name: "Advait", person2Name: "Divya",
+    tentativeDate: "2026-10-11", city: "Santorini", isActive: true, slug: SKYTEMPLE_CODE,
+    heroImageUrl: SAMPLES.coupleSunset, tagline: "A wedding among the gods.",
+    invitationMessage: "Above the world we knew, we found a room the sky agreed to hold for us. Come stand in it while we make our promise.",
+    aboutStory: "Doors of marble opening onto cloud, a bridge of light between the two of us, and a small orchestra somewhere behind the sun. This is the day the sky lends us its temples.",
+    mainDate: "2026-10-11", mainStartTime: "17:00", mainEndTime: "23:00",
+    themeAccentColor: "#e6c988",
+    venueName: "Temple Terrace", venueAddress: "Oia, Santorini, Greece",
+    mapLink: "https://maps.google.com/?q=Oia+Santorini", latitude: 36.4614, longitude: 25.3753,
+    contactName: "Advait & Divya", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/skytemple-rsvp",
+  },
+  subEvents: [
+    { eventCode: SKYTEMPLE_CODE, order: 1, name: "Opening the Doors", date: "2026-10-11", startTime: "17:00", endTime: "17:30", venueName: "Marble Gate", description: "Marble doors part as the sun begins its descent.", icon: "⛩" },
+    { eventCode: SKYTEMPLE_CODE, order: 2, name: "The Ceremony", date: "2026-10-11", startTime: "18:00", endTime: "19:30", venueName: "Sky Terrace", dressCode: "Ivory & gold", description: "Vows exchanged on a bridge above the clouds.", icon: "✦" },
+    { eventCode: SKYTEMPLE_CODE, order: 3, name: "Feast Above the Clouds", date: "2026-10-11", startTime: "20:00", endTime: "23:00", venueName: "The Sanctuary", description: "A long dinner among the temples.", icon: "🕊" },
+  ],
+  media: [hero(SKYTEMPLE_CODE, "photo-1519741497674-611481863552"), ...gallery(SKYTEMPLE_CODE, [
+    { url: SAMPLES.coupleSunset, caption: "Ascent" }, { url: SAMPLES.coupleEmbrace, caption: "The vow" },
+    { url: SAMPLES.pinkFlowers, caption: "Clouds" }, { url: SAMPLES.coupleBehind, caption: "The bridge" },
+  ])],
+};
+
+const OCEANPALACE_CODE = "DEMO-OCEANPALACE";
+const oceanpalace: DemoBundle = {
+  event: {
+    eventCode: OCEANPALACE_CODE, eventType: "wedding", templateId: "oceanpalace",
+    eventTitle: "Vihaan & Anaya", person1Name: "Vihaan", person2Name: "Anaya",
+    tentativeDate: "2026-08-22", city: "Maldives", isActive: true, slug: OCEANPALACE_CODE,
+    heroImageUrl: SAMPLES.coupleHands, tagline: "Two tides, one shore.",
+    invitationMessage: "Somewhere between the surface and the deep, the light writes its own kind of vow. Come see it with us.",
+    aboutStory: "A palace nobody built and everyone can feel. The room hums like a shell. Every promise arrives on a slow current.",
+    mainDate: "2026-08-22", mainStartTime: "16:00", mainEndTime: "22:00",
+    themeAccentColor: "#4fb0c6",
+    venueName: "Coral Reef Pavilion", venueAddress: "Baa Atoll, Maldives",
+    mapLink: "https://maps.google.com/?q=Baa+Atoll+Maldives", latitude: 5.2043, longitude: 73.0669,
+    contactName: "Vihaan & Anaya", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/oceanpalace-rsvp",
+  },
+  subEvents: [
+    { eventCode: OCEANPALACE_CODE, order: 1, name: "Pearl Welcome", date: "2026-08-21", startTime: "18:00", endTime: "21:00", venueName: "Beach", description: "Sundowners on the sand.", icon: "🐚" },
+    { eventCode: OCEANPALACE_CODE, order: 2, name: "The Ceremony", date: "2026-08-22", startTime: "16:00", endTime: "17:30", venueName: "Reef Deck", dressCode: "Aquamarine & pearl", description: "Vows over the water at high tide.", icon: "🌊" },
+    { eventCode: OCEANPALACE_CODE, order: 3, name: "Bioluminescent Dinner", date: "2026-08-22", startTime: "19:00", endTime: "22:00", venueName: "The Lagoon", description: "Long table lit by the water itself.", icon: "✧" },
+  ],
+  media: [hero(OCEANPALACE_CODE, "photo-1465495976277-4387d4b0b4c6"), ...gallery(OCEANPALACE_CODE, [
+    { url: SAMPLES.coupleHands, caption: "Beneath the surface" }, { url: SAMPLES.coupleSunset, caption: "Golden water" },
+    { url: SAMPLES.coupleEmbrace, caption: "Two tides" }, { url: SAMPLES.pinkFlowers, caption: "Coral" },
+  ])],
+};
+
+const SYMPHONY_CODE = "DEMO-SYMPHONY";
+const symphony: DemoBundle = {
+  event: {
+    eventCode: SYMPHONY_CODE, eventType: "wedding", templateId: "symphony",
+    eventTitle: "Rehan & Zoya", person1Name: "Rehan", person2Name: "Zoya",
+    tentativeDate: "2026-09-27", city: "Vienna", isActive: true, slug: SYMPHONY_CODE,
+    heroImageUrl: SAMPLES.coupleBehind, tagline: "In four movements.",
+    invitationMessage: "Every love has a score. Ours has been rehearsing since the day we met. Come hear the first performance.",
+    aboutStory: "Movement I — the meeting. Movement II — the long slow verse. Movement III — the crescendo. Movement IV — you, walking down the aisle, all instruments held on the same note.",
+    mainDate: "2026-09-27", mainStartTime: "18:00", mainEndTime: "23:00",
+    themeAccentColor: "#b48eff",
+    venueName: "Palais Ferstel", venueAddress: "Strauchgasse 4, Vienna, Austria",
+    mapLink: "https://maps.google.com/?q=Palais+Ferstel+Vienna", latitude: 48.2115, longitude: 16.3672,
+    contactName: "Rehan & Zoya", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/symphony-rsvp",
+  },
+  subEvents: [
+    { eventCode: SYMPHONY_CODE, order: 1, name: "I — Prelude", date: "2026-09-27", startTime: "18:00", endTime: "18:45", venueName: "The Foyer", description: "String quartet at the door.", icon: "♪" },
+    { eventCode: SYMPHONY_CODE, order: 2, name: "II — Vows", date: "2026-09-27", startTime: "19:00", endTime: "20:00", venueName: "Concert Hall", dressCode: "Black tie", description: "The exchange, in the silence between movements.", icon: "♫" },
+    { eventCode: SYMPHONY_CODE, order: 3, name: "III — Feast", date: "2026-09-27", startTime: "20:30", endTime: "22:00", venueName: "The Long Room", description: "Dinner scored by the full ensemble.", icon: "♬" },
+    { eventCode: SYMPHONY_CODE, order: 4, name: "IV — Finale", date: "2026-09-27", startTime: "22:00", endTime: "23:00", venueName: "The Ballroom", description: "The last movement is a dance.", icon: "♩" },
+  ],
+  media: [hero(SYMPHONY_CODE, "photo-1606216794074-735e91aa2c92"), ...gallery(SYMPHONY_CODE, [
+    { url: SAMPLES.coupleBehind, caption: "Prelude" }, { url: SAMPLES.coupleEmbrace, caption: "Crescendo" },
+    { url: SAMPLES.weddingScene, caption: "Hall" }, { url: SAMPLES.coupleSunset, caption: "Finale" },
+  ])],
+};
+
+const INFINITY_CODE = "DEMO-INFINITY";
+const infinity: DemoBundle = {
+  event: {
+    eventCode: INFINITY_CODE, eventType: "engagement", templateId: "infinity",
+    eventTitle: "Nihal & Sara", person1Name: "Nihal", person2Name: "Sara",
+    tentativeDate: "2026-07-30", city: "Lisbon", isActive: true, slug: INFINITY_CODE,
+    heroImageUrl: SAMPLES.ringsClose, tagline: "One line, forever.",
+    invitationMessage: "Two paths, drawn separately for a long time, closing into one line. We're calling that a promise. Come sign your name to it.",
+    aboutStory: "A ring is a circle that keeps its own promise — no start, no end, only more of itself. So is this.",
+    mainDate: "2026-07-30", mainStartTime: "19:00", mainEndTime: "23:00",
+    themeAccentColor: "#d4a574",
+    venueName: "Rooftop of the Alfama", venueAddress: "Rua da Regueira, Lisbon, Portugal",
+    mapLink: "https://maps.google.com/?q=Alfama+Lisbon", latitude: 38.7143, longitude: -9.1289,
+    contactName: "Nihal & Sara", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/infinity-rsvp",
+  },
+  subEvents: [
+    { eventCode: INFINITY_CODE, order: 1, name: "Ring Exchange", date: "2026-07-30", startTime: "19:30", endTime: "20:00", venueName: "Rooftop Terrace", dressCode: "Warm gold", description: "The exchange, exactly one glass of champagne long.", icon: "∞" },
+    { eventCode: INFINITY_CODE, order: 2, name: "Dinner", date: "2026-07-30", startTime: "20:30", endTime: "23:00", venueName: "The Terrace", description: "Long table under the Lisbon sky.", icon: "✦" },
+  ],
+  media: [hero(INFINITY_CODE, "photo-1525258946800-98cfd641d0de"), ...gallery(INFINITY_CODE, [
+    { url: SAMPLES.ringsClose, caption: "The ring" }, { url: SAMPLES.coupleHands, caption: "Hands" },
+    { url: SAMPLES.coupleEmbrace, caption: "Yes" }, { url: SAMPLES.coupleSunset, caption: "One line" },
+  ])],
+};
+
+const LOVESTARS_CODE = "DEMO-LOVESTARS";
+const lovestars: DemoBundle = {
+  event: {
+    eventCode: LOVESTARS_CODE, eventType: "engagement", templateId: "lovestars",
+    eventTitle: "Kian & Amaya", person1Name: "Kian", person2Name: "Amaya",
+    tentativeDate: "2026-11-11", city: "Reykjavik", isActive: true, slug: LOVESTARS_CODE,
+    heroImageUrl: SAMPLES.coupleBehind, tagline: "Two destinies, one line.",
+    invitationMessage: "Somewhere between two accidents, a pattern showed up. We've been staring at it for years. Come see it named out loud.",
+    aboutStory: "Every memory that mattered turned out to be a star. Only now, standing far enough back, we can see the shape they were making all along.",
+    mainDate: "2026-11-11", mainStartTime: "19:30", mainEndTime: "22:30",
+    themeAccentColor: "#8ea9ff",
+    venueName: "The Observatory Bar", venueAddress: "Laugavegur 22, Reykjavik, Iceland",
+    mapLink: "https://maps.google.com/?q=Reykjavik+Iceland", latitude: 64.1466, longitude: -21.9426,
+    contactName: "Kian & Amaya", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/lovestars-rsvp",
+  },
+  subEvents: [
+    { eventCode: LOVESTARS_CODE, order: 1, name: "Under the Aurora", date: "2026-11-11", startTime: "19:30", endTime: "20:30", venueName: "The Rooftop", description: "Champagne, sky-watching, quiet.", icon: "✧" },
+    { eventCode: LOVESTARS_CODE, order: 2, name: "The Announcement", date: "2026-11-11", startTime: "20:30", endTime: "21:00", venueName: "The Observatory", description: "The room finally hears it.", icon: "✦" },
+    { eventCode: LOVESTARS_CODE, order: 3, name: "Late Dinner", date: "2026-11-11", startTime: "21:00", endTime: "22:30", venueName: "The Long Room", description: "Everyone stays too long. Good.", icon: "★" },
+  ],
+  media: [hero(LOVESTARS_CODE, "photo-1606216794074-735e91aa2c92"), ...gallery(LOVESTARS_CODE, [
+    { url: SAMPLES.coupleBehind, caption: "Constellation" }, { url: SAMPLES.coupleSunset, caption: "The pattern" },
+    { url: SAMPLES.coupleEmbrace, caption: "Named" }, { url: SAMPLES.ringsClose, caption: "The ring" },
+  ])],
+};
+
+const GARDEN_CODE = "DEMO-GARDEN";
+const garden: DemoBundle = {
+  event: {
+    eventCode: GARDEN_CODE, eventType: "engagement", templateId: "garden",
+    eventTitle: "Rian & Myra", person1Name: "Rian", person2Name: "Myra",
+    tentativeDate: "2026-05-18", city: "Kyoto", isActive: true, slug: GARDEN_CODE,
+    heroImageUrl: SAMPLES.pinkFlowers, tagline: "Something quiet is blooming.",
+    invitationMessage: "There's a garden we've been growing for a long time without noticing. Today it flowers. Come stand in it with us.",
+    aboutStory: "The garden was here first. It knew before we did. Butterflies drift over the memories, and every flower has a footnote nobody planted.",
+    mainDate: "2026-05-18", mainStartTime: "16:00", mainEndTime: "20:30",
+    themeAccentColor: "#88b06a",
+    venueName: "Shosei-en Garden", venueAddress: "Shimogyo Ward, Kyoto, Japan",
+    mapLink: "https://maps.google.com/?q=Shosei-en+Kyoto", latitude: 34.9902, longitude: 135.7622,
+    contactName: "Rian & Myra", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/garden-rsvp",
+  },
+  subEvents: [
+    { eventCode: GARDEN_CODE, order: 1, name: "Garden Walk", date: "2026-05-18", startTime: "16:00", endTime: "17:00", venueName: "Shosei-en", dressCode: "Botanical pastels", description: "Petals underfoot, tea at the pavilion.", icon: "🌸" },
+    { eventCode: GARDEN_CODE, order: 2, name: "The Ring", date: "2026-05-18", startTime: "17:30", endTime: "18:15", venueName: "The Greenhouse", description: "The exchange, indoors when the rain came.", icon: "🌿" },
+    { eventCode: GARDEN_CODE, order: 3, name: "Garden Dinner", date: "2026-05-18", startTime: "18:30", endTime: "20:30", venueName: "The Terrace", description: "Long table under wisteria.", icon: "🦋" },
+  ],
+  media: [hero(GARDEN_CODE, "photo-1465495976277-4387d4b0b4c6"), ...gallery(GARDEN_CODE, [
+    { url: SAMPLES.pinkFlowers, caption: "Bloom" }, { url: SAMPLES.bouquet, caption: "Petals" },
+    { url: SAMPLES.coupleEmbrace, caption: "Under wisteria" }, { url: SAMPLES.coupleSunset, caption: "Golden hour" },
+  ])],
+};
+
+const HORIZON_CODE = "DEMO-HORIZON";
+const horizon: DemoBundle = {
+  event: {
+    eventCode: HORIZON_CODE, eventType: "engagement", templateId: "horizon",
+    eventTitle: "Kabir & Ira", person1Name: "Kabir", person2Name: "Ira",
+    tentativeDate: "2026-06-14", city: "Big Sur", isActive: true, slug: HORIZON_CODE,
+    heroImageUrl: SAMPLES.coupleSunset, tagline: "Between two lights.",
+    invitationMessage: "Between the last light of day and the first quiet of night, we asked one question — and the answer became a life. Come stand at that edge with us.",
+    aboutStory: "Every sunset is a small conclusion the sky lets us watch. This one felt like a promise we couldn't stop looking at.",
+    mainDate: "2026-06-14", mainStartTime: "18:30", mainEndTime: "22:00",
+    themeAccentColor: "#e8a86a",
+    venueName: "Bixby Cliffside", venueAddress: "Big Sur, California",
+    mapLink: "https://maps.google.com/?q=Bixby+Bridge+Big+Sur", latitude: 36.3722, longitude: -121.9017,
+    contactName: "Kabir & Ira", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/horizon-rsvp",
+  },
+  subEvents: [
+    { eventCode: HORIZON_CODE, order: 1, name: "Golden Hour", date: "2026-06-14", startTime: "18:30", endTime: "19:30", venueName: "The Cliff", dressCode: "Warm tones", description: "Champagne, silhouettes, one very committed sunset.", icon: "🌇" },
+    { eventCode: HORIZON_CODE, order: 2, name: "Twilight Dinner", date: "2026-06-14", startTime: "20:00", endTime: "22:00", venueName: "The Terrace", description: "Long table as the sky rotates through everything.", icon: "✦" },
+  ],
+  media: [hero(HORIZON_CODE, "photo-1519741497674-611481863552"), ...gallery(HORIZON_CODE, [
+    { url: SAMPLES.coupleSunset, caption: "Golden hour" }, { url: SAMPLES.coupleBehind, caption: "The edge" },
+    { url: SAMPLES.coupleEmbrace, caption: "Twilight" }, { url: SAMPLES.pinkFlowers, caption: "Silhouettes" },
+  ])],
+};
+
+const TOYBOX_CODE = "DEMO-TOYBOX";
+const toybox: DemoBundle = {
+  event: {
+    eventCode: TOYBOX_CODE, eventType: "birthday", templateId: "toybox",
+    eventTitle: "Riaan turns 4!", person1Name: "Riaan",
+    tentativeDate: "2026-08-04", city: "Mumbai", isActive: true, slug: TOYBOX_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "A whole city for one day.",
+    invitationMessage: "Blocks, trains, balloons, cake and one very important small human. Come play in the tiny universe we're building for a day.",
+    aboutStory: "A city made of blocks. Trains that go where their engineers point. And one birthday that everyone else in the toybox is celebrating.",
+    mainDate: "2026-08-04", mainStartTime: "15:30", mainEndTime: "18:30",
+    themeAccentColor: "#ff9f4a",
+    venueName: "Playhouse Mumbai", venueAddress: "Bandra West, Mumbai",
+    mapLink: "https://maps.google.com/?q=Bandra+Mumbai", latitude: 19.0596, longitude: 72.8295,
+    contactName: "Priya (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: TOYBOX_CODE, order: 1, name: "Block City", date: "2026-08-04", startTime: "15:30", endTime: "16:15", venueName: "Play zone", description: "Build a city, knock it down, build it again.", icon: "🧱" },
+    { eventCode: TOYBOX_CODE, order: 2, name: "Toy Train", date: "2026-08-04", startTime: "16:15", endTime: "17:00", venueName: "The tunnel", description: "The train arrives on time. This is important.", icon: "🚂" },
+    { eventCode: TOYBOX_CODE, order: 3, name: "Cake Time", date: "2026-08-04", startTime: "17:30", endTime: "18:30", venueName: "Main hall", description: "Bring napkins.", icon: "🎂" },
+  ],
+  media: [hero(TOYBOX_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(TOYBOX_CODE, [
+    { url: SAMPLES.confetti, caption: "Blocks" }, { url: SAMPLES.pinkFlowers, caption: "Cake" },
+    { url: PICSUM(`${TOYBOX_CODE}-train`, 1200, 1500), caption: "Train" },
+    { url: PICSUM(`${TOYBOX_CODE}-balloons`, 1200, 1500), caption: "Balloons" },
+  ])],
+};
+
+const TIMEMACHINE_CODE = "DEMO-TIMEMACHINE";
+const timemachine: DemoBundle = {
+  event: {
+    eventCode: TIMEMACHINE_CODE, eventType: "birthday", templateId: "timemachine",
+    eventTitle: "Aparna turns 50", person1Name: "Aparna",
+    tentativeDate: "2026-09-08", city: "Bengaluru", isActive: true, slug: TIMEMACHINE_CODE,
+    heroImageUrl: SAMPLES.coupleSunset, tagline: "Every year, a chapter.",
+    invitationMessage: "A whole life, worth toasting. Come walk through the years with us — the awkward ones included.",
+    aboutStory: "A calendar the size of a room. Clocks that only run forward when you scroll. Everything that's happened, waiting on the right page.",
+    mainDate: "2026-09-08", mainStartTime: "19:00", mainEndTime: "23:00",
+    themeAccentColor: "#a67b3c",
+    venueName: "The Grand Ballroom", venueAddress: "Taj West End, Bengaluru",
+    mapLink: "https://maps.google.com/?q=Taj+West+End+Bengaluru", latitude: 12.9884, longitude: 77.5844,
+    contactName: "Family", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/timemachine-rsvp",
+  },
+  subEvents: [
+    { eventCode: TIMEMACHINE_CODE, order: 1, name: "The Early Years", date: "2026-09-08", startTime: "19:00", endTime: "19:45", venueName: "Foyer", description: "Photographs, cocktails, embarrassing yearbook pages.", icon: "⏳" },
+    { eventCode: TIMEMACHINE_CODE, order: 2, name: "The Middle", date: "2026-09-08", startTime: "20:00", endTime: "21:15", venueName: "The Long Table", description: "Dinner, toasts, the years everyone remembers differently.", icon: "🗝" },
+    { eventCode: TIMEMACHINE_CODE, order: 3, name: "The Now", date: "2026-09-08", startTime: "21:30", endTime: "23:00", venueName: "The Ballroom", description: "Dance floor, playlist assembled by family, no phones out.", icon: "✦" },
+  ],
+  media: [hero(TIMEMACHINE_CODE, "photo-1465495976277-4387d4b0b4c6"), ...gallery(TIMEMACHINE_CODE, [
+    { url: SAMPLES.coupleSunset, caption: "1976" }, { url: SAMPLES.coupleEmbrace, caption: "1994" },
+    { url: SAMPLES.pinkFlowers, caption: "2005" }, { url: SAMPLES.coupleBehind, caption: "2019" },
+  ])],
+};
+
+const CARNIVAL_CODE = "DEMO-CARNIVAL";
+const carnival: DemoBundle = {
+  event: {
+    eventCode: CARNIVAL_CODE, eventType: "birthday", templateId: "carnival",
+    eventTitle: "Zara turns 21!", person1Name: "Zara",
+    tentativeDate: "2026-10-04", city: "Bengaluru", isActive: true, slug: CARNIVAL_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "The lights are on for you.",
+    invitationMessage: "The rides are running, the popcorn is warm and the fireworks are on standby. Bring cash for the games and nothing to prove.",
+    aboutStory: "A ferris wheel turning above the neon. Booths with prizes nobody needs. Fireworks the sky agreed to spend on one person tonight.",
+    mainDate: "2026-10-04", mainStartTime: "20:00", mainEndTime: "01:00",
+    themeAccentColor: "#ff4dd2",
+    venueName: "The Rooftop Fairground", venueAddress: "Indiranagar, Bengaluru",
+    mapLink: "https://maps.google.com/?q=Indiranagar+Bengaluru", latitude: 12.9784, longitude: 77.6408,
+    contactName: "Zara", socialLink: "https://instagram.com/", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/carnival-rsvp",
+  },
+  subEvents: [
+    { eventCode: CARNIVAL_CODE, order: 1, name: "Gates Open", date: "2026-10-04", startTime: "20:00", endTime: "21:00", venueName: "The Rooftop", description: "Ticket booth, welcome drinks, first photo-booth queue.", icon: "🎡" },
+    { eventCode: CARNIVAL_CODE, order: 2, name: "Fireworks", date: "2026-10-04", startTime: "22:00", endTime: "22:30", venueName: "The Sky", description: "Look up, don't check your phone.", icon: "🎆" },
+    { eventCode: CARNIVAL_CODE, order: 3, name: "After Rides", date: "2026-10-04", startTime: "22:30", endTime: "01:00", venueName: "The Dance Floor", description: "The last ride is the loudest.", icon: "✧" },
+  ],
+  media: [hero(CARNIVAL_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(CARNIVAL_CODE, [
+    { url: SAMPLES.confetti, caption: "Neon" }, { url: PICSUM(`${CARNIVAL_CODE}-ferris`, 1200, 1500), caption: "Ferris wheel" },
+    { url: PICSUM(`${CARNIVAL_CODE}-booth`, 1200, 1500), caption: "Photo booth" }, { url: PICSUM(`${CARNIVAL_CODE}-fireworks`, 1200, 1500), caption: "Fireworks" },
+  ])],
+};
+
+const DREAMFACTORY_CODE = "DEMO-DREAMFACTORY";
+const dreamfactory: DemoBundle = {
+  event: {
+    eventCode: DREAMFACTORY_CODE, eventType: "birthday", templateId: "dreamfactory",
+    eventTitle: "Kabir turns 8", person1Name: "Kabir",
+    tentativeDate: "2026-07-12", city: "Pune", isActive: true, slug: DREAMFACTORY_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Assembly required.",
+    invitationMessage: "The factory ran overtime this week — balloons, cake and one very custom-built birthday, packed and ready. Come pick yours up.",
+    aboutStory: "Conveyor belts humming, robots making executive decisions about frosting, and every gear turning toward the same happy shipment.",
+    mainDate: "2026-07-12", mainStartTime: "15:00", mainEndTime: "18:00",
+    themeAccentColor: "#f77c3c",
+    venueName: "The Workshop", venueAddress: "Koregaon Park, Pune",
+    mapLink: "https://maps.google.com/?q=Koregaon+Park+Pune", latitude: 18.5362, longitude: 73.8939,
+    contactName: "Family", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: DREAMFACTORY_CODE, order: 1, name: "Line Start", date: "2026-07-12", startTime: "15:00", endTime: "15:45", venueName: "Workshop floor", description: "Assembly stations, robot assistants, safety glasses (optional).", icon: "⚙" },
+    { eventCode: DREAMFACTORY_CODE, order: 2, name: "Quality Control", date: "2026-07-12", startTime: "16:00", endTime: "17:00", venueName: "Cake bay", description: "The cake is inspected. Repeatedly.", icon: "🎂" },
+    { eventCode: DREAMFACTORY_CODE, order: 3, name: "Shipping", date: "2026-07-12", startTime: "17:00", endTime: "18:00", venueName: "Delivery bay", description: "Everyone leaves with something.", icon: "📦" },
+  ],
+  media: [hero(DREAMFACTORY_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(DREAMFACTORY_CODE, [
+    { url: SAMPLES.confetti, caption: "Assembly" }, { url: PICSUM(`${DREAMFACTORY_CODE}-robot`, 1200, 1500), caption: "Robot" },
+    { url: PICSUM(`${DREAMFACTORY_CODE}-belt`, 1200, 1500), caption: "Conveyor" }, { url: SAMPLES.pinkFlowers, caption: "Cake" },
+  ])],
+};
+
+const LIBRARY_CODE = "DEMO-LIBRARY";
+const library: DemoBundle = {
+  event: {
+    eventCode: LIBRARY_CODE, eventType: "anniversary", templateId: "library",
+    eventTitle: "Sohini & Arjun — 30 years", person1Name: "Sohini", person2Name: "Arjun",
+    tentativeDate: "2026-12-19", city: "Kolkata", isActive: true, slug: LIBRARY_CODE,
+    heroImageUrl: SAMPLES.coupleSunset, tagline: "Volume the next.",
+    invitationMessage: "Twenty-something books, one shelf, one very long argument about whose fault the good years were. Come read a few chapters with us.",
+    aboutStory: "Books lined up like the years that made them. Butterflies escaping the letters. A staircase to the next chapter that only opens when both of us walk on it.",
+    mainDate: "2026-12-19", mainStartTime: "18:30", mainEndTime: "23:00",
+    themeAccentColor: "#7c5a2e",
+    venueName: "The Grand Reading Room", venueAddress: "Park Street, Kolkata",
+    mapLink: "https://maps.google.com/?q=Park+Street+Kolkata", latitude: 22.5535, longitude: 88.352,
+    contactName: "Sohini & Arjun", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/library-rsvp",
+  },
+  subEvents: [
+    { eventCode: LIBRARY_CODE, order: 1, name: "The Toast", date: "2026-12-19", startTime: "18:30", endTime: "19:30", venueName: "Reading Room", description: "One glass, thirty years, several unfair jokes.", icon: "📖" },
+    { eventCode: LIBRARY_CODE, order: 2, name: "The Reading", date: "2026-12-19", startTime: "19:30", endTime: "21:00", venueName: "The Terrace", description: "Letters read aloud by the people who know.", icon: "❦" },
+    { eventCode: LIBRARY_CODE, order: 3, name: "The Dance", date: "2026-12-19", startTime: "21:30", endTime: "23:00", venueName: "The Ballroom", description: "The playlist from 1996. Still works.", icon: "❧" },
+  ],
+  media: [hero(LIBRARY_CODE, "photo-1465495976277-4387d4b0b4c6"), ...gallery(LIBRARY_CODE, [
+    { url: SAMPLES.coupleSunset, caption: "Chapter I" }, { url: SAMPLES.coupleEmbrace, caption: "Chapter V" },
+    { url: SAMPLES.coupleBehind, caption: "Chapter XV" }, { url: SAMPLES.coupleHands, caption: "Chapter XXX" },
+  ])],
+};
+
+const QUANTUM_CODE = "DEMO-QUANTUM";
+const quantum: DemoBundle = {
+  event: {
+    eventCode: QUANTUM_CODE, eventType: "corporate", templateId: "quantum",
+    eventTitle: "Quantum City 2026", person1Name: "Quantum Foundation",
+    tentativeDate: "2026-11-05", city: "Seoul", isActive: true, slug: QUANTUM_CODE,
+    heroImageUrl: UNSPLASH("photo-1486312338219-ce68d2c6f44d"), tagline: "The city, indexed.",
+    invitationMessage: "One week. Every track a district. Every speaker a landmark. Come navigate the future with us.",
+    aboutStory: "A smart city as a conference map. Every session is an address. Every network cable is a road. Every idea, a building somebody is standing under.",
+    mainDate: "2026-11-05", mainStartTime: "09:00", mainEndTime: "18:00",
+    themeAccentColor: "#3ea6ff",
+    venueName: "Coex Convention Center", venueAddress: "Yeongdong-daero, Gangnam-gu, Seoul",
+    mapLink: "https://maps.google.com/?q=Coex+Seoul", latitude: 37.5116, longitude: 127.0596,
+    contactName: "Quantum Ops", contactEmail: "hello@quantumcity.io", rsvpEnabled: true, rsvpLinkOrContact: "https://quantumcity.io/register",
+  },
+  subEvents: [
+    { eventCode: QUANTUM_CODE, order: 1, name: "Opening Keynote", date: "2026-11-05", startTime: "09:30", endTime: "10:30", venueName: "Main Hall", description: "The state of the map — where the districts are moving.", icon: "🏙" },
+    { eventCode: QUANTUM_CODE, order: 2, name: "District Tracks", date: "2026-11-05", startTime: "11:00", endTime: "16:00", venueName: "Halls A-F", description: "Six parallel tracks — AI, robotics, biotech, quantum, climate, security.", icon: "◈" },
+    { eventCode: QUANTUM_CODE, order: 3, name: "City Lights Reception", date: "2026-11-05", startTime: "19:00", endTime: "22:00", venueName: "Skyline Terrace", description: "Cocktails and unstructured hallway conversations.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const GENESIS_CODE = "DEMO-GENESIS";
+const genesis: DemoBundle = {
+  event: {
+    eventCode: GENESIS_CODE, eventType: "product-launch", templateId: "genesis",
+    eventTitle: "Project Genesis", person1Name: "Genesis Labs",
+    tentativeDate: "2026-10-24", city: "Cupertino", isActive: true, slug: GENESIS_CODE,
+    heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"), tagline: "Watch it come together.",
+    invitationMessage: "You will see it built in front of you. Particle by particle. Layer by layer. Until the moment we can't hide it any more.",
+    aboutStory: "Every prototype we ever threw away. Every meeting that ran long. Every quiet decision to remove one more thing. All of it walked us to the object you'll meet on stage.",
+    mainDate: "2026-10-24", mainStartTime: "10:00", mainEndTime: "13:00",
+    themeAccentColor: "#ff5147",
+    venueName: "Steve Jobs Theater", venueAddress: "One Apple Park Way, Cupertino, CA",
+    mapLink: "https://maps.google.com/?q=Steve+Jobs+Theater", latitude: 37.3346, longitude: -122.009,
+    contactName: "Genesis Team", contactEmail: "hello@genesis.dev", rsvpEnabled: true, rsvpLinkOrContact: "https://genesis.dev/launch",
+  },
+  subEvents: [
+    { eventCode: GENESIS_CODE, order: 1, name: "Doors", date: "2026-10-24", startTime: "09:30", endTime: "10:00", venueName: "Theater Lobby", description: "Silent entry. Coffee, no press.", icon: "◈" },
+    { eventCode: GENESIS_CODE, order: 2, name: "The Assembly", date: "2026-10-24", startTime: "10:00", endTime: "11:15", venueName: "Main Stage", description: "The product built in front of the room.", icon: "◆" },
+    { eventCode: GENESIS_CODE, order: 3, name: "Hands-On", date: "2026-10-24", startTime: "11:30", endTime: "13:00", venueName: "The Atrium", description: "Talk to the engineers. Touch the thing.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const IMMORTALS_CODE = "DEMO-IMMORTALS";
+const immortals: DemoBundle = {
+  event: {
+    eventCode: IMMORTALS_CODE, eventType: "award-ceremony", templateId: "immortals",
+    eventTitle: "The Immortals — 2026", person1Name: "The Immortals Foundation",
+    tentativeDate: "2026-12-06", city: "Paris", isActive: true, slug: IMMORTALS_CODE,
+    heroImageUrl: UNSPLASH("photo-1501281668745-f7f57925c3b4"), tagline: "Where names stay.",
+    invitationMessage: "A room built to remember. Tonight we add another set of names to a list nobody will forget.",
+    aboutStory: "Golden pillars, reflective floors, one spotlight per soul. Above it all a sky of golden stars, each one a story that decided to keep going.",
+    mainDate: "2026-12-06", mainStartTime: "19:00", mainEndTime: "23:59",
+    themeAccentColor: "#e5c26a",
+    venueName: "Palais Garnier", venueAddress: "Place de l'Opéra, 75009 Paris, France",
+    mapLink: "https://maps.google.com/?q=Palais+Garnier+Paris", latitude: 48.8719, longitude: 2.3316,
+    contactName: "The Foundation", contactEmail: "awards@immortals.foundation", rsvpEnabled: true, rsvpLinkOrContact: "https://immortals.foundation/tickets",
+  },
+  subEvents: [
+    { eventCode: IMMORTALS_CODE, order: 1, name: "The Arrival", date: "2026-12-06", startTime: "19:00", endTime: "20:00", venueName: "The Grand Staircase", dressCode: "White tie", description: "The staircase, the coats, the first photograph of the night.", icon: "🏛" },
+    { eventCode: IMMORTALS_CODE, order: 2, name: "The Naming", date: "2026-12-06", startTime: "20:00", endTime: "22:00", venueName: "Main Auditorium", description: "Twelve pillars added to the hall this year.", icon: "★" },
+    { eventCode: IMMORTALS_CODE, order: 3, name: "The Room After", date: "2026-12-06", startTime: "22:30", endTime: "23:59", venueName: "The Salon", dressCode: "White tie", description: "The photograph everyone remembers, taken by someone who wasn't invited.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const ECOSYSTEM_CODE = "DEMO-ECOSYSTEM";
+const ecosystem: DemoBundle = {
+  event: {
+    eventCode: ECOSYSTEM_CODE, eventType: "networking-event", templateId: "ecosystem",
+    eventTitle: "Ecosystem — Founders Forest", person1Name: "Ecosystem",
+    tentativeDate: "2026-10-19", city: "Stockholm", isActive: true, slug: ECOSYSTEM_CODE,
+    heroImageUrl: UNSPLASH("photo-1540575467063-178a50c2df87"), tagline: "A room that grows.",
+    invitationMessage: "A community is not a list. It's a shape that changes shape when the right people are in the room. Tonight the room is you.",
+    aboutStory: "Every person a node. Every conversation a new edge. The network isn't built when we walk in — it's built while we're here.",
+    mainDate: "2026-10-19", mainStartTime: "18:00", mainEndTime: "22:00",
+    themeAccentColor: "#4bc27a",
+    venueName: "Fotografiska", venueAddress: "Stadsgårdshamnen 22, Stockholm, Sweden",
+    mapLink: "https://maps.google.com/?q=Fotografiska+Stockholm", latitude: 59.3183, longitude: 18.086,
+    contactName: "Ecosystem Team", contactEmail: "hello@ecosystem.dev", socialLink: "https://linkedin.com/", rsvpEnabled: true, rsvpLinkOrContact: "https://ecosystem.dev/rsvp",
+  },
+  subEvents: [
+    { eventCode: ECOSYSTEM_CODE, order: 1, name: "Growth Hour", date: "2026-10-19", startTime: "18:00", endTime: "19:00", venueName: "The Foyer", description: "Coats, drinks, first roots.", icon: "🌱" },
+    { eventCode: ECOSYSTEM_CODE, order: 2, name: "Living Network", date: "2026-10-19", startTime: "19:00", endTime: "21:00", venueName: "The Main Room", description: "Fluid rounds, no name tags, actual conversations.", icon: "🕸" },
+    { eventCode: ECOSYSTEM_CODE, order: 3, name: "Late Grove", date: "2026-10-19", startTime: "21:00", endTime: "22:00", venueName: "The Terrace", description: "The unstructured hour. The best one.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const INFINITYCLUB_CODE = "DEMO-INFINITYCLUB";
+const infinityclub: DemoBundle = {
+  event: {
+    eventCode: INFINITYCLUB_CODE, eventType: "party", templateId: "infinityclub",
+    eventTitle: "INFINITY: The Long Room", person1Name: "Infinity",
+    tentativeDate: "2026-12-27", city: "Ibiza", isActive: true, slug: INFINITYCLUB_CODE,
+    heroImageUrl: UNSPLASH("photo-1470229722913-7c0e2dbbafd3"), tagline: "Every room leads here.",
+    invitationMessage: "One club, several rooms, no end. Take the elevator, the corridor, the wrong turn — every route ends at the same night.",
+    aboutStory: "Tunnels of light joining rooms that shouldn't fit in one building. LED walls that answer when you look at them. The kind of night that quietly forgets to end.",
+    mainDate: "2026-12-27", mainStartTime: "23:00", mainEndTime: "07:00",
+    themeAccentColor: "#00e5ff",
+    venueName: "Amnesia", venueAddress: "Ctra. Ibiza a San Antonio, Ibiza, Spain",
+    mapLink: "https://maps.google.com/?q=Amnesia+Ibiza", latitude: 38.9611, longitude: 1.4137,
+    contactName: "Infinity Collective", socialLink: "https://instagram.com/", rsvpEnabled: true, rsvpLinkOrContact: "https://ra.co/events/ibiza",
+  },
+  subEvents: [
+    { eventCode: INFINITYCLUB_CODE, order: 1, name: "Room A", date: "2026-12-27", startTime: "23:00", endTime: "01:00", venueName: "Main Floor", dressCode: "Anything", description: "Warm-up set. Doors, drinks, first tunnel opens.", icon: "◈" },
+    { eventCode: INFINITYCLUB_CODE, order: 2, name: "Room B — The Long Corridor", date: "2026-12-28", startTime: "01:00", endTime: "03:30", venueName: "Corridor Room", description: "Headliner. LED walls answer back.", icon: "✦" },
+    { eventCode: INFINITYCLUB_CODE, order: 3, name: "Room C — Sunrise", date: "2026-12-28", startTime: "03:30", endTime: "07:00", venueName: "Rooftop", description: "The room the sun finds us in.", icon: "☀" },
+  ],
+  media: [],
+};
+
 // ---------- registry ----------
 
 export const DEMO_EVENTS: Record<string, DemoBundle> = {
@@ -1208,6 +1665,24 @@ export const DEMO_EVENTS: Record<string, DemoBundle> = {
   [ODEON_CODE]: odeon,
   [CONSTELLA_CODE]: constella,
   [METROPOLIS_CODE]: metropolis,
+  [MOONLIT_CODE]: moonlit,
+  [SKYTEMPLE_CODE]: skytemple,
+  [OCEANPALACE_CODE]: oceanpalace,
+  [SYMPHONY_CODE]: symphony,
+  [INFINITY_CODE]: infinity,
+  [LOVESTARS_CODE]: lovestars,
+  [GARDEN_CODE]: garden,
+  [HORIZON_CODE]: horizon,
+  [TOYBOX_CODE]: toybox,
+  [TIMEMACHINE_CODE]: timemachine,
+  [CARNIVAL_CODE]: carnival,
+  [DREAMFACTORY_CODE]: dreamfactory,
+  [LIBRARY_CODE]: library,
+  [QUANTUM_CODE]: quantum,
+  [GENESIS_CODE]: genesis,
+  [IMMORTALS_CODE]: immortals,
+  [ECOSYSTEM_CODE]: ecosystem,
+  [INFINITYCLUB_CODE]: infinityclub,
 };
 
 export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
@@ -1235,6 +1710,24 @@ export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
   odeon: ODEON_CODE,
   constella: CONSTELLA_CODE,
   metropolis: METROPOLIS_CODE,
+  moonlit: MOONLIT_CODE,
+  skytemple: SKYTEMPLE_CODE,
+  oceanpalace: OCEANPALACE_CODE,
+  symphony: SYMPHONY_CODE,
+  infinity: INFINITY_CODE,
+  lovestars: LOVESTARS_CODE,
+  garden: GARDEN_CODE,
+  horizon: HORIZON_CODE,
+  toybox: TOYBOX_CODE,
+  timemachine: TIMEMACHINE_CODE,
+  carnival: CARNIVAL_CODE,
+  dreamfactory: DREAMFACTORY_CODE,
+  library: LIBRARY_CODE,
+  quantum: QUANTUM_CODE,
+  genesis: GENESIS_CODE,
+  immortals: IMMORTALS_CODE,
+  ecosystem: ECOSYSTEM_CODE,
+  infinityclub: INFINITYCLUB_CODE,
 };
 
 export function getDemoBundle(code: string): DemoBundle | undefined {

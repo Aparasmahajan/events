@@ -32,6 +32,7 @@ export function LandingTemplates() {
   const reduce = useReducedMotion();
   const [tag, setTag] = useState<TemplateTag | "all">("all");
   const [query, setQuery] = useState("");
+  const [showAll, setShowAll] = useState(false);
 
   const filtered = useMemo(() => {
     const tagFiltered =
@@ -45,6 +46,14 @@ export function LandingTemplates() {
       .sort((a, b) => b.score - a.score)
       .map((x) => x.t);
   }, [tag, query]);
+
+  // When user is actively searching or filtering by tag, show every match.
+  // Otherwise show a curated first page — 2 on mobile, 6 on desktop —
+  // with a "View all" toggle underneath. On mobile, items past index 1 are
+  // hidden via `hidden sm:flex` on the card so the desktop grid still gets 6.
+  const isBrowsing = tag === "all" && !query.trim();
+  const visible =
+    isBrowsing && !showAll ? filtered.slice(0, 6) : filtered;
 
   return (
     <>
@@ -87,7 +96,7 @@ export function LandingTemplates() {
 
       <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         <AnimatePresence mode="popLayout">
-          {filtered.map((t, i) => {
+          {visible.map((t, i) => {
             // Preview each template with a demo of its primary event type, so
             // e.g. Modern shows a wedding rather than its corporate seed event.
             const previewHref = `/events/${t.eventTypes[0]}/${t.id}/preview`;
@@ -100,7 +109,9 @@ export function LandingTemplates() {
                 exit={reduce ? undefined : { opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.45, delay: i * 0.05, ease: "easeOut" }}
                 whileHover={reduce ? undefined : { y: -4 }}
-                className="rounded-2xl overflow-hidden border border-black/10 bg-white flex flex-col group"
+                className={`rounded-2xl overflow-hidden border border-black/10 bg-white flex flex-col group ${
+                  isBrowsing && !showAll && i >= 2 ? "hidden sm:flex" : ""
+                }`}
               >
                 <Link href={previewHref} className="block overflow-hidden">
                   <div
@@ -162,6 +173,28 @@ export function LandingTemplates() {
           })}
         </AnimatePresence>
       </motion.div>
+
+      {isBrowsing && !showAll && filtered.length > 6 && (
+        <div className="text-center mt-10">
+          <button
+            onClick={() => setShowAll(true)}
+            className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white px-6 py-3 text-sm font-medium hover:border-black/40 hover:shadow-sm transition"
+          >
+            View all templates <span className="opacity-60">({filtered.length})</span>
+          </button>
+        </div>
+      )}
+
+      {isBrowsing && showAll && (
+        <div className="text-center mt-10">
+          <button
+            onClick={() => setShowAll(false)}
+            className="text-sm underline opacity-70 hover:opacity-100"
+          >
+            Show fewer
+          </button>
+        </div>
+      )}
 
       {filtered.length === 0 && (
         <div className="text-center py-12">

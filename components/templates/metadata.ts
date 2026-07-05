@@ -642,6 +642,528 @@ export const metropolisMeta: TemplateMeta = {
   },
 };
 
+// ─── Wedding: Moonlit Kingdom ────────────────────────────────
+export const moonlitMeta: TemplateMeta = {
+  id: "moonlit",
+  name: "Moonlit Kingdom",
+  codename: "Moonlit Kingdom",
+  description:
+    "A kingdom under a giant full moon — castles in mist, floating lanterns, silver on still water. For weddings that want to feel like the greatest fantasy royal wedding ever held.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["royal", "cinematic", "luxurious", "romantic", "celestial", "traditional"],
+  keywords: [
+    "fantasy wedding", "castle wedding", "moonlight", "lanterns", "royal night",
+    "kingdom", "cinematic wedding", "epic wedding", "fairy tale wedding",
+    "mist", "midnight ceremony", "gothic romance",
+  ],
+  icon: "🏰",
+  vibe: { label: "Moonlit Kingdom", color: "#c8d4e8" },
+  previewImage: "/template-previews/moonlit.jpg",
+  defaults: {
+    invitationMessage:
+      "Beneath a moon that has lit every love before ours, and every kingdom before ours, we invite you into the night we've been walking toward.",
+    tagline: "Under one silver sky.",
+    accentColor: "#c8d4e8",
+    heroImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Two names carved into a glowing stone gate. A pathway lit by ten thousand candles. A kingdom holding its breath for the words that turn a promise into a covenant.",
+  },
+};
+
+// ─── Wedding: Sky Temple ─────────────────────────────────────
+export const skytempleMeta: TemplateMeta = {
+  id: "skytemple",
+  name: "Sky Temple",
+  codename: "Sky Temple",
+  description:
+    "Marble temples floating between cloud islands, golden birds, waterfalls falling into infinite sky. For weddings that want the guest to feel they're attending among the gods.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["celestial", "luxurious", "cinematic", "elegant", "artistic", "premium"],
+  keywords: [
+    "sky wedding", "cloud wedding", "heavenly", "floating temple", "godly",
+    "olympian", "cloud kingdom", "spiritual wedding", "temple wedding",
+    "orchestral", "divine",
+  ],
+  icon: "⛩",
+  vibe: { label: "Sky Temple", color: "#e6c988" },
+  previewImage: "/template-previews/skytemple.jpg",
+  defaults: {
+    invitationMessage:
+      "Above the world we knew, we found a room the sky agreed to hold for us. Come stand in it while we make our promise.",
+    tagline: "A wedding among the gods.",
+    accentColor: "#e6c988",
+    heroImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Doors of marble opening onto cloud, a bridge of light between the two of us, and a small orchestra somewhere behind the sun. This is the day the sky lends us its temples.",
+  },
+};
+
+// ─── Wedding: Ocean Palace ───────────────────────────────────
+export const oceanpalaceMeta: TemplateMeta = {
+  id: "oceanpalace",
+  name: "Ocean Palace",
+  codename: "Ocean Palace",
+  description:
+    "A palace beneath the sea — rays of sun through crystal water, pearls rising, coral gardens, photos inside luminous bubbles. For weddings that want to feel weightless and magical.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["luxurious", "elegant", "romantic", "artistic", "cinematic", "premium"],
+  keywords: [
+    "underwater wedding", "ocean wedding", "beach wedding", "sea wedding",
+    "pearl wedding", "coral", "aquamarine", "atlantis", "mermaid",
+    "island wedding", "destination wedding",
+  ],
+  icon: "🐚",
+  vibe: { label: "Ocean Palace", color: "#4fb0c6" },
+  previewImage: "/template-previews/oceanpalace.jpg",
+  defaults: {
+    invitationMessage:
+      "Somewhere between the surface and the deep, the light writes its own kind of vow. Come see it with us.",
+    tagline: "Two tides, one shore.",
+    accentColor: "#4fb0c6",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A palace nobody built and everyone can feel. The room hums like a shell. Every promise arrives on a slow current.",
+  },
+};
+
+// ─── Wedding: Celestial Symphony ─────────────────────────────
+export const symphonyMeta: TemplateMeta = {
+  id: "symphony",
+  name: "Celestial Symphony",
+  codename: "Symphony",
+  description:
+    "The wedding as a piece of music — constellations pulse to orchestral rhythm, notes become stars, the story unfolds in movements. For couples whose love has a score.",
+  eventTypes: ["wedding", "anniversary"],
+  tags: ["cinematic", "artistic", "romantic", "celestial", "editorial", "luxurious"],
+  keywords: [
+    "symphony wedding", "musical wedding", "orchestra", "opera wedding",
+    "concert wedding", "composer", "instrumental", "artistic wedding",
+    "score", "movements", "notes",
+  ],
+  icon: "🎼",
+  vibe: { label: "Symphony", color: "#b48eff" },
+  previewImage: "/template-previews/symphony.jpg",
+  defaults: {
+    invitationMessage:
+      "Every love has a score. Ours has been rehearsing since the day we met. Come hear the first performance.",
+    tagline: "In four movements.",
+    accentColor: "#b48eff",
+    heroImage:
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Movement I — the meeting. Movement II — the long slow verse. Movement III — the crescendo. Movement IV — you, walking down the aisle, all instruments held on the same note.",
+  },
+};
+
+// ─── Engagement: Infinity Rings ──────────────────────────────
+export const infinityMeta: TemplateMeta = {
+  id: "infinity",
+  name: "Infinity Rings",
+  codename: "Infinity",
+  description:
+    "Two glowing rings crossing universes, closing in on each other as the page scrolls, meeting in a single infinite ring. A cinematic engagement announcement.",
+  eventTypes: ["engagement", "anniversary"],
+  tags: ["luxurious", "romantic", "cinematic", "modern", "editorial", "premium"],
+  keywords: [
+    "engagement", "ring ceremony", "roka", "infinity", "eternal ring",
+    "engagement announcement", "commitment", "propose", "she said yes",
+    "we're engaged", "vow",
+  ],
+  icon: "∞",
+  vibe: { label: "Infinity", color: "#d4a574" },
+  previewImage: "/template-previews/infinity.jpg",
+  defaults: {
+    invitationMessage:
+      "Two paths, drawn separately for a long time, closing into one line. We're calling that a promise. Come sign your name to it.",
+    tagline: "One line, forever.",
+    accentColor: "#d4a574",
+    heroImage:
+      "https://images.unsplash.com/photo-1525258946800-98cfd641d0de?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A ring is a circle that keeps its own promise — no start, no end, only more of itself. So is this.",
+  },
+};
+
+// ─── Engagement: Love Constellation ──────────────────────────
+export const lovestarsMeta: TemplateMeta = {
+  id: "lovestars",
+  name: "Love Constellation",
+  codename: "Lovestars",
+  description:
+    "Memories drawn as stars that connect into a constellation as you scroll — the moment of the proposal becomes an exploding galaxy. Two destinies written in the sky.",
+  eventTypes: ["engagement", "anniversary"],
+  tags: ["celestial", "romantic", "cinematic", "artistic", "interactive", "modern"],
+  keywords: [
+    "engagement", "astronomy", "constellation", "stars", "galaxy",
+    "cosmic engagement", "space engagement", "we're engaged", "destinies",
+    "written in stars", "zodiac",
+  ],
+  icon: "✨",
+  vibe: { label: "Lovestars", color: "#8ea9ff" },
+  previewImage: "/template-previews/lovestars.jpg",
+  defaults: {
+    invitationMessage:
+      "Somewhere between two accidents, a pattern showed up. We've been staring at it for years. Come see it named out loud.",
+    tagline: "Two destinies, one line.",
+    accentColor: "#8ea9ff",
+    heroImage:
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every memory that mattered turned out to be a star. Only now, standing far enough back, we can see the shape they were making all along.",
+  },
+};
+
+// ─── Engagement: Secret Garden ───────────────────────────────
+export const gardenMeta: TemplateMeta = {
+  id: "garden",
+  name: "Secret Garden",
+  codename: "Garden",
+  description:
+    "A magical botanical garden — flowers bloom as you scroll, butterflies reveal photos, glass greenhouses hold memories. An intimate, naturally romantic engagement.",
+  eventTypes: ["engagement", "wedding", "anniversary"],
+  tags: ["romantic", "botanical", "pastel", "elegant", "artistic", "whimsical"],
+  keywords: [
+    "garden engagement", "botanical", "flowers", "greenhouse", "florals",
+    "secret garden", "spring engagement", "romantic garden", "outdoor engagement",
+    "butterfly", "conservatory",
+  ],
+  icon: "🌿",
+  vibe: { label: "Secret Garden", color: "#88b06a" },
+  previewImage: "/template-previews/garden.jpg",
+  defaults: {
+    invitationMessage:
+      "There's a garden we've been growing for a long time without noticing. Today it flowers. Come stand in it with us.",
+    tagline: "Something quiet is blooming.",
+    accentColor: "#88b06a",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The garden was here first. It knew before we did. Butterflies drift over the memories, and every flower has a footnote nobody planted.",
+  },
+};
+
+// ─── Engagement: Golden Horizon ──────────────────────────────
+export const horizonMeta: TemplateMeta = {
+  id: "horizon",
+  name: "Golden Horizon",
+  codename: "Horizon",
+  description:
+    "Endless sunset — warm golden hour drifts into twilight as you scroll, clouds pink and orange, silhouettes on calm water. Warm, peaceful, deeply romantic.",
+  eventTypes: ["engagement", "anniversary", "wedding"],
+  tags: ["romantic", "elegant", "pastel", "cinematic", "editorial", "appealing"],
+  keywords: [
+    "sunset engagement", "golden hour", "beach engagement", "twilight",
+    "warm engagement", "silhouette engagement", "horizon", "coastal",
+    "peaceful engagement", "romantic sunset",
+  ],
+  icon: "🌇",
+  vibe: { label: "Golden Horizon", color: "#e8a86a" },
+  previewImage: "/template-previews/horizon.jpg",
+  defaults: {
+    invitationMessage:
+      "Between the last light of day and the first quiet of night, we asked one question — and the answer became a life. Come stand at that edge with us.",
+    tagline: "Between two lights.",
+    accentColor: "#e8a86a",
+    heroImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every sunset is a small conclusion the sky lets us watch. This one felt like a promise we couldn't stop looking at.",
+  },
+};
+
+// ─── Birthday: Toy Universe ──────────────────────────────────
+export const toyboxMeta: TemplateMeta = {
+  id: "toybox",
+  name: "Toy Universe",
+  codename: "Toybox",
+  description:
+    "A gigantic toy universe — blocks are buildings, trains run between sections, balloons carry memories. Playful animation and joyful chaos for a kid's birthday.",
+  eventTypes: ["birthday"],
+  tags: ["playful", "vibrant", "whimsical", "festive", "cool", "bold"],
+  keywords: [
+    "kids birthday", "toy party", "lego", "playroom", "block party",
+    "toddler birthday", "first birthday", "2nd birthday", "3rd birthday",
+    "child birthday", "playful",
+  ],
+  icon: "🧸",
+  vibe: { label: "Toybox", color: "#ff9f4a" },
+  previewImage: "/template-previews/toybox.jpg",
+  defaults: {
+    invitationMessage:
+      "Blocks, trains, balloons, cake and one very important small human. Come play in the tiny universe we're building for a day.",
+    tagline: "A whole city for one day.",
+    accentColor: "#ff9f4a",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A city made of blocks. Trains that go where their engineers point. And one birthday that everyone else in the toybox is celebrating.",
+  },
+};
+
+// ─── Birthday: Time Machine ──────────────────────────────────
+export const timemachineMeta: TemplateMeta = {
+  id: "timemachine",
+  name: "Time Machine",
+  codename: "Time Machine",
+  description:
+    "Scrolling travels through years — childhood, teens, adulthood — photos fly out of floating clocks, memories become pages of a giant mechanical calendar. For milestone birthdays.",
+  eventTypes: ["birthday", "anniversary"],
+  tags: ["editorial", "cinematic", "playful", "artistic", "modern", "traditional"],
+  keywords: [
+    "milestone birthday", "30th birthday", "40th birthday", "50th birthday",
+    "60th birthday", "retirement", "life journey", "years of", "vintage",
+    "throwback", "life story", "big birthday",
+  ],
+  icon: "⏳",
+  vibe: { label: "Time Machine", color: "#a67b3c" },
+  previewImage: "/template-previews/timemachine.jpg",
+  defaults: {
+    invitationMessage:
+      "A whole life, worth toasting. Come walk through the years with us — the awkward ones included.",
+    tagline: "Every year, a chapter.",
+    accentColor: "#a67b3c",
+    heroImage:
+      "https://images.unsplash.com/photo-1494203484021-3c454daf695d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A calendar the size of a room. Clocks that only run forward when you scroll. Everything that's happened, waiting on the right page.",
+  },
+};
+
+// ─── Birthday: Neon Carnival ─────────────────────────────────
+export const carnivalMeta: TemplateMeta = {
+  id: "carnival",
+  name: "Neon Carnival",
+  codename: "Carnival",
+  description:
+    "A futuristic carnival — ferris wheels rotate behind headings, fireworks react to scroll, arcade games become gallery sections. Energetic, exciting, unforgettable.",
+  eventTypes: ["birthday", "party"],
+  tags: ["vibrant", "neon", "playful", "festive", "bold", "modern"],
+  keywords: [
+    "carnival birthday", "fair", "ferris wheel", "arcade birthday",
+    "neon party", "sweet sixteen", "18th birthday", "21st birthday",
+    "big birthday", "photo booth", "fireworks",
+  ],
+  icon: "🎡",
+  vibe: { label: "Carnival", color: "#ff4dd2" },
+  previewImage: "/template-previews/carnival.jpg",
+  defaults: {
+    invitationMessage:
+      "The rides are running, the popcorn is warm and the fireworks are on standby. Bring cash for the games and nothing to prove.",
+    tagline: "The lights are on for you.",
+    accentColor: "#ff4dd2",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A ferris wheel turning above the neon. Booths with prizes nobody needs. Fireworks the sky agreed to spend on one person tonight.",
+  },
+};
+
+// ─── Birthday: Dream Factory ─────────────────────────────────
+export const dreamfactoryMeta: TemplateMeta = {
+  id: "dreamfactory",
+  name: "Dream Factory",
+  codename: "Dream Factory",
+  description:
+    "An imagination factory — conveyor belts making balloons, robots delivering memories, gears powering every scroll. Creative, playful and surprisingly futuristic.",
+  eventTypes: ["birthday"],
+  tags: ["playful", "modern", "whimsical", "vibrant", "artistic", "interactive"],
+  keywords: [
+    "birthday factory", "machine birthday", "robots", "steampunk birthday",
+    "invention", "creator birthday", "maker", "imagination", "confetti factory",
+    "gears", "workshop",
+  ],
+  icon: "⚙",
+  vibe: { label: "Dream Factory", color: "#f77c3c" },
+  previewImage: "/template-previews/dreamfactory.jpg",
+  defaults: {
+    invitationMessage:
+      "The factory ran overtime this week — balloons, cake and one very custom-built birthday, packed and ready. Come pick yours up.",
+    tagline: "Assembly required.",
+    accentColor: "#f77c3c",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Conveyor belts humming, robots making executive decisions about frosting, and every gear turning toward the same happy shipment.",
+  },
+};
+
+// ─── Anniversary: Eternal Library ────────────────────────────
+export const libraryMeta: TemplateMeta = {
+  id: "library",
+  name: "Eternal Library",
+  codename: "Library",
+  description:
+    "An infinite library — each year of marriage is an illuminated book, letters become butterflies, grand staircases connect chapters. The greatest love story ever written.",
+  eventTypes: ["anniversary", "wedding"],
+  tags: ["editorial", "elegant", "traditional", "romantic", "artistic", "premium"],
+  keywords: [
+    "anniversary library", "book anniversary", "years together", "silver",
+    "golden anniversary", "vow renewal", "memoir", "chronicle",
+    "letter anniversary", "literary anniversary", "hardcover",
+  ],
+  icon: "📚",
+  vibe: { label: "Eternal Library", color: "#7c5a2e" },
+  previewImage: "/template-previews/library.jpg",
+  defaults: {
+    invitationMessage:
+      "Twenty-something books, one shelf, one very long argument about whose fault the good years were. Come read a few chapters with us.",
+    tagline: "Volume the next.",
+    accentColor: "#7c5a2e",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Books lined up like the years that made them. Butterflies escaping the letters. A staircase to the next chapter that only opens when both of us walk on it.",
+  },
+};
+
+// ─── Corporate: Quantum City ─────────────────────────────────
+export const quantumMeta: TemplateMeta = {
+  id: "quantum",
+  name: "Quantum City",
+  codename: "Quantum",
+  description:
+    "A smart-city conference — buildings visualize tracks, speakers appear as holographic skyscrapers, data streams flow through transparent roads. For the biggest tech conferences.",
+  eventTypes: ["corporate", "product-launch"],
+  tags: ["tech", "premium", "modern", "architectural", "cyberpunk", "interactive"],
+  keywords: [
+    "quantum computing", "tech conference", "developer conference",
+    "smart city", "future of tech", "hackathon", "innovation summit",
+    "keynote", "world tech conference", "flagship",
+  ],
+  icon: "🏙",
+  vibe: { label: "Quantum City", color: "#3ea6ff" },
+  previewImage: "/template-previews/quantum.jpg",
+  defaults: {
+    invitationMessage:
+      "One week. Every track a district. Every speaker a landmark. Come navigate the future with us.",
+    tagline: "The city, indexed.",
+    accentColor: "#3ea6ff",
+    heroImage:
+      "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A smart city as a conference map. Every session is an address. Every network cable is a road. Every idea, a building somebody is standing under.",
+  },
+};
+
+// ─── Product Launch: Genesis ─────────────────────────────────
+export const genesisMeta: TemplateMeta = {
+  id: "genesis",
+  name: "Genesis",
+  codename: "Genesis",
+  description:
+    "The product assembling itself in real time — raw particles becoming components, each scroll adding a layer, cinematic suspense to the final reveal. Rivals the best product keynotes.",
+  eventTypes: ["product-launch", "corporate"],
+  tags: ["cinematic", "tech", "bold", "premium", "modern", "interactive"],
+  keywords: [
+    "product launch", "keynote", "reveal", "flagship launch", "hardware launch",
+    "unveiling", "genesis", "product story", "manufacturing", "assembly",
+    "cinematic launch",
+  ],
+  icon: "◯",
+  vibe: { label: "Genesis", color: "#ff5147" },
+  previewImage: "/template-previews/genesis.jpg",
+  defaults: {
+    invitationMessage:
+      "You will see it built in front of you. Particle by particle. Layer by layer. Until the moment we can't hide it any more.",
+    tagline: "Watch it come together.",
+    accentColor: "#ff5147",
+    heroImage:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every prototype we ever threw away. Every meeting that ran long. Every quiet decision to remove one more thing. All of it walked us to the object you'll meet on stage.",
+  },
+};
+
+// ─── Award Ceremony: Hall of Immortals ───────────────────────
+export const immortalsMeta: TemplateMeta = {
+  id: "immortals",
+  name: "Hall of Immortals",
+  codename: "Immortals",
+  description:
+    "A hall for legendary achievements — golden pillars on reflective floors, spotlights following winners, monumentally scaled award cards. Sky filled with golden stars for the finale.",
+  eventTypes: ["award-ceremony", "corporate"],
+  tags: ["premium", "luxurious", "cinematic", "traditional", "artistic", "elegant"],
+  keywords: [
+    "hall of fame", "lifetime achievement", "immortals", "legends",
+    "industry awards", "founders awards", "legacy", "grand awards",
+    "sports hall", "science awards", "arts awards", "honours",
+  ],
+  icon: "🏛",
+  vibe: { label: "Immortals", color: "#e5c26a" },
+  previewImage: "/template-previews/immortals.jpg",
+  defaults: {
+    invitationMessage:
+      "A room built to remember. Tonight we add another set of names to a list nobody will forget.",
+    tagline: "Where names stay.",
+    accentColor: "#e5c26a",
+    heroImage:
+      "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Golden pillars, reflective floors, one spotlight per soul. Above it all a sky of golden stars, each one a story that decided to keep going.",
+  },
+};
+
+// ─── Networking: Digital Ecosystem ───────────────────────────
+export const ecosystemMeta: TemplateMeta = {
+  id: "ecosystem",
+  name: "Digital Ecosystem",
+  codename: "Ecosystem",
+  description:
+    "Every attendee is a living digital organism — profiles grow and connect, communities form forests of nodes, relationship paths animate organically. A living ecosystem of innovation.",
+  eventTypes: ["networking-event", "corporate"],
+  tags: ["organic", "modern", "tech", "interactive", "artistic", "cool"],
+  keywords: [
+    "networking", "community", "ecosystem", "organic network", "living network",
+    "communities of practice", "salon", "meetup", "founders community",
+    "operator community", "collective",
+  ],
+  icon: "🕸",
+  vibe: { label: "Ecosystem", color: "#4bc27a" },
+  previewImage: "/template-previews/ecosystem.jpg",
+  defaults: {
+    invitationMessage:
+      "A community is not a list. It's a shape that changes shape when the right people are in the room. Tonight the room is you.",
+    tagline: "A room that grows.",
+    accentColor: "#4bc27a",
+    heroImage:
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every person a node. Every conversation a new edge. The network isn't built when we walk in — it's built while we're here.",
+  },
+};
+
+// ─── Party: Infinity Club ────────────────────────────────────
+export const infinityclubMeta: TemplateMeta = {
+  id: "infinityclub",
+  name: "Infinity Club",
+  codename: "Infinity Club",
+  description:
+    "An endless megaclub — multiple arenas linked by glowing tunnels, LED walls reacting to scroll, laser architecture, gallery as digital billboards. The most futuristic night in the city.",
+  eventTypes: ["party", "birthday"],
+  tags: ["neon", "cyberpunk", "vibrant", "bold", "playful", "festive", "modern"],
+  keywords: [
+    "megaclub", "warehouse party", "afterparty", "rave", "nightlife",
+    "club night", "laser show", "led wall", "electronic party",
+    "underground", "boiler room", "infinity",
+  ],
+  icon: "♾",
+  vibe: { label: "Infinity Club", color: "#00e5ff" },
+  previewImage: "/template-previews/infinityclub.jpg",
+  defaults: {
+    invitationMessage:
+      "One club, several rooms, no end. Take the elevator, the corridor, the wrong turn — every route ends at the same night.",
+    tagline: "Every room leads here.",
+    accentColor: "#00e5ff",
+    heroImage:
+      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Tunnels of light joining rooms that shouldn't fit in one building. LED walls that answer when you look at them. The kind of night that quietly forgets to end.",
+  },
+};
+
 export const convergeMeta: TemplateMeta = {
   id: "converge",
   name: "Warm Networking",
@@ -670,6 +1192,11 @@ export const convergeMeta: TemplateMeta = {
 };
 
 export const TEMPLATES_META: TemplateMeta[] = [
+  // Wedding & romantic
+  moonlitMeta,
+  skytempleMeta,
+  oceanpalaceMeta,
+  symphonyMeta,
   empyreanMeta,
   prismMeta,
   auroraMeta,
@@ -679,19 +1206,38 @@ export const TEMPLATES_META: TemplateMeta[] = [
   minimalMeta,
   modernMeta,
   pastelMeta,
+  // Engagement
+  infinityMeta,
+  lovestarsMeta,
+  gardenMeta,
+  horizonMeta,
   promiseMeta,
+  // Anniversary
+  libraryMeta,
   chaptersMeta,
+  // Birthday
+  toyboxMeta,
+  timemachineMeta,
+  carnivalMeta,
+  dreamfactoryMeta,
   orbitMeta,
   arcadeMeta,
   vibrantMeta,
+  // Corporate / Launch / Awards
+  quantumMeta,
   neuralMeta,
+  genesisMeta,
   unveilMeta,
   nexusMeta,
   pinnacleMeta,
+  immortalsMeta,
   odeonMeta,
   luminaryMeta,
+  // Networking / Party
+  ecosystemMeta,
   constellaMeta,
   convergeMeta,
+  infinityclubMeta,
   metropolisMeta,
   afterMeta,
 ];
