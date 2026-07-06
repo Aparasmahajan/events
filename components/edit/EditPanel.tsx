@@ -481,6 +481,13 @@ export function EditPanel({
                   onChange={(v) => patchEvent({ hideTimer: !v })}
                 />
                 {!data.event.hideTimer && (
+                  <Toggle
+                    label="Customize timer"
+                    checked={!!data.event.timerCustom}
+                    onChange={(v) => patchEvent({ timerCustom: v })}
+                  />
+                )}
+                {!data.event.hideTimer && data.event.timerCustom && (
                   <div className="pl-1">
                     <span className="block text-[11px] opacity-60 mb-1.5">Timer position</span>
                     <div className="grid grid-cols-2 gap-1">
@@ -512,7 +519,7 @@ export function EditPanel({
                     </p>
                   </div>
                 )}
-                {!data.event.hideTimer && (
+                {!data.event.hideTimer && data.event.timerCustom && (
                   <div className="pl-1">
                     <span className="block text-[11px] opacity-60 mb-1.5">Position on hero</span>
                     <div className="grid grid-cols-3 gap-1">
@@ -542,7 +549,7 @@ export function EditPanel({
                     </div>
                   </div>
                 )}
-                {!data.event.hideTimer && (
+                {!data.event.hideTimer && data.event.timerCustom && (
                   <div className="pl-1">
                     <span className="block text-[11px] opacity-60 mb-1.5">Countdown design</span>
                     <div className="grid grid-cols-3 gap-1">

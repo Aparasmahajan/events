@@ -53,7 +53,7 @@ export const PastelTemplate: TemplateComponent = ({ event, subEvents, media }) =
               {event.city && ` · ${event.city}`}
             </p>
           )}
-          {!event.hideTimer && event.timerStyle !== "floating" && event.mainDate && (
+          {!event.hideTimer && !(event.timerCustom && event.timerStyle === "floating") && event.mainDate && (
             <div className="mt-10">
               <Countdown target={`${event.mainDate}T${event.mainStartTime || "16:00"}:00`} label="Counting moments" />
             </div>

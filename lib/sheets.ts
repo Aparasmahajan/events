@@ -99,6 +99,7 @@ export const LIVE_COL = {
   TIMER_STYLE: 58,
   TIMER_DESIGN: 59,
   TIMER_POSITION: 60,
+  TIMER_CUSTOM: 61,
 } as const;
 
 const LIVE_LAST_COL = LIVE_COL.RSVP_TYPE;
@@ -346,6 +347,7 @@ function liveRowToEvent(r: string[]): EventData {
       (get(LIVE_COL.TIMER_DESIGN) as EventData["timerDesign"]) || undefined,
     timerPosition:
       (get(LIVE_COL.TIMER_POSITION) as EventData["timerPosition"]) || undefined,
+    timerCustom: boolish(get(LIVE_COL.TIMER_CUSTOM)),
   };
 }
 

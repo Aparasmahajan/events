@@ -17,6 +17,29 @@ export const TIMER_DESIGNS: { key: Design; label: string }[] = [
   { key: "elegant", label: "Elegant" },
 ];
 
+/** Picks a template-appropriate default countdown design from its tags, so
+ *  every template shows a fitting timer without hand-tuning each one. */
+export function defaultTimerDesign(tags: readonly string[]): Design {
+  if (tags.includes("neon")) return "neon";
+  if (tags.includes("minimal") || tags.includes("monochrome")) return "minimal";
+  if (
+    tags.includes("royal") ||
+    tags.includes("luxurious") ||
+    tags.includes("elegant") ||
+    tags.includes("traditional")
+  )
+    return "elegant";
+  if (
+    tags.includes("playful") ||
+    tags.includes("festive") ||
+    tags.includes("whimsical") ||
+    tags.includes("vibrant")
+  )
+    return "flip";
+  if (tags.includes("cinematic") || tags.includes("cool")) return "glass";
+  return "glass";
+}
+
 function calc(target: string): State {
   const diff = new Date(target).getTime() - Date.now();
   if (!Number.isFinite(diff) || diff <= 0) return { d: 0, h: 0, m: 0, s: 0, done: true };
@@ -135,9 +158,13 @@ function DesignBody({ design, cells }: { design: Design; cells: Cell[] }) {
 export function EventCountdown({
   event,
   variant = "fixed",
+  design = "glass",
+  position = "center",
 }: {
   event: EventData;
   variant?: "floating" | "fixed";
+  design?: Design;
+  position?: "left" | "center" | "right";
 }) {
   const target = event.mainDate
     ? `${event.mainDate}T${event.mainStartTime || "18:00"}:00`
@@ -154,8 +181,6 @@ export function EventCountdown({
   if (event.hideTimer || !event.mainDate) return null;
 
   const accent = event.themeAccentColor || "#a3792c";
-  const design = event.timerDesign || "glass";
-  const position = event.timerPosition || "center";
   const styleVar = { ["--tc" as string]: accent } as React.CSSProperties;
 
   // Horizontal placement. On mobile the "fixed" timer always centers so wide

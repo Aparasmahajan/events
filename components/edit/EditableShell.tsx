@@ -5,7 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { TemplateRouter } from "@/components/templates/TemplateRouter";
 import { EditPanel } from "./EditPanel";
 import { EditProvider } from "./EditContext";
-import { EventCountdown } from "@/components/ui/EventCountdown";
+import { EventCountdown, defaultTimerDesign } from "@/components/ui/EventCountdown";
+import { getTemplateMeta } from "@/components/templates/metadata";
 import type { EventData, MediaItem, SubEvent } from "@/lib/types";
 
 // These templates build a countdown into their own hero, so the shell must not
@@ -176,9 +177,15 @@ export function EditableShell({
   // Timer placement. Flagship templates default to their built-in hero timer
   // ("fixed"); everything else floats. The customer can override per event.
   const isInlineTimer = TEMPLATES_WITH_INLINE_TIMER.has(templateId);
-  // Default: the timer sits on the hero ("fixed"). Customers can switch to a
-  // sticky "floating" chip per event.
-  const timerStyle = data.event.timerStyle || "fixed";
+  // By default each template shows its own appropriate fixed (on-hero) timer.
+  // Only when the customer opts to "customize" do their style/design/position
+  // choices take over.
+  const timerCustom = !!data.event.timerCustom;
+  const timerStyle = timerCustom ? data.event.timerStyle || "fixed" : "fixed";
+  const timerDesign = timerCustom
+    ? data.event.timerDesign || "glass"
+    : defaultTimerDesign(getTemplateMeta(templateId)?.tags ?? []);
+  const timerPosition = timerCustom ? data.event.timerPosition || "center" : "center";
 
   return (
     <EditProvider
@@ -200,7 +207,12 @@ export function EditableShell({
         {/* Fixed (in-page) countdown band. Only for non-flagship templates —
             the flagship ones render their own fixed timer in the hero. */}
         {!isInlineTimer && timerStyle === "fixed" && (
-          <EventCountdown event={data.event} variant="fixed" />
+          <EventCountdown
+            event={data.event}
+            variant="fixed"
+            design={timerDesign}
+            position={timerPosition}
+          />
         )}
         <TemplateRouter
           templateId={templateId}
@@ -213,7 +225,12 @@ export function EditableShell({
       {/* Floating (sticky) countdown chip. Shown whenever the style is floating,
           on any template — the flagship inline timers hide themselves then. */}
       {timerStyle === "floating" && (
-        <EventCountdown event={data.event} variant="floating" />
+        <EventCountdown
+          event={data.event}
+          variant="floating"
+          design={timerDesign}
+          position={timerPosition}
+        />
       )}
 
       {editParam && mounted && (

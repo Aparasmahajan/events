@@ -111,6 +111,9 @@ export type EventData = {
   /** Horizontal position along the bottom of the hero. "fixed" sits there;
    *  "floating" floats at that corner. Default "center". */
   timerPosition?: "left" | "center" | "right";
+  /** When false/unset the template's own appropriate timer is used. When true,
+   *  the customer's timerStyle / timerDesign / timerPosition choices apply. */
+  timerCustom?: boolean;
 };
 
 export type SubEvent = {

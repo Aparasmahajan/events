@@ -520,7 +520,7 @@ export const AuroraTemplate: TemplateComponent = ({ event, subEvents, media }) =
               {event.city && ` · ${event.city}`}
             </motion.p>
           )}
-          {!event.hideTimer && event.timerStyle !== "floating" && event.mainDate && (
+          {!event.hideTimer && !(event.timerCustom && event.timerStyle === "floating") && event.mainDate && (
             <motion.div
               initial={reduce ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
