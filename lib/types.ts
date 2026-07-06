@@ -96,6 +96,9 @@ export type EventData = {
   hideEvents?: boolean;
   hideGallery?: boolean;
   hideVenue?: boolean;
+  /** Countdown timer visibility. Default (undefined/false) = show. TRUE = hide
+   *  the countdown on the live site. Applies to every template. */
+  hideTimer?: boolean;
 };
 
 export type SubEvent = {

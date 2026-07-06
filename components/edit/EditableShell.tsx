@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { TemplateRouter } from "@/components/templates/TemplateRouter";
 import { EditPanel } from "./EditPanel";
 import { EditProvider } from "./EditContext";
+import { EventCountdown } from "@/components/ui/EventCountdown";
 import type { EventData, MediaItem, SubEvent } from "@/lib/types";
 
 export type EditableData = {
@@ -183,6 +184,10 @@ export function EditableShell({
           media={data.media}
         />
       </div>
+
+      {/* Persistent floating countdown on every template (stays visible after
+          the hero scrolls away). Hidden via the "Countdown timer" toggle. */}
+      <EventCountdown event={data.event} />
 
       {editParam && mounted && (
         <EditPanel

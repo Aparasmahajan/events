@@ -84,7 +84,7 @@ export const VibrantTemplate: TemplateComponent = ({ event, subEvents, media }) 
               {event.city && ` · ${event.city}`}
             </p>
           )}
-          {event.mainDate && (
+          {!event.hideTimer && event.mainDate && (
             <div className="mt-10">
               <Countdown target={`${event.mainDate}T${event.mainStartTime || "16:00"}:00`} label="Party starts in" />
             </div>

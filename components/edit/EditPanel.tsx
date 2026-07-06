@@ -475,6 +475,11 @@ export function EditPanel({
                   onChange={(v) => patchEvent({ hideVenue: !v })}
                 />
                 <Toggle
+                  label="Countdown timer"
+                  checked={!data.event.hideTimer}
+                  onChange={(v) => patchEvent({ hideTimer: !v })}
+                />
+                <Toggle
                   label="RSVP"
                   checked={!!data.event.rsvpEnabled}
                   onChange={(v) => patchEvent({ rsvpEnabled: v })}
