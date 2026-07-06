@@ -105,9 +105,24 @@ const TEMPLATES = [
   { id: "midnighttokyo", code: "DEMO-MIDNIGHTTOKYO" },
 ];
 
+// CLI flags (cross-platform — no env-var prefixes needed on Windows):
+//   --mobile          capture a phone-shaped viewport (390×844) instead of 1200×900
+//   --out <dir>       output folder (default depends on --mobile)
+const argv = process.argv.slice(2);
+const argVal = (name) => {
+  const i = argv.indexOf(name);
+  return i >= 0 ? argv[i + 1] : undefined;
+};
+const MOBILE = argv.includes("--mobile") || process.env.PREVIEW_MOBILE === "1";
+
 const BASE_URL = process.env.PREVIEW_BASE_URL ?? "http://localhost:3000";
-const OUT_DIR = path.resolve("public/template-previews");
-const VIEWPORT = { width: 1200, height: 900 };
+const OUT_DIR = path.resolve(
+  argVal("--out") ??
+    process.env.PREVIEW_OUT_DIR ??
+    (MOBILE ? "public/template-previews-mobile" : "public/template-previews"),
+);
+// Mobile = a tall phone frame (portrait); desktop = the 4:3 card crop.
+const VIEWPORT = MOBILE ? { width: 390, height: 844 } : { width: 1200, height: 900 };
 const ONLY = process.env.PREVIEW_ONLY
   ? new Set(process.env.PREVIEW_ONLY.split(",").map((s) => s.trim()))
   : null;

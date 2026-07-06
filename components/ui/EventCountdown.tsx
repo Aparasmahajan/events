@@ -162,7 +162,7 @@ export function EventCountdown({
   position = "center",
 }: {
   event: EventData;
-  variant?: "floating" | "fixed";
+  variant?: "floating" | "fixed" | "inline";
   design?: Design;
   position?: "left" | "center" | "right";
 }) {
@@ -220,6 +220,15 @@ export function EventCountdown({
           ["--", "sec"],
         ];
     body = <DesignBody design={design} cells={cells} />;
+  }
+
+  if (variant === "inline") {
+    // Rendered in normal flow by a template (e.g. inside its hero content).
+    return (
+      <div style={styleVar} className="flex justify-center">
+        {body}
+      </div>
+    );
   }
 
   if (variant === "fixed") {

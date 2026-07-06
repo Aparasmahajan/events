@@ -20,6 +20,11 @@ const TEMPLATES_WITH_INLINE_TIMER = new Set([
   "aurora",
   "obsidian",
   "celestia",
+  // These render an in-flow timer inside their own hero (placed to avoid
+  // overlapping content), so the shell must not add the fixed overlay too.
+  "cartoon",
+  "immortals",
+  "halloffame", // renders via ImmortalsTemplate
 ]);
 
 export type EditableData = {

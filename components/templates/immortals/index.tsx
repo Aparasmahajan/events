@@ -11,6 +11,7 @@ import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { EventCountdown } from "@/components/ui/EventCountdown";
 import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent, SubEvent } from "@/lib/types";
 
@@ -206,7 +207,7 @@ export const ImmortalsTemplate: TemplateComponent = ({ event, subEvents, media }
       <ScrollProgress color={accent} />
 
       {/* HERO — pillars + reflective floor */}
-      <section ref={heroRef} className="relative flex min-h-[720px] items-center justify-center overflow-hidden pb-[25vh] pt-24 sm:pt-28">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-[25vh] pt-24 sm:pt-28">
         <div className="absolute inset-0">
           <HeroMedia
             imageSrc={hero}
@@ -315,6 +316,15 @@ export const ImmortalsTemplate: TemplateComponent = ({ event, subEvents, media }
             {event.mainStartTime && <span>{event.mainStartTime}</span>}
             {event.city && <><span style={{ color: "#a67b3c" }}>✦</span><span>{event.city}</span></>}
           </motion.div>
+          {!event.hideTimer && !(event.timerCustom && event.timerStyle === "floating") && event.mainDate && (
+            <div className="mt-12">
+              <EventCountdown
+                event={event}
+                variant="inline"
+                design={event.timerCustom ? event.timerDesign ?? "glass" : "elegant"}
+              />
+            </div>
+          )}
         </motion.div>
       </section>
 

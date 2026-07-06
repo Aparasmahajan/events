@@ -8,6 +8,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { HeroMedia } from "@/components/ui/HeroMedia";
+import { EventCountdown } from "@/components/ui/EventCountdown";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
@@ -248,7 +249,7 @@ export const CartoonTemplate: TemplateComponent = ({ event, subEvents, media }) 
       </div>
 
       {/* HERO */}
-      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6 pb-16 pt-24">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6 pb-28 pt-24 sm:pb-32">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           {CLOUDS.map((c, i) => (
             <motion.div
@@ -279,6 +280,15 @@ export const CartoonTemplate: TemplateComponent = ({ event, subEvents, media }) 
           style={reduce ? undefined : { y: heroY, opacity: heroOpacity }}
           className="relative z-10 mt-[38vh] max-w-3xl text-center"
         >
+          {!event.hideTimer && !(event.timerCustom && event.timerStyle === "floating") && event.mainDate && (
+            <div className="mb-6">
+              <EventCountdown
+                event={event}
+                variant="inline"
+                design={event.timerCustom ? event.timerDesign ?? "glass" : "flip"}
+              />
+            </div>
+          )}
           <motion.p
             initial={reduce ? false : { scale: 0, rotate: -8 }}
             animate={{ scale: 1, rotate: 0 }}

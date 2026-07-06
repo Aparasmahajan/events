@@ -171,8 +171,8 @@ const modern: DemoBundle = {
     eventCode: MODERN_CODE,
     eventType: "corporate",
     templateId: "modern",
-    eventTitle: "Azalio Summit 2026",
-    person1Name: "Azalio",
+    eventTitle: "Mahajan Summit 2026",
+    person1Name: "Mahajan",
     tentativeDate: "2026-09-22",
     city: "Mumbai",
     isActive: true,
@@ -182,7 +182,7 @@ const modern: DemoBundle = {
     invitationMessage:
       "A full day of keynotes, case studies and candid hallway conversations with product leaders.",
     aboutStory:
-      "Azalio Summit returns for its third year. 600 attendees, 18 speakers, one shared agenda — ship faster without breaking what matters.",
+      "Mahajan Summit returns for its third year. 600 attendees, 18 speakers, one shared agenda — ship faster without breaking what matters.",
     mainDate: "2026-09-22",
     mainStartTime: "09:00",
     mainEndTime: "21:00",
@@ -192,10 +192,10 @@ const modern: DemoBundle = {
     mapLink: "https://maps.google.com/?q=BKC+Convention+Center+Mumbai",
     latitude: 19.0596,
     longitude: 72.8656,
-    contactName: "Azalio events team",
-    contactEmail: "events@azalio.io",
+    contactName: "Mahajan events team",
+    contactEmail: "events@Mahajan.io",
     rsvpEnabled: true,
-    rsvpLinkOrContact: "https://summit.azalio.io/register",
+    rsvpLinkOrContact: "https://summit.Mahajan.io/register",
   },
   subEvents: [
     { eventCode: MODERN_CODE, order: 1, name: "Registration & breakfast", date: "2026-09-22", startTime: "09:00", endTime: "10:00", venueName: "Foyer", venueAddress: "BKC Convention Center", description: "Pick up your badge and a flat white.", icon: "☕" },

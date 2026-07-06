@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "previews": "node scripts/generate-template-previews.mjs"
+    "previews": "node scripts/generate-template-previews.mjs",
+    "previews:mobile": "node scripts/generate-template-previews.mjs --mobile --out public/template-previews-mobile"
   },
   "dependencies": {
     "framer-motion": "^11.3.19",

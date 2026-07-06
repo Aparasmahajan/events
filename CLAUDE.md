@@ -266,6 +266,25 @@ All client-side, zero server cost. Each must work at **375 / 768 / 1280** px:
 - RSVP block (links/contact for v1)
 - No horizontal scroll on mobile; skeleton/loading states
 
+### 9a. Countdown timer system (every template)
+
+Every template shows a countdown, controlled by five `Live` columns / `EventData` fields and rendered by `components/ui/EventCountdown.tsx` (the universal timer) or, for a few flagship templates, their own built-in hero timer.
+
+- **`hideTimer`** (col `Hide Timer`) — TRUE hides the countdown everywhere.
+- **`timerCustom`** (col `Timer Custom`) — FALSE/blank (default) = the template's *own appropriate* timer is used (see below). TRUE = the customer's choices below apply.
+- **`timerStyle`** (`Timer Style`) — `fixed` (default) = pinned to the **bottom of the hero** and scrolls away with it; `floating` = a sticky chip that follows the scroll.
+- **`timerDesign`** (`Timer Design`) — one of `glass · minimal · flip · rings · neon · elegant`.
+- **`timerPosition`** (`Timer Position`) — `left · center · right` along the bottom of the hero (with edge margin; auto-centers on mobile so wide designs never overflow).
+
+**Appropriate-by-default:** when `timerCustom` is off, the design is auto-picked from the template's own tags (`defaultTimerDesign()` in `EventCountdown.tsx`: neon→neon, royal/luxurious/elegant→elegant, minimal→minimal, playful/festive/vibrant→flip, cinematic/cool→glass). So each template gets a fitting timer with no per-template code.
+
+**Flagship templates** (`royal, minimal, modern, vibrant, pastel, aurora, obsidian, celestia`) build the timer into their hero — listed in `TEMPLATES_WITH_INLINE_TIMER` in `EditableShell.tsx`. They render their inline timer for `fixed`, and hide it (shell shows the floating chip) when the customer picks `floating`.
+
+**Placement rule — the timer must not overlap hero content.** The fixed timer is an absolute overlay pinned to the bottom of the **first `100svh`**. For it to sit cleanly on the hero image (not on content or the next section) a template's hero must:
+1. be a full **`min-h-[100svh]`** section (not a fixed pixel height — a `min-h-[720px]` hero lets the overlay spill onto the next section on tall screens), and
+2. keep the bottom band clear — reserve **`pb-24`+** so centered/bottom hero content doesn't collide with the timer.
+New templates should follow this; the timer sits *over the image*, never over text.
+
 ---
 
 ## 10. Customer editor — "after-enquiry page" (`/manage/[token]`)
