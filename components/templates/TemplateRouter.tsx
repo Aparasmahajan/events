@@ -42,6 +42,26 @@ import { QuantumTemplate } from "./quantum";
 import { ImmortalsTemplate } from "./immortals";
 import { EcosystemTemplate } from "./ecosystem";
 import { InfinityclubTemplate } from "./infinityclub";
+import { SkyrealmTemplate } from "./skyrealm";
+import { CathedralTemplate } from "./cathedral";
+import { SakuraTemplate } from "./sakura";
+import { VersaillesTemplate } from "./versailles";
+import { FrescoTemplate } from "./fresco";
+import { MirageTemplate } from "./mirage";
+import { IcepalaceTemplate } from "./icepalace";
+import { GalaxyoperaTemplate } from "./galaxyopera";
+import { TworiversTemplate } from "./tworivers";
+import { MirrorworldsTemplate } from "./mirrorworlds";
+import { InfinitytrainTemplate } from "./infinitytrain";
+import { LanternsTemplate } from "./lanterns";
+import { GlassroseTemplate } from "./glassrose";
+import { SecretgalaxyTemplate } from "./secretgalaxy";
+import { CartoonTemplate } from "./cartoon";
+import { BricktownTemplate } from "./bricktown";
+import { TreasureTemplate } from "./treasure";
+import { ThemeparkTemplate } from "./themepark";
+import { CandylandTemplate } from "./candyland";
+import { RobocityTemplate } from "./robocity";
 import type { TemplateProps } from "@/lib/types";
 
 type Props = TemplateProps & { templateId: string };
@@ -134,6 +154,85 @@ export function TemplateRouter({ templateId, ...rest }: Props) {
       return <EcosystemTemplate {...rest} />;
     case "infinityclub":
       return <InfinityclubTemplate {...rest} />;
+    // Batch-3 templates: metadata + demo bundles + preview entries exist, the
+    // dedicated component doesn't yet. Each falls back to the closest existing
+    // template (nearest palette/motif). Swap in real components as they land.
+    case "skyrealm":
+      return <SkyrealmTemplate {...rest} />;
+    case "cathedral":
+      return <CathedralTemplate {...rest} />;
+    case "sakura":
+      return <SakuraTemplate {...rest} />;
+    case "versailles":
+      return <VersaillesTemplate {...rest} />;
+    case "fresco":
+      return <FrescoTemplate {...rest} />;
+    case "mirage":
+      return <MirageTemplate {...rest} />;
+    case "icepalace":
+      return <IcepalaceTemplate {...rest} />;
+    case "galaxyopera":
+      return <GalaxyoperaTemplate {...rest} />;
+    case "tworivers":
+      return <TworiversTemplate {...rest} />;
+    case "mirrorworlds":
+      return <MirrorworldsTemplate {...rest} />;
+    case "infinitytrain":
+      return <InfinitytrainTemplate {...rest} />;
+    case "lanterns":
+      return <LanternsTemplate {...rest} />;
+    case "glassrose":
+      return <GlassroseTemplate {...rest} />;
+    case "secretgalaxy":
+      return <SecretgalaxyTemplate {...rest} />;
+    case "cartoon":
+      return <CartoonTemplate {...rest} />;
+    case "bricktown":
+      return <BricktownTemplate {...rest} />;
+    case "treasure":
+      return <TreasureTemplate {...rest} />;
+    case "themepark":
+      return <ThemeparkTemplate {...rest} />;
+    case "candyland":
+      return <CandylandTemplate {...rest} />;
+    case "robocity":
+      return <RobocityTemplate {...rest} />;
+    case "spacemission":
+      return <OrbitTemplate {...rest} />;
+    case "jungle":
+      return <GardenTemplate {...rest} />;
+    case "timecapsule":
+      return <ChaptersTemplate {...rest} />;
+    case "treeoflife":
+      return <EcosystemTemplate {...rest} />;
+    case "endlessclock":
+      return <TimemachineTemplate {...rest} />;
+    case "digitalcity":
+      return <QuantumTemplate {...rest} />;
+    case "quantumlab":
+      return <NeuralTemplate {...rest} />;
+    case "missioncontrol":
+      return <NexusTemplate {...rest} />;
+    case "secretlab":
+      return <GenesisTemplate {...rest} />;
+    case "portal":
+      return <UnveilTemplate {...rest} />;
+    case "evolution":
+      return <GenesisTemplate {...rest} />;
+    case "goldenuniverse":
+      return <LuminaryTemplate {...rest} />;
+    case "halloffame":
+      return <ImmortalsTemplate {...rest} />;
+    case "synapse":
+      return <ConvergeTemplate {...rest} />;
+    case "futurecity":
+      return <QuantumTemplate {...rest} />;
+    case "festival":
+      return <InfinityclubTemplate {...rest} />;
+    case "neonjungle":
+      return <MetropolisTemplate {...rest} />;
+    case "midnighttokyo":
+      return <MetropolisTemplate {...rest} />;
     case "royal":
     default:
       return <RoyalTemplate {...rest} />;

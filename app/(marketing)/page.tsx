@@ -107,7 +107,7 @@ export default function LandingPage() {
       </section>
 
       <footer className="py-10 px-6 text-center text-sm opacity-60 border-t border-black/5">
-        <p>Event Platform · MVP build</p>
+        <p>Event Platform</p>
       </footer>
     </main>
     </UltimateModeWrapper>

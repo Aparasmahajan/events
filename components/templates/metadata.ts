@@ -1191,6 +1191,1108 @@ export const convergeMeta: TemplateMeta = {
   },
 };
 
+// ─── Wedding: Floating Kingdom ───────────────────────────────
+export const skyrealmMeta: TemplateMeta = {
+  id: "skyrealm",
+  name: "Floating Kingdom",
+  codename: "Skyrealm",
+  description:
+    "Floating marble islands joined by bridges, clouds drifting beneath, golden birds crossing the sky — for weddings that want a grand fantasy setting above the world.",
+  eventTypes: ["wedding", "engagement"],
+  tags: ["celestial", "luxurious", "cinematic", "elegant", "romantic", "premium"],
+  keywords: [
+    "floating islands", "sky kingdom", "fantasy wedding", "cloud wedding",
+    "marble bridges", "golden birds", "heavenly wedding", "epic wedding",
+    "sky blue", "destination wedding", "fairy tale", "kingdom in the sky",
+  ],
+  icon: "🕊",
+  vibe: { label: "Floating Kingdom", color: "#7ab8e8" },
+  previewImage: "/template-previews/skyrealm.jpg",
+  defaults: {
+    invitationMessage:
+      "We found a place above the clouds where two islands meet by one bridge. Come cross it with us.",
+    tagline: "Above the world, together.",
+    accentColor: "#7ab8e8",
+    heroImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Two islands drifted for years on separate winds. Then a bridge of white marble appeared, and the golden birds began circling as if they knew.",
+  },
+};
+
+// ─── Wedding: Starlight Cathedral ────────────────────────────
+export const cathedralMeta: TemplateMeta = {
+  id: "cathedral",
+  name: "Starlight Cathedral",
+  codename: "Cathedral of Stars",
+  description:
+    "A cathedral built entirely of constellations — galaxy ceiling, photos glowing like stained glass. For night weddings and anniversaries that want sacred, cosmic scale.",
+  eventTypes: ["wedding", "anniversary"],
+  tags: ["celestial", "cinematic", "luxurious", "elegant", "romantic", "artistic"],
+  keywords: [
+    "cathedral wedding", "starlight", "constellation", "galaxy ceiling",
+    "stained glass", "night wedding", "sacred", "church wedding",
+    "cosmic wedding", "midnight ceremony", "stars", "celestial vows",
+  ],
+  icon: "⛪",
+  vibe: { label: "Starlight", color: "#4a5fc1" },
+  previewImage: "/template-previews/cathedral.jpg",
+  defaults: {
+    invitationMessage:
+      "We are building a cathedral out of the stars we met under. Come sit in the front pew of the sky.",
+    tagline: "Vows under a galaxy ceiling.",
+    accentColor: "#4a5fc1",
+    heroImage:
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every window in this cathedral is a memory lit from behind. The ceiling is the night we first named the constellations wrong, on purpose.",
+  },
+};
+
+// ─── Wedding: Sakura Dreams ──────────────────────────────────
+export const sakuraMeta: TemplateMeta = {
+  id: "sakura",
+  name: "Sakura Dreams",
+  codename: "Sakura",
+  description:
+    "An endless cherry-blossom forest — drifting petals, floating lanterns, seasons turning as you scroll. For weddings and engagements that want soft Japanese-spring romance.",
+  eventTypes: ["wedding", "engagement"],
+  tags: ["romantic", "pastel", "botanical", "elegant", "whimsical", "appealing"],
+  keywords: [
+    "cherry blossom", "sakura", "japanese wedding", "spring wedding",
+    "petals", "blossom forest", "lanterns", "pink wedding", "garden wedding",
+    "hanami", "blush", "soft romance", "outdoor wedding",
+  ],
+  icon: "🌸",
+  vibe: { label: "Sakura", color: "#e88aa8" },
+  previewImage: "/template-previews/sakura.jpg",
+  defaults: {
+    invitationMessage:
+      "The blossoms only stay a few weeks each year — so we chose them to hold our forever. Come walk the petal path with us.",
+    tagline: "A season made to stay.",
+    accentColor: "#e88aa8",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "We met when the trees were bare and stayed until they flowered. Every spring since has felt like the forest applauding.",
+  },
+};
+
+// ─── Wedding: Royal Versailles ───────────────────────────────
+export const versaillesMeta: TemplateMeta = {
+  id: "versailles",
+  name: "Royal Versailles",
+  codename: "Versailles",
+  description:
+    "A tour through palace rooms — grand staircases, chandeliers, golden mirrors, royal gardens. For weddings and anniversaries that want full European-palace opulence.",
+  eventTypes: ["wedding", "anniversary"],
+  tags: ["royal", "luxurious", "traditional", "elegant", "premium", "appealing"],
+  keywords: [
+    "palace wedding", "versailles", "french wedding", "chandelier",
+    "golden mirrors", "baroque", "grand staircase", "royal garden",
+    "opulent", "regal", "european wedding", "castle", "ballroom wedding",
+  ],
+  icon: "🪞",
+  vibe: { label: "Palace Royal", color: "#c9a13b" },
+  previewImage: "/template-previews/versailles.jpg",
+  defaults: {
+    invitationMessage:
+      "The palace doors are open, the chandeliers are lit, and one seat in the hall of mirrors has your name on it.",
+    tagline: "A palace for one evening.",
+    accentColor: "#c9a13b",
+    heroImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Room by gilded room, our story walks ahead of us — up the staircase, past the mirrors, out into a garden that has been waiting three hundred years for this dance.",
+  },
+};
+
+// ─── Wedding: Renaissance Painting ───────────────────────────
+export const frescoMeta: TemplateMeta = {
+  id: "fresco",
+  name: "Renaissance Painting",
+  codename: "Fresco",
+  description:
+    "The whole site is a living Renaissance painting — brush-stroke reveals, floating golden frames, a museum-gallery walk. For couples who want their day treated as art.",
+  eventTypes: ["wedding", "anniversary"],
+  tags: ["artistic", "traditional", "elegant", "romantic", "editorial", "luxurious"],
+  keywords: [
+    "renaissance", "painting wedding", "art wedding", "museum wedding",
+    "fresco", "oil paint", "golden frames", "gallery", "classical",
+    "italian wedding", "baroque art", "masterpiece", "brush stroke",
+  ],
+  icon: "🎨",
+  vibe: { label: "Renaissance", color: "#b0722f" },
+  previewImage: "/template-previews/fresco.jpg",
+  defaults: {
+    invitationMessage:
+      "Some loves get painted; ours insisted on it. Come stand inside the frame with us for one afternoon.",
+    tagline: "A love, painted.",
+    accentColor: "#b0722f",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The first brush stroke was a glance across a crowded room. Every year since has added another layer of gold leaf.",
+  },
+};
+
+// ─── Wedding: Desert Mirage ──────────────────────────────────
+export const mirageMeta: TemplateMeta = {
+  id: "mirage",
+  name: "Desert Mirage",
+  codename: "Mirage",
+  description:
+    "Arabian luxury — golden dunes, shimmering mirage transitions, fire bowls and geometric patterns. For weddings and engagements with warm desert-night drama.",
+  eventTypes: ["wedding", "engagement"],
+  tags: ["luxurious", "cinematic", "romantic", "traditional", "bold", "elegant"],
+  keywords: [
+    "desert wedding", "arabian nights", "dunes", "mirage", "fire bowls",
+    "moroccan", "middle eastern wedding", "gold", "terracotta",
+    "geometric patterns", "oasis", "nikah", "destination wedding", "sunset dunes",
+  ],
+  icon: "🏜",
+  vibe: { label: "Desert Luxe", color: "#d19a4f" },
+  previewImage: "/template-previews/mirage.jpg",
+  defaults: {
+    invitationMessage:
+      "At the edge of the dunes, where the heat turns light into water, we found something real. Come toast it by firelight.",
+    tagline: "Real as the desert night.",
+    accentColor: "#d19a4f",
+    heroImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Everyone said it was a mirage. We walked toward it anyway — and it turned out to be an oasis with room for everyone we love.",
+  },
+};
+
+// ─── Wedding: Nordic Ice Palace ──────────────────────────────
+export const icepalaceMeta: TemplateMeta = {
+  id: "icepalace",
+  name: "Nordic Ice Palace",
+  codename: "Ice Palace",
+  description:
+    "A palace carved from glowing ice — aurora lighting, drifting snow, frozen-lake reflections. For winter weddings and engagements that want crystalline Nordic magic.",
+  eventTypes: ["wedding", "engagement"],
+  tags: ["celestial", "elegant", "cinematic", "luxurious", "glass", "cool"],
+  keywords: [
+    "winter wedding", "ice palace", "nordic", "aurora", "northern lights",
+    "snow wedding", "frozen lake", "scandinavian", "crystal", "december wedding",
+    "ice blue", "arctic", "snowflake",
+  ],
+  icon: "❄",
+  vibe: { label: "Ice Palace", color: "#8fd4e8" },
+  previewImage: "/template-previews/icepalace.jpg",
+  defaults: {
+    invitationMessage:
+      "In a palace of ice under a green-lit sky, we're making the warmest promise of our lives. Bring your coat and your best toast.",
+    tagline: "Warmth, kept in ice.",
+    accentColor: "#8fd4e8",
+    heroImage:
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The lake froze the winter we met, and we walked on it anyway. Some things hold when you trust them.",
+  },
+};
+
+// ─── Wedding: Galaxy Opera ───────────────────────────────────
+export const galaxyoperaMeta: TemplateMeta = {
+  id: "galaxyopera",
+  name: "Galaxy Opera",
+  codename: "Opera Celeste",
+  description:
+    "An opera house drifting through space — velvet curtains revealing galaxies, chandeliers made of planets. For weddings and award nights that want cosmic theatrical grandeur.",
+  eventTypes: ["wedding", "award-ceremony"],
+  tags: ["cinematic", "celestial", "luxurious", "artistic", "bold", "premium"],
+  keywords: [
+    "opera wedding", "galaxy", "theatrical wedding", "velvet curtains",
+    "cosmic", "grand wedding", "space opera", "planet chandelier",
+    "dramatic wedding", "stage", "crimson and gold", "awards night", "gala",
+  ],
+  icon: "🎻",
+  vibe: { label: "Galaxy Opera", color: "#8b5cf6" },
+  previewImage: "/template-previews/galaxyopera.jpg",
+  defaults: {
+    invitationMessage:
+      "The curtain rises on the one performance we've rehearsed our whole lives. Your seat is in the front row of the universe.",
+    tagline: "The curtain rises tonight.",
+    accentColor: "#8b5cf6",
+    heroImage:
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Act one was a chance meeting. Act two, a long duet. Tonight the orchestra of planets tunes up for the finale that is really a beginning.",
+  },
+};
+
+// ─── Engagement: Two Rivers ──────────────────────────────────
+export const tworiversMeta: TemplateMeta = {
+  id: "tworivers",
+  name: "Two Rivers",
+  codename: "Confluence",
+  description:
+    "Two rivers flow separately down the page and merge into one ocean as you scroll, lotus flowers drifting on the current. A gentle metaphor for engagements and anniversaries.",
+  eventTypes: ["engagement", "anniversary"],
+  tags: ["romantic", "organic", "artistic", "elegant", "cinematic", "appealing"],
+  keywords: [
+    "two rivers", "confluence", "engagement", "lotus", "river",
+    "merging", "ocean", "nature engagement", "teal", "sangam",
+    "journey together", "flowing", "anniversary",
+  ],
+  icon: "🌊",
+  vibe: { label: "Confluence", color: "#3f9e9b" },
+  previewImage: "/template-previews/tworivers.jpg",
+  defaults: {
+    invitationMessage:
+      "Two rivers ran a long way alone before they found the same sea. Come stand on the shore the day they meet.",
+    tagline: "Two currents, one sea.",
+    accentColor: "#3f9e9b",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "One of us started in the mountains, one in the plains. The map never planned a confluence — the water found it anyway.",
+  },
+};
+
+// ─── Engagement: Mirror Worlds ───────────────────────────────
+export const mirrorworldsMeta: TemplateMeta = {
+  id: "mirrorworlds",
+  name: "Mirror Worlds",
+  codename: "Symmetry",
+  description:
+    "The page is split vertically into two distinct worlds that merge into perfect symmetry as you scroll. For engagements and weddings of two very different people who fit.",
+  eventTypes: ["engagement", "wedding"],
+  tags: ["modern", "editorial", "artistic", "romantic", "minimal", "cinematic"],
+  keywords: [
+    "split screen", "symmetry", "mirror", "two worlds", "opposites attract",
+    "engagement", "modern engagement", "design forward", "his and hers",
+    "two stories", "converging", "duality",
+  ],
+  icon: "◫",
+  vibe: { label: "Symmetry", color: "#8a93a5" },
+  previewImage: "/template-previews/mirrorworlds.jpg",
+  defaults: {
+    invitationMessage:
+      "We lived in two different worlds that turned out to be reflections. Come watch them line up.",
+    tagline: "Two halves, one frame.",
+    accentColor: "#8a93a5",
+    heroImage:
+      "https://images.unsplash.com/photo-1525258946800-98cfd641d0de?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "One of us likes mornings, one likes midnight. Somehow the days meet exactly in the middle, every single time.",
+  },
+};
+
+// ─── Engagement: Infinity Train ──────────────────────────────
+export const infinitytrainMeta: TemplateMeta = {
+  id: "infinitytrain",
+  name: "Infinity Train",
+  codename: "The Grand Line",
+  description:
+    "A luxury train travelling through memories — each coach a chapter, windows showing changing landscapes. For engagements and anniversaries told as a journey.",
+  eventTypes: ["engagement", "anniversary"],
+  tags: ["cinematic", "luxurious", "romantic", "traditional", "artistic", "premium"],
+  keywords: [
+    "train journey", "orient express", "luxury train", "vintage travel",
+    "engagement journey", "memories", "coaches", "brass", "anniversary trip",
+    "railway", "grand tour", "chapters", "voyage",
+  ],
+  icon: "🚂",
+  vibe: { label: "Grand Line", color: "#b08d3f" },
+  previewImage: "/template-previews/infinitytrain.jpg",
+  defaults: {
+    invitationMessage:
+      "Our train leaves from the platform where we first met and doesn't stop until forever. Your ticket is attached.",
+    tagline: "All aboard, no last stop.",
+    accentColor: "#b08d3f",
+    heroImage:
+      "https://images.unsplash.com/photo-1494203484021-3c454daf695d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Coach one holds the first hello. Coach two, the long slow years. Keep walking toward the lamp-lit dining car — that's where we are now.",
+  },
+};
+
+// ─── Engagement: Dream Lanterns ──────────────────────────────
+export const lanternsMeta: TemplateMeta = {
+  id: "lanterns",
+  name: "Dream Lanterns",
+  codename: "Lanterns",
+  description:
+    "Thousands of floating lanterns carry memories over a still lake on a warm cinematic night. For engagements and weddings that want quiet, glowing wonder.",
+  eventTypes: ["engagement", "wedding"],
+  tags: ["romantic", "cinematic", "whimsical", "elegant", "appealing", "festive"],
+  keywords: [
+    "floating lanterns", "sky lanterns", "lake", "night engagement",
+    "lantern festival", "warm night", "diya", "candlelight", "wish lanterns",
+    "romantic night", "tangled", "glow", "reflection",
+  ],
+  icon: "🏮",
+  vibe: { label: "Lantern Night", color: "#e8a545" },
+  previewImage: "/template-previews/lanterns.jpg",
+  defaults: {
+    invitationMessage:
+      "We're sending a thousand lanterns up with one wish inside each of them — and the wish is the same in every one. Come light yours with us.",
+    tagline: "One wish, a thousand lights.",
+    accentColor: "#e8a545",
+    heroImage:
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every memory we've made is warm enough to fly. Tonight we let them all go at once and watch the lake double the sky.",
+  },
+};
+
+// ─── Engagement: Glass Rose ──────────────────────────────────
+export const glassroseMeta: TemplateMeta = {
+  id: "glassrose",
+  name: "Glass Rose",
+  codename: "Rosaline",
+  description:
+    "The entire site lives inside a giant crystal rose — petals become sections and the flower blooms open as you scroll. For engagements and anniversaries with delicate drama.",
+  eventTypes: ["engagement", "anniversary"],
+  tags: ["glass", "romantic", "elegant", "artistic", "luxurious", "pastel"],
+  keywords: [
+    "crystal rose", "glass flower", "blooming", "rose engagement",
+    "petals", "delicate", "blush", "beauty and the beast", "enchanted rose",
+    "romantic engagement", "crystalline", "flower",
+  ],
+  icon: "🌹",
+  vibe: { label: "Crystal Rose", color: "#d66a8a" },
+  previewImage: "/template-previews/glassrose.jpg",
+  defaults: {
+    invitationMessage:
+      "Some flowers wilt; we grew one out of glass instead. Come watch it open, one petal at a time.",
+    tagline: "A rose that keeps.",
+    accentColor: "#d66a8a",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Petal by petal we built something transparent enough to see all the way through, and strong enough to keep the light inside.",
+  },
+};
+
+// ─── Engagement: Secret Galaxy ───────────────────────────────
+export const secretgalaxyMeta: TemplateMeta = {
+  id: "secretgalaxy",
+  name: "Secret Galaxy",
+  codename: "Andromeda",
+  description:
+    "A hidden galaxy discovered by two people — stars form rings, constellations write your names across deep violet space. For engagements that feel like a private universe.",
+  eventTypes: ["engagement"],
+  tags: ["celestial", "romantic", "cinematic", "interactive", "artistic", "cool"],
+  keywords: [
+    "galaxy engagement", "secret", "andromeda", "constellation names",
+    "stars", "nebula", "space engagement", "hidden universe", "cosmic rings",
+    "violet", "stargazing", "she said yes", "astronomy",
+  ],
+  icon: "🔭",
+  vibe: { label: "Andromeda", color: "#7b5ce8" },
+  previewImage: "/template-previews/secretgalaxy.jpg",
+  defaults: {
+    invitationMessage:
+      "We found a galaxy nobody else had named, so we gave it both our names. Come see the coordinates.",
+    tagline: "A universe of two.",
+    accentColor: "#7b5ce8",
+    heroImage:
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Astronomers say most galaxies go undiscovered. Ours stayed hidden until the night two telescopes pointed at the same patch of sky.",
+  },
+};
+
+// ─── Birthday: Cartoon Universe ──────────────────────────────
+export const cartoonMeta: TemplateMeta = {
+  id: "cartoon",
+  name: "Cartoon Universe",
+  codename: "Toonverse",
+  description:
+    "A bouncy animated world — squashy clouds, balloon characters, everything moving with cartoon squash-and-stretch. For kids' birthdays that want maximum giggles.",
+  eventTypes: ["birthday"],
+  tags: ["playful", "whimsical", "vibrant", "festive", "bold", "cool"],
+  keywords: [
+    "cartoon birthday", "kids birthday", "animated", "pixar", "balloon characters",
+    "bouncy", "toddler party", "first birthday", "fun", "clouds",
+    "children", "colorful party", "silly",
+  ],
+  icon: "🎈",
+  vibe: { label: "Toonverse", color: "#38b6ff" },
+  previewImage: "/template-previews/cartoon.jpg",
+  defaults: {
+    invitationMessage:
+      "The clouds are bouncy, the balloons have faces, and the birthday kid is the main character. Come join the episode.",
+    tagline: "Today's episode: the birthday!",
+    accentColor: "#38b6ff",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "In this universe gravity is optional, cake is mandatory, and every friend who walks in gets their own theme song.",
+  },
+};
+
+// ─── Birthday: Brick City ────────────────────────────────────
+export const bricktownMeta: TemplateMeta = {
+  id: "bricktown",
+  name: "Brick City",
+  codename: "Bricktown",
+  description:
+    "A whole city built from toy bricks — blocks click together as you scroll and photos sit in brick frames. For builder kids' birthdays.",
+  eventTypes: ["birthday"],
+  tags: ["playful", "vibrant", "whimsical", "bold", "interactive", "festive"],
+  keywords: [
+    "lego birthday", "brick party", "building blocks", "toy bricks",
+    "kids birthday", "builder", "construction party", "block city",
+    "5th birthday", "6th birthday", "primary colors", "master builder",
+  ],
+  icon: "🧱",
+  vibe: { label: "Bricktown", color: "#d64545" },
+  previewImage: "/template-previews/bricktown.jpg",
+  defaults: {
+    invitationMessage:
+      "We're building a whole city for one birthday — brick by brick, snack by snack. Bring your best builder energy.",
+    tagline: "Everything clicks today.",
+    accentColor: "#d64545",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every year we add a new floor to the tower. This year's blueprint calls for cake on every level and friends in every window.",
+  },
+};
+
+// ─── Birthday: Treasure Hunt ─────────────────────────────────
+export const treasureMeta: TemplateMeta = {
+  id: "treasure",
+  name: "Treasure Hunt",
+  codename: "El Dorado",
+  description:
+    "Each section unlocks a new treasure — old maps, jungle ruins, gold coins and hidden surprises. For birthdays and parties that want an adventure to follow.",
+  eventTypes: ["birthday", "party"],
+  tags: ["playful", "whimsical", "festive", "interactive", "bold", "appealing"],
+  keywords: [
+    "treasure hunt", "pirate party", "adventure birthday", "map",
+    "gold coins", "el dorado", "jungle", "scavenger hunt", "explorer",
+    "kids adventure", "hidden treasure", "quest", "ruins",
+  ],
+  icon: "🗺",
+  vibe: { label: "El Dorado", color: "#c9942e" },
+  previewImage: "/template-previews/treasure.jpg",
+  defaults: {
+    invitationMessage:
+      "X marks the party. Follow the map, dodge the traps, and the treasure at the end is cake. Probably. Come find out.",
+    tagline: "X marks the party.",
+    accentColor: "#c9942e",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The map is old, the coins are chocolate, and the greatest treasure in the ruins is turning one year braver.",
+  },
+};
+
+// ─── Birthday: Theme Park ────────────────────────────────────
+export const themeparkMeta: TemplateMeta = {
+  id: "themepark",
+  name: "Theme Park",
+  codename: "Wonderland",
+  description:
+    "A full theme park — rollercoasters, ferris wheels, carnival games and night fireworks. For birthdays and parties that want big-ride energy.",
+  eventTypes: ["birthday", "party"],
+  tags: ["playful", "festive", "vibrant", "whimsical", "bold", "appealing"],
+  keywords: [
+    "theme park", "rollercoaster", "ferris wheel", "amusement park",
+    "carnival games", "fireworks", "fair", "kids birthday", "fun fair",
+    "rides", "cotton candy", "wonderland", "night park",
+  ],
+  icon: "🎢",
+  vibe: { label: "Wonderland", color: "#e0433f" },
+  previewImage: "/template-previews/themepark.jpg",
+  defaults: {
+    invitationMessage:
+      "The gates open, the rides are free, and the fireworks are timed to the candles. You must be this excited to enter.",
+    tagline: "You must be this fun to ride.",
+    accentColor: "#e0433f",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "One day a year the whole park runs for a single guest of honor — every ride, every game, every burst of light over the ferris wheel.",
+  },
+};
+
+// ─── Birthday: Candy Factory ─────────────────────────────────
+export const candylandMeta: TemplateMeta = {
+  id: "candyland",
+  name: "Candy Factory",
+  codename: "Candyland",
+  description:
+    "Chocolate rivers, cookie mountains and candy machines with sweet colorful transitions. For kids' birthdays with a serious sweet tooth.",
+  eventTypes: ["birthday"],
+  tags: ["playful", "whimsical", "vibrant", "pastel", "festive", "appealing"],
+  keywords: [
+    "candy party", "chocolate factory", "willy wonka", "sweets",
+    "kids birthday", "candyland", "dessert party", "cookie", "lollipop",
+    "sugar", "mint", "pink party", "sweet sixteen",
+  ],
+  icon: "🍭",
+  vibe: { label: "Candyland", color: "#f06ea9" },
+  previewImage: "/template-previews/candyland.jpg",
+  defaults: {
+    invitationMessage:
+      "The chocolate river is flowing and the cookie mountains are fresh out of the oven. Golden ticket attached — don't lose it.",
+    tagline: "Sweetness at full production.",
+    accentColor: "#f06ea9",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The factory makes one thing better than candy: birthdays. Today's batch is extra sweet and comes with sprinkles of everyone we love.",
+  },
+};
+
+// ─── Birthday: Robot City ────────────────────────────────────
+export const robocityMeta: TemplateMeta = {
+  id: "robocity",
+  name: "Robot City",
+  codename: "Robo City",
+  description:
+    "Cute robots run the whole birthday — mechanical gifts, delivery drones, neon factories humming. For kids who love machines that beep.",
+  eventTypes: ["birthday"],
+  tags: ["playful", "tech", "modern", "vibrant", "interactive", "cool"],
+  keywords: [
+    "robot birthday", "robots", "kids tech party", "drones", "machines",
+    "neon factory", "science party", "stem birthday", "gears",
+    "future kid", "beep boop", "android", "mechanical",
+  ],
+  icon: "🤖",
+  vibe: { label: "Robo City", color: "#ff7a2f" },
+  previewImage: "/template-previews/robocity.jpg",
+  defaults: {
+    invitationMessage:
+      "The robots have been programmed with one directive: best birthday ever. Systems are green — we just need you.",
+    tagline: "Party protocol: activated.",
+    accentColor: "#ff7a2f",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "In Robo City the drones carry balloons, the factories print confetti, and every machine in town knows exactly whose day it is.",
+  },
+};
+
+// ─── Birthday: Space Mission ─────────────────────────────────
+export const spacemissionMeta: TemplateMeta = {
+  id: "spacemission",
+  name: "Space Mission",
+  codename: "Commander",
+  description:
+    "The guest becomes commander of the birthday spaceship — planets to visit, a live countdown, and a rocket-launch finale. For kids who dream in rocket fuel.",
+  eventTypes: ["birthday"],
+  tags: ["playful", "interactive", "cinematic", "bold", "tech", "cool"],
+  keywords: [
+    "space birthday", "rocket party", "astronaut", "mission control",
+    "countdown", "planets", "spaceship", "nasa kids", "launch",
+    "kids birthday", "commander", "galaxy party", "solar system",
+  ],
+  icon: "🚀",
+  vibe: { label: "Commander", color: "#ff6a2b" },
+  previewImage: "/template-previews/spacemission.jpg",
+  defaults: {
+    invitationMessage:
+      "Commander, your mission: one birthday, several planets, unlimited cake. The countdown has already started — report to the launchpad.",
+    tagline: "T-minus one birthday.",
+    accentColor: "#ff6a2b",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every mission needs a crew. Ours is made of best friends, grandparents and one very excited commander with frosting on the flight suit.",
+  },
+};
+
+// ─── Birthday: Jungle Adventure ──────────────────────────────
+export const jungleMeta: TemplateMeta = {
+  id: "jungle",
+  name: "Jungle Adventure",
+  codename: "Wildheart",
+  description:
+    "Ancient temples, waterfalls, vines and wildlife told as an adventure story. For birthdays and parties that want explorer energy.",
+  eventTypes: ["birthday", "party"],
+  tags: ["playful", "organic", "bold", "whimsical", "festive", "interactive"],
+  keywords: [
+    "jungle birthday", "safari party", "adventure", "temple", "waterfall",
+    "wildlife", "explorer", "animals", "kids birthday", "wild one",
+    "tarzan", "vines", "expedition",
+  ],
+  icon: "🦁",
+  vibe: { label: "Wildheart", color: "#2e7d4f" },
+  previewImage: "/template-previews/jungle.jpg",
+  defaults: {
+    invitationMessage:
+      "Deep in the jungle, past the waterfall and one very opinionated parrot, a birthday is waiting. Pack your sense of adventure.",
+    tagline: "Into the wild we go.",
+    accentColor: "#2e7d4f",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The temple map says the treasure room is guarded by balloons. The waterfall says lunch is at noon. The jungle has been rehearsing all week.",
+  },
+};
+
+// ─── Anniversary: Time Capsule ───────────────────────────────
+export const timecapsuleMeta: TemplateMeta = {
+  id: "timecapsule",
+  name: "Time Capsule",
+  codename: "The Capsule",
+  description:
+    "A giant time capsule opens and memories emerge as glowing artifacts on a decade-by-decade journey. For anniversaries built on years of kept things.",
+  eventTypes: ["anniversary"],
+  tags: ["traditional", "editorial", "romantic", "artistic", "elegant", "decent"],
+  keywords: [
+    "time capsule", "anniversary", "memories", "decades", "keepsakes",
+    "artifacts", "25 years", "50 years", "milestone anniversary",
+    "nostalgia", "vintage", "years together", "golden anniversary",
+  ],
+  icon: "🗝",
+  vibe: { label: "The Capsule", color: "#a97e3f" },
+  previewImage: "/template-previews/timecapsule.jpg",
+  defaults: {
+    invitationMessage:
+      "Years ago we started keeping the small things. Tonight we open the capsule and let them glow. Come see what we saved.",
+    tagline: "Everything we kept, opened.",
+    accentColor: "#a97e3f",
+    heroImage:
+      "https://images.unsplash.com/photo-1494203484021-3c454daf695d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A cinema stub, a bad polaroid, a note passed under a door. None of it was valuable — until you stack the decades and realize it was everything.",
+  },
+};
+
+// ─── Anniversary: Tree of Life ───────────────────────────────
+export const treeoflifeMeta: TemplateMeta = {
+  id: "treeoflife",
+  name: "Tree of Life",
+  codename: "Evergreen",
+  description:
+    "One giant tree — every anniversary a branch, photos hanging as leaves, seasons turning as you scroll. For anniversaries and weddings rooted in family.",
+  eventTypes: ["anniversary", "wedding"],
+  tags: ["organic", "botanical", "romantic", "traditional", "artistic", "elegant"],
+  keywords: [
+    "tree of life", "family tree", "anniversary", "branches", "roots",
+    "seasons", "nature anniversary", "green", "growth", "leaves",
+    "vow renewal", "generations", "evergreen", "garden",
+  ],
+  icon: "🌳",
+  vibe: { label: "Evergreen", color: "#5c8a4a" },
+  previewImage: "/template-previews/treeoflife.jpg",
+  defaults: {
+    invitationMessage:
+      "We planted something the day we married, and it has grown a new branch every year since. Come sit under it with us.",
+    tagline: "Still growing, together.",
+    accentColor: "#5c8a4a",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The roots are the two of us. The branches are the years. The leaves are every face that ever sat at our table — and there's room on the branch for more.",
+  },
+};
+
+// ─── Anniversary: Endless Clock ──────────────────────────────
+export const endlessclockMeta: TemplateMeta = {
+  id: "endlessclock",
+  name: "Endless Clock",
+  codename: "Horologium",
+  description:
+    "Gigantic floating clocks — years as turning gears, photos set inside luxury bronze time mechanisms. For anniversaries that want time itself as the guest of honor.",
+  eventTypes: ["anniversary"],
+  tags: ["luxurious", "cinematic", "elegant", "traditional", "artistic", "premium"],
+  keywords: [
+    "clock anniversary", "time", "gears", "bronze", "horology",
+    "milestone anniversary", "25th anniversary", "50th anniversary",
+    "years together", "clockwork", "timeless", "mechanism", "vintage luxury",
+  ],
+  icon: "🕰",
+  vibe: { label: "Horologium", color: "#b3823c" },
+  previewImage: "/template-previews/endlessclock.jpg",
+  defaults: {
+    invitationMessage:
+      "The clocks have counted every year for us, gear by patient gear. Come hear them all strike at once.",
+    tagline: "Time, well spent.",
+    accentColor: "#b3823c",
+    heroImage:
+      "https://images.unsplash.com/photo-1494203484021-3c454daf695d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "People say time flies. Ours was built like a bronze movement — every year a gear, every gear still turning, none of them wasted.",
+  },
+};
+
+// ─── Corporate: Digital City ─────────────────────────────────
+export const digitalcityMeta: TemplateMeta = {
+  id: "digitalcity",
+  name: "Digital City",
+  codename: "Metrogrid",
+  description:
+    "A futuristic megacity conference — buildings represent speakers, roads carry the agenda, data streams flow between districts. For large tech conferences and networking summits.",
+  eventTypes: ["corporate", "networking-event"],
+  tags: ["tech", "modern", "architectural", "interactive", "cyberpunk", "bold"],
+  keywords: [
+    "tech conference", "digital city", "smart city", "agenda",
+    "speakers", "data streams", "networking summit", "developer event",
+    "futuristic conference", "grid", "corporate summit", "innovation",
+  ],
+  icon: "🌐",
+  vibe: { label: "Metrogrid", color: "#2f7dff" },
+  previewImage: "/template-previews/digitalcity.jpg",
+  defaults: {
+    invitationMessage:
+      "The city boots up at nine. Every district is a track, every road an agenda, every light a conversation waiting to happen.",
+    tagline: "A city built to connect.",
+    accentColor: "#2f7dff",
+    heroImage:
+      "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "We mapped the conference like a city: keynotes downtown, workshops in the maker district, and the best conversations — as always — in the streets between.",
+  },
+};
+
+// ─── Corporate: Quantum Lab ──────────────────────────────────
+export const quantumlabMeta: TemplateMeta = {
+  id: "quantumlab",
+  name: "Quantum Lab",
+  codename: "The Lab",
+  description:
+    "An advanced research lab — floating holograms, glass interfaces, interactive experiments per section. For R&D showcases, science-forward corporate events and launches.",
+  eventTypes: ["corporate", "product-launch"],
+  tags: ["tech", "glass", "modern", "minimal", "interactive", "premium"],
+  keywords: [
+    "research lab", "quantum", "holograms", "science event", "r&d",
+    "innovation day", "experiments", "glass interface", "deep tech",
+    "laboratory", "demo day", "showcase", "prototype",
+  ],
+  icon: "🧪",
+  vibe: { label: "The Lab", color: "#9d5cf0" },
+  previewImage: "/template-previews/quantumlab.jpg",
+  defaults: {
+    invitationMessage:
+      "The lab doors open for one day. Touch the holograms, question the researchers, break nothing expensive.",
+    tagline: "Hypothesis: you'll be impressed.",
+    accentColor: "#9d5cf0",
+    heroImage:
+      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Most of what happens here stays behind glass. Once a year we open the doors and let the experiments explain themselves.",
+  },
+};
+
+// ─── Corporate: Mission Control ──────────────────────────────
+export const missioncontrolMeta: TemplateMeta = {
+  id: "missioncontrol",
+  name: "Mission Control",
+  codename: "Houston",
+  description:
+    "NASA-style mission control — live countdown, control panels, satellite maps and a mission timeline. For launches and corporate events run like a flight program.",
+  eventTypes: ["corporate", "product-launch"],
+  tags: ["tech", "cinematic", "bold", "interactive", "modern", "cool"],
+  keywords: [
+    "mission control", "nasa", "countdown", "launch event", "telemetry",
+    "control room", "satellite", "flight program", "go for launch",
+    "houston", "command center", "mission timeline", "space program",
+  ],
+  icon: "🛰",
+  vibe: { label: "Houston", color: "#3ddc84" },
+  previewImage: "/template-previews/missioncontrol.jpg",
+  defaults: {
+    invitationMessage:
+      "All stations report go. The countdown is live, the telemetry is green, and the only thing missing from the control room is you.",
+    tagline: "We are go for launch.",
+    accentColor: "#3ddc84",
+    heroImage:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Years of quiet checklists led to this console. When the clock hits zero, everyone in the room will know exactly why we built it.",
+  },
+};
+
+// ─── Product Launch: Secret Laboratory ───────────────────────
+export const secretlabMeta: TemplateMeta = {
+  id: "secretlab",
+  name: "Secret Laboratory",
+  codename: "The Vault",
+  description:
+    "An underground lab discovered section by section — robots assembling the product, a secret behind every door, a dramatic final reveal. For launches that want suspense.",
+  eventTypes: ["product-launch"],
+  tags: ["tech", "bold", "cinematic", "interactive", "modern", "cyberpunk"],
+  keywords: [
+    "secret lab", "underground", "vault", "classified", "product reveal",
+    "robots", "assembly", "bunker", "restricted access", "top secret",
+    "launch suspense", "prototype", "warning yellow",
+  ],
+  icon: "🔬",
+  vibe: { label: "The Vault", color: "#f5c518" },
+  previewImage: "/template-previews/secretlab.jpg",
+  defaults: {
+    invitationMessage:
+      "Clearance granted. What we've been building below ground is ready to surface — and you're on the access list.",
+    tagline: "Clearance: granted.",
+    accentColor: "#f5c518",
+    heroImage:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Behind the last blast door, the robots are tightening the final bolts. Every secret in this facility points at one object — and one evening.",
+  },
+};
+
+// ─── Product Launch: Portal ──────────────────────────────────
+export const portalMeta: TemplateMeta = {
+  id: "portal",
+  name: "Portal",
+  codename: "The Threshold",
+  description:
+    "A portal slowly opening in the void — unknown energy leaking through until the product arrives from another dimension. For launches that want pure mystery.",
+  eventTypes: ["product-launch"],
+  tags: ["cinematic", "bold", "tech", "cyberpunk", "modern", "premium"],
+  keywords: [
+    "portal", "threshold", "mystery launch", "dimension", "teaser",
+    "product reveal", "void", "energy", "sci-fi launch", "arrival",
+    "cyan", "magenta", "unknown", "unveiling",
+  ],
+  icon: "◉",
+  vibe: { label: "Threshold", color: "#00d9e8" },
+  previewImage: "/template-previews/portal.jpg",
+  defaults: {
+    invitationMessage:
+      "Something is coming through, and we can't fully explain it yet. Stand with us at the threshold when it arrives.",
+    tagline: "It's coming through.",
+    accentColor: "#00d9e8",
+    heroImage:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "First a hairline of light. Then a hum the instruments couldn't name. The portal has been widening for months — on launch night, it opens all the way.",
+  },
+};
+
+// ─── Product Launch: Evolution ───────────────────────────────
+export const evolutionMeta: TemplateMeta = {
+  id: "evolution",
+  name: "Evolution",
+  codename: "Ascent",
+  description:
+    "The evolution of technology told as one scroll — primitive to industrial to digital to AI, with the product as the destination. For launches with a lineage story.",
+  eventTypes: ["product-launch", "corporate"],
+  tags: ["editorial", "tech", "cinematic", "artistic", "modern", "bold"],
+  keywords: [
+    "evolution", "timeline", "history of technology", "industrial",
+    "digital", "ai", "product story", "lineage", "progress",
+    "launch narrative", "ascent", "from stone to silicon", "generations",
+  ],
+  icon: "🧬",
+  vibe: { label: "Ascent", color: "#3aa8c9" },
+  previewImage: "/template-previews/evolution.jpg",
+  defaults: {
+    invitationMessage:
+      "Everything before this was a draft — stone, steam, silicon. Come see what all of it was evolving toward.",
+    tagline: "The next stage, revealed.",
+    accentColor: "#3aa8c9",
+    heroImage:
+      "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every era solved one problem and handed the next one forward. We picked up the last unsolved piece — and on launch night, we hand back the answer.",
+  },
+};
+
+// ─── Awards: Golden Universe ─────────────────────────────────
+export const goldenuniverseMeta: TemplateMeta = {
+  id: "goldenuniverse",
+  name: "Golden Universe",
+  codename: "Aurum",
+  description:
+    "Awards floating in deep space — golden planets, sweeping spotlights, a cosmic theater finale. For award ceremonies that want celestial scale with pure gold glamour.",
+  eventTypes: ["award-ceremony"],
+  tags: ["celestial", "luxurious", "premium", "cinematic", "elegant", "bold"],
+  keywords: [
+    "awards", "golden", "gala", "cosmic awards", "spotlights",
+    "trophy", "ceremony", "recognition night", "space gala",
+    "annual awards", "black tie", "gold planets", "prestige",
+  ],
+  icon: "🥇",
+  vibe: { label: "Aurum", color: "#e3b74a" },
+  previewImage: "/template-previews/goldenuniverse.jpg",
+  defaults: {
+    invitationMessage:
+      "Tonight the spotlights leave the stage and search the whole universe. Join us as the year's brightest are given their own orbit.",
+    tagline: "Gold, at cosmic scale.",
+    accentColor: "#e3b74a",
+    heroImage:
+      "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Somewhere past the last row of seats, the theater becomes sky. Every award tonight is a planet — and every winner, the reason it shines.",
+  },
+};
+
+// ─── Awards: Hall of Fame ────────────────────────────────────
+export const halloffameMeta: TemplateMeta = {
+  id: "halloffame",
+  name: "Hall of Fame",
+  codename: "Pantheon",
+  description:
+    "A gigantic marble museum — interactive statues, achievements carved as monuments, bronze and laurel throughout. For award ceremonies and corporate honors built to last.",
+  eventTypes: ["award-ceremony", "corporate"],
+  tags: ["architectural", "premium", "traditional", "elegant", "artistic", "luxurious"],
+  keywords: [
+    "hall of fame", "pantheon", "marble", "monuments", "statues",
+    "laurel", "bronze", "lifetime achievement", "legacy awards",
+    "museum", "honors", "induction", "recognition", "greek",
+  ],
+  icon: "🗿",
+  vibe: { label: "Pantheon", color: "#a87f4f" },
+  previewImage: "/template-previews/halloffame.jpg",
+  defaults: {
+    invitationMessage:
+      "Marble remembers what applause forgets. Join us the evening this year's names are carved into the hall.",
+    tagline: "Carved to be remembered.",
+    accentColor: "#a87f4f",
+    heroImage:
+      "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every statue in this hall started as a person who refused to stop. Tonight we hand the sculptors a few more names.",
+  },
+};
+
+// ─── Networking: Neural Network ──────────────────────────────
+export const synapseMeta: TemplateMeta = {
+  id: "synapse",
+  name: "Neural Network",
+  codename: "Synapse",
+  description:
+    "Attendees rendered as neurons — connections firing into a collective intelligence, knowledge flowing visibly across the page. For networking events and idea-dense meetups.",
+  eventTypes: ["networking-event", "corporate"],
+  tags: ["tech", "interactive", "modern", "artistic", "cool", "bold"],
+  keywords: [
+    "networking", "neurons", "synapse", "connections", "collective intelligence",
+    "knowledge sharing", "meetup", "brain", "ai community", "indigo",
+    "thinkers", "idea exchange", "community night",
+  ],
+  icon: "⚡",
+  vibe: { label: "Synapse", color: "#22d3ee" },
+  previewImage: "/template-previews/synapse.jpg",
+  defaults: {
+    invitationMessage:
+      "One neuron is a spark; a room of them is a mind. Come fire a few connections with us.",
+    tagline: "Where sparks become thought.",
+    accentColor: "#22d3ee",
+    heroImage:
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "No single person in the room has the answer. But watch the connections light up over one evening, and the room starts thinking things nobody brought in.",
+  },
+};
+
+// ─── Networking: Future City ─────────────────────────────────
+export const futurecityMeta: TemplateMeta = {
+  id: "futurecity",
+  name: "Future City",
+  codename: "Urbania",
+  description:
+    "People become buildings, companies become districts, connections become highways — the city grows as the networking happens. For community and ecosystem events with scale.",
+  eventTypes: ["networking-event", "corporate"],
+  tags: ["architectural", "modern", "tech", "interactive", "premium", "cool"],
+  keywords: [
+    "networking", "future city", "skyline", "districts", "highways",
+    "ecosystem event", "community building", "growth", "urban",
+    "startup city", "connections", "corporate mixer", "expansion",
+  ],
+  icon: "🏗",
+  vibe: { label: "Urbania", color: "#4f8fd9" },
+  previewImage: "/template-previews/futurecity.jpg",
+  defaults: {
+    invitationMessage:
+      "Every handshake tonight lays a road; every conversation raises a floor. Come help us build the skyline.",
+    tagline: "A skyline built by hand.",
+    accentColor: "#4f8fd9",
+    heroImage:
+      "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The city starts empty at dawn. By the last drink, there are towers where strangers stood — and highways between people who arrived alone.",
+  },
+};
+
+// ─── Party: Festival of Lights ───────────────────────────────
+export const festivalMeta: TemplateMeta = {
+  id: "festival",
+  name: "Festival of Lights",
+  codename: "Lumina",
+  description:
+    "Tomorrowland energy — floating stages, fireworks, laser tunnels, LED flowers and music visualizers. For big parties and birthdays that want main-stage spectacle.",
+  eventTypes: ["party", "birthday"],
+  tags: ["festive", "neon", "vibrant", "bold", "interactive", "playful"],
+  keywords: [
+    "festival", "tomorrowland", "edm", "main stage", "fireworks",
+    "laser tunnel", "led", "music festival", "rave", "visualizer",
+    "big party", "dance", "lights", "open air",
+  ],
+  icon: "🎆",
+  vibe: { label: "Lumina", color: "#e935c1" },
+  previewImage: "/template-previews/festival.jpg",
+  defaults: {
+    invitationMessage:
+      "The stages are floating, the lasers are warm, and the sky has been booked for fireworks. All we need now is your hands in the air.",
+    tagline: "Lights up. Volume up.",
+    accentColor: "#e935c1",
+    heroImage:
+      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Somewhere between the laser tunnel and the LED garden, the crowd stops being strangers. That's the moment we build the whole night around.",
+  },
+};
+
+// ─── Party: Neon Jungle ──────────────────────────────────────
+export const neonjungleMeta: TemplateMeta = {
+  id: "neonjungle",
+  name: "Neon Jungle",
+  codename: "Neon Jungle",
+  description:
+    "A cyberpunk rainforest — neon animals, glowing plants, interactive waterfalls of light. For parties that want wild nature rendered in electric color.",
+  eventTypes: ["party"],
+  tags: ["neon", "cyberpunk", "vibrant", "bold", "organic", "festive"],
+  keywords: [
+    "neon jungle", "cyberpunk party", "rainforest", "glowing plants",
+    "neon animals", "jungle rave", "tropical night", "electric pink",
+    "uv party", "blacklight", "wild night", "exotic party",
+  ],
+  icon: "🐆",
+  vibe: { label: "Neon Jungle", color: "#39ff6e" },
+  previewImage: "/template-previews/neonjungle.jpg",
+  defaults: {
+    invitationMessage:
+      "Past the glowing vines and the waterfall made of light, the jungle is already dancing. Follow the neon panther — she knows the way.",
+    tagline: "The wild glows tonight.",
+    accentColor: "#39ff6e",
+    heroImage:
+      "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Nobody planted this jungle; it grew out of bass lines and blacklight. The animals are friendly, the plants hum, and the waterfall answers when you touch it.",
+  },
+};
+
+// ─── Party: Midnight Tokyo ───────────────────────────────────
+export const midnighttokyoMeta: TemplateMeta = {
+  id: "midnighttokyo",
+  name: "Midnight Tokyo",
+  codename: "Shibuya",
+  description:
+    "Tokyo nightlife — rain reflections on black streets, animated signs, arcades and rooftop clubs in luxury neon. For parties and birthdays with big-city midnight energy.",
+  eventTypes: ["party", "birthday"],
+  tags: ["neon", "cyberpunk", "bold", "modern", "cinematic", "festive"],
+  keywords: [
+    "tokyo", "shibuya", "japanese nightlife", "neon signs", "rain",
+    "rooftop club", "arcade", "city night", "izakaya", "karaoke",
+    "night out", "urban party", "midnight", "vending machine",
+  ],
+  icon: "🗼",
+  vibe: { label: "Shibuya", color: "#ff3b4e" },
+  previewImage: "/template-previews/midnighttokyo.jpg",
+  defaults: {
+    invitationMessage:
+      "The rain has polished the streets, the signs are singing, and there's a rooftop with your name in neon. Meet us after the last train.",
+    tagline: "After the last train.",
+    accentColor: "#ff3b4e",
+    heroImage:
+      "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "The night starts at a vending machine and ends on a rooftop above the crossing. Everything in between is arcades, ramen and songs nobody admits to knowing.",
+  },
+};
+
 export const TEMPLATES_META: TemplateMeta[] = [
   // Wedding & romantic
   moonlitMeta,
@@ -1206,15 +2308,32 @@ export const TEMPLATES_META: TemplateMeta[] = [
   minimalMeta,
   modernMeta,
   pastelMeta,
+  skyrealmMeta,
+  cathedralMeta,
+  sakuraMeta,
+  versaillesMeta,
+  frescoMeta,
+  mirageMeta,
+  icepalaceMeta,
+  galaxyoperaMeta,
   // Engagement
   infinityMeta,
   lovestarsMeta,
   gardenMeta,
   horizonMeta,
   promiseMeta,
+  tworiversMeta,
+  mirrorworldsMeta,
+  infinitytrainMeta,
+  lanternsMeta,
+  glassroseMeta,
+  secretgalaxyMeta,
   // Anniversary
   libraryMeta,
   chaptersMeta,
+  timecapsuleMeta,
+  treeoflifeMeta,
+  endlessclockMeta,
   // Birthday
   toyboxMeta,
   timemachineMeta,
@@ -1223,6 +2342,14 @@ export const TEMPLATES_META: TemplateMeta[] = [
   orbitMeta,
   arcadeMeta,
   vibrantMeta,
+  cartoonMeta,
+  bricktownMeta,
+  treasureMeta,
+  themeparkMeta,
+  candylandMeta,
+  robocityMeta,
+  spacemissionMeta,
+  jungleMeta,
   // Corporate / Launch / Awards
   quantumMeta,
   neuralMeta,
@@ -1233,6 +2360,14 @@ export const TEMPLATES_META: TemplateMeta[] = [
   immortalsMeta,
   odeonMeta,
   luminaryMeta,
+  digitalcityMeta,
+  quantumlabMeta,
+  missioncontrolMeta,
+  secretlabMeta,
+  portalMeta,
+  evolutionMeta,
+  goldenuniverseMeta,
+  halloffameMeta,
   // Networking / Party
   ecosystemMeta,
   constellaMeta,
@@ -1240,6 +2375,11 @@ export const TEMPLATES_META: TemplateMeta[] = [
   infinityclubMeta,
   metropolisMeta,
   afterMeta,
+  synapseMeta,
+  futurecityMeta,
+  festivalMeta,
+  neonjungleMeta,
+  midnighttokyoMeta,
 ];
 
 export function getTemplateMeta(id: string): TemplateMeta | undefined {

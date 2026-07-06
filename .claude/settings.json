@@ -13,7 +13,8 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 30 http://localhost:3000/)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 60 http://localhost:3000/e/DEMO-CELESTIA)",
       "Bash(node --experimental-vm-modules -e ' *)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 60 http://localhost:3000/events/wedding)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 60 http://localhost:3000/events/wedding)",
+      "Bash(npx tsc *)"
     ]
   }
 }

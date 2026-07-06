@@ -9,3 +9,5 @@ next-env.d.ts
 
 # Local media uploads (dev fallback when no Cloudinary config)
 public/uploads/
+
+recordings

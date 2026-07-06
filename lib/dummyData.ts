@@ -1638,6 +1638,957 @@ const infinityclub: DemoBundle = {
   media: [],
 };
 
+// ---------- 38 additional demo bundles (Skyrealm … Midnight Tokyo) ----------
+
+const SKYREALM_CODE = "DEMO-SKYREALM";
+const skyrealm: DemoBundle = {
+  event: {
+    eventCode: SKYREALM_CODE, eventType: "wedding", templateId: "skyrealm",
+    eventTitle: "Aarav & Niyati", person1Name: "Aarav", person2Name: "Niyati",
+    tentativeDate: "2026-09-19", city: "Interlaken", isActive: true, slug: SKYREALM_CODE,
+    heroImageUrl: SAMPLES.coupleSunset, tagline: "Above the world, together.",
+    invitationMessage: "We found a place above the clouds where two islands meet by one bridge. Come cross it with us.",
+    aboutStory: "Two islands drifted on separate winds for years. Then a marble bridge appeared between them, and the golden birds started circling like they'd been expecting this.",
+    mainDate: "2026-09-19", mainStartTime: "16:00", mainEndTime: "22:00",
+    themeAccentColor: "#7ab8e8",
+    venueName: "Harder Kulm Terrace", venueAddress: "Harder Kulm, Interlaken, Switzerland",
+    mapLink: "https://maps.google.com/?q=Harder+Kulm+Interlaken", latitude: 46.6997, longitude: 7.8632,
+    contactName: "Aarav & Niyati", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/skyrealm-rsvp",
+  },
+  subEvents: [
+    { eventCode: SKYREALM_CODE, order: 1, name: "The Ascent", date: "2026-09-19", startTime: "16:00", endTime: "17:00", venueName: "Funicular Station", description: "The ride above the clouds — window seats for everyone.", icon: "☁" },
+    { eventCode: SKYREALM_CODE, order: 2, name: "The Bridge Ceremony", date: "2026-09-19", startTime: "17:30", endTime: "19:00", venueName: "Sky Terrace", dressCode: "Sky blue & ivory", description: "Vows on the bridge between two kingdoms.", icon: "🕊" },
+    { eventCode: SKYREALM_CODE, order: 3, name: "Dinner in the Clouds", date: "2026-09-19", startTime: "19:30", endTime: "22:00", venueName: "The Pavilion", description: "A long table with the Alps for wallpaper.", icon: "✦" },
+  ],
+  media: [hero(SKYREALM_CODE, "photo-1519741497674-611481863552"), ...gallery(SKYREALM_CODE, [
+    { url: SAMPLES.coupleSunset, caption: "Above the clouds" }, { url: SAMPLES.coupleEmbrace, caption: "The bridge" },
+    { url: SAMPLES.coupleBehind, caption: "Two kingdoms" }, { url: SAMPLES.weddingScene, caption: "The pavilion" },
+  ])],
+};
+
+const CATHEDRAL_CODE = "DEMO-CATHEDRAL";
+const cathedral: DemoBundle = {
+  event: {
+    eventCode: CATHEDRAL_CODE, eventType: "wedding", templateId: "cathedral",
+    eventTitle: "Dev & Elena", person1Name: "Dev", person2Name: "Elena",
+    tentativeDate: "2026-11-21", city: "Prague", isActive: true, slug: CATHEDRAL_CODE,
+    heroImageUrl: SAMPLES.coupleBehind, tagline: "Vows under a galaxy ceiling.",
+    invitationMessage: "We are building a cathedral out of the stars we met under. Come sit in the front pew of the sky.",
+    aboutStory: "Every window in this cathedral is a memory lit from behind. The ceiling is the night we first named the constellations wrong, on purpose.",
+    mainDate: "2026-11-21", mainStartTime: "19:00", mainEndTime: "23:30",
+    themeAccentColor: "#4a5fc1",
+    venueName: "Clementinum Hall", venueAddress: "Mariánské námestí, Prague, Czech Republic",
+    mapLink: "https://maps.google.com/?q=Clementinum+Prague", latitude: 50.0866, longitude: 14.4166,
+    contactName: "Dev & Elena", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/cathedral-rsvp",
+  },
+  subEvents: [
+    { eventCode: CATHEDRAL_CODE, order: 1, name: "Candlelight Arrival", date: "2026-11-21", startTime: "19:00", endTime: "19:45", venueName: "The Nave", description: "A thousand candles, one aisle.", icon: "🕯" },
+    { eventCode: CATHEDRAL_CODE, order: 2, name: "Vows Under the Stars", date: "2026-11-21", startTime: "20:00", endTime: "21:00", venueName: "The Great Hall", dressCode: "Midnight formal", description: "The exchange, beneath the galaxy ceiling.", icon: "✦" },
+    { eventCode: CATHEDRAL_CODE, order: 3, name: "Midnight Feast", date: "2026-11-21", startTime: "21:30", endTime: "23:30", venueName: "The Crypt Hall", description: "Dinner where the echoes are kind.", icon: "★" },
+  ],
+  media: [hero(CATHEDRAL_CODE, "photo-1606216794074-735e91aa2c92"), ...gallery(CATHEDRAL_CODE, [
+    { url: SAMPLES.coupleBehind, caption: "Stained glass" }, { url: SAMPLES.coupleEmbrace, caption: "The nave" },
+    { url: SAMPLES.weddingScene, caption: "Candlelight" }, { url: SAMPLES.ringsClose, caption: "The vow" },
+  ])],
+};
+
+const SAKURA_CODE = "DEMO-SAKURA";
+const sakura: DemoBundle = {
+  event: {
+    eventCode: SAKURA_CODE, eventType: "wedding", templateId: "sakura",
+    eventTitle: "Haruki & Meera", person1Name: "Haruki", person2Name: "Meera",
+    tentativeDate: "2026-04-04", city: "Kyoto", isActive: true, slug: SAKURA_CODE,
+    heroImageUrl: SAMPLES.pinkFlowers, tagline: "A season made to stay.",
+    invitationMessage: "The blossoms only stay a few weeks each year — so we chose them to hold our forever. Come walk the petal path with us.",
+    aboutStory: "We met when the trees were bare and stayed until they flowered. Every spring since has felt like the forest applauding.",
+    mainDate: "2026-04-04", mainStartTime: "15:00", mainEndTime: "21:00",
+    themeAccentColor: "#e88aa8",
+    venueName: "Maruyama Park Pavilion", venueAddress: "Higashiyama Ward, Kyoto, Japan",
+    mapLink: "https://maps.google.com/?q=Maruyama+Park+Kyoto", latitude: 35.0037, longitude: 135.7809,
+    contactName: "Haruki & Meera", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/sakura-rsvp",
+  },
+  subEvents: [
+    { eventCode: SAKURA_CODE, order: 1, name: "Petal Walk", date: "2026-04-04", startTime: "15:00", endTime: "16:00", venueName: "The Blossom Path", dressCode: "Blush & cream", description: "A slow walk under full bloom.", icon: "🌸" },
+    { eventCode: SAKURA_CODE, order: 2, name: "The Ceremony", date: "2026-04-04", startTime: "16:30", endTime: "18:00", venueName: "The Pavilion", description: "Vows while the petals do the confetti's job.", icon: "🏮" },
+    { eventCode: SAKURA_CODE, order: 3, name: "Lantern Dinner", date: "2026-04-04", startTime: "18:30", endTime: "21:00", venueName: "The Garden Terrace", description: "Lanterns on, season noted, dinner long.", icon: "🕯" },
+  ],
+  media: [hero(SAKURA_CODE, "photo-1465495976277-4387d4b0b4c6"), ...gallery(SAKURA_CODE, [
+    { url: SAMPLES.pinkFlowers, caption: "Full bloom" }, { url: SAMPLES.coupleEmbrace, caption: "The path" },
+    { url: SAMPLES.bouquet, caption: "Petals" }, { url: SAMPLES.coupleSunset, caption: "Last light" },
+  ])],
+};
+
+const VERSAILLES_CODE = "DEMO-VERSAILLES";
+const versailles: DemoBundle = {
+  event: {
+    eventCode: VERSAILLES_CODE, eventType: "wedding", templateId: "versailles",
+    eventTitle: "Armaan & Céline", person1Name: "Armaan", person2Name: "Céline",
+    tentativeDate: "2026-06-20", city: "Paris", isActive: true, slug: VERSAILLES_CODE,
+    heroImageUrl: SAMPLES.weddingScene, tagline: "A palace for one evening.",
+    invitationMessage: "The palace doors are open, the chandeliers are lit, and one seat in the hall of mirrors has your name on it.",
+    aboutStory: "Some love stories rent a hall. Ours borrowed a palace — grand staircases, golden mirrors, and gardens that were clearly showing off.",
+    mainDate: "2026-06-20", mainStartTime: "17:00", mainEndTime: "23:59",
+    themeAccentColor: "#c9a13b",
+    venueName: "Château Ballroom", venueAddress: "Avenue de Paris, Versailles, France",
+    mapLink: "https://maps.google.com/?q=Versailles+France", latitude: 48.8049, longitude: 2.1204,
+    contactName: "Armaan & Céline", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/versailles-rsvp",
+  },
+  subEvents: [
+    { eventCode: VERSAILLES_CODE, order: 1, name: "Garden Reception", date: "2026-06-20", startTime: "17:00", endTime: "18:30", venueName: "The Royal Gardens", dressCode: "Baroque formal", description: "Champagne among fountains that never learned modesty.", icon: "⚜" },
+    { eventCode: VERSAILLES_CODE, order: 2, name: "Hall of Mirrors Ceremony", date: "2026-06-20", startTime: "19:00", endTime: "20:30", venueName: "Hall of Mirrors", description: "Vows, reflected seventeen times.", icon: "👑" },
+    { eventCode: VERSAILLES_CODE, order: 3, name: "The Royal Banquet", date: "2026-06-20", startTime: "21:00", endTime: "23:59", venueName: "Grand Ballroom", description: "Dinner under chandeliers, dancing under orders.", icon: "🥂" },
+  ],
+  media: [hero(VERSAILLES_CODE, "photo-1519741497674-611481863552"), ...gallery(VERSAILLES_CODE, [
+    { url: SAMPLES.weddingScene, caption: "The hall" }, { url: SAMPLES.coupleEmbrace, caption: "The mirrors" },
+    { url: SAMPLES.bouquet, caption: "The gardens" }, { url: SAMPLES.coupleBehind, caption: "The staircase" },
+  ])],
+};
+
+const FRESCO_CODE = "DEMO-FRESCO";
+const fresco: DemoBundle = {
+  event: {
+    eventCode: FRESCO_CODE, eventType: "wedding", templateId: "fresco",
+    eventTitle: "Luca & Aisha", person1Name: "Luca", person2Name: "Aisha",
+    tentativeDate: "2026-05-30", city: "Florence", isActive: true, slug: FRESCO_CODE,
+    heroImageUrl: SAMPLES.coupleEmbrace, tagline: "A love, painted.",
+    invitationMessage: "Some loves get painted; ours insisted on it. Come stand inside the frame with us for one afternoon.",
+    aboutStory: "The brush strokes started years ago — a café, a missed train, an argument about Caravaggio. Today the painting finally gets its gold frame.",
+    mainDate: "2026-05-30", mainStartTime: "16:00", mainEndTime: "22:30",
+    themeAccentColor: "#b0722f",
+    venueName: "Palazzo Vecchio Courtyard", venueAddress: "Piazza della Signoria, Florence, Italy",
+    mapLink: "https://maps.google.com/?q=Palazzo+Vecchio+Florence", latitude: 43.7696, longitude: 11.2558,
+    contactName: "Luca & Aisha", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/fresco-rsvp",
+  },
+  subEvents: [
+    { eventCode: FRESCO_CODE, order: 1, name: "The Gallery Walk", date: "2026-05-30", startTime: "16:00", endTime: "17:00", venueName: "The Loggia", description: "Our story, hung frame by frame.", icon: "🖼" },
+    { eventCode: FRESCO_CODE, order: 2, name: "The Ceremony", date: "2026-05-30", startTime: "17:30", endTime: "19:00", venueName: "The Courtyard", dressCode: "Renaissance warm tones", description: "Vows under a ceiling someone spent a decade on.", icon: "🎨" },
+    { eventCode: FRESCO_CODE, order: 3, name: "The Banquet", date: "2026-05-30", startTime: "19:30", endTime: "22:30", venueName: "The Long Hall", description: "Tuscan dinner, painted light, no dress rehearsal.", icon: "🍷" },
+  ],
+  media: [hero(FRESCO_CODE, "photo-1519225421980-715cb0215aed"), ...gallery(FRESCO_CODE, [
+    { url: SAMPLES.coupleEmbrace, caption: "The frame" }, { url: SAMPLES.weddingScene, caption: "The hall" },
+    { url: SAMPLES.bouquet, caption: "Still life" }, { url: SAMPLES.coupleSunset, caption: "Golden hour" },
+  ])],
+};
+
+const MIRAGE_CODE = "DEMO-MIRAGE";
+const mirage: DemoBundle = {
+  event: {
+    eventCode: MIRAGE_CODE, eventType: "wedding", templateId: "mirage",
+    eventTitle: "Zayd & Mariam", person1Name: "Zayd", person2Name: "Mariam",
+    tentativeDate: "2026-11-27", city: "Dubai", isActive: true, slug: MIRAGE_CODE,
+    heroImageUrl: SAMPLES.coupleSunset, tagline: "Real as the desert night.",
+    invitationMessage: "At the edge of the dunes, where the heat turns light into water, we found something real. Come toast it by firelight.",
+    aboutStory: "The desert shows you things that aren't there. It showed us each other — and for once, the mirage stayed.",
+    mainDate: "2026-11-27", mainStartTime: "17:00", mainEndTime: "23:59",
+    themeAccentColor: "#d19a4f",
+    venueName: "Al Marmoom Oasis", venueAddress: "Al Marmoom Desert, Dubai, UAE",
+    mapLink: "https://maps.google.com/?q=Al+Marmoom+Dubai", latitude: 24.8607, longitude: 55.3781,
+    contactName: "Zayd & Mariam", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/mirage-rsvp",
+  },
+  subEvents: [
+    { eventCode: MIRAGE_CODE, order: 1, name: "Sunset on the Dunes", date: "2026-11-27", startTime: "17:00", endTime: "18:30", venueName: "The High Dune", dressCode: "Gold & terracotta", description: "Arrive before the light does its trick.", icon: "🌅" },
+    { eventCode: MIRAGE_CODE, order: 2, name: "The Nikah", date: "2026-11-27", startTime: "19:00", endTime: "20:30", venueName: "The Oasis Pavilion", description: "Vows by firelight, witnessed by the dunes.", icon: "🔥" },
+    { eventCode: MIRAGE_CODE, order: 3, name: "Feast Under the Stars", date: "2026-11-27", startTime: "21:00", endTime: "23:59", venueName: "The Majlis", description: "Long carpets, low tables, high spirits.", icon: "✦" },
+  ],
+  media: [hero(MIRAGE_CODE, "photo-1519741497674-611481863552"), ...gallery(MIRAGE_CODE, [
+    { url: SAMPLES.coupleSunset, caption: "The dunes" }, { url: SAMPLES.coupleEmbrace, caption: "Firelight" },
+    { url: SAMPLES.coupleBehind, caption: "The oasis" }, { url: SAMPLES.ringsClose, caption: "The promise" },
+  ])],
+};
+
+const ICEPALACE_CODE = "DEMO-ICEPALACE";
+const icepalace: DemoBundle = {
+  event: {
+    eventCode: ICEPALACE_CODE, eventType: "wedding", templateId: "icepalace",
+    eventTitle: "Erik & Priya", person1Name: "Erik", person2Name: "Priya",
+    tentativeDate: "2026-12-12", city: "Tromsø", isActive: true, slug: ICEPALACE_CODE,
+    heroImageUrl: SAMPLES.coupleBehind, tagline: "Warmth, kept in ice.",
+    invitationMessage: "In a palace of ice under a green-lit sky, we're making the warmest promise of our lives. Bring your coat and your best toast.",
+    aboutStory: "One of us grew up with snow, the other met it at 25 and took its side immediately. The aurora agreed to do the lighting.",
+    mainDate: "2026-12-12", mainStartTime: "17:00", mainEndTime: "22:30",
+    themeAccentColor: "#8fd4e8",
+    venueName: "The Ice Dome", venueAddress: "Tamokdalen, Tromsø, Norway",
+    mapLink: "https://maps.google.com/?q=Tromso+Norway", latitude: 69.6496, longitude: 18.956,
+    contactName: "Erik & Priya", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/icepalace-rsvp",
+  },
+  subEvents: [
+    { eventCode: ICEPALACE_CODE, order: 1, name: "Aurora Watch", date: "2026-12-11", startTime: "21:00", endTime: "23:00", venueName: "The Frozen Lake", description: "Blankets, cocoa, and the sky doing its thing.", icon: "❄" },
+    { eventCode: ICEPALACE_CODE, order: 2, name: "The Ceremony", date: "2026-12-12", startTime: "17:00", endTime: "18:30", venueName: "The Ice Dome", dressCode: "Winter white & silver", description: "Vows in a hall carved from the lake itself.", icon: "💠" },
+    { eventCode: ICEPALACE_CODE, order: 3, name: "The Warm Feast", date: "2026-12-12", startTime: "19:00", endTime: "22:30", venueName: "The Lodge", description: "Fireplaces, long tables, extremely committed soup.", icon: "🔥" },
+  ],
+  media: [hero(ICEPALACE_CODE, "photo-1606216794074-735e91aa2c92"), ...gallery(ICEPALACE_CODE, [
+    { url: SAMPLES.coupleBehind, caption: "Green sky" }, { url: SAMPLES.coupleEmbrace, caption: "The dome" },
+    { url: SAMPLES.coupleSunset, caption: "The lake" }, { url: SAMPLES.ringsClose, caption: "Cold hands, warm vow" },
+  ])],
+};
+
+const GALAXYOPERA_CODE = "DEMO-GALAXYOPERA";
+const galaxyopera: DemoBundle = {
+  event: {
+    eventCode: GALAXYOPERA_CODE, eventType: "wedding", templateId: "galaxyopera",
+    eventTitle: "Vikram & Sofia", person1Name: "Vikram", person2Name: "Sofia",
+    tentativeDate: "2026-10-17", city: "Milan", isActive: true, slug: GALAXYOPERA_CODE,
+    heroImageUrl: SAMPLES.coupleEmbrace, tagline: "The curtain rises tonight.",
+    invitationMessage: "The curtain rises on the one performance we've rehearsed our whole lives. Your seat is in the front row of the universe.",
+    aboutStory: "An opera house adrift in space — velvet curtains parting on nebulae, chandeliers made of small patient planets. We supply the duet.",
+    mainDate: "2026-10-17", mainStartTime: "18:30", mainEndTime: "23:59",
+    themeAccentColor: "#8b5cf6",
+    venueName: "Teatro Grande", venueAddress: "Via Filodrammatici, Milan, Italy",
+    mapLink: "https://maps.google.com/?q=Teatro+alla+Scala+Milan", latitude: 45.4669, longitude: 9.19,
+    contactName: "Vikram & Sofia", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/galaxyopera-rsvp",
+  },
+  subEvents: [
+    { eventCode: GALAXYOPERA_CODE, order: 1, name: "Overture", date: "2026-10-17", startTime: "18:30", endTime: "19:30", venueName: "The Grand Foyer", dressCode: "Black tie & stardust", description: "Champagne while the orchestra tunes the cosmos.", icon: "♪" },
+    { eventCode: GALAXYOPERA_CODE, order: 2, name: "The Duet", date: "2026-10-17", startTime: "20:00", endTime: "21:30", venueName: "Main Stage", description: "Vows, center stage, curtain up.", icon: "🎭" },
+    { eventCode: GALAXYOPERA_CODE, order: 3, name: "The Encore", date: "2026-10-17", startTime: "22:00", endTime: "23:59", venueName: "The Ballroom", description: "Dinner and dancing until the house lights give up.", icon: "✦" },
+  ],
+  media: [hero(GALAXYOPERA_CODE, "photo-1519225421980-715cb0215aed"), ...gallery(GALAXYOPERA_CODE, [
+    { url: SAMPLES.coupleEmbrace, caption: "Center stage" }, { url: SAMPLES.coupleBehind, caption: "The balcony" },
+    { url: SAMPLES.weddingScene, caption: "The house" }, { url: SAMPLES.coupleSunset, caption: "Curtain call" },
+  ])],
+};
+
+const TWORIVERS_CODE = "DEMO-TWORIVERS";
+const tworivers: DemoBundle = {
+  event: {
+    eventCode: TWORIVERS_CODE, eventType: "engagement", templateId: "tworivers",
+    eventTitle: "Arnav & Tara", person1Name: "Arnav", person2Name: "Tara",
+    tentativeDate: "2026-03-14", city: "Rishikesh", isActive: true, slug: TWORIVERS_CODE,
+    heroImageUrl: SAMPLES.coupleHands, tagline: "Two currents, one sea.",
+    invitationMessage: "Two rivers ran a long way alone before they found the same sea. Come stand on the shore the day they meet.",
+    aboutStory: "One of us moves fast and loud, the other slow and certain. Somewhere downstream it stopped mattering which was which.",
+    mainDate: "2026-03-14", mainStartTime: "16:00", mainEndTime: "21:00",
+    themeAccentColor: "#3f9e9b",
+    venueName: "Ganga View Terrace", venueAddress: "Tapovan, Rishikesh, Uttarakhand",
+    mapLink: "https://maps.google.com/?q=Tapovan+Rishikesh", latitude: 30.1265, longitude: 78.3089,
+    contactName: "Arnav & Tara", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/tworivers-rsvp",
+  },
+  subEvents: [
+    { eventCode: TWORIVERS_CODE, order: 1, name: "Riverside Aarti", date: "2026-03-14", startTime: "16:00", endTime: "17:00", venueName: "The Ghat", description: "Lamps on the water, one from each family.", icon: "🪔" },
+    { eventCode: TWORIVERS_CODE, order: 2, name: "The Ring Exchange", date: "2026-03-14", startTime: "17:30", endTime: "18:30", venueName: "The Terrace", dressCode: "River teal & ivory", description: "Two currents, formally introduced.", icon: "💍" },
+    { eventCode: TWORIVERS_CODE, order: 3, name: "Dinner by the Water", date: "2026-03-14", startTime: "19:00", endTime: "21:00", venueName: "The Riverbank", description: "Long table, river soundtrack, lotus centrepieces.", icon: "🌊" },
+  ],
+  media: [hero(TWORIVERS_CODE, "photo-1525258946800-98cfd641d0de"), ...gallery(TWORIVERS_CODE, [
+    { url: SAMPLES.coupleHands, caption: "The meeting" }, { url: SAMPLES.coupleSunset, caption: "Downstream" },
+    { url: SAMPLES.ringsClose, caption: "The rings" }, { url: SAMPLES.coupleEmbrace, caption: "One current" },
+  ])],
+};
+
+const MIRRORWORLDS_CODE = "DEMO-MIRRORWORLDS";
+const mirrorworlds: DemoBundle = {
+  event: {
+    eventCode: MIRRORWORLDS_CODE, eventType: "engagement", templateId: "mirrorworlds",
+    eventTitle: "Dhruv & Alia", person1Name: "Dhruv", person2Name: "Alia",
+    tentativeDate: "2026-09-05", city: "Prague", isActive: true, slug: MIRRORWORLDS_CODE,
+    heroImageUrl: SAMPLES.coupleBehind, tagline: "Two halves, one frame.",
+    invitationMessage: "We lived in two different worlds that turned out to be reflections. Come watch them line up.",
+    aboutStory: "He alphabetises his bookshelf; she uses colour. Both systems, it turns out, file the same person under 'home'.",
+    mainDate: "2026-09-05", mainStartTime: "18:00", mainEndTime: "22:30",
+    themeAccentColor: "#8a93a5",
+    venueName: "The Mirror Chapel", venueAddress: "Malá Strana, Prague, Czech Republic",
+    mapLink: "https://maps.google.com/?q=Mala+Strana+Prague", latitude: 50.0875, longitude: 14.4213,
+    contactName: "Dhruv & Alia", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/mirrorworlds-rsvp",
+  },
+  subEvents: [
+    { eventCode: MIRRORWORLDS_CODE, order: 1, name: "His Side, Her Side", date: "2026-09-05", startTime: "18:00", endTime: "19:00", venueName: "The Twin Foyers", description: "Two entrances, two playlists, one bar in the middle.", icon: "◧" },
+    { eventCode: MIRRORWORLDS_CODE, order: 2, name: "The Alignment", date: "2026-09-05", startTime: "19:30", endTime: "20:30", venueName: "The Mirror Hall", dressCode: "Monochrome, your pick", description: "The rings, exchanged where the two rooms meet.", icon: "💍" },
+    { eventCode: MIRRORWORLDS_CODE, order: 3, name: "One Table", date: "2026-09-05", startTime: "21:00", endTime: "22:30", venueName: "The Long Room", description: "Dinner with the seating plans finally merged.", icon: "✦" },
+  ],
+  media: [hero(MIRRORWORLDS_CODE, "photo-1606216794074-735e91aa2c92"), ...gallery(MIRRORWORLDS_CODE, [
+    { url: SAMPLES.coupleBehind, caption: "Two worlds" }, { url: SAMPLES.coupleHands, caption: "The seam" },
+    { url: SAMPLES.coupleEmbrace, caption: "Aligned" }, { url: SAMPLES.ringsClose, caption: "The rings" },
+  ])],
+};
+
+const INFINITYTRAIN_CODE = "DEMO-INFINITYTRAIN";
+const infinitytrain: DemoBundle = {
+  event: {
+    eventCode: INFINITYTRAIN_CODE, eventType: "engagement", templateId: "infinitytrain",
+    eventTitle: "Kabir & Naomi", person1Name: "Kabir", person2Name: "Naomi",
+    tentativeDate: "2026-10-10", city: "Venice", isActive: true, slug: INFINITYTRAIN_CODE,
+    heroImageUrl: SAMPLES.coupleSunset, tagline: "All aboard, no last stop.",
+    invitationMessage: "Our train leaves from the platform where we first met and doesn't stop until forever. Your ticket is attached.",
+    aboutStory: "Coach one is the year we met. Coach two, the year we almost didn't. The windows show every landscape we crossed to get here — and the bar car is fully stocked.",
+    mainDate: "2026-10-10", mainStartTime: "17:00", mainEndTime: "22:00",
+    themeAccentColor: "#b08d3f",
+    venueName: "Venezia Santa Lucia — Royal Platform", venueAddress: "Fondamenta Santa Lucia, Venice, Italy",
+    mapLink: "https://maps.google.com/?q=Venezia+Santa+Lucia", latitude: 45.4408, longitude: 12.3155,
+    contactName: "Kabir & Naomi", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/infinitytrain-rsvp",
+  },
+  subEvents: [
+    { eventCode: INFINITYTRAIN_CODE, order: 1, name: "Boarding", date: "2026-10-10", startTime: "17:00", endTime: "17:45", venueName: "The Royal Platform", dressCode: "Vintage travel", description: "Tickets checked, coats taken, brass polished.", icon: "🎫" },
+    { eventCode: INFINITYTRAIN_CODE, order: 2, name: "The Proposal Coach", date: "2026-10-10", startTime: "18:30", endTime: "19:30", venueName: "Coach No. 8", description: "The question, asked between stations.", icon: "💍" },
+    { eventCode: INFINITYTRAIN_CODE, order: 3, name: "Dining Car Dinner", date: "2026-10-10", startTime: "20:00", endTime: "22:00", venueName: "The Dining Car", description: "White linen, moving scenery, no arrival time.", icon: "🚂" },
+  ],
+  media: [hero(INFINITYTRAIN_CODE, "photo-1519741497674-611481863552"), ...gallery(INFINITYTRAIN_CODE, [
+    { url: SAMPLES.coupleSunset, caption: "The window seat" }, { url: SAMPLES.coupleEmbrace, caption: "Coach No. 8" },
+    { url: SAMPLES.ringsClose, caption: "The ticket" }, { url: SAMPLES.coupleBehind, caption: "The platform" },
+  ])],
+};
+
+const LANTERNS_CODE = "DEMO-LANTERNS";
+const lanterns: DemoBundle = {
+  event: {
+    eventCode: LANTERNS_CODE, eventType: "engagement", templateId: "lanterns",
+    eventTitle: "Ishan & Mai", person1Name: "Ishan", person2Name: "Mai",
+    tentativeDate: "2026-02-28", city: "Hoi An", isActive: true, slug: LANTERNS_CODE,
+    heroImageUrl: SAMPLES.coupleEmbrace, tagline: "One wish, a thousand lights.",
+    invitationMessage: "We're sending a thousand lanterns up with one wish inside each of them — and the wish is the same in every one. Come light yours with us.",
+    aboutStory: "We met on a night market bridge, arguing over the last paper lantern. We bought it together. It's still on the shelf — tonight it gets a thousand siblings.",
+    mainDate: "2026-02-28", mainStartTime: "18:00", mainEndTime: "22:00",
+    themeAccentColor: "#e8a545",
+    venueName: "Thu Bon Riverside", venueAddress: "Old Town, Hoi An, Vietnam",
+    mapLink: "https://maps.google.com/?q=Hoi+An+Old+Town", latitude: 15.8801, longitude: 108.338,
+    contactName: "Ishan & Mai", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/lanterns-rsvp",
+  },
+  subEvents: [
+    { eventCode: LANTERNS_CODE, order: 1, name: "Lantern Making", date: "2026-02-28", startTime: "18:00", endTime: "19:00", venueName: "The Riverside Workshop", description: "Fold your own, write your wish inside.", icon: "🏮" },
+    { eventCode: LANTERNS_CODE, order: 2, name: "The Ring, The River", date: "2026-02-28", startTime: "19:30", endTime: "20:15", venueName: "The Bridge", dressCode: "Warm lantern tones", description: "The question, asked where we first argued.", icon: "💍" },
+    { eventCode: LANTERNS_CODE, order: 3, name: "The Release", date: "2026-02-28", startTime: "20:30", endTime: "22:00", venueName: "The Riverbank", description: "A thousand lanterns up, dinner after.", icon: "✨" },
+  ],
+  media: [hero(LANTERNS_CODE, "photo-1519225421980-715cb0215aed"), ...gallery(LANTERNS_CODE, [
+    { url: SAMPLES.coupleEmbrace, caption: "Lantern light" }, { url: SAMPLES.coupleSunset, caption: "The river" },
+    { url: SAMPLES.coupleHands, caption: "One wish" }, { url: SAMPLES.ringsClose, caption: "The ring" },
+  ])],
+};
+
+const GLASSROSE_CODE = "DEMO-GLASSROSE";
+const glassrose: DemoBundle = {
+  event: {
+    eventCode: GLASSROSE_CODE, eventType: "engagement", templateId: "glassrose",
+    eventTitle: "Rey & Anya", person1Name: "Rey", person2Name: "Anya",
+    tentativeDate: "2026-05-09", city: "Vienna", isActive: true, slug: GLASSROSE_CODE,
+    heroImageUrl: SAMPLES.bouquet, tagline: "A rose that keeps.",
+    invitationMessage: "Some flowers wilt; we grew one out of glass instead. Come watch it open, one petal at a time.",
+    aboutStory: "He gave her a rose on the first date. She pressed it in a book she never returned. This one is made of crystal, so the library is safe.",
+    mainDate: "2026-05-09", mainStartTime: "17:30", mainEndTime: "22:00",
+    themeAccentColor: "#d66a8a",
+    venueName: "Palmenhaus", venueAddress: "Burggarten 1, Vienna, Austria",
+    mapLink: "https://maps.google.com/?q=Palmenhaus+Vienna", latitude: 48.2049, longitude: 16.3665,
+    contactName: "Rey & Anya", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/glassrose-rsvp",
+  },
+  subEvents: [
+    { eventCode: GLASSROSE_CODE, order: 1, name: "The Glasshouse Hour", date: "2026-05-09", startTime: "17:30", endTime: "18:30", venueName: "The Palm House", dressCode: "Blush & crystal", description: "Champagne under glass and greenery.", icon: "🌹" },
+    { eventCode: GLASSROSE_CODE, order: 2, name: "The Bloom", date: "2026-05-09", startTime: "19:00", endTime: "20:00", venueName: "The Rose Atrium", description: "The ring, offered as the last petal opens.", icon: "💍" },
+    { eventCode: GLASSROSE_CODE, order: 3, name: "Petal Dinner", date: "2026-05-09", startTime: "20:30", endTime: "22:00", venueName: "The Conservatory", description: "Dinner inside the flower. Mind the stems.", icon: "✧" },
+  ],
+  media: [hero(GLASSROSE_CODE, "photo-1465495976277-4387d4b0b4c6"), ...gallery(GLASSROSE_CODE, [
+    { url: SAMPLES.bouquet, caption: "The rose" }, { url: SAMPLES.pinkFlowers, caption: "Petals" },
+    { url: SAMPLES.coupleEmbrace, caption: "The bloom" }, { url: SAMPLES.ringsClose, caption: "The ring" },
+  ])],
+};
+
+const SECRETGALAXY_CODE = "DEMO-SECRETGALAXY";
+const secretgalaxy: DemoBundle = {
+  event: {
+    eventCode: SECRETGALAXY_CODE, eventType: "engagement", templateId: "secretgalaxy",
+    eventTitle: "Neil & Aria", person1Name: "Neil", person2Name: "Aria",
+    tentativeDate: "2026-08-15", city: "Ladakh", isActive: true, slug: SECRETGALAXY_CODE,
+    heroImageUrl: SAMPLES.coupleBehind, tagline: "A universe of two.",
+    invitationMessage: "We found a galaxy nobody else had named, so we gave it both our names. Come see the coordinates.",
+    aboutStory: "At 3,500 metres the sky stops pretending to be a ceiling. We looked up, picked an unnamed smudge of stars, and filed the paperwork ourselves.",
+    mainDate: "2026-08-15", mainStartTime: "19:00", mainEndTime: "23:30",
+    themeAccentColor: "#7b5ce8",
+    venueName: "Stargazers' Camp, Nubra", venueAddress: "Nubra Valley, Ladakh",
+    mapLink: "https://maps.google.com/?q=Nubra+Valley+Ladakh", latitude: 34.6868, longitude: 77.5661,
+    contactName: "Neil & Aria", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/secretgalaxy-rsvp",
+  },
+  subEvents: [
+    { eventCode: SECRETGALAXY_CODE, order: 1, name: "Telescope Hour", date: "2026-08-15", startTime: "19:00", endTime: "20:30", venueName: "The Ridge", description: "Hot chai, cold air, borrowed telescopes.", icon: "🔭" },
+    { eventCode: SECRETGALAXY_CODE, order: 2, name: "The Naming", date: "2026-08-15", startTime: "21:00", endTime: "21:45", venueName: "The Dome Tent", dressCode: "Layers. Trust us.", description: "The ring, and the coordinates, announced together.", icon: "✦" },
+    { eventCode: SECRETGALAXY_CODE, order: 3, name: "Bonfire Supper", date: "2026-08-15", startTime: "22:00", endTime: "23:30", venueName: "The Camp", description: "Fire, blankets, one extremely smug couple.", icon: "🔥" },
+  ],
+  media: [hero(SECRETGALAXY_CODE, "photo-1606216794074-735e91aa2c92"), ...gallery(SECRETGALAXY_CODE, [
+    { url: SAMPLES.coupleBehind, caption: "The smudge of stars" }, { url: SAMPLES.coupleSunset, caption: "Last light" },
+    { url: SAMPLES.coupleEmbrace, caption: "Named" }, { url: SAMPLES.ringsClose, caption: "Coordinates" },
+  ])],
+};
+
+const CARTOON_CODE = "DEMO-CARTOON";
+const cartoon: DemoBundle = {
+  event: {
+    eventCode: CARTOON_CODE, eventType: "birthday", templateId: "cartoon",
+    eventTitle: "Vivaan turns 6!", person1Name: "Vivaan",
+    tentativeDate: "2026-08-09", city: "Mumbai", isActive: true, slug: CARTOON_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Today's episode: the birthday!",
+    invitationMessage: "The clouds are bouncy, the balloons have faces, and the birthday kid is the main character. Come join the episode.",
+    aboutStory: "Season six of the Vivaan show is the best one yet — more jokes, more jumping, and a season finale with cake.",
+    mainDate: "2026-08-09", mainStartTime: "16:00", mainEndTime: "19:00",
+    themeAccentColor: "#38b6ff",
+    venueName: "Funhouse Studio", venueAddress: "Juhu, Mumbai",
+    mapLink: "https://maps.google.com/?q=Juhu+Mumbai", latitude: 19.1075, longitude: 72.8263,
+    contactName: "Neha (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: CARTOON_CODE, order: 1, name: "Opening Credits", date: "2026-08-09", startTime: "16:00", endTime: "16:45", venueName: "The Bouncy Zone", description: "Face paint, balloon characters, warm-up giggles.", icon: "🎈" },
+    { eventCode: CARTOON_CODE, order: 2, name: "The Big Episode", date: "2026-08-09", startTime: "16:45", endTime: "17:45", venueName: "Main Stage", description: "Games, a magician, and one plot twist.", icon: "🎬" },
+    { eventCode: CARTOON_CODE, order: 3, name: "Season Finale: Cake", date: "2026-08-09", startTime: "18:00", endTime: "19:00", venueName: "Party Hall", description: "Six candles. Zero suspense about the wish.", icon: "🎂" },
+  ],
+  media: [hero(CARTOON_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(CARTOON_CODE, [
+    { url: SAMPLES.confetti, caption: "Confetti" }, { url: PICSUM(`${CARTOON_CODE}-balloons`, 1200, 1500), caption: "Balloon friends" },
+    { url: PICSUM(`${CARTOON_CODE}-games`, 1200, 1500), caption: "Games" }, { url: SAMPLES.pinkFlowers, caption: "Cake table" },
+  ])],
+};
+
+const BRICKTOWN_CODE = "DEMO-BRICKTOWN";
+const bricktown: DemoBundle = {
+  event: {
+    eventCode: BRICKTOWN_CODE, eventType: "birthday", templateId: "bricktown",
+    eventTitle: "Advik turns 5!", person1Name: "Advik",
+    tentativeDate: "2026-06-07", city: "Pune", isActive: true, slug: BRICKTOWN_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Everything clicks today.",
+    invitationMessage: "We're building a whole city for one birthday — brick by brick, snack by snack. Bring your best builder energy.",
+    aboutStory: "The master builder turns five, and the city needs towers, a fire station, and — by executive order — a dinosaur enclosure.",
+    mainDate: "2026-06-07", mainStartTime: "15:00", mainEndTime: "18:00",
+    themeAccentColor: "#d64545",
+    venueName: "The Builder Barn", venueAddress: "Baner, Pune",
+    mapLink: "https://maps.google.com/?q=Baner+Pune", latitude: 18.559, longitude: 73.7868,
+    contactName: "Rohit (Dad)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: BRICKTOWN_CODE, order: 1, name: "City Planning", date: "2026-06-07", startTime: "15:00", endTime: "16:00", venueName: "The Build Tables", description: "Teams, bricks, and very serious zoning debates.", icon: "🧱" },
+    { eventCode: BRICKTOWN_CODE, order: 2, name: "The Grand Opening", date: "2026-06-07", startTime: "16:15", endTime: "17:00", venueName: "Brick City", description: "Ribbon cut by the mayor (age five).", icon: "🏗" },
+    { eventCode: BRICKTOWN_CODE, order: 3, name: "Cake Demolition", date: "2026-06-07", startTime: "17:15", endTime: "18:00", venueName: "Main Hall", description: "The only demolition on today's permit.", icon: "🎂" },
+  ],
+  media: [hero(BRICKTOWN_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(BRICKTOWN_CODE, [
+    { url: SAMPLES.confetti, caption: "The city" }, { url: PICSUM(`${BRICKTOWN_CODE}-towers`, 1200, 1500), caption: "Towers" },
+    { url: PICSUM(`${BRICKTOWN_CODE}-build`, 1200, 1500), caption: "Build tables" }, { url: PICSUM(`${BRICKTOWN_CODE}-cake`, 1200, 1500), caption: "Cake" },
+  ])],
+};
+
+const TREASURE_CODE = "DEMO-TREASURE";
+const treasure: DemoBundle = {
+  event: {
+    eventCode: TREASURE_CODE, eventType: "birthday", templateId: "treasure",
+    eventTitle: "Anika turns 9!", person1Name: "Anika",
+    tentativeDate: "2026-10-11", city: "Goa", isActive: true, slug: TREASURE_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "X marks the party.",
+    invitationMessage: "X marks the party. Follow the map, dodge the traps, and the treasure at the end is cake. Probably. Come find out.",
+    aboutStory: "Captain Anika has a map, a crew, and nine years of experience finding hidden snacks. This expedition is her biggest yet.",
+    mainDate: "2026-10-11", mainStartTime: "10:00", mainEndTime: "13:30",
+    themeAccentColor: "#c9942e",
+    venueName: "Coco Beach Shack", venueAddress: "Nerul, Goa",
+    mapLink: "https://maps.google.com/?q=Nerul+Goa", latitude: 15.5167, longitude: 73.7833,
+    contactName: "Sameera (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: TREASURE_CODE, order: 1, name: "Crew Muster", date: "2026-10-11", startTime: "10:00", endTime: "10:45", venueName: "The Shack", description: "Bandanas issued, maps distributed, parrots optional.", icon: "🏴‍☠️" },
+    { eventCode: TREASURE_CODE, order: 2, name: "The Hunt", date: "2026-10-11", startTime: "10:45", endTime: "12:15", venueName: "The Beach", description: "Five clues, three traps, one buried chest.", icon: "🗺" },
+    { eventCode: TREASURE_CODE, order: 3, name: "The Treasure Feast", date: "2026-10-11", startTime: "12:30", endTime: "13:30", venueName: "The Shack", description: "The treasure was cake. It's always cake.", icon: "💰" },
+  ],
+  media: [hero(TREASURE_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(TREASURE_CODE, [
+    { url: SAMPLES.confetti, caption: "The crew" }, { url: PICSUM(`${TREASURE_CODE}-map`, 1200, 1500), caption: "The map" },
+    { url: PICSUM(`${TREASURE_CODE}-chest`, 1200, 1500), caption: "The chest" }, { url: SAMPLES.coupleSunset, caption: "The cove" },
+  ])],
+};
+
+const THEMEPARK_CODE = "DEMO-THEMEPARK";
+const themepark: DemoBundle = {
+  event: {
+    eventCode: THEMEPARK_CODE, eventType: "birthday", templateId: "themepark",
+    eventTitle: "Ishaan turns 12!", person1Name: "Ishaan",
+    tentativeDate: "2026-11-01", city: "Delhi", isActive: true, slug: THEMEPARK_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "You must be this fun to ride.",
+    invitationMessage: "The gates open, the rides are free, and the fireworks are timed to the candles. You must be this excited to enter.",
+    aboutStory: "Twelve years old and finally tall enough for everything. The park stays open late for exactly one commander of the ferris wheel.",
+    mainDate: "2026-11-01", mainStartTime: "17:00", mainEndTime: "21:30",
+    themeAccentColor: "#e0433f",
+    venueName: "Wonder Park", venueAddress: "Rohini, Delhi",
+    mapLink: "https://maps.google.com/?q=Rohini+Delhi", latitude: 28.7041, longitude: 77.1025,
+    contactName: "Family", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/themepark-rsvp",
+  },
+  subEvents: [
+    { eventCode: THEMEPARK_CODE, order: 1, name: "Gates Open", date: "2026-11-01", startTime: "17:00", endTime: "18:00", venueName: "Main Gate", description: "Wristbands on, sugar levels rising.", icon: "🎟" },
+    { eventCode: THEMEPARK_CODE, order: 2, name: "Ride Marathon", date: "2026-11-01", startTime: "18:00", endTime: "20:00", venueName: "The Midway", description: "Coasters, bumper cars, and one haunted house dare.", icon: "🎢" },
+    { eventCode: THEMEPARK_CODE, order: 3, name: "Cake & Fireworks", date: "2026-11-01", startTime: "20:30", endTime: "21:30", venueName: "The Ferris Plaza", description: "Twelve candles, then the sky takes over.", icon: "🎆" },
+  ],
+  media: [hero(THEMEPARK_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(THEMEPARK_CODE, [
+    { url: SAMPLES.confetti, caption: "The midway" }, { url: PICSUM(`${THEMEPARK_CODE}-ferris`, 1200, 1500), caption: "Ferris wheel" },
+    { url: PICSUM(`${THEMEPARK_CODE}-coaster`, 1200, 1500), caption: "The coaster" }, { url: PICSUM(`${THEMEPARK_CODE}-fireworks`, 1200, 1500), caption: "Fireworks" },
+  ])],
+};
+
+const CANDYLAND_CODE = "DEMO-CANDYLAND";
+const candyland: DemoBundle = {
+  event: {
+    eventCode: CANDYLAND_CODE, eventType: "birthday", templateId: "candyland",
+    eventTitle: "Myra turns 7!", person1Name: "Myra",
+    tentativeDate: "2026-09-13", city: "Mumbai", isActive: true, slug: CANDYLAND_CODE,
+    heroImageUrl: SAMPLES.pinkFlowers, tagline: "Sweetness at full production.",
+    invitationMessage: "The chocolate river is flowing and the cookie mountains are fresh out of the oven. Golden ticket attached — don't lose it.",
+    aboutStory: "The factory has been running all week: gumdrop hills polished, marshmallow clouds fluffed, and one birthday girl promoted to Chief Taste Officer.",
+    mainDate: "2026-09-13", mainStartTime: "15:30", mainEndTime: "18:30",
+    themeAccentColor: "#f06ea9",
+    venueName: "The Sweet Factory", venueAddress: "Powai, Mumbai",
+    mapLink: "https://maps.google.com/?q=Powai+Mumbai", latitude: 19.1176, longitude: 72.906,
+    contactName: "Tanvi (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: CANDYLAND_CODE, order: 1, name: "Golden Ticket Check", date: "2026-09-13", startTime: "15:30", endTime: "16:00", venueName: "Factory Gates", description: "Tickets in, sugar expectations up.", icon: "🎫" },
+    { eventCode: CANDYLAND_CODE, order: 2, name: "The Tasting Tour", date: "2026-09-13", startTime: "16:00", endTime: "17:15", venueName: "The Factory Floor", description: "Candy stations, cookie decorating, quality control by committee.", icon: "🍭" },
+    { eventCode: CANDYLAND_CODE, order: 3, name: "The Cake Reveal", date: "2026-09-13", startTime: "17:30", endTime: "18:30", venueName: "The Chocolate Hall", description: "Seven layers. One per year. Obviously.", icon: "🎂" },
+  ],
+  media: [hero(CANDYLAND_CODE, "photo-1465495976277-4387d4b0b4c6"), ...gallery(CANDYLAND_CODE, [
+    { url: SAMPLES.pinkFlowers, caption: "Sugar blooms" }, { url: SAMPLES.confetti, caption: "Sprinkles" },
+    { url: PICSUM(`${CANDYLAND_CODE}-candy`, 1200, 1500), caption: "Candy stations" }, { url: PICSUM(`${CANDYLAND_CODE}-cake`, 1200, 1500), caption: "The cake" },
+  ])],
+};
+
+const ROBOCITY_CODE = "DEMO-ROBOCITY";
+const robocity: DemoBundle = {
+  event: {
+    eventCode: ROBOCITY_CODE, eventType: "birthday", templateId: "robocity",
+    eventTitle: "Arjun turns 10!", person1Name: "Arjun",
+    tentativeDate: "2026-07-26", city: "Hyderabad", isActive: true, slug: ROBOCITY_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Party protocol: activated.",
+    invitationMessage: "The robots have been programmed with one directive: best birthday ever. Systems are green — we just need you.",
+    aboutStory: "Double digits unlocked. The city's robots have run the diagnostics twice: balloons charged, games loaded, cake module standing by.",
+    mainDate: "2026-07-26", mainStartTime: "16:00", mainEndTime: "19:30",
+    themeAccentColor: "#ff7a2f",
+    venueName: "Circuit Arena", venueAddress: "Gachibowli, Hyderabad",
+    mapLink: "https://maps.google.com/?q=Gachibowli+Hyderabad", latitude: 17.4401, longitude: 78.3489,
+    contactName: "Kavya (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: ROBOCITY_CODE, order: 1, name: "Boot Sequence", date: "2026-07-26", startTime: "16:00", endTime: "16:45", venueName: "The Arena", description: "Robot badge assembly and team assignments.", icon: "🤖" },
+    { eventCode: ROBOCITY_CODE, order: 2, name: "Robot Games", date: "2026-07-26", startTime: "16:45", endTime: "18:15", venueName: "The Circuit Floor", description: "Bot races, laser mazes, one rogue vacuum.", icon: "⚡" },
+    { eventCode: ROBOCITY_CODE, order: 3, name: "Cake Protocol", date: "2026-07-26", startTime: "18:30", endTime: "19:30", venueName: "Command Deck", description: "Ten candles extinguished in a single pass. Efficient.", icon: "🎂" },
+  ],
+  media: [hero(ROBOCITY_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(ROBOCITY_CODE, [
+    { url: SAMPLES.confetti, caption: "Systems green" }, { url: PICSUM(`${ROBOCITY_CODE}-bots`, 1200, 1500), caption: "The bots" },
+    { url: PICSUM(`${ROBOCITY_CODE}-maze`, 1200, 1500), caption: "Laser maze" }, { url: PICSUM(`${ROBOCITY_CODE}-cake`, 1200, 1500), caption: "Cake module" },
+  ])],
+};
+
+const SPACEMISSION_CODE = "DEMO-SPACEMISSION";
+const spacemission: DemoBundle = {
+  event: {
+    eventCode: SPACEMISSION_CODE, eventType: "birthday", templateId: "spacemission",
+    eventTitle: "Reyansh turns 8!", person1Name: "Reyansh",
+    tentativeDate: "2026-08-23", city: "Bengaluru", isActive: true, slug: SPACEMISSION_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "T-minus one birthday.",
+    invitationMessage: "Commander, your mission: one birthday, several planets, unlimited cake. The countdown has already started — report to the launchpad.",
+    aboutStory: "Mission year eight. The commander has logged 2,920 days of training and is cleared for the biggest launch of his career: the candle sequence.",
+    mainDate: "2026-08-23", mainStartTime: "15:00", mainEndTime: "18:30",
+    themeAccentColor: "#ff6a2b",
+    venueName: "Launchpad Play Center", venueAddress: "Whitefield, Bengaluru",
+    mapLink: "https://maps.google.com/?q=Whitefield+Bengaluru", latitude: 12.9698, longitude: 77.7499,
+    contactName: "Deepa (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: SPACEMISSION_CODE, order: 1, name: "Crew Suit-Up", date: "2026-08-23", startTime: "15:00", endTime: "15:45", venueName: "Mission Prep Bay", description: "Helmets, badges, and mission patches for every astronaut.", icon: "🧑‍🚀" },
+    { eventCode: SPACEMISSION_CODE, order: 2, name: "Planet Hop", date: "2026-08-23", startTime: "15:45", endTime: "17:15", venueName: "The Star Field", description: "Games across four planets. Gravity varies.", icon: "🪐" },
+    { eventCode: SPACEMISSION_CODE, order: 3, name: "The Candle Launch", date: "2026-08-23", startTime: "17:30", endTime: "18:30", venueName: "Mission Control", description: "Eight candles. Ignition on the count of three.", icon: "🚀" },
+  ],
+  media: [hero(SPACEMISSION_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(SPACEMISSION_CODE, [
+    { url: SAMPLES.confetti, caption: "Launch day" }, { url: PICSUM(`${SPACEMISSION_CODE}-crew`, 1200, 1500), caption: "The crew" },
+    { url: PICSUM(`${SPACEMISSION_CODE}-planets`, 1200, 1500), caption: "Planet hop" }, { url: PICSUM(`${SPACEMISSION_CODE}-cake`, 1200, 1500), caption: "Ignition" },
+  ])],
+};
+
+const JUNGLE_CODE = "DEMO-JUNGLE";
+const jungle: DemoBundle = {
+  event: {
+    eventCode: JUNGLE_CODE, eventType: "birthday", templateId: "jungle",
+    eventTitle: "Kiara turns 6!", person1Name: "Kiara",
+    tentativeDate: "2026-06-21", city: "Kochi", isActive: true, slug: JUNGLE_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Into the wild we go.",
+    invitationMessage: "Deep in the jungle, past the waterfall and one very opinionated parrot, a birthday is waiting. Pack your sense of adventure.",
+    aboutStory: "The expedition leader turns six. The trail is marked, the monkeys have been briefed, and the parrot has opinions about the cake flavour.",
+    mainDate: "2026-06-21", mainStartTime: "10:00", mainEndTime: "13:00",
+    themeAccentColor: "#2e7d4f",
+    venueName: "The Canopy Garden", venueAddress: "Fort Kochi, Kochi",
+    mapLink: "https://maps.google.com/?q=Fort+Kochi", latitude: 9.9658, longitude: 76.2422,
+    contactName: "Anju (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: JUNGLE_CODE, order: 1, name: "Explorer Sign-In", date: "2026-06-21", startTime: "10:00", endTime: "10:45", venueName: "Base Camp", description: "Safari hats, binoculars, animal face paint.", icon: "🦜" },
+    { eventCode: JUNGLE_CODE, order: 2, name: "The Trail", date: "2026-06-21", startTime: "10:45", endTime: "12:00", venueName: "The Canopy", description: "Treasure trail, animal spotting, waterfall crossing (paddling pool).", icon: "🌿" },
+    { eventCode: JUNGLE_CODE, order: 3, name: "Feast at Base Camp", date: "2026-06-21", startTime: "12:15", endTime: "13:00", venueName: "Base Camp", description: "Cake shaped like a lion. The parrot approves.", icon: "🦁" },
+  ],
+  media: [hero(JUNGLE_CODE, "photo-1530103862676-de8c9debad1d"), ...gallery(JUNGLE_CODE, [
+    { url: SAMPLES.confetti, caption: "Base camp" }, { url: PICSUM(`${JUNGLE_CODE}-trail`, 1200, 1500), caption: "The trail" },
+    { url: PICSUM(`${JUNGLE_CODE}-waterfall`, 1200, 1500), caption: "The waterfall" }, { url: PICSUM(`${JUNGLE_CODE}-cake`, 1200, 1500), caption: "Lion cake" },
+  ])],
+};
+
+const TIMECAPSULE_CODE = "DEMO-TIMECAPSULE";
+const timecapsule: DemoBundle = {
+  event: {
+    eventCode: TIMECAPSULE_CODE, eventType: "anniversary", templateId: "timecapsule",
+    eventTitle: "Rajiv & Sunita — 40 years", person1Name: "Rajiv", person2Name: "Sunita",
+    tentativeDate: "2026-11-29", city: "Chandigarh", isActive: true, slug: TIMECAPSULE_CODE,
+    heroImageUrl: SAMPLES.coupleSunset, tagline: "Everything we kept, opened.",
+    invitationMessage: "Years ago we started keeping the small things. Tonight we open the capsule and let them glow. Come see what we saved.",
+    aboutStory: "Cinema stubs from 1986. A wedding card printed on a typewriter. Forty years of small things, sealed and saved — opened tonight, one at a time.",
+    mainDate: "2026-11-29", mainStartTime: "18:30", mainEndTime: "22:30",
+    themeAccentColor: "#a97e3f",
+    venueName: "The Rose Garden Pavilion", venueAddress: "Sector 16, Chandigarh",
+    mapLink: "https://maps.google.com/?q=Rose+Garden+Chandigarh", latitude: 30.7484, longitude: 76.7797,
+    contactName: "The Kids", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/timecapsule-rsvp",
+  },
+  subEvents: [
+    { eventCode: TIMECAPSULE_CODE, order: 1, name: "The Unsealing", date: "2026-11-29", startTime: "18:30", endTime: "19:30", venueName: "The Pavilion", description: "The capsule opens. Handkerchiefs recommended.", icon: "🗝" },
+    { eventCode: TIMECAPSULE_CODE, order: 2, name: "Dinner Through the Decades", date: "2026-11-29", startTime: "19:45", endTime: "21:15", venueName: "The Long Table", description: "A course for each decade, toasts in between.", icon: "🥂" },
+    { eventCode: TIMECAPSULE_CODE, order: 3, name: "The New Capsule", date: "2026-11-29", startTime: "21:30", endTime: "22:30", venueName: "The Garden", description: "Everyone adds one thing for the 50th. Sealed at ten.", icon: "⏳" },
+  ],
+  media: [hero(TIMECAPSULE_CODE, "photo-1519741497674-611481863552"), ...gallery(TIMECAPSULE_CODE, [
+    { url: SAMPLES.coupleSunset, caption: "1986" }, { url: SAMPLES.coupleEmbrace, caption: "1998" },
+    { url: SAMPLES.coupleBehind, caption: "2010" }, { url: SAMPLES.coupleHands, caption: "Tonight" },
+  ])],
+};
+
+const TREEOFLIFE_CODE = "DEMO-TREEOFLIFE";
+const treeoflife: DemoBundle = {
+  event: {
+    eventCode: TREEOFLIFE_CODE, eventType: "anniversary", templateId: "treeoflife",
+    eventTitle: "Mohan & Lakshmi — 50 years", person1Name: "Mohan", person2Name: "Lakshmi",
+    tentativeDate: "2026-12-13", city: "Coimbatore", isActive: true, slug: TREEOFLIFE_CODE,
+    heroImageUrl: SAMPLES.coupleHands, tagline: "Still growing, together.",
+    invitationMessage: "We planted something the day we married, and it has grown a new branch every year since. Come sit under it with us.",
+    aboutStory: "Fifty rings in the trunk now. Children on one branch, grandchildren on the newer ones, and the shade wide enough for everyone we love.",
+    mainDate: "2026-12-13", mainStartTime: "17:00", mainEndTime: "21:30",
+    themeAccentColor: "#5c8a4a",
+    venueName: "The Banyan Courtyard", venueAddress: "Race Course Road, Coimbatore",
+    mapLink: "https://maps.google.com/?q=Race+Course+Coimbatore", latitude: 11.0018, longitude: 76.9629,
+    contactName: "The Family", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/treeoflife-rsvp",
+  },
+  subEvents: [
+    { eventCode: TREEOFLIFE_CODE, order: 1, name: "Blessings Under the Tree", date: "2026-12-13", startTime: "17:00", endTime: "18:00", venueName: "The Banyan", description: "The elders first, then everyone the branches hold.", icon: "🌳" },
+    { eventCode: TREEOFLIFE_CODE, order: 2, name: "The Golden Feast", date: "2026-12-13", startTime: "18:30", endTime: "20:30", venueName: "The Courtyard", description: "Banana leaves, fifty dishes, no shortcuts.", icon: "🍃" },
+    { eventCode: TREEOFLIFE_CODE, order: 3, name: "Planting the Next", date: "2026-12-13", startTime: "20:45", endTime: "21:30", venueName: "The Garden", description: "The grandchildren plant a sapling. The cycle continues.", icon: "🌱" },
+  ],
+  media: [hero(TREEOFLIFE_CODE, "photo-1525258946800-98cfd641d0de"), ...gallery(TREEOFLIFE_CODE, [
+    { url: SAMPLES.coupleHands, caption: "Fifty rings" }, { url: SAMPLES.coupleSunset, caption: "The shade" },
+    { url: SAMPLES.coupleEmbrace, caption: "Still growing" }, { url: SAMPLES.pinkFlowers, caption: "New blooms" },
+  ])],
+};
+
+const ENDLESSCLOCK_CODE = "DEMO-ENDLESSCLOCK";
+const endlessclock: DemoBundle = {
+  event: {
+    eventCode: ENDLESSCLOCK_CODE, eventType: "anniversary", templateId: "endlessclock",
+    eventTitle: "Farhan & Nadia — 20 years", person1Name: "Farhan", person2Name: "Nadia",
+    tentativeDate: "2026-10-25", city: "Lucknow", isActive: true, slug: ENDLESSCLOCK_CODE,
+    heroImageUrl: SAMPLES.coupleEmbrace, tagline: "Time, well spent.",
+    invitationMessage: "The clocks have counted every year for us, gear by patient gear. Come hear them all strike at once.",
+    aboutStory: "Twenty years measured in small mechanisms — morning tea at seven, the same song every anniversary, arguments that resolve by dinner. The clocks kept score; we kept going.",
+    mainDate: "2026-10-25", mainStartTime: "19:00", mainEndTime: "23:00",
+    themeAccentColor: "#b3823c",
+    venueName: "The Clock Tower Hall", venueAddress: "Husainabad, Lucknow",
+    mapLink: "https://maps.google.com/?q=Husainabad+Clock+Tower+Lucknow", latitude: 26.875, longitude: 80.9046,
+    contactName: "Farhan & Nadia", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/endlessclock-rsvp",
+  },
+  subEvents: [
+    { eventCode: ENDLESSCLOCK_CODE, order: 1, name: "The Winding Hour", date: "2026-10-25", startTime: "19:00", endTime: "20:00", venueName: "The Gallery", description: "Cocktails among twenty clocks, each set to a year.", icon: "🕰" },
+    { eventCode: ENDLESSCLOCK_CODE, order: 2, name: "The Strike", date: "2026-10-25", startTime: "20:00", endTime: "20:30", venueName: "The Main Hall", description: "All clocks strike together. Once. For us.", icon: "🔔" },
+    { eventCode: ENDLESSCLOCK_CODE, order: 3, name: "Dinner Out of Time", date: "2026-10-25", startTime: "20:45", endTime: "23:00", venueName: "The Long Room", description: "Awadhi dinner, no watches allowed.", icon: "✦" },
+  ],
+  media: [hero(ENDLESSCLOCK_CODE, "photo-1519225421980-715cb0215aed"), ...gallery(ENDLESSCLOCK_CODE, [
+    { url: SAMPLES.coupleEmbrace, caption: "Year one" }, { url: SAMPLES.coupleBehind, caption: "Year ten" },
+    { url: SAMPLES.coupleSunset, caption: "Year twenty" }, { url: SAMPLES.coupleHands, caption: "All hours" },
+  ])],
+};
+
+const DIGITALCITY_CODE = "DEMO-DIGITALCITY";
+const digitalcity: DemoBundle = {
+  event: {
+    eventCode: DIGITALCITY_CODE, eventType: "corporate", templateId: "digitalcity",
+    eventTitle: "Metrogrid Summit 2026", person1Name: "Metrogrid Forum",
+    tentativeDate: "2026-09-16", city: "Singapore", isActive: true, slug: DIGITALCITY_CODE,
+    heroImageUrl: UNSPLASH("photo-1486312338219-ce68d2c6f44d"), tagline: "A city built to connect.",
+    invitationMessage: "The city boots up at nine. Every district is a track, every road an agenda, every light a conversation waiting to happen.",
+    aboutStory: "Metrogrid maps the summit like a megacity — districts for AI, mobility, climate and finance, with the skyline lighting up as the sessions fill.",
+    mainDate: "2026-09-16", mainStartTime: "09:00", mainEndTime: "19:00",
+    themeAccentColor: "#2f7dff",
+    venueName: "Marina Bay Sands Expo", venueAddress: "10 Bayfront Avenue, Singapore",
+    mapLink: "https://maps.google.com/?q=Marina+Bay+Sands+Singapore", latitude: 1.2834, longitude: 103.8607,
+    contactName: "Metrogrid Ops", contactEmail: "hello@metrogrid.io", rsvpEnabled: true, rsvpLinkOrContact: "https://metrogrid.io/register",
+  },
+  subEvents: [
+    { eventCode: DIGITALCITY_CODE, order: 1, name: "City Boot-Up", date: "2026-09-16", startTime: "09:00", endTime: "10:00", venueName: "The Grid Hall", description: "Badges, coffee, the skyline coming online.", icon: "🏙" },
+    { eventCode: DIGITALCITY_CODE, order: 2, name: "District Tracks", date: "2026-09-16", startTime: "10:30", endTime: "17:00", venueName: "Halls A–D", description: "Four districts, forty sessions, one map.", icon: "◈" },
+    { eventCode: DIGITALCITY_CODE, order: 3, name: "Skyline Reception", date: "2026-09-16", startTime: "17:30", endTime: "19:00", venueName: "The Observation Deck", description: "Drinks where the whole grid is visible.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const QUANTUMLAB_CODE = "DEMO-QUANTUMLAB";
+const quantumlab: DemoBundle = {
+  event: {
+    eventCode: QUANTUMLAB_CODE, eventType: "corporate", templateId: "quantumlab",
+    eventTitle: "The Lab: Open Research Day", person1Name: "Quantum Institute",
+    tentativeDate: "2026-10-08", city: "Zurich", isActive: true, slug: QUANTUMLAB_CODE,
+    heroImageUrl: UNSPLASH("photo-1486312338219-ce68d2c6f44d"), tagline: "Hypothesis: you'll be impressed.",
+    invitationMessage: "The lab doors open for one day. Touch the holograms, question the researchers, break nothing expensive.",
+    aboutStory: "Once a year the institute lets the outside in — live experiments, unpublished results, and researchers who genuinely want to be interrupted.",
+    mainDate: "2026-10-08", mainStartTime: "10:00", mainEndTime: "18:00",
+    themeAccentColor: "#9d5cf0",
+    venueName: "Quantum Institute Campus", venueAddress: "Rämistrasse, Zurich, Switzerland",
+    mapLink: "https://maps.google.com/?q=ETH+Zurich", latitude: 47.3769, longitude: 8.5417,
+    contactName: "Institute Outreach", contactEmail: "openday@quantuminstitute.ch", rsvpEnabled: true, rsvpLinkOrContact: "https://quantuminstitute.ch/openday",
+  },
+  subEvents: [
+    { eventCode: QUANTUMLAB_CODE, order: 1, name: "Clean Room Tours", date: "2026-10-08", startTime: "10:00", endTime: "12:30", venueName: "Lab Wing B", description: "Suits provided. Curiosity assumed.", icon: "🧪" },
+    { eventCode: QUANTUMLAB_CODE, order: 2, name: "Live Experiments", date: "2026-10-08", startTime: "13:30", endTime: "16:00", venueName: "The Demonstration Hall", description: "Six benches, six experiments, zero guarantees.", icon: "⚛" },
+    { eventCode: QUANTUMLAB_CODE, order: 3, name: "Ask the Researchers", date: "2026-10-08", startTime: "16:30", endTime: "18:00", venueName: "The Atrium", description: "Open Q&A, coffee, whiteboards that fill fast.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const MISSIONCONTROL_CODE = "DEMO-MISSIONCONTROL";
+const missioncontrol: DemoBundle = {
+  event: {
+    eventCode: MISSIONCONTROL_CODE, eventType: "corporate", templateId: "missioncontrol",
+    eventTitle: "Launch Ops Summit", person1Name: "Orbital Systems",
+    tentativeDate: "2026-11-12", city: "Houston", isActive: true, slug: MISSIONCONTROL_CODE,
+    heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"), tagline: "We are go for launch.",
+    invitationMessage: "All stations report go. The countdown is live, the telemetry is green, and the only thing missing from the control room is you.",
+    aboutStory: "One day of flight directors, launch engineers and the people who say 'go' out loud — sharing what the consoles taught them.",
+    mainDate: "2026-11-12", mainStartTime: "08:30", mainEndTime: "18:00",
+    themeAccentColor: "#3ddc84",
+    venueName: "Space Center Houston", venueAddress: "1601 E NASA Pkwy, Houston, TX",
+    mapLink: "https://maps.google.com/?q=Space+Center+Houston", latitude: 29.5519, longitude: -95.0972,
+    contactName: "Orbital Ops", contactEmail: "summit@orbitalsystems.com", rsvpEnabled: true, rsvpLinkOrContact: "https://orbitalsystems.com/summit",
+  },
+  subEvents: [
+    { eventCode: MISSIONCONTROL_CODE, order: 1, name: "Station Check-In", date: "2026-11-12", startTime: "08:30", endTime: "09:30", venueName: "Mission Lobby", description: "Badges, consoles assigned, coffee at every station.", icon: "🛰" },
+    { eventCode: MISSIONCONTROL_CODE, order: 2, name: "Flight Director Panels", date: "2026-11-12", startTime: "10:00", endTime: "16:00", venueName: "Control Room A", description: "Real launches, real anomalies, real debriefs.", icon: "🚀" },
+    { eventCode: MISSIONCONTROL_CODE, order: 3, name: "Splashdown Reception", date: "2026-11-12", startTime: "16:30", endTime: "18:00", venueName: "The Rocket Garden", description: "Drinks under actual rockets.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const SECRETLAB_CODE = "DEMO-SECRETLAB";
+const secretlab: DemoBundle = {
+  event: {
+    eventCode: SECRETLAB_CODE, eventType: "product-launch", templateId: "secretlab",
+    eventTitle: "Project Vault", person1Name: "Vault Robotics",
+    tentativeDate: "2026-10-29", city: "Berlin", isActive: true, slug: SECRETLAB_CODE,
+    heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"), tagline: "Clearance: granted.",
+    invitationMessage: "Clearance granted. What we've been building below ground is ready to surface — and you're on the access list.",
+    aboutStory: "Three years, one basement, no leaks. Tonight the freight elevator comes up for the first time with the lights on.",
+    mainDate: "2026-10-29", mainStartTime: "19:00", mainEndTime: "23:00",
+    themeAccentColor: "#f5c518",
+    venueName: "Kraftwerk Berlin", venueAddress: "Köpenicker Str. 70, Berlin, Germany",
+    mapLink: "https://maps.google.com/?q=Kraftwerk+Berlin", latitude: 52.5104, longitude: 13.4265,
+    contactName: "Vault Comms", contactEmail: "access@vaultrobotics.com", rsvpEnabled: true, rsvpLinkOrContact: "https://vaultrobotics.com/access",
+  },
+  subEvents: [
+    { eventCode: SECRETLAB_CODE, order: 1, name: "Security Check", date: "2026-10-29", startTime: "19:00", endTime: "19:45", venueName: "Ground Level", description: "NDAs signed, phones sleeved, badges issued.", icon: "🔒" },
+    { eventCode: SECRETLAB_CODE, order: 2, name: "The Descent", date: "2026-10-29", startTime: "20:00", endTime: "21:00", venueName: "Sub-Level 3", description: "The freight elevator, then the thing itself.", icon: "🧬" },
+    { eventCode: SECRETLAB_CODE, order: 3, name: "Debrief & Drinks", date: "2026-10-29", startTime: "21:00", endTime: "23:00", venueName: "The Turbine Hall", description: "Questions allowed. Some answers, too.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const PORTAL_CODE = "DEMO-PORTAL";
+const portal: DemoBundle = {
+  event: {
+    eventCode: PORTAL_CODE, eventType: "product-launch", templateId: "portal",
+    eventTitle: "The Threshold", person1Name: "Portal Dynamics",
+    tentativeDate: "2026-09-30", city: "San Francisco", isActive: true, slug: PORTAL_CODE,
+    heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"), tagline: "It's coming through.",
+    invitationMessage: "Something is coming through, and we can't fully explain it yet. Stand with us at the threshold when it arrives.",
+    aboutStory: "Every demo we've given ended with the same question: 'wait, how?' On the 30th, we open the frame all the way and let you walk through.",
+    mainDate: "2026-09-30", mainStartTime: "18:00", mainEndTime: "22:00",
+    themeAccentColor: "#00d9e8",
+    venueName: "Fort Mason Center", venueAddress: "2 Marina Blvd, San Francisco, CA",
+    mapLink: "https://maps.google.com/?q=Fort+Mason+San+Francisco", latitude: 37.8065, longitude: -122.4312,
+    contactName: "Portal Team", contactEmail: "rsvp@portaldynamics.com", rsvpEnabled: true, rsvpLinkOrContact: "https://portaldynamics.com/threshold",
+  },
+  subEvents: [
+    { eventCode: PORTAL_CODE, order: 1, name: "Approach", date: "2026-09-30", startTime: "18:00", endTime: "19:00", venueName: "The Pier", description: "Doors, drinks, a low hum you'll ask about.", icon: "◎" },
+    { eventCode: PORTAL_CODE, order: 2, name: "The Opening", date: "2026-09-30", startTime: "19:30", endTime: "20:30", venueName: "Main Hall", description: "The frame activates. Front rows feel the breeze.", icon: "🌀" },
+    { eventCode: PORTAL_CODE, order: 3, name: "Walkthroughs", date: "2026-09-30", startTime: "20:30", endTime: "22:00", venueName: "The Annex", description: "Hands-on. One at a time. Mind the step.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const EVOLUTION_CODE = "DEMO-EVOLUTION";
+const evolution: DemoBundle = {
+  event: {
+    eventCode: EVOLUTION_CODE, eventType: "product-launch", templateId: "evolution",
+    eventTitle: "Ascent Keynote", person1Name: "Ascent Technologies",
+    tentativeDate: "2026-11-18", city: "London", isActive: true, slug: EVOLUTION_CODE,
+    heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"), tagline: "The next stage, revealed.",
+    invitationMessage: "Everything before this was a draft — stone, steam, silicon. Come see what all of it was evolving toward.",
+    aboutStory: "The keynote walks the whole lineage — every generation of the product on stage, ending with the one nobody outside the building has seen.",
+    mainDate: "2026-11-18", mainStartTime: "10:00", mainEndTime: "14:00",
+    themeAccentColor: "#3aa8c9",
+    venueName: "The Barbican Hall", venueAddress: "Silk Street, London, UK",
+    mapLink: "https://maps.google.com/?q=Barbican+Centre+London", latitude: 51.5202, longitude: -0.0937,
+    contactName: "Ascent Events", contactEmail: "keynote@ascent.tech", rsvpEnabled: true, rsvpLinkOrContact: "https://ascent.tech/keynote",
+  },
+  subEvents: [
+    { eventCode: EVOLUTION_CODE, order: 1, name: "The Lineage", date: "2026-11-18", startTime: "10:00", endTime: "11:00", venueName: "The Gallery", description: "Every generation, displayed in order. Touch the old ones.", icon: "🦴" },
+    { eventCode: EVOLUTION_CODE, order: 2, name: "The Keynote", date: "2026-11-18", startTime: "11:30", endTime: "13:00", venueName: "Main Hall", description: "The next stage, on stage.", icon: "◆" },
+    { eventCode: EVOLUTION_CODE, order: 3, name: "Hands-On Lab", date: "2026-11-18", startTime: "13:00", endTime: "14:00", venueName: "The Foyer", description: "Meet the new one. It's friendlier than it looks.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const GOLDENUNIVERSE_CODE = "DEMO-GOLDENUNIVERSE";
+const goldenuniverse: DemoBundle = {
+  event: {
+    eventCode: GOLDENUNIVERSE_CODE, eventType: "award-ceremony", templateId: "goldenuniverse",
+    eventTitle: "The Aurum Awards", person1Name: "Aurum Society",
+    tentativeDate: "2026-12-05", city: "Dubai", isActive: true, slug: GOLDENUNIVERSE_CODE,
+    heroImageUrl: UNSPLASH("photo-1501281668745-f7f57925c3b4"), tagline: "Gold, at cosmic scale.",
+    invitationMessage: "Tonight the spotlights leave the stage and search the whole universe. Join us as the year's brightest are given their own orbit.",
+    aboutStory: "Twelve categories, twelve golden orbits. The Aurum Awards put this year's brightest names where they belong — among the constellations.",
+    mainDate: "2026-12-05", mainStartTime: "19:30", mainEndTime: "23:59",
+    themeAccentColor: "#e3b74a",
+    venueName: "Museum of the Future", venueAddress: "Sheikh Zayed Road, Dubai, UAE",
+    mapLink: "https://maps.google.com/?q=Museum+of+the+Future+Dubai", latitude: 25.2191, longitude: 55.2823,
+    contactName: "Aurum Society", contactEmail: "gala@aurumsociety.org", rsvpEnabled: true, rsvpLinkOrContact: "https://aurumsociety.org/tickets",
+  },
+  subEvents: [
+    { eventCode: GOLDENUNIVERSE_CODE, order: 1, name: "The Golden Carpet", date: "2026-12-05", startTime: "19:30", endTime: "20:30", venueName: "The Atrium", dressCode: "Black tie, gold welcome", description: "Arrivals, photographs, orbital small talk.", icon: "✨" },
+    { eventCode: GOLDENUNIVERSE_CODE, order: 2, name: "The Ceremony", date: "2026-12-05", startTime: "20:30", endTime: "22:30", venueName: "The Sphere Hall", description: "Twelve awards, each with its own constellation.", icon: "🏆" },
+    { eventCode: GOLDENUNIVERSE_CODE, order: 3, name: "The After-Orbit", date: "2026-12-05", startTime: "22:30", endTime: "23:59", venueName: "The Sky Terrace", description: "Champagne with the newly orbited.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const HALLOFFAME_CODE = "DEMO-HALLOFFAME";
+const halloffame: DemoBundle = {
+  event: {
+    eventCode: HALLOFFAME_CODE, eventType: "award-ceremony", templateId: "halloffame",
+    eventTitle: "The Pantheon Honors", person1Name: "Pantheon Committee",
+    tentativeDate: "2026-11-07", city: "Athens", isActive: true, slug: HALLOFFAME_CODE,
+    heroImageUrl: UNSPLASH("photo-1501281668745-f7f57925c3b4"), tagline: "Carved to be remembered.",
+    invitationMessage: "Marble remembers what applause forgets. Join us the evening this year's names are carved into the hall.",
+    aboutStory: "The hall gains eight names this year. The chisels are ceremonial; the permanence is not.",
+    mainDate: "2026-11-07", mainStartTime: "19:00", mainEndTime: "23:30",
+    themeAccentColor: "#a87f4f",
+    venueName: "Zappeion Hall", venueAddress: "Vasilissis Olgas Avenue, Athens, Greece",
+    mapLink: "https://maps.google.com/?q=Zappeion+Athens", latitude: 37.9715, longitude: 23.7367,
+    contactName: "The Committee", contactEmail: "honors@pantheon.org", rsvpEnabled: true, rsvpLinkOrContact: "https://pantheon.org/honors",
+  },
+  subEvents: [
+    { eventCode: HALLOFFAME_CODE, order: 1, name: "The Colonnade Hour", date: "2026-11-07", startTime: "19:00", endTime: "20:00", venueName: "The Colonnade", dressCode: "White tie", description: "Aperitifs among the pillars, past honorees among the guests.", icon: "🏛" },
+    { eventCode: HALLOFFAME_CODE, order: 2, name: "The Carving", date: "2026-11-07", startTime: "20:00", endTime: "22:00", venueName: "The Great Hall", description: "Eight names, read aloud and set in stone.", icon: "🏆" },
+    { eventCode: HALLOFFAME_CODE, order: 3, name: "The Marble Banquet", date: "2026-11-07", startTime: "22:00", endTime: "23:30", venueName: "The East Wing", description: "Dinner beside the newest inscriptions.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const SYNAPSE_CODE = "DEMO-SYNAPSE";
+const synapse: DemoBundle = {
+  event: {
+    eventCode: SYNAPSE_CODE, eventType: "networking-event", templateId: "synapse",
+    eventTitle: "Synapse Night", person1Name: "Synapse Collective",
+    tentativeDate: "2026-08-28", city: "Bengaluru", isActive: true, slug: SYNAPSE_CODE,
+    heroImageUrl: UNSPLASH("photo-1540575467063-178a50c2df87"), tagline: "Where sparks become thought.",
+    invitationMessage: "One neuron is a spark; a room of them is a mind. Come fire a few connections with us.",
+    aboutStory: "A hundred and fifty builders, researchers and founders in one room, wired for exactly one thing: the conversation you didn't know you needed.",
+    mainDate: "2026-08-28", mainStartTime: "18:30", mainEndTime: "22:30",
+    themeAccentColor: "#22d3ee",
+    venueName: "The Loft, Koramangala", venueAddress: "80 Feet Road, Koramangala, Bengaluru",
+    mapLink: "https://maps.google.com/?q=Koramangala+Bengaluru", latitude: 12.9352, longitude: 77.6245,
+    contactName: "Synapse Team", contactEmail: "hello@synapse.club", socialLink: "https://linkedin.com/", rsvpEnabled: true, rsvpLinkOrContact: "https://synapse.club/rsvp",
+  },
+  subEvents: [
+    { eventCode: SYNAPSE_CODE, order: 1, name: "First Impulse", date: "2026-08-28", startTime: "18:30", endTime: "19:30", venueName: "The Bar", description: "Name tags with prompts instead of titles.", icon: "⚡" },
+    { eventCode: SYNAPSE_CODE, order: 2, name: "Firing Rounds", date: "2026-08-28", startTime: "19:30", endTime: "21:30", venueName: "The Main Floor", description: "Curated introductions every twenty minutes. Resistance is allowed but rare.", icon: "🧠" },
+    { eventCode: SYNAPSE_CODE, order: 3, name: "Long-Term Potentiation", date: "2026-08-28", startTime: "21:30", endTime: "22:30", venueName: "The Terrace", description: "The unstructured hour where the real synapses form.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const FUTURECITY_CODE = "DEMO-FUTURECITY";
+const futurecity: DemoBundle = {
+  event: {
+    eventCode: FUTURECITY_CODE, eventType: "networking-event", templateId: "futurecity",
+    eventTitle: "Urbania Mixer", person1Name: "Urbania Network",
+    tentativeDate: "2026-09-24", city: "Amsterdam", isActive: true, slug: FUTURECITY_CODE,
+    heroImageUrl: UNSPLASH("photo-1540575467063-178a50c2df87"), tagline: "A skyline built by hand.",
+    invitationMessage: "Every handshake tonight lays a road; every conversation raises a floor. Come help us build the skyline.",
+    aboutStory: "Urbania's wall-sized city grows all evening — every new connection adds a building, and by last call there's a skyline nobody built alone.",
+    mainDate: "2026-09-24", mainStartTime: "18:00", mainEndTime: "22:00",
+    themeAccentColor: "#4f8fd9",
+    venueName: "A'DAM Toren", venueAddress: "Overhoeksplein 1, Amsterdam, Netherlands",
+    mapLink: "https://maps.google.com/?q=A'DAM+Toren+Amsterdam", latitude: 52.3841, longitude: 4.9024,
+    contactName: "Urbania Team", contactEmail: "hello@urbania.network", socialLink: "https://linkedin.com/", rsvpEnabled: true, rsvpLinkOrContact: "https://urbania.network/mixer",
+  },
+  subEvents: [
+    { eventCode: FUTURECITY_CODE, order: 1, name: "Groundbreaking", date: "2026-09-24", startTime: "18:00", endTime: "19:00", venueName: "The Lookout", description: "Doors, drinks, the empty city grid on the wall.", icon: "🏗" },
+    { eventCode: FUTURECITY_CODE, order: 2, name: "Construction Hours", date: "2026-09-24", startTime: "19:00", endTime: "21:00", venueName: "The Main Floor", description: "Every intro adds a building. The skyline keeps score.", icon: "🌆" },
+    { eventCode: FUTURECITY_CODE, order: 3, name: "City Lights", date: "2026-09-24", startTime: "21:00", endTime: "22:00", venueName: "The Rooftop", description: "The finished skyline, lit — plus the real one behind it.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const FESTIVAL_CODE = "DEMO-FESTIVAL";
+const festival: DemoBundle = {
+  event: {
+    eventCode: FESTIVAL_CODE, eventType: "party", templateId: "festival",
+    eventTitle: "LUMINA Festival", person1Name: "Lumina Collective",
+    tentativeDate: "2026-12-19", city: "Goa", isActive: true, slug: FESTIVAL_CODE,
+    heroImageUrl: UNSPLASH("photo-1470229722913-7c0e2dbbafd3"), tagline: "Lights up. Volume up.",
+    invitationMessage: "The stages are floating, the lasers are warm, and the sky has been booked for fireworks. All we need now is your hands in the air.",
+    aboutStory: "Three stages, one beach, and a lighting rig that took four days to hang. LUMINA ends the year the only correct way — loudly, and glowing.",
+    mainDate: "2026-12-19", mainStartTime: "16:00", mainEndTime: "04:00",
+    themeAccentColor: "#e935c1",
+    venueName: "Vagator Cliffside", venueAddress: "Vagator Beach, Goa",
+    mapLink: "https://maps.google.com/?q=Vagator+Beach+Goa", latitude: 15.5989, longitude: 73.7444,
+    contactName: "Lumina Collective", socialLink: "https://instagram.com/", rsvpEnabled: true, rsvpLinkOrContact: "https://lumina.fest/tickets",
+  },
+  subEvents: [
+    { eventCode: FESTIVAL_CODE, order: 1, name: "Sunset Stage", date: "2026-12-19", startTime: "16:00", endTime: "19:00", venueName: "The Cliff Stage", description: "Openers with the ocean as backdrop.", icon: "🌅" },
+    { eventCode: FESTIVAL_CODE, order: 2, name: "The Light Show", date: "2026-12-19", startTime: "20:00", endTime: "00:00", venueName: "Main Stage", description: "Headliners under the full rig. Look up often.", icon: "🎆" },
+    { eventCode: FESTIVAL_CODE, order: 3, name: "Sunrise Set", date: "2026-12-20", startTime: "00:00", endTime: "04:00", venueName: "The Beach Floor", description: "The set that ends when the sky says so.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const NEONJUNGLE_CODE = "DEMO-NEONJUNGLE";
+const neonjungle: DemoBundle = {
+  event: {
+    eventCode: NEONJUNGLE_CODE, eventType: "party", templateId: "neonjungle",
+    eventTitle: "Neon Jungle Night", person1Name: "Jungle Kru",
+    tentativeDate: "2026-10-31", city: "Bangkok", isActive: true, slug: NEONJUNGLE_CODE,
+    heroImageUrl: UNSPLASH("photo-1470229722913-7c0e2dbbafd3"), tagline: "The wild glows tonight.",
+    invitationMessage: "Past the glowing vines and the waterfall made of light, the jungle is already dancing. Follow the neon panther — she knows the way.",
+    aboutStory: "A warehouse rainforest where the vines are LED, the canopy pulses with the bassline, and the wildlife is exclusively on the dance floor.",
+    mainDate: "2026-10-31", mainStartTime: "21:00", mainEndTime: "05:00",
+    themeAccentColor: "#39ff6e",
+    venueName: "The Greenhouse Warehouse", venueAddress: "Thonglor, Bangkok, Thailand",
+    mapLink: "https://maps.google.com/?q=Thonglor+Bangkok", latitude: 13.7305, longitude: 100.5697,
+    contactName: "Jungle Kru", socialLink: "https://instagram.com/", rsvpEnabled: true, rsvpLinkOrContact: "https://ra.co/events/bangkok",
+  },
+  subEvents: [
+    { eventCode: NEONJUNGLE_CODE, order: 1, name: "Into the Undergrowth", date: "2026-10-31", startTime: "21:00", endTime: "23:00", venueName: "The Vine Tunnel", dressCode: "Glow encouraged", description: "Entry through the LED canopy. UV paint station on the left.", icon: "🌿" },
+    { eventCode: NEONJUNGLE_CODE, order: 2, name: "The Canopy Set", date: "2026-10-31", startTime: "23:00", endTime: "02:00", venueName: "Main Floor", description: "Headliner under the pulsing canopy.", icon: "🐆" },
+    { eventCode: NEONJUNGLE_CODE, order: 3, name: "The Waterfall Room", date: "2026-11-01", startTime: "02:00", endTime: "05:00", venueName: "Back Room", description: "Slower, deeper, lit by falling light.", icon: "✦" },
+  ],
+  media: [],
+};
+
+const MIDNIGHTTOKYO_CODE = "DEMO-MIDNIGHTTOKYO";
+const midnighttokyo: DemoBundle = {
+  event: {
+    eventCode: MIDNIGHTTOKYO_CODE, eventType: "party", templateId: "midnighttokyo",
+    eventTitle: "Midnight Shibuya", person1Name: "Shibuya Underground",
+    tentativeDate: "2026-11-14", city: "Tokyo", isActive: true, slug: MIDNIGHTTOKYO_CODE,
+    heroImageUrl: UNSPLASH("photo-1470229722913-7c0e2dbbafd3"), tagline: "After the last train.",
+    invitationMessage: "The rain has polished the streets, the signs are singing, and there's a rooftop with your name in neon. Meet us after the last train.",
+    aboutStory: "The night starts when the station closes — noodles at the counter, neon down every alley, and a rooftop that only the regulars can find.",
+    mainDate: "2026-11-14", mainStartTime: "23:30", mainEndTime: "06:00",
+    themeAccentColor: "#ff3b4e",
+    venueName: "Rooftop Ichiban", venueAddress: "Dogenzaka, Shibuya, Tokyo, Japan",
+    mapLink: "https://maps.google.com/?q=Dogenzaka+Shibuya+Tokyo", latitude: 35.6595, longitude: 139.6986,
+    contactName: "Shibuya Underground", socialLink: "https://instagram.com/", rsvpEnabled: true, rsvpLinkOrContact: "https://ra.co/events/tokyo",
+  },
+  subEvents: [
+    { eventCode: MIDNIGHTTOKYO_CODE, order: 1, name: "Last Train Missed", date: "2026-11-14", startTime: "23:30", endTime: "00:30", venueName: "The Alley Bar", description: "Highballs and the good kind of bad decisions.", icon: "🏮" },
+    { eventCode: MIDNIGHTTOKYO_CODE, order: 2, name: "Rooftop Hours", date: "2026-11-15", startTime: "00:30", endTime: "04:00", venueName: "Rooftop Ichiban", description: "DJ over the crossing, neon below, city awake.", icon: "🌃" },
+    { eventCode: MIDNIGHTTOKYO_CODE, order: 3, name: "First Train Ramen", date: "2026-11-15", startTime: "04:30", endTime: "06:00", venueName: "The Counter", description: "The traditional closing ceremony. Slurping mandatory.", icon: "🍜" },
+  ],
+  media: [],
+};
+
 // ---------- registry ----------
 
 export const DEMO_EVENTS: Record<string, DemoBundle> = {
@@ -1683,6 +2634,44 @@ export const DEMO_EVENTS: Record<string, DemoBundle> = {
   [IMMORTALS_CODE]: immortals,
   [ECOSYSTEM_CODE]: ecosystem,
   [INFINITYCLUB_CODE]: infinityclub,
+  [SKYREALM_CODE]: skyrealm,
+  [CATHEDRAL_CODE]: cathedral,
+  [SAKURA_CODE]: sakura,
+  [VERSAILLES_CODE]: versailles,
+  [FRESCO_CODE]: fresco,
+  [MIRAGE_CODE]: mirage,
+  [ICEPALACE_CODE]: icepalace,
+  [GALAXYOPERA_CODE]: galaxyopera,
+  [TWORIVERS_CODE]: tworivers,
+  [MIRRORWORLDS_CODE]: mirrorworlds,
+  [INFINITYTRAIN_CODE]: infinitytrain,
+  [LANTERNS_CODE]: lanterns,
+  [GLASSROSE_CODE]: glassrose,
+  [SECRETGALAXY_CODE]: secretgalaxy,
+  [CARTOON_CODE]: cartoon,
+  [BRICKTOWN_CODE]: bricktown,
+  [TREASURE_CODE]: treasure,
+  [THEMEPARK_CODE]: themepark,
+  [CANDYLAND_CODE]: candyland,
+  [ROBOCITY_CODE]: robocity,
+  [SPACEMISSION_CODE]: spacemission,
+  [JUNGLE_CODE]: jungle,
+  [TIMECAPSULE_CODE]: timecapsule,
+  [TREEOFLIFE_CODE]: treeoflife,
+  [ENDLESSCLOCK_CODE]: endlessclock,
+  [DIGITALCITY_CODE]: digitalcity,
+  [QUANTUMLAB_CODE]: quantumlab,
+  [MISSIONCONTROL_CODE]: missioncontrol,
+  [SECRETLAB_CODE]: secretlab,
+  [PORTAL_CODE]: portal,
+  [EVOLUTION_CODE]: evolution,
+  [GOLDENUNIVERSE_CODE]: goldenuniverse,
+  [HALLOFFAME_CODE]: halloffame,
+  [SYNAPSE_CODE]: synapse,
+  [FUTURECITY_CODE]: futurecity,
+  [FESTIVAL_CODE]: festival,
+  [NEONJUNGLE_CODE]: neonjungle,
+  [MIDNIGHTTOKYO_CODE]: midnighttokyo,
 };
 
 export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
@@ -1728,6 +2717,44 @@ export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
   immortals: IMMORTALS_CODE,
   ecosystem: ECOSYSTEM_CODE,
   infinityclub: INFINITYCLUB_CODE,
+  skyrealm: SKYREALM_CODE,
+  cathedral: CATHEDRAL_CODE,
+  sakura: SAKURA_CODE,
+  versailles: VERSAILLES_CODE,
+  fresco: FRESCO_CODE,
+  mirage: MIRAGE_CODE,
+  icepalace: ICEPALACE_CODE,
+  galaxyopera: GALAXYOPERA_CODE,
+  tworivers: TWORIVERS_CODE,
+  mirrorworlds: MIRRORWORLDS_CODE,
+  infinitytrain: INFINITYTRAIN_CODE,
+  lanterns: LANTERNS_CODE,
+  glassrose: GLASSROSE_CODE,
+  secretgalaxy: SECRETGALAXY_CODE,
+  cartoon: CARTOON_CODE,
+  bricktown: BRICKTOWN_CODE,
+  treasure: TREASURE_CODE,
+  themepark: THEMEPARK_CODE,
+  candyland: CANDYLAND_CODE,
+  robocity: ROBOCITY_CODE,
+  spacemission: SPACEMISSION_CODE,
+  jungle: JUNGLE_CODE,
+  timecapsule: TIMECAPSULE_CODE,
+  treeoflife: TREEOFLIFE_CODE,
+  endlessclock: ENDLESSCLOCK_CODE,
+  digitalcity: DIGITALCITY_CODE,
+  quantumlab: QUANTUMLAB_CODE,
+  missioncontrol: MISSIONCONTROL_CODE,
+  secretlab: SECRETLAB_CODE,
+  portal: PORTAL_CODE,
+  evolution: EVOLUTION_CODE,
+  goldenuniverse: GOLDENUNIVERSE_CODE,
+  halloffame: HALLOFFAME_CODE,
+  synapse: SYNAPSE_CODE,
+  futurecity: FUTURECITY_CODE,
+  festival: FESTIVAL_CODE,
+  neonjungle: NEONJUNGLE_CODE,
+  midnighttokyo: MIDNIGHTTOKYO_CODE,
 };
 
 export function getDemoBundle(code: string): DemoBundle | undefined {
