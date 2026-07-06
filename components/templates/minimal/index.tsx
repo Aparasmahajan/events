@@ -52,7 +52,7 @@ export const MinimalTemplate: TemplateComponent = ({ event, subEvents, media }) 
               <span className="w-2 h-2 rounded-full" style={{ background: accent }} />
               {event.venueName ?? "Venue details below"}
             </div>
-            {!event.hideTimer && event.mainDate && (
+            {!event.hideTimer && event.timerStyle !== "floating" && event.mainDate && (
               <div className="mt-12 text-neutral-900">
                 <Countdown target={`${event.mainDate}T${event.mainStartTime || "10:00"}:00`} label="" />
               </div>

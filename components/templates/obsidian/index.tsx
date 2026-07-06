@@ -158,7 +158,7 @@ export const ObsidianTemplate: TemplateComponent = ({ event, subEvents, media })
           </h1>
           <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
             <p className="max-w-sm text-sm leading-relaxed text-white/60">{event.city}</p>
-            {!event.hideTimer && event.mainDate && (
+            {!event.hideTimer && event.timerStyle !== "floating" && event.mainDate && (
               <Countdown target={`${event.mainDate}T${event.mainStartTime || "18:00"}:00`} label="" />
             )}
           </div>

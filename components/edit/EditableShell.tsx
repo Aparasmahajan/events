@@ -8,6 +8,19 @@ import { EditProvider } from "./EditContext";
 import { EventCountdown } from "@/components/ui/EventCountdown";
 import type { EventData, MediaItem, SubEvent } from "@/lib/types";
 
+// These templates build a countdown into their own hero, so the shell must not
+// add a second (floating) one — they'd show two timers otherwise.
+const TEMPLATES_WITH_INLINE_TIMER = new Set([
+  "royal",
+  "minimal",
+  "modern",
+  "vibrant",
+  "pastel",
+  "aurora",
+  "obsidian",
+  "celestia",
+]);
+
 export type EditableData = {
   event: EventData;
   subEvents: SubEvent[];
@@ -160,6 +173,13 @@ export function EditableShell({
     }
   };
 
+  // Timer placement. Flagship templates default to their built-in hero timer
+  // ("fixed"); everything else floats. The customer can override per event.
+  const isInlineTimer = TEMPLATES_WITH_INLINE_TIMER.has(templateId);
+  // Default: the timer sits on the hero ("fixed"). Customers can switch to a
+  // sticky "floating" chip per event.
+  const timerStyle = data.event.timerStyle || "fixed";
+
   return (
     <EditProvider
       enabled={!!editParam && !!uploadEndpoint}
@@ -173,10 +193,15 @@ export function EditableShell({
     >
       <div
         style={{ paddingTop: topOffset || undefined }}
-        className={`transition-[padding] duration-300 ${
+        className={`relative transition-[padding] duration-300 ${
           editParam && mounted && panelOpen ? "sm:pr-[420px]" : ""
         }`}
       >
+        {/* Fixed (in-page) countdown band. Only for non-flagship templates —
+            the flagship ones render their own fixed timer in the hero. */}
+        {!isInlineTimer && timerStyle === "fixed" && (
+          <EventCountdown event={data.event} variant="fixed" />
+        )}
         <TemplateRouter
           templateId={templateId}
           event={data.event}
@@ -185,9 +210,11 @@ export function EditableShell({
         />
       </div>
 
-      {/* Persistent floating countdown on every template (stays visible after
-          the hero scrolls away). Hidden via the "Countdown timer" toggle. */}
-      <EventCountdown event={data.event} />
+      {/* Floating (sticky) countdown chip. Shown whenever the style is floating,
+          on any template — the flagship inline timers hide themselves then. */}
+      {timerStyle === "floating" && (
+        <EventCountdown event={data.event} variant="floating" />
+      )}
 
       {editParam && mounted && (
         <EditPanel

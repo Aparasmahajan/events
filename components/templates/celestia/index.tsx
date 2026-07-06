@@ -193,7 +193,7 @@ export const CelestiaTemplate: TemplateComponent = ({ event, subEvents, media })
             {event.city && ` · ${event.city}`}
           </p>
         )}
-        {!event.hideTimer && event.mainDate && (
+        {!event.hideTimer && event.timerStyle !== "floating" && event.mainDate && (
           <div className="mt-10 rounded-3xl bg-[#2a2540]/90 px-6 py-5 shadow-xl">
             <Countdown target={`${event.mainDate}T${event.mainStartTime || "16:00"}:00`} label="Until we say yes" />
           </div>

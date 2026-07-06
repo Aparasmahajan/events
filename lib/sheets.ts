@@ -96,6 +96,9 @@ export const LIVE_COL = {
   OTP_LOCKED_UNTIL: 55,
   RSVP_TYPE: 56,
   HIDE_TIMER: 57,
+  TIMER_STYLE: 58,
+  TIMER_DESIGN: 59,
+  TIMER_POSITION: 60,
 } as const;
 
 const LIVE_LAST_COL = LIVE_COL.RSVP_TYPE;
@@ -337,6 +340,12 @@ function liveRowToEvent(r: string[]): EventData {
     hideGallery: boolish(get(LIVE_COL.HIDE_GALLERY)),
     hideVenue: boolish(get(LIVE_COL.HIDE_VENUE)),
     hideTimer: boolish(get(LIVE_COL.HIDE_TIMER)),
+    timerStyle:
+      (get(LIVE_COL.TIMER_STYLE) as EventData["timerStyle"]) || undefined,
+    timerDesign:
+      (get(LIVE_COL.TIMER_DESIGN) as EventData["timerDesign"]) || undefined,
+    timerPosition:
+      (get(LIVE_COL.TIMER_POSITION) as EventData["timerPosition"]) || undefined,
   };
 }
 

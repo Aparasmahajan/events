@@ -54,6 +54,9 @@ const EVENT_TO_COL: Partial<
   hideGallery: "HIDE_GALLERY",
   hideVenue: "HIDE_VENUE",
   hideTimer: "HIDE_TIMER",
+  timerStyle: "TIMER_STYLE",
+  timerDesign: "TIMER_DESIGN",
+  timerPosition: "TIMER_POSITION",
 };
 
 const BOOL_COLS = new Set<keyof typeof LIVE_COL>([

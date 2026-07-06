@@ -66,7 +66,7 @@ export const ModernTemplate: TemplateComponent = ({ event, subEvents, media }) =
               {event.city && ` // ${event.city.toUpperCase()}`}
             </p>
           )}
-          {!event.hideTimer && event.mainDate && (
+          {!event.hideTimer && event.timerStyle !== "floating" && event.mainDate && (
             <div className="mt-12">
               <Countdown target={`${event.mainDate}T${event.mainStartTime || "19:00"}:00`} label="T-minus" />
             </div>

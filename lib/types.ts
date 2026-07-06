@@ -99,6 +99,18 @@ export type EventData = {
   /** Countdown timer visibility. Default (undefined/false) = show. TRUE = hide
    *  the countdown on the live site. Applies to every template. */
   hideTimer?: boolean;
+  /** How the countdown is positioned:
+   *  - "floating": a sticky chip that stays on screen as you scroll
+   *  - "fixed": a static countdown band that sits in the page and scrolls away
+   *  Default (unset) = each template's natural choice (flagship templates show
+   *  their built-in hero timer; others float). */
+  timerStyle?: "floating" | "fixed";
+  /** Which countdown design to render. Default "glass". See TIMER_DESIGNS in
+   *  components/ui/EventCountdown.tsx. */
+  timerDesign?: "glass" | "minimal" | "flip" | "rings" | "neon" | "elegant";
+  /** Horizontal position along the bottom of the hero. "fixed" sits there;
+   *  "floating" floats at that corner. Default "center". */
+  timerPosition?: "left" | "center" | "right";
 };
 
 export type SubEvent = {

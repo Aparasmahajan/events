@@ -63,7 +63,7 @@ export const RoyalTemplate: TemplateComponent = ({ event, subEvents, media }) =>
               {event.city && ` · ${event.city}`}
             </p>
           )}
-          {!event.hideTimer && event.mainDate && (
+          {!event.hideTimer && event.timerStyle !== "floating" && event.mainDate && (
             <div className="mt-10">
               <Countdown target={`${event.mainDate}T${event.mainStartTime || "18:00"}:00`} label="Until the big day" />
             </div>
