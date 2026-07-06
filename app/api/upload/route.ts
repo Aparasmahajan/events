@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { uploadToEvent } from "@/lib/media";
+import { uploadToEvent, HAS_CLOUDINARY_CONFIG } from "@/lib/media";
 import { isValidEventCode } from "@/lib/eventCode";
 
 export const runtime = "nodejs";
@@ -26,12 +26,14 @@ export async function POST(req: Request) {
 
   if (!uploaded) {
     return NextResponse.json(
-      { error: "Drive not configured. Set Google credentials in env to enable uploads." },
+      { error: "No storage backend available. Check server logs." },
       { status: 503 },
     );
   }
 
-  // TODO (Phase 4 follow-up): append to Media sheet with publicUrl, sortOrder etc.
+  const warning = HAS_CLOUDINARY_CONFIG
+    ? undefined
+    : "Using local file storage (no Cloudinary config). Files are not backed up.";
 
-  return NextResponse.json({ ok: true, ...uploaded });
+  return NextResponse.json({ ok: true, ...uploaded, warning });
 }
