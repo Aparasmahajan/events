@@ -2386,8 +2386,50 @@ export function getTemplateMeta(id: string): TemplateMeta | undefined {
   return TEMPLATES_META.find((t) => t.id === id);
 }
 
+/** Alphabetical A–Z by display name — the default order for every listing. */
+const byName = (a: TemplateMeta, b: TemplateMeta) => a.name.localeCompare(b.name);
+
+/** Curated "featured" order — the most attention-grabbing templates lead, then
+ *  everything else falls in A–Z. Reorder / extend this to promote templates. */
+export const FEATURED_ORDER: string[] = [
+  "aurora",
+  "obsidian",
+  "celestia",
+  "royal",
+  "galaxyopera",
+  "luminary",
+  "immortals",
+  "midnighttokyo",
+  "vibrant",
+  "cartoon",
+  "modern",
+  "minimal",
+  "pastel",
+];
+
+export type TemplateSort = "featured" | "az" | "random";
+
+/** Order a list of templates by the chosen strategy (used by the listings).
+ *  `featuredIds` (from the admin-managed Featured sheet, per event type) wins
+ *  for the "featured" mode; otherwise the built-in FEATURED_ORDER is used. */
+export function sortTemplates(
+  list: TemplateMeta[],
+  mode: TemplateSort,
+  featuredIds?: string[],
+): TemplateMeta[] {
+  if (mode === "az") return [...list].sort(byName);
+  if (mode === "random") return [...list].sort(() => Math.random() - 0.5);
+  const order = featuredIds && featuredIds.length > 0 ? featuredIds : FEATURED_ORDER;
+  const rank = new Map(order.map((id, i) => [id, i]));
+  return [...list].sort((a, b) => {
+    const ra = rank.has(a.id) ? (rank.get(a.id) as number) : Infinity;
+    const rb = rank.has(b.id) ? (rank.get(b.id) as number) : Infinity;
+    return ra !== rb ? ra - rb : byName(a, b);
+  });
+}
+
 export function getTemplatesForEventType(eventType: EventType): TemplateMeta[] {
-  return TEMPLATES_META.filter((t) => t.eventTypes.includes(eventType));
+  return TEMPLATES_META.filter((t) => t.eventTypes.includes(eventType)).sort(byName);
 }
 
 export function filterTemplates(opts: {
@@ -2398,7 +2440,7 @@ export function filterTemplates(opts: {
     if (opts.eventType && !t.eventTypes.includes(opts.eventType)) return false;
     if (opts.tags && opts.tags.length > 0 && !opts.tags.some((tag) => t.tags.includes(tag))) return false;
     return true;
-  });
+  }).sort(byName);
 }
 
 /**

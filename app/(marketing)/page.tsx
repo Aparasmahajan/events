@@ -6,9 +6,14 @@ import { LandingTemplates } from "./_components/LandingTemplates";
 import { EventTypeCard } from "./_components/EventTypeCard";
 import { HowItWorks } from "./_components/HowItWorks";
 import { TEMPLATES_META } from "@/components/templates/metadata";
+import { getFeaturedMap } from "@/lib/sheets";
 import { UltimateModeWrapper } from "./_components/UltimateMode";
 
-export default function LandingPage() {
+// Re-fetch the admin-curated featured order periodically (ISR).
+export const revalidate = 120;
+
+export default async function LandingPage() {
+  const featured = await getFeaturedMap();
   return (
     <UltimateModeWrapper>
     <main className="min-h-screen">
@@ -56,7 +61,7 @@ export default function LandingPage() {
             to open a live preview.
           </p>
         </ScrollReveal>
-        <LandingTemplates />
+        <LandingTemplates featuredIds={featured["all"] ?? []} />
       </section>
 
       {/* CTA banner */}

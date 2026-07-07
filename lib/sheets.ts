@@ -848,6 +848,76 @@ export async function replaceMediaForCode(
   }
 }
 
+/* ────────────────────────────────────────────────────────────────────────
+ * Featured templates — curated ordering PER EVENT TYPE (admin-managed).
+ * Tab `Featured`, columns:  A Event Type | B Template ID | C Rank
+ * The pseudo event type "all" drives the landing page's featured order.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+/** Read the whole Featured tab → { eventType: [templateId ordered by rank] }.
+ *  Returns {} when Sheets isn't configured (callers fall back to the built-in
+ *  FEATURED_ORDER). */
+export async function getFeaturedMap(): Promise<Record<string, string[]>> {
+  if (!HAS_SHEETS_CONFIG) return {};
+  try {
+    const sheets = await getSheets();
+    const res = await sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId(),
+      range: "Featured!A2:C",
+    });
+    const rows = res.data.values ?? [];
+    const byType: Record<string, { id: string; rank: number }[]> = {};
+    for (const r of rows) {
+      const type = (r[0] ?? "").trim();
+      const id = (r[1] ?? "").trim();
+      if (!type || !id) continue;
+      (byType[type] ??= []).push({ id, rank: Number(r[2]) || 0 });
+    }
+    const out: Record<string, string[]> = {};
+    for (const [type, arr] of Object.entries(byType)) {
+      out[type] = arr.sort((a, b) => a.rank - b.rank).map((x) => x.id);
+    }
+    return out;
+  } catch (err) {
+    console.error("[sheets] getFeaturedMap failed:", err);
+    return {};
+  }
+}
+
+/** Replace the featured list for one event type with `ids` (order = rank). */
+export async function setFeaturedForType(
+  eventType: string,
+  ids: string[],
+): Promise<void> {
+  if (!HAS_SHEETS_CONFIG) return;
+  const sheets = await getSheets();
+  const existing = await findRowNumbersByCode("Featured", eventType);
+  const newRows: (string | number)[][] = ids.map((id, i) => [eventType, id, i + 1]);
+  const blank = ["", "", ""];
+  const data: { range: string; values: (string | number)[][] }[] = [];
+
+  for (let i = 0; i < existing.length; i++) {
+    data.push({
+      range: `Featured!A${existing[i]}:C${existing[i]}`,
+      values: [i < newRows.length ? newRows[i] : blank],
+    });
+  }
+  if (data.length > 0) {
+    await sheets.spreadsheets.values.batchUpdate({
+      spreadsheetId: spreadsheetId(),
+      requestBody: { valueInputOption: "USER_ENTERED", data },
+    });
+  }
+  if (newRows.length > existing.length) {
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: spreadsheetId(),
+      range: "Featured!A2",
+      valueInputOption: "USER_ENTERED",
+      requestBody: { values: newRows.slice(existing.length) },
+    });
+  }
+}
+
 /** Replace all SubEvents for a code with the given array (in-place overwrite
  *  for rows that exist, append the rest, clear any leftovers). */
 export async function replaceSubEventsForCode(
