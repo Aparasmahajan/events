@@ -453,7 +453,7 @@ export const promiseMeta: TemplateMeta = {
   codename: "Promise",
   description:
     "Two lives, two typographic worlds, converging into one as the page scrolls. For engagements that want to feel like the exact moment.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["romantic", "elegant", "cinematic", "modern", "artistic", "editorial"],
   keywords: [
     "engagement", "proposal", "roka", "engagement party", "just engaged",
@@ -765,7 +765,7 @@ export const infinityMeta: TemplateMeta = {
   codename: "Infinity",
   description:
     "Two glowing rings crossing universes, closing in on each other as the page scrolls, meeting in a single infinite ring. A cinematic engagement announcement.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["luxurious", "romantic", "cinematic", "modern", "editorial", "premium"],
   keywords: [
     "engagement", "ring ceremony", "roka", "infinity", "eternal ring",
@@ -794,7 +794,7 @@ export const lovestarsMeta: TemplateMeta = {
   codename: "Lovestars",
   description:
     "Memories drawn as stars that connect into a constellation as you scroll — the moment of the proposal becomes an exploding galaxy. Two destinies written in the sky.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["celestial", "romantic", "cinematic", "artistic", "interactive", "modern"],
   keywords: [
     "engagement", "astronomy", "constellation", "stars", "galaxy",
@@ -1430,7 +1430,7 @@ export const tworiversMeta: TemplateMeta = {
   codename: "Confluence",
   description:
     "Two rivers flow separately down the page and merge into one ocean as you scroll, lotus flowers drifting on the current. A gentle metaphor for engagements and anniversaries.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["romantic", "organic", "artistic", "elegant", "cinematic", "appealing"],
   keywords: [
     "two rivers", "confluence", "engagement", "lotus", "river",
@@ -1488,7 +1488,7 @@ export const infinitytrainMeta: TemplateMeta = {
   codename: "The Grand Line",
   description:
     "A luxury train travelling through memories — each coach a chapter, windows showing changing landscapes. For engagements and anniversaries told as a journey.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["cinematic", "luxurious", "romantic", "traditional", "artistic", "premium"],
   keywords: [
     "train journey", "orient express", "luxury train", "vintage travel",
@@ -1546,7 +1546,7 @@ export const glassroseMeta: TemplateMeta = {
   codename: "Rosaline",
   description:
     "The entire site lives inside a giant crystal rose — petals become sections and the flower blooms open as you scroll. For engagements and anniversaries with delicate drama.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["glass", "romantic", "elegant", "artistic", "luxurious", "pastel"],
   keywords: [
     "crystal rose", "glass flower", "blooming", "rose engagement",
@@ -1575,7 +1575,7 @@ export const secretgalaxyMeta: TemplateMeta = {
   codename: "Andromeda",
   description:
     "A hidden galaxy discovered by two people — stars form rings, constellations write your names across deep violet space. For engagements that feel like a private universe.",
-  eventTypes: ["engagement"],
+  eventTypes: ["engagement", "wedding"],
   tags: ["celestial", "romantic", "cinematic", "interactive", "artistic", "cool"],
   keywords: [
     "galaxy engagement", "secret", "andromeda", "constellation names",
