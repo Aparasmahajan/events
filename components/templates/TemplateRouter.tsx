@@ -62,6 +62,24 @@ import { TreasureTemplate } from "./treasure";
 import { ThemeparkTemplate } from "./themepark";
 import { CandylandTemplate } from "./candyland";
 import { RobocityTemplate } from "./robocity";
+import { SpacemissionTemplate } from "./spacemission";
+import { JungleTemplate } from "./jungle";
+import { TimecapsuleTemplate } from "./timecapsule";
+import { TreeoflifeTemplate } from "./treeoflife";
+import { EndlessclockTemplate } from "./endlessclock";
+import { DigitalcityTemplate } from "./digitalcity";
+import { QuantumlabTemplate } from "./quantumlab";
+import { MissioncontrolTemplate } from "./missioncontrol";
+import { SecretlabTemplate } from "./secretlab";
+import { PortalTemplate } from "./portal";
+import { EvolutionTemplate } from "./evolution";
+import { GoldenuniverseTemplate } from "./goldenuniverse";
+import { HalloffameTemplate } from "./halloffame";
+import { SynapseTemplate } from "./synapse";
+import { FuturecityTemplate } from "./futurecity";
+import { FestivalTemplate } from "./festival";
+import { NeonjungleTemplate } from "./neonjungle";
+import { MidnighttokyoTemplate } from "./midnighttokyo";
 import type { TemplateProps } from "@/lib/types";
 
 type Props = TemplateProps & { templateId: string };
@@ -198,41 +216,41 @@ export function TemplateRouter({ templateId, ...rest }: Props) {
     case "robocity":
       return <RobocityTemplate {...rest} />;
     case "spacemission":
-      return <OrbitTemplate {...rest} />;
+      return <SpacemissionTemplate {...rest} />;
     case "jungle":
-      return <GardenTemplate {...rest} />;
+      return <JungleTemplate {...rest} />;
     case "timecapsule":
-      return <ChaptersTemplate {...rest} />;
+      return <TimecapsuleTemplate {...rest} />;
     case "treeoflife":
-      return <EcosystemTemplate {...rest} />;
+      return <TreeoflifeTemplate {...rest} />;
     case "endlessclock":
-      return <TimemachineTemplate {...rest} />;
+      return <EndlessclockTemplate {...rest} />;
     case "digitalcity":
-      return <QuantumTemplate {...rest} />;
+      return <DigitalcityTemplate {...rest} />;
     case "quantumlab":
-      return <NeuralTemplate {...rest} />;
+      return <QuantumlabTemplate {...rest} />;
     case "missioncontrol":
-      return <NexusTemplate {...rest} />;
+      return <MissioncontrolTemplate {...rest} />;
     case "secretlab":
-      return <GenesisTemplate {...rest} />;
+      return <SecretlabTemplate {...rest} />;
     case "portal":
-      return <UnveilTemplate {...rest} />;
+      return <PortalTemplate {...rest} />;
     case "evolution":
-      return <GenesisTemplate {...rest} />;
+      return <EvolutionTemplate {...rest} />;
     case "goldenuniverse":
-      return <LuminaryTemplate {...rest} />;
+      return <GoldenuniverseTemplate {...rest} />;
     case "halloffame":
-      return <ImmortalsTemplate {...rest} />;
+      return <HalloffameTemplate {...rest} />;
     case "synapse":
-      return <ConvergeTemplate {...rest} />;
+      return <SynapseTemplate {...rest} />;
     case "futurecity":
-      return <QuantumTemplate {...rest} />;
+      return <FuturecityTemplate {...rest} />;
     case "festival":
-      return <InfinityclubTemplate {...rest} />;
+      return <FestivalTemplate {...rest} />;
     case "neonjungle":
-      return <MetropolisTemplate {...rest} />;
+      return <NeonjungleTemplate {...rest} />;
     case "midnighttokyo":
-      return <MetropolisTemplate {...rest} />;
+      return <MidnighttokyoTemplate {...rest} />;
     case "royal":
     default:
       return <RoyalTemplate {...rest} />;
