@@ -4,105 +4,109 @@ import fs from "node:fs";
 import path from "node:path";
 
 /**
- * Render each template's built-in demo, screenshot the hero, and save as
- * `public/template-previews/<templateId>.jpg`. Point every `TemplateMeta`
- * `previewImage` at that path and the marketing surfaces stop depending on
- * Unsplash for template thumbnails.
+ * Screenshot each template's TYPE-AWARE preview route
+ * (`/events/<type>/<templateId>/preview`) and save as
+ * `public/template-previews/<templateId>.jpg`.
  *
  * Usage:
- *   1. Start dev server:   npm run dev
- *   2. In another terminal: npm run previews
+ *   Local:    npm run dev   then   npm run previews
+ *   Deployed: npm run previews -- --base https://1event.vercel.app
+ *   Mobile:   npm run previews:mobile -- --base https://1event.vercel.app
  *
+ * Flags:
+ *   --base <url>   base URL (default http://localhost:3000). Use the deployed
+ *                  site to avoid running a local dev server.
+ *   --mobile       phone viewport (390×844)
+ *   --out <dir>    output folder
  * Env:
- *   PREVIEW_BASE_URL   Override the base URL (default http://localhost:3000)
- *   PREVIEW_ONLY       Comma-separated list of templateIds to regenerate.
- *                      Handy after redesigning a single template.
+ *   PREVIEW_BASE_URL   same as --base
+ *   PREVIEW_ONLY       comma-separated templateIds to regenerate
  */
 
 // Demo codes live in the DEMO-<TEMPLATE> namespace so they can't collide with
 // real customer enquiries (which are always <PREFIX>-<YEAR>-<SEQ>). Change
 // these together with the *_CODE constants in lib/dummyData.ts.
 const TEMPLATES = [
-  { id: "royal", code: "DEMO-ROYAL" },
-  { id: "minimal", code: "DEMO-MINIMAL" },
-  { id: "modern", code: "DEMO-MODERN" },
-  { id: "vibrant", code: "DEMO-VIBRANT" },
-  { id: "pastel", code: "DEMO-PASTEL" },
-  { id: "aurora", code: "DEMO-AURORA" },
-  { id: "obsidian", code: "DEMO-OBSIDIAN" },
-  { id: "celestia", code: "DEMO-CELESTIA" },
-  { id: "nexus", code: "DEMO-NEXUS" },
-  { id: "pinnacle", code: "DEMO-PINNACLE" },
-  { id: "luminary", code: "DEMO-LUMINARY" },
-  { id: "converge", code: "DEMO-CONVERGE" },
-  { id: "after", code: "DEMO-AFTER" },
-  { id: "empyrean", code: "DEMO-EMPYREAN" },
-  { id: "prism", code: "DEMO-PRISM" },
-  { id: "orbit", code: "DEMO-ORBIT" },
-  { id: "arcade", code: "DEMO-ARCADE" },
-  { id: "promise", code: "DEMO-PROMISE" },
-  { id: "chapters", code: "DEMO-CHAPTERS" },
-  { id: "neural", code: "DEMO-NEURAL" },
-  { id: "unveil", code: "DEMO-UNVEIL" },
-  { id: "odeon", code: "DEMO-ODEON" },
-  { id: "constella", code: "DEMO-CONSTELLA" },
-  { id: "metropolis", code: "DEMO-METROPOLIS" },
-  { id: "moonlit", code: "DEMO-MOONLIT" },
-  { id: "skytemple", code: "DEMO-SKYTEMPLE" },
-  { id: "oceanpalace", code: "DEMO-OCEANPALACE" },
-  { id: "symphony", code: "DEMO-SYMPHONY" },
-  { id: "infinity", code: "DEMO-INFINITY" },
-  { id: "lovestars", code: "DEMO-LOVESTARS" },
-  { id: "garden", code: "DEMO-GARDEN" },
-  { id: "horizon", code: "DEMO-HORIZON" },
-  { id: "toybox", code: "DEMO-TOYBOX" },
-  { id: "timemachine", code: "DEMO-TIMEMACHINE" },
-  { id: "carnival", code: "DEMO-CARNIVAL" },
-  { id: "dreamfactory", code: "DEMO-DREAMFACTORY" },
-  { id: "library", code: "DEMO-LIBRARY" },
-  { id: "quantum", code: "DEMO-QUANTUM" },
-  { id: "genesis", code: "DEMO-GENESIS" },
-  { id: "immortals", code: "DEMO-IMMORTALS" },
-  { id: "ecosystem", code: "DEMO-ECOSYSTEM" },
-  { id: "infinityclub", code: "DEMO-INFINITYCLUB" },
-  { id: "skyrealm", code: "DEMO-SKYREALM" },
-  { id: "cathedral", code: "DEMO-CATHEDRAL" },
-  { id: "sakura", code: "DEMO-SAKURA" },
-  { id: "versailles", code: "DEMO-VERSAILLES" },
-  { id: "fresco", code: "DEMO-FRESCO" },
-  { id: "mirage", code: "DEMO-MIRAGE" },
-  { id: "icepalace", code: "DEMO-ICEPALACE" },
-  { id: "galaxyopera", code: "DEMO-GALAXYOPERA" },
-  { id: "tworivers", code: "DEMO-TWORIVERS" },
-  { id: "mirrorworlds", code: "DEMO-MIRRORWORLDS" },
-  { id: "infinitytrain", code: "DEMO-INFINITYTRAIN" },
-  { id: "lanterns", code: "DEMO-LANTERNS" },
-  { id: "glassrose", code: "DEMO-GLASSROSE" },
-  { id: "secretgalaxy", code: "DEMO-SECRETGALAXY" },
-  { id: "cartoon", code: "DEMO-CARTOON" },
-  { id: "bricktown", code: "DEMO-BRICKTOWN" },
-  { id: "treasure", code: "DEMO-TREASURE" },
-  { id: "themepark", code: "DEMO-THEMEPARK" },
-  { id: "candyland", code: "DEMO-CANDYLAND" },
-  { id: "robocity", code: "DEMO-ROBOCITY" },
-  { id: "spacemission", code: "DEMO-SPACEMISSION" },
-  { id: "jungle", code: "DEMO-JUNGLE" },
-  { id: "timecapsule", code: "DEMO-TIMECAPSULE" },
-  { id: "treeoflife", code: "DEMO-TREEOFLIFE" },
-  { id: "endlessclock", code: "DEMO-ENDLESSCLOCK" },
-  { id: "digitalcity", code: "DEMO-DIGITALCITY" },
-  { id: "quantumlab", code: "DEMO-QUANTUMLAB" },
-  { id: "missioncontrol", code: "DEMO-MISSIONCONTROL" },
-  { id: "secretlab", code: "DEMO-SECRETLAB" },
-  { id: "portal", code: "DEMO-PORTAL" },
-  { id: "evolution", code: "DEMO-EVOLUTION" },
-  { id: "goldenuniverse", code: "DEMO-GOLDENUNIVERSE" },
-  { id: "halloffame", code: "DEMO-HALLOFFAME" },
-  { id: "synapse", code: "DEMO-SYNAPSE" },
-  { id: "futurecity", code: "DEMO-FUTURECITY" },
-  { id: "festival", code: "DEMO-FESTIVAL" },
-  { id: "neonjungle", code: "DEMO-NEONJUNGLE" },
-  { id: "midnighttokyo", code: "DEMO-MIDNIGHTTOKYO" },
+  // { id: "royal", code: "DEMO-ROYAL", type: "wedding" },
+  // { id: "minimal", code: "DEMO-MINIMAL", type: "wedding" },
+  { id: "modern", code: "DEMO-MODERN", type: "wedding" },
+  // { id: "vibrant", code: "DEMO-VIBRANT", type: "birthday" },
+  // { id: "pastel", code: "DEMO-PASTEL", type: "wedding" },
+  // { id: "aurora", code: "DEMO-AURORA", type: "wedding" },
+  // { id: "obsidian", code: "DEMO-OBSIDIAN", type: "wedding" },
+  // { id: "celestia", code: "DEMO-CELESTIA", type: "wedding" },
+  // { id: "nexus", code: "DEMO-NEXUS", type: "product-launch" },
+  // { id: "pinnacle", code: "DEMO-PINNACLE", type: "corporate" },
+  // { id: "luminary", code: "DEMO-LUMINARY", type: "award-ceremony" },
+  // { id: "converge", code: "DEMO-CONVERGE", type: "networking-event" },
+  // { id: "after", code: "DEMO-AFTER", type: "party" },
+  // { id: "empyrean", code: "DEMO-EMPYREAN", type: "wedding" },
+  // { id: "prism", code: "DEMO-PRISM", type: "wedding" },
+  // { id: "orbit", code: "DEMO-ORBIT", type: "birthday" },
+  // { id: "arcade", code: "DEMO-ARCADE", type: "birthday" },
+  // { id: "promise", code: "DEMO-PROMISE", type: "engagement" },
+  // { id: "chapters", code: "DEMO-CHAPTERS", type: "anniversary" },
+  // { id: "neural", code: "DEMO-NEURAL", type: "corporate" },
+  // { id: "unveil", code: "DEMO-UNVEIL", type: "product-launch" },
+  // { id: "odeon", code: "DEMO-ODEON", type: "award-ceremony" },
+  // { id: "constella", code: "DEMO-CONSTELLA", type: "networking-event" },
+  // { id: "metropolis", code: "DEMO-METROPOLIS", type: "party" },
+  // { id: "moonlit", code: "DEMO-MOONLIT", type: "wedding" },
+  // { id: "skytemple", code: "DEMO-SKYTEMPLE", type: "wedding" },
+  // { id: "oceanpalace", code: "DEMO-OCEANPALACE", type: "wedding" },
+  // { id: "symphony", code: "DEMO-SYMPHONY", type: "wedding" },
+  // { id: "infinity", code: "DEMO-INFINITY", type: "engagement" },
+  // { id: "lovestars", code: "DEMO-LOVESTARS", type: "engagement" },
+  // { id: "garden", code: "DEMO-GARDEN", type: "engagement" },
+  // { id: "horizon", code: "DEMO-HORIZON", type: "engagement" },
+  // { id: "toybox", code: "DEMO-TOYBOX", type: "birthday" },
+  // { id: "timemachine", code: "DEMO-TIMEMACHINE", type: "birthday" },
+  // { id: "carnival", code: "DEMO-CARNIVAL", type: "birthday" },
+  // { id: "dreamfactory", code: "DEMO-DREAMFACTORY", type: "birthday" },
+  // { id: "library", code: "DEMO-LIBRARY", type: "anniversary" },
+  // { id: "quantum", code: "DEMO-QUANTUM", type: "corporate" },
+  // { id: "genesis", code: "DEMO-GENESIS", type: "product-launch" },
+  // { id: "immortals", code: "DEMO-IMMORTALS", type: "award-ceremony" },
+  // { id: "ecosystem", code: "DEMO-ECOSYSTEM", type: "networking-event" },
+  // { id: "infinityclub", code: "DEMO-INFINITYCLUB", type: "party" },
+  // { id: "skyrealm", code: "DEMO-SKYREALM", type: "wedding" },
+  // { id: "cathedral", code: "DEMO-CATHEDRAL", type: "wedding" },
+  // { id: "sakura", code: "DEMO-SAKURA", type: "wedding" },
+  // { id: "versailles", code: "DEMO-VERSAILLES", type: "wedding" },
+  // { id: "fresco", code: "DEMO-FRESCO", type: "wedding" },
+  // { id: "mirage", code: "DEMO-MIRAGE", type: "wedding" },
+  // { id: "icepalace", code: "DEMO-ICEPALACE", type: "wedding" },
+  // { id: "galaxyopera", code: "DEMO-GALAXYOPERA", type: "wedding" },
+  // { id: "tworivers", code: "DEMO-TWORIVERS", type: "engagement" },
+  // { id: "mirrorworlds", code: "DEMO-MIRRORWORLDS", type: "engagement" },
+  // { id: "infinitytrain", code: "DEMO-INFINITYTRAIN", type: "engagement" },
+  // { id: "lanterns", code: "DEMO-LANTERNS", type: "engagement" },
+  // { id: "glassrose", code: "DEMO-GLASSROSE", type: "engagement" },
+  // { id: "secretgalaxy", code: "DEMO-SECRETGALAXY", type: "engagement" },
+  // { id: "cartoon", code: "DEMO-CARTOON", type: "birthday" },
+  // { id: "bricktown", code: "DEMO-BRICKTOWN", type: "birthday" },
+  // { id: "treasure", code: "DEMO-TREASURE", type: "birthday" },
+  // { id: "themepark", code: "DEMO-THEMEPARK", type: "birthday" },
+  // { id: "candyland", code: "DEMO-CANDYLAND", type: "birthday" },
+  // { id: "robocity", code: "DEMO-ROBOCITY", type: "birthday" },
+  // { id: "spacemission", code: "DEMO-SPACEMISSION", type: "birthday" },
+  // { id: "jungle", code: "DEMO-JUNGLE", type: "birthday" },
+  // { id: "timecapsule", code: "DEMO-TIMECAPSULE", type: "anniversary" },
+  // { id: "treeoflife", code: "DEMO-TREEOFLIFE", type: "anniversary" },
+  // { id: "endlessclock", code: "DEMO-ENDLESSCLOCK", type: "anniversary" },
+  // { id: "digitalcity", code: "DEMO-DIGITALCITY", type: "corporate" },
+  // { id: "quantumlab", code: "DEMO-QUANTUMLAB", type: "corporate" },
+  // { id: "missioncontrol", code: "DEMO-MISSIONCONTROL", type: "corporate" },
+  // { id: "secretlab", code: "DEMO-SECRETLAB", type: "product-launch" },
+  // { id: "portal", code: "DEMO-PORTAL", type: "product-launch" },
+  // { id: "evolution", code: "DEMO-EVOLUTION", type: "product-launch" },
+  // { id: "goldenuniverse", code: "DEMO-GOLDENUNIVERSE", type: "award-ceremony" },
+  // { id: "halloffame", code: "DEMO-HALLOFFAME", type: "award-ceremony" },
+  // { id: "synapse", code: "DEMO-SYNAPSE", type: "networking-event" },
+  // { id: "futurecity", code: "DEMO-FUTURECITY", type: "networking-event" },
+  // { id: "festival", code: "DEMO-FESTIVAL", type: "party" },
+  // { id: "neonjungle", code: "DEMO-NEONJUNGLE", type: "party" },
+  // { id: "midnighttokyo", code: "DEMO-MIDNIGHTTOKYO", type: "party" },
 ];
 
 // CLI flags (cross-platform — no env-var prefixes needed on Windows):
@@ -115,7 +119,8 @@ const argVal = (name) => {
 };
 const MOBILE = argv.includes("--mobile") || process.env.PREVIEW_MOBILE === "1";
 
-const BASE_URL = process.env.PREVIEW_BASE_URL ?? "http://localhost:3000";
+const BASE_URL =
+  argVal("--base") ?? process.env.PREVIEW_BASE_URL ?? "http://localhost:3000";
 const OUT_DIR = path.resolve(
   argVal("--out") ??
     process.env.PREVIEW_OUT_DIR ??
@@ -150,11 +155,15 @@ async function main() {
   const failures = [];
 
   try {
-    for (const { id, code } of TEMPLATES) {
+    for (const { id, type = "wedding" } of TEMPLATES) {
       if (ONLY && !ONLY.has(id)) continue;
 
-      const url = `${BASE_URL}/e/${code}`;
-      console.log(`→ ${id.padEnd(10)} ${code.padEnd(16)} ${url}`);
+      // Screenshot the TYPE-AWARE preview route so the demo matches the event
+      // type (e.g. /events/wedding/modern/preview) rather than the raw
+      // /e/<code>. `type` must be one of the template's eventTypes (default
+      // "wedding"); set it per entry for birthday-/corporate-only templates.
+      const url = `${BASE_URL}/events/${type}/${id}/preview`;
+      console.log(`→ ${id.padEnd(12)} ${url}`);
 
       const context = await browser.newContext({
         viewport: VIEWPORT,
