@@ -5,7 +5,27 @@ import { useSearchParams } from "next/navigation";
 import { TemplateRouter } from "@/components/templates/TemplateRouter";
 import { EditPanel } from "./EditPanel";
 import { EditProvider } from "./EditContext";
+import { EventCountdown, defaultTimerDesign } from "@/components/ui/EventCountdown";
+import { getTemplateMeta } from "@/components/templates/metadata";
 import type { EventData, MediaItem, SubEvent } from "@/lib/types";
+
+// These templates build a countdown into their own hero, so the shell must not
+// add a second (floating) one — they'd show two timers otherwise.
+const TEMPLATES_WITH_INLINE_TIMER = new Set([
+  "royal",
+  "minimal",
+  "modern",
+  "vibrant",
+  "pastel",
+  "aurora",
+  "obsidian",
+  "celestia",
+  // These render an in-flow timer inside their own hero (placed to avoid
+  // overlapping content), so the shell must not add the fixed overlay too.
+  "cartoon",
+  "immortals",
+  "halloffame", // renders via ImmortalsTemplate
+]);
 
 export type EditableData = {
   event: EventData;
@@ -159,6 +179,19 @@ export function EditableShell({
     }
   };
 
+  // Timer placement. Flagship templates default to their built-in hero timer
+  // ("fixed"); everything else floats. The customer can override per event.
+  const isInlineTimer = TEMPLATES_WITH_INLINE_TIMER.has(templateId);
+  // By default each template shows its own appropriate fixed (on-hero) timer.
+  // Only when the customer opts to "customize" do their style/design/position
+  // choices take over.
+  const timerCustom = !!data.event.timerCustom;
+  const timerStyle = timerCustom ? data.event.timerStyle || "fixed" : "fixed";
+  const timerDesign = timerCustom
+    ? data.event.timerDesign || "glass"
+    : defaultTimerDesign(getTemplateMeta(templateId)?.tags ?? []);
+  const timerPosition = timerCustom ? data.event.timerPosition || "center" : "center";
+
   return (
     <EditProvider
       enabled={!!editParam && !!uploadEndpoint}
@@ -172,10 +205,20 @@ export function EditableShell({
     >
       <div
         style={{ paddingTop: topOffset || undefined }}
-        className={`transition-[padding] duration-300 ${
+        className={`relative transition-[padding] duration-300 ${
           editParam && mounted && panelOpen ? "sm:pr-[420px]" : ""
         }`}
       >
+        {/* Fixed (in-page) countdown band. Only for non-flagship templates —
+            the flagship ones render their own fixed timer in the hero. */}
+        {!isInlineTimer && timerStyle === "fixed" && (
+          <EventCountdown
+            event={data.event}
+            variant="fixed"
+            design={timerDesign}
+            position={timerPosition}
+          />
+        )}
         <TemplateRouter
           templateId={templateId}
           event={data.event}
@@ -183,6 +226,17 @@ export function EditableShell({
           media={data.media}
         />
       </div>
+
+      {/* Floating (sticky) countdown chip. Shown whenever the style is floating,
+          on any template — the flagship inline timers hide themselves then. */}
+      {timerStyle === "floating" && (
+        <EventCountdown
+          event={data.event}
+          variant="floating"
+          design={timerDesign}
+          position={timerPosition}
+        />
+      )}
 
       {editParam && mounted && (
         <EditPanel
