@@ -192,7 +192,25 @@ export const OceanpalaceTemplate: TemplateComponent = ({ event, subEvents, media
   const invitationMessage = event.invitationMessage?.trim() || "Descend into a palace of coral and light, where two souls are pledged in the quiet of the deep.";
   const aboutStory = event.aboutStory?.trim() || "";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
   const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1518877593221-1f28583780b4?auto=format&fit=crop&w=1600&q=80";
+
+  // Deterministic drifting pearls across the hero (bubbles rising).
+  const heroPearls = Array.from({ length: 10 }, (_, i) => ({
+    left: `${(i * 41 + 7) % 100}%`,
+    top: `${(i * 53 + 12) % 90}%`,
+    size: 6 + (i % 4) * 3,
+    delay: (i % 5) * 0.9,
+    dur: 8 + (i % 4) * 2,
+  }));
+
+  // Diagonal sun-ray beams — light through water.
+  const heroRays = [
+    { left: "10%", width: "5vw", delay: 0 },
+    { left: "34%", width: "7vw", delay: 1.1 },
+    { left: "62%", width: "4vw", delay: 0.6 },
+    { left: "82%", width: "6vw", delay: 1.8 },
+  ];
 
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -214,18 +232,196 @@ export const OceanpalaceTemplate: TemplateComponent = ({ event, subEvents, media
       <ScrollProgress color={accent} />
 
       {/* ─── HERO ─── */}
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden">
-        <SunRays reduce={reduce} />
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28">
         <motion.div style={reduce ? undefined : { scale: heroScale, y: heroY }} className="absolute inset-0">
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-40" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,42,58,0.4) 0%, rgba(5,42,58,0.55) 50%, #052a3a 100%)" }} />
+          {/* Deep aquamarine vignette */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(5,42,58,0.45) 0%, rgba(5,42,58,0.55) 50%, #052a3a 100%), radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(5,20,32,0.55) 100%)",
+            }}
+          />
         </motion.div>
 
-        <motion.div style={reduce ? undefined : { opacity: heroOpacity }} className="relative z-10 px-6 text-center">
+        {/* Diagonal sun-ray beams — light through water */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          {heroRays.map((r, i) => (
+            <motion.div
+              key={`ray-${i}`}
+              className="absolute top-[-15%] h-[130%] origin-top"
+              style={{
+                left: r.left,
+                width: r.width,
+                background: "linear-gradient(180deg, rgba(230,250,255,0.25), rgba(79,176,198,0.10) 45%, transparent 90%)",
+                transform: "rotate(15deg)",
+                filter: "blur(8px)",
+                opacity: 0.35,
+              }}
+              animate={reduce ? undefined : { opacity: [0.15, 0.4, 0.15] }}
+              transition={{ duration: 8 + i, delay: r.delay, repeat: Infinity, ease: "easeInOut" }}
+            />
+          ))}
+        </div>
+
+        {/* Rising pearls — deterministic positions */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          {heroPearls.map((p, i) => (
+            <motion.span
+              key={`pearl-${i}`}
+              className="absolute rounded-full"
+              style={{
+                left: p.left,
+                top: p.top,
+                width: p.size,
+                height: p.size,
+                background: "radial-gradient(circle at 30% 30%, #ffffff, #f5f4ec 45%, #b7dce6 100%)",
+                boxShadow: "0 0 8px rgba(230,250,255,0.7), inset -1px -1px 2px rgba(10,77,94,0.35)",
+              }}
+              animate={reduce ? undefined : { y: [0, -30, 0], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
+            />
+          ))}
+        </div>
+
+        {/* ─── Underwater bubble & shell collage ───
+         *  frame1: luminous bubble (top-left)
+         *  frame2: larger bubble (top-right)
+         *  frame3: seashell-scalloped rectangle (bottom-left) */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden md:block absolute left-[6%] top-[14%] w-40 h-40 lg:w-52 lg:h-52 rounded-full overflow-hidden"
+            style={{
+              boxShadow: `0 0 0 1px rgba(230,250,255,0.5), 0 0 40px ${accent}66, 0 20px 40px -12px rgba(0,0,0,0.5)`,
+            }}
+          >
+            <motion.img
+              src={frame1.publicUrl}
+              alt={frame1.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover"
+              animate={reduce ? undefined : { y: [0, -10, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* translucent white sheen — light catching the bubble */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle at 25% 22%, rgba(255,255,255,0.55), rgba(255,255,255,0.18) 22%, transparent 45%)",
+              }}
+            />
+            {/* aquamarine outer glow ring */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-full"
+              style={{ boxShadow: `inset 0 0 30px ${accent}55` }}
+            />
+          </motion.figure>
+        )}
+
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden md:block absolute right-[6%] top-[24%] w-48 h-48 lg:w-64 lg:h-64 rounded-full overflow-hidden"
+            style={{
+              boxShadow: `0 0 0 1px rgba(230,250,255,0.5), 0 0 50px ${accent}77, 0 24px 50px -14px rgba(0,0,0,0.55)`,
+            }}
+          >
+            <motion.img
+              src={frame2.publicUrl}
+              alt={frame2.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover"
+              animate={reduce ? undefined : { y: [0, 10, 0] }}
+              transition={{ duration: 7, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle at 28% 20%, rgba(255,255,255,0.55), rgba(255,255,255,0.18) 24%, transparent 48%)",
+              }}
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-full"
+              style={{ boxShadow: `inset 0 0 34px ${accent}55` }}
+            />
+          </motion.figure>
+        )}
+
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden lg:block absolute left-[9%] bottom-[18%] w-44 h-56"
+            style={{ filter: `drop-shadow(0 20px 40px rgba(0,0,0,0.55)) drop-shadow(0 0 24px ${accent}44)` }}
+          >
+            {/* SVG shell-scalloped card */}
+            <svg viewBox="0 0 176 224" className="absolute inset-0 w-full h-full" preserveAspectRatio="none" aria-hidden>
+              <defs>
+                <clipPath id="oceanShellClip">
+                  <path d="M0,32 Q14.6,0 29.3,32 Q44,0 58.6,32 Q73.3,0 88,32 Q102.6,0 117.3,32 Q132,0 146.6,32 Q161.3,0 176,32 L176,224 L0,224 Z" />
+                </clipPath>
+              </defs>
+              <path
+                d="M0,32 Q14.6,0 29.3,32 Q44,0 58.6,32 Q73.3,0 88,32 Q102.6,0 117.3,32 Q132,0 146.6,32 Q161.3,0 176,32 L176,224 L0,224 Z"
+                fill={pearl}
+              />
+              <path
+                d="M0,32 Q14.6,0 29.3,32 Q44,0 58.6,32 Q73.3,0 88,32 Q102.6,0 117.3,32 Q132,0 146.6,32 Q161.3,0 176,32 L176,224 L0,224 Z"
+                fill="none"
+                stroke={coral}
+                strokeWidth="1"
+                opacity="0.7"
+              />
+            </svg>
+            <div
+              className="absolute inset-0 overflow-hidden"
+              style={{ clipPath: "url(#oceanShellClip)", WebkitClipPath: "url(#oceanShellClip)" }}
+            >
+              <img
+                src={frame3.publicUrl}
+                alt={frame3.caption ?? ""}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover"
+                style={{ paddingTop: 24, paddingLeft: 8, paddingRight: 8, paddingBottom: 24 }}
+              />
+            </div>
+            <figcaption
+              className="absolute bottom-2 inset-x-0 text-center text-[10px] uppercase tracking-[0.3em]"
+              style={{ color: coral }}
+            >
+              {frame3.caption ?? "Pearl I"}
+            </figcaption>
+          </motion.figure>
+        )}
+
+        <motion.div style={reduce ? undefined : { opacity: heroOpacity }} className="relative z-10 px-6 text-center max-w-3xl">
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 1 }}
+            className="mb-4 text-2xl"
+            style={{ color: accent }}
+            aria-hidden
+          >
+            ❍
+          </motion.p>
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 1 }}
             className="mb-6 text-[10px] uppercase tracking-[0.7em]"
             style={{ color: pearl }}
           >
@@ -241,6 +437,16 @@ export const OceanpalaceTemplate: TemplateComponent = ({ event, subEvents, media
             {event.eventTitle}
           </motion.h1>
           <PearlDivider accent={accent} />
+          <motion.p
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9, duration: 1 }}
+            className="mt-2 text-lg"
+            style={{ color: accent }}
+            aria-hidden
+          >
+            ~
+          </motion.p>
           <motion.div
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -254,6 +460,34 @@ export const OceanpalaceTemplate: TemplateComponent = ({ event, subEvents, media
             )}
             {event.city && <><span className="opacity-50">•</span><span>{event.city}</span></>}
           </motion.div>
+
+          {/* Mobile-only bubble-thumb row */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="md:hidden mt-8 flex items-center justify-center gap-3">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`mob-bubble-${i}`}
+                  initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 + i * 0.15 }}
+                  className="relative w-16 h-16 rounded-full overflow-hidden"
+                  style={{
+                    boxShadow: `0 0 0 1px rgba(230,250,255,0.5), 0 0 20px ${accent}66, 0 8px 20px -6px rgba(0,0,0,0.6)`,
+                  }}
+                >
+                  <img src={f!.publicUrl} alt={f!.caption ?? ""} className="w-full h-full object-cover" loading="lazy" />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 rounded-full"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 26% 22%, rgba(255,255,255,0.55), rgba(255,255,255,0.15) 26%, transparent 50%)",
+                    }}
+                  />
+                </motion.figure>
+              ))}
+            </div>
+          )}
         </motion.div>
 
         {!reduce && (

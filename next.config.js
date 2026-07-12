@@ -19,6 +19,8 @@ const nextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "picsum.photos" },
       { protocol: "https", hostname: "fastly.picsum.photos" },
+      // Wikimedia Commons — used for verified Indian-wedding photos in demos.
+      { protocol: "https", hostname: "upload.wikimedia.org" },
       // Local dev — files served from public/uploads/
       { protocol: "http", hostname: "localhost" },
     ],

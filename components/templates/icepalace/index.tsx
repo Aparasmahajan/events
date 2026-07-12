@@ -123,6 +123,7 @@ export const IcepalaceTemplate: TemplateComponent = ({ event, subEvents, media }
   const invitationMessage = event.invitationMessage?.trim() || "Under the northern lights, in a palace of glass and snow, we begin our forever. Come stand with us where the winter glows.";
   const aboutStory = event.aboutStory?.trim() || "Two winters ago we walked out onto a frozen lake and knew we would never let go of each other's hands. Now the ice holds our promise — clear, bright, and made to last.";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
   const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=1600&q=80";
 
   const heroRef = useRef<HTMLDivElement>(null);
@@ -143,11 +144,92 @@ export const IcepalaceTemplate: TemplateComponent = ({ event, subEvents, media }
       <SnowField reduce={reduce} />
       <ScrollProgress color={accent} />
 
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[620px] items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28">
         <div className="absolute inset-0">
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-70" />
           <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${GLACIAL}66 0%, transparent 40%, ${GLACIAL} 96%)` }} />
         </div>
+
+        {/* Ceremony frames — ice-block, crystal-shard, frozen-lake mirror */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.4, ease: EASE }}
+            className="hidden md:block absolute left-[6%] top-[16%] w-40 h-52 lg:w-52 lg:h-64 z-20 overflow-hidden shadow-2xl"
+            style={{
+              clipPath: "polygon(6% 0, 94% 0, 100% 6%, 100% 94%, 94% 100%, 6% 100%, 0 94%, 0 6%)",
+              border: `1px solid ${ICE}`,
+              boxShadow: `0 0 0 1px ${accent}44 inset, 0 20px 40px -12px rgba(30,56,68,0.5), 0 0 60px -20px ${AURORA_GREEN}`,
+            }}
+          >
+            <motion.img
+              src={frame1.publicUrl}
+              alt={frame1.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover"
+              animate={reduce ? undefined : { y: [0, -6, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div className="absolute inset-x-0 top-0 h-8" style={{ background: `linear-gradient(180deg, rgba(255,255,255,0.35), transparent)` }} />
+          </motion.figure>
+        )}
+
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, rotate: -8 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            transition={{ duration: 1.1, delay: 0.6, ease: EASE }}
+            className="hidden md:block absolute right-[6%] top-[20%] w-40 h-48 lg:w-48 lg:h-56 z-20 overflow-hidden shadow-2xl"
+            style={{
+              clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+              boxShadow: `0 0 40px -8px ${AURORA_VIOLET}, 0 0 0 1px ${accent}44 inset`,
+            }}
+          >
+            <motion.img
+              src={frame2.publicUrl}
+              alt={frame2.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover"
+              animate={reduce ? undefined : { rotate: [0, 2, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.figure>
+        )}
+
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.85, ease: EASE }}
+            className="hidden lg:block absolute left-[8%] bottom-[26%] w-52 z-20"
+          >
+            <div
+              className="w-full h-32 overflow-hidden"
+              style={{
+                border: `1px solid ${ICE}`,
+                boxShadow: `0 0 0 1px ${accent}33 inset, 0 8px 20px -8px rgba(30,56,68,0.6)`,
+                clipPath: "polygon(4% 0, 96% 0, 100% 8%, 100% 92%, 96% 100%, 4% 100%, 0 92%, 0 8%)",
+              }}
+            >
+              <img src={frame3.publicUrl} alt={frame3.caption ?? ""} loading="lazy" className="w-full h-full object-cover" />
+            </div>
+            <div
+              aria-hidden
+              className="w-full h-16"
+              style={{
+                transform: "scaleY(-1)",
+                opacity: 0.35,
+                maskImage: "linear-gradient(to bottom, black, transparent)",
+                WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
+                clipPath: "polygon(4% 0, 96% 0, 100% 8%, 100% 100%, 0 100%, 0 8%)",
+                overflow: "hidden",
+              }}
+            >
+              <img src={frame3.publicUrl} alt="" loading="lazy" className="w-full h-32 object-cover" style={{ filter: "blur(2px)" }} />
+            </div>
+          </motion.figure>
+        )}
         <motion.div
           aria-hidden
           className="absolute inset-x-[-20%] top-[-6%] h-[34vh]"

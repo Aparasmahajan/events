@@ -160,6 +160,7 @@ export const GalaxyoperaTemplate: TemplateComponent = ({ event, subEvents, media
   const invitationMessage = event.invitationMessage?.trim() || "The house lights dim, the curtains part, and two names share one marquee. Take your seat in the cosmos — the overture of our forever begins.";
   const aboutStory = event.aboutStory?.trim() || "Every great opera begins with two voices finding the same key. Ours met in an ordinary scene and turned it into a libretto — and now the finale becomes an opening night.";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
   const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80";
   const sortedActs = useMemo(() => [...subEvents].sort((a, b) => a.order - b.order), [subEvents]);
 
@@ -183,7 +184,7 @@ export const GalaxyoperaTemplate: TemplateComponent = ({ event, subEvents, media
       <StarField reduce={reduce} />
       <ScrollProgress color={accent} />
 
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28">
         <div className="absolute inset-0">
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-40" />
           <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${SPACE}cc, transparent 40%, ${SPACE})` }} />
@@ -191,6 +192,95 @@ export const GalaxyoperaTemplate: TemplateComponent = ({ event, subEvents, media
         <Curtain side="left" reduce={reduce} />
         <Curtain side="right" reduce={reduce} />
         <ChandelierPlanet reduce={reduce} />
+
+        {/* Ceremony frames — proscenium arch box, planet-chandelier, curtain-reveal */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 1.6, ease: EASE }}
+            className="hidden md:block absolute left-[6%] top-[16%] w-40 lg:w-48 z-[6]"
+          >
+            <div
+              className="relative p-2 shadow-2xl"
+              style={{
+                background: `linear-gradient(135deg, ${GOLD}, #8a6a24 60%, ${GOLD})`,
+                borderRadius: "50% 50% 8% 8% / 40% 40% 8% 8%",
+              }}
+            >
+              <div
+                className="w-full aspect-[3/4] overflow-hidden bg-black"
+                style={{ borderRadius: "50% 50% 6% 6% / 40% 40% 6% 6%" }}
+              >
+                <img src={frame1.publicUrl} alt={frame1.caption ?? ""} loading="lazy" className="w-full h-full object-cover" />
+              </div>
+              <div aria-hidden className="absolute -bottom-1 left-1/4 h-2 w-1" style={{ background: GOLD, transform: "skewX(-15deg)" }} />
+              <div aria-hidden className="absolute -bottom-1 right-1/4 h-2 w-1" style={{ background: GOLD, transform: "skewX(15deg)" }} />
+            </div>
+          </motion.figure>
+        )}
+
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.1, delay: 1.85, ease: EASE }}
+            className="hidden md:block absolute right-[7%] top-[18%] w-40 h-40 lg:w-52 lg:h-52 z-[6]"
+          >
+            <div aria-hidden className="absolute left-1/2 -top-6 h-6 w-px" style={{ background: `linear-gradient(180deg, transparent, ${GOLD})` }} />
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex gap-1">
+              {[0, 1, 2, 3].map((i) => (
+                <motion.span
+                  key={i}
+                  className="w-1 h-2 rounded-full"
+                  style={{ background: "linear-gradient(180deg, #fff5c8, #ffd77a)" }}
+                  animate={reduce ? undefined : { opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 2, delay: i * 0.3, repeat: Infinity }}
+                />
+              ))}
+            </div>
+            <div
+              className="relative w-full h-full rounded-full overflow-hidden shadow-2xl"
+              style={{
+                border: `2px solid ${GOLD}`,
+                boxShadow: `0 0 0 4px ${SPACE}, 0 0 60px -12px ${VIOLET}, 0 0 100px -20px ${GOLD}`,
+              }}
+            >
+              <img src={frame2.publicUrl} alt={frame2.caption ?? ""} loading="lazy" className="w-full h-full object-cover" />
+            </div>
+            <div
+              aria-hidden
+              className="absolute inset-[-8px] rounded-full pointer-events-none"
+              style={{ border: `1px dashed ${GOLD}`, transform: "rotate(25deg) scaleY(0.35)", opacity: 0.7 }}
+            />
+          </motion.figure>
+        )}
+
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 2.1, ease: EASE }}
+            className="hidden lg:block absolute left-[10%] bottom-[24%] w-52 z-[6]"
+          >
+            <div className="relative flex">
+              <div
+                aria-hidden
+                className="w-2 h-40 flex-none"
+                style={{ background: `linear-gradient(180deg, ${CRIMSON} 0%, #3a0a14 50%, ${CRIMSON} 100%)`, boxShadow: `inset -2px 0 4px rgba(0,0,0,0.5), inset 2px 0 3px rgba(255,255,255,0.1)` }}
+              />
+              <div className="flex-1 h-40 overflow-hidden" style={{ border: `1px solid ${GOLD}66`, boxShadow: `0 0 30px -10px ${VIOLET}` }}>
+                <img src={frame3.publicUrl} alt={frame3.caption ?? ""} loading="lazy" className="w-full h-full object-cover" />
+              </div>
+              <div
+                aria-hidden
+                className="w-2 h-40 flex-none"
+                style={{ background: `linear-gradient(180deg, ${CRIMSON} 0%, #3a0a14 50%, ${CRIMSON} 100%)`, boxShadow: `inset 2px 0 4px rgba(0,0,0,0.5), inset -2px 0 3px rgba(255,255,255,0.1)` }}
+              />
+            </div>
+            <div className="mt-1 text-center text-[9px] uppercase tracking-[0.4em]" style={{ color: GOLD }}>Act III</div>
+          </motion.figure>
+        )}
 
         <motion.div style={reduce ? undefined : { y: heroTextY, opacity: heroOpacity }} className="relative z-[5] px-5 pt-24 text-center">
           <motion.p

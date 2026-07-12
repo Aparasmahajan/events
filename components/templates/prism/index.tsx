@@ -185,6 +185,12 @@ export const PrismTemplate: TemplateComponent = ({ event, subEvents, media }) =>
   const heroTextY = useTransform(heroP, [0, 0.6], [0, -60]);
   const heroOpacity = useTransform(heroP, [0, 0.6], [1, 0]);
 
+  // Art-directed hero collage — three glass "shards" refract around the title.
+  // Frame 1: hexagonal shard (top-left). Frame 2: rotated diamond (top-right).
+  // Frame 3: rectangular glass panel with iridescent sheen (bottom-left).
+  // Falls back gracefully when the customer has fewer than 3 gallery photos.
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
+
   const showStory = !event.hideStory;
   const showJourney = !event.hideEvents && subEvents.length > 0;
   const showVenue = !event.hideVenue;
@@ -198,15 +204,176 @@ export const PrismTemplate: TemplateComponent = ({ event, subEvents, media }) =>
       <PrismField reduce={reduce} />
       <ScrollProgress color={accent} />
 
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28">
         <motion.div style={reduce ? undefined : { scale: heroScale }} className="absolute inset-0">
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-45" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,22,56,0.5) 0%, rgba(10,22,56,0.3) 40%, rgba(10,22,56,0.9) 100%)" }} />
+          {/* Deep-sapphire vignette so glass shards read against any photo. */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,22,56,0.55) 0%, rgba(10,22,56,0.3) 40%, rgba(10,22,56,0.92) 100%), radial-gradient(circle at 50% 45%, transparent 30%, rgba(10,22,56,0.45) 100%)" }} />
         </motion.div>
 
         <PrismBeam reduce={reduce} />
 
+        {/* ─── Prism beam diagonals — the signature motif. Two very-low-opacity
+         *  iridescent bands sweep across the hero at opposing angles, evoking
+         *  refracted light passing through a crystal. */}
+        <svg aria-hidden className="pointer-events-none absolute inset-0 h-full w-full mix-blend-screen" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="prism-hero-beam-a" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#ff6b8b" stopOpacity="0" />
+              <stop offset="30%" stopColor="#ffd166" stopOpacity="0.35" />
+              <stop offset="55%" stopColor="#7ff9c9" stopOpacity="0.35" />
+              <stop offset="80%" stopColor="#7ea8ff" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#b28eff" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="prism-hero-beam-b" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#b28eff" stopOpacity="0" />
+              <stop offset="40%" stopColor="#7ea8ff" stopOpacity="0.3" />
+              <stop offset="70%" stopColor="#ffd166" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#ff6b8b" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <motion.rect
+            x="-20%"
+            y="30%"
+            width="140%"
+            height="90"
+            fill="url(#prism-hero-beam-a)"
+            style={{ transformOrigin: "center", transformBox: "fill-box" }}
+            transform="rotate(15)"
+            initial={reduce ? false : { opacity: 0.15 }}
+            animate={reduce ? undefined : { opacity: [0.15, 0.35, 0.15], y: [0, 20, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.rect
+            x="-20%"
+            y="55%"
+            width="140%"
+            height="60"
+            fill="url(#prism-hero-beam-b)"
+            style={{ transformOrigin: "center", transformBox: "fill-box" }}
+            transform="rotate(-15)"
+            initial={reduce ? false : { opacity: 0.15 }}
+            animate={reduce ? undefined : { opacity: [0.2, 0.4, 0.2], y: [0, -15, 0] }}
+            transition={{ duration: 14, delay: 2, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </svg>
+
+        {/* ─── Frame 1: hexagonal glass shard (top-left) with iridescent
+         *  gradient border ring and a subtle vertical float. */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -20, scale: 0.9, rotate: -8 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotate: -4 }}
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden md:block absolute left-[6%] top-[14%] w-44 h-44 lg:w-56 lg:h-56"
+            style={{
+              clipPath: "polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%)",
+              background: IRIDESCENT,
+              padding: 2,
+              filter: `drop-shadow(0 20px 40px rgba(10,22,56,0.6)) drop-shadow(0 0 40px rgba(178,142,255,0.35))`,
+            }}
+          >
+            <motion.div
+              className="relative h-full w-full overflow-hidden"
+              style={{
+                clipPath: "polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%)",
+                background: "#0a1638",
+              }}
+              animate={reduce ? undefined : { y: [0, -6, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src={frame1.publicUrl}
+                alt={frame1.caption ?? ""}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <div aria-hidden className="absolute inset-0 mix-blend-overlay opacity-30" style={{ background: IRIDESCENT }} />
+            </motion.div>
+          </motion.figure>
+        )}
+
+        {/* ─── Frame 2: glass diamond (top-right) — a rotated square with
+         *  iridescent hairline. Slow lazy rotation float. */}
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 20, scale: 0.85, rotate: 40 }}
+            animate={reduce ? { opacity: 1, y: 0, scale: 1, rotate: 45 } : { opacity: 1, y: 0, scale: 1, rotate: [45, 47, 45] }}
+            transition={{ duration: 1.2, delay: 0.55, ease: [0.22, 1, 0.36, 1], rotate: reduce ? undefined : { duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1.2 } }}
+            className="hidden md:block absolute right-[8%] top-[20%] w-36 h-36 lg:w-48 lg:h-48"
+            style={{
+              background: IRIDESCENT,
+              padding: 2,
+              filter: `drop-shadow(0 20px 40px rgba(10,22,56,0.6)) drop-shadow(0 0 40px rgba(126,168,255,0.35))`,
+            }}
+          >
+            <div className="relative h-full w-full overflow-hidden" style={{ background: "#0a1638" }}>
+              <div className="absolute inset-0 flex items-center justify-center" style={{ transform: "rotate(-45deg) scale(1.42)" }}>
+                <img
+                  src={frame2.publicUrl}
+                  alt={frame2.caption ?? ""}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div aria-hidden className="absolute inset-0 mix-blend-overlay opacity-25" style={{ background: IRIDESCENT }} />
+            </div>
+          </motion.figure>
+        )}
+
+        {/* ─── Frame 3: rectangular glass panel (bottom-left) — normal
+         *  orientation with a translucent white sheen and an iridescent
+         *  bottom-edge glow. Not tilted like Royal's polaroid. */}
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 30, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={reduce ? undefined : { y: -4 }}
+            className="hidden lg:block absolute left-[9%] bottom-[18%] w-44 h-56"
+            style={{
+              background: IRIDESCENT,
+              padding: 1.5,
+              borderRadius: 4,
+              filter: `drop-shadow(0 20px 40px rgba(10,22,56,0.7)) drop-shadow(0 0 50px rgba(127,249,201,0.25))`,
+            }}
+          >
+            <div className="relative h-full w-full overflow-hidden" style={{ background: "#0a1638", borderRadius: 3 }}>
+              <img
+                src={frame3.publicUrl}
+                alt={frame3.caption ?? ""}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              {/* Glass sheen — translucent white gradient across the top */}
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(160deg, rgba(255,255,255,0.22), rgba(255,255,255,0) 45%)" }}
+              />
+              {/* Iridescent bottom-edge glow */}
+              <div
+                aria-hidden
+                className="absolute bottom-0 left-0 right-0 h-8"
+                style={{ background: `linear-gradient(180deg, transparent, ${IRIDESCENT.replace("linear-gradient(90deg, ", "").replace(")", "")})`, opacity: 0.35, mixBlendMode: "screen" }}
+              />
+              <div
+                aria-hidden
+                className="absolute bottom-0 left-0 right-0 h-[2px]"
+                style={{ background: IRIDESCENT }}
+              />
+            </div>
+          </motion.figure>
+        )}
+
         <motion.div style={reduce ? undefined : { y: heroTextY, opacity: heroOpacity }} className="relative z-10 px-6 text-center">
+          {/* Top iridescent hairline + diamond ornament */}
+          <div className="mb-6 flex items-center justify-center gap-3 opacity-90">
+            <span className="h-px w-10 sm:w-16" style={{ background: IRIDESCENT }} />
+            <span className="text-sm" style={{ color: "#b28eff" }}>◇</span>
+            <span className="h-px w-10 sm:w-16" style={{ background: IRIDESCENT }} />
+          </div>
+
           <motion.p
             initial={reduce ? false : { opacity: 0, letterSpacing: "0.2em" }}
             animate={{ opacity: 1, letterSpacing: "0.6em" }}
@@ -239,7 +406,7 @@ export const PrismTemplate: TemplateComponent = ({ event, subEvents, media }) =>
               className="mt-4 font-display text-lg tracking-[0.3em]"
               style={{ color: "rgba(232,236,247,0.85)" }}
             >
-              {[event.person1Name, event.person2Name].filter(Boolean).join("  ✦  ")}
+              {[event.person1Name, event.person2Name].filter(Boolean).join("  ◇  ")}
             </motion.p>
           )}
           <motion.div
@@ -256,6 +423,43 @@ export const PrismTemplate: TemplateComponent = ({ event, subEvents, media }) =>
             )}
             {event.city && <><span style={{ color: "#7ea8ff" }}>◇</span><span>{event.city}</span></>}
           </motion.div>
+
+          {/* Bottom iridescent hairline */}
+          <div className="mt-8 flex items-center justify-center gap-3 opacity-80">
+            <span className="h-px w-16" style={{ background: IRIDESCENT }} />
+            <span className="text-xs" style={{ color: "#7ea8ff" }}>◈</span>
+            <span className="h-px w-16" style={{ background: IRIDESCENT }} />
+          </div>
+
+          {/* Mobile-only 3-circle cluster with iridescent border rings — the
+           *  desktop shard/diamond/panel hide below md, so bring the frames
+           *  together as a compact row under the title. */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="md:hidden mt-8 flex items-center justify-center gap-3">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`mob-${i}`}
+                  initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.15 }}
+                  className="h-16 w-16 rounded-full p-[1.5px]"
+                  style={{
+                    background: IRIDESCENT,
+                    filter: "drop-shadow(0 8px 20px rgba(10,22,56,0.7))",
+                  }}
+                >
+                  <div className="h-full w-full overflow-hidden rounded-full" style={{ background: "#0a1638" }}>
+                    <img
+                      src={f!.publicUrl}
+                      alt={f!.caption ?? ""}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </motion.figure>
+              ))}
+            </div>
+          )}
         </motion.div>
 
         <div aria-hidden className="absolute bottom-0 left-0 right-0 h-px" style={{ background: IRIDESCENT, opacity: 0.5 }} />

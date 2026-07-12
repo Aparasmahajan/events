@@ -109,24 +109,30 @@ export function Hero({ demoCode }: { demoCode: string }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.05 }}
-          className="font-display text-5xl sm:text-7xl leading-[1.05] tracking-tight"
+          className="font-display text-4xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight"
         >
-          Beautiful{" "}
-          <span className="relative inline-block align-baseline" style={{ minWidth: "5.5ch" }}>
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={cur.word}
-                initial={{ y: 28, opacity: 0, filter: "blur(4px)" }}
-                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                exit={{ y: -28, opacity: 0, filter: "blur(4px)" }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                style={{ color: cur.color }}
-                className="inline-block font-display"
-              >
-                {cur.word}
-              </motion.span>
-            </AnimatePresence>
-            <span aria-hidden className="invisible">anniversary</span>
+          {/* First line: "Beautiful [rotating-word]" — kept as one wrap-unit
+           *  so the width is driven by the longest rotation word (see the
+           *  invisible sizer span) and the layout never jitters when the
+           *  animated word crossfades to a wider/narrower one. */}
+          <span className="whitespace-nowrap">
+            Beautiful{" "}
+            <span className="relative inline-block align-baseline">
+              <span aria-hidden className="invisible">anniversary</span>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={cur.word}
+                  initial={{ y: 28, opacity: 0, filter: "blur(4px)" }}
+                  animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                  exit={{ y: -28, opacity: 0, filter: "blur(4px)" }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ color: cur.color }}
+                  className="absolute inset-0 font-display text-center"
+                >
+                  {cur.word}
+                </motion.span>
+              </AnimatePresence>
+            </span>
           </span>
           <br />
           sites, live in minutes.

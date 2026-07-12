@@ -153,6 +153,7 @@ export const EmpyreanTemplate: TemplateComponent = ({ event, subEvents, media })
     "With grace, gratitude, and the quiet blessing of the heavens, we invite you to the joining of our lives.";
   const aboutStory = event.aboutStory?.trim() || "";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
   const hero =
     event.heroImageUrl ||
     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=80";
@@ -176,13 +177,135 @@ export const EmpyreanTemplate: TemplateComponent = ({ event, subEvents, media })
       <CloudField reduce={reduce} />
       <ScrollProgress color={accent} />
 
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28">
         <motion.div style={reduce ? undefined : { scale: heroScale }} className="absolute inset-0">
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-70" />
+          {/* Dark vignette for legibility (Empyrean keeps a lighter alabaster wash on top of it). */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(20,10,4,0.35) 0%, rgba(20,10,4,0.1) 40%, rgba(20,10,4,0.55) 100%), radial-gradient(circle at 50% 40%, transparent 30%, rgba(0,0,0,0.25) 100%)",
+            }}
+          />
           <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(246,244,238,0.35) 0%, rgba(246,244,238,0.15) 40%, rgba(246,244,238,0.9) 100%)" }} />
         </motion.div>
 
+        {/* ─── Sacred frames — art-directed collage of celestial moments.
+         *  Frame 1 is a stained-glass panel with a pointed-arch top; frame 2
+         *  is a halo medallion with a dual-gold ring; frame 3 is a hovering
+         *  marble tile with a faint cream backdrop. On mobile the frames
+         *  collapse into a compact trio of dual-ring circles under the title. */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -20, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.3, ease: EASE }}
+            className="hidden md:block absolute left-[6%] top-[13%] w-40 h-52 lg:w-52 lg:h-64 overflow-hidden"
+            style={{
+              clipPath: "path('M 0 40 Q 0 0 50 0 Q 100 0 100 40 L 100 100 L 0 100 Z')",
+              WebkitClipPath: "path('M 0 40 Q 0 0 50 0 Q 100 0 100 40 L 100 100 L 0 100 Z')",
+              background: `linear-gradient(180deg, rgba(253,252,249,0.9) 0%, rgba(253,252,249,0.65) 100%)`,
+              boxShadow: `inset 0 0 0 1px ${accent}, 0 0 60px -10px rgba(253,252,249,0.7), 0 20px 40px -18px rgba(61,58,53,0.4)`,
+              padding: "6px",
+            }}
+          >
+            <motion.img
+              src={frame1.publicUrl}
+              alt={frame1.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover"
+              style={{
+                clipPath: "path('M 0 34 Q 0 0 50 0 Q 100 0 100 34 L 100 100 L 0 100 Z')",
+                WebkitClipPath: "path('M 0 34 Q 0 0 50 0 Q 100 0 100 34 L 100 100 L 0 100 Z')",
+              }}
+              animate={reduce ? undefined : { y: [0, -6, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <figcaption
+              className="absolute bottom-2 inset-x-0 text-center text-[10px] uppercase tracking-[0.3em]"
+              style={{ color: accent, textShadow: "0 1px 4px rgba(253,252,249,0.9)" }}
+            >
+              {frame1.caption ?? "Sanctum"}
+            </figcaption>
+          </motion.figure>
+        )}
+
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 20, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.55, ease: EASE }}
+            className="hidden md:block absolute right-[7%] top-[20%] w-40 h-40 lg:w-52 lg:h-52 rounded-full overflow-hidden"
+            style={{
+              // Dual gold ring: outer border + gap (via padding) + inner thin ring drawn with box-shadow inset on the inner img wrapper.
+              border: `1.5px solid ${accent}`,
+              padding: "6px",
+              background: "rgba(253,252,249,0.5)",
+              boxShadow: `0 0 0 1px ${accent}22, 0 0 80px -8px rgba(253,252,249,0.8), 0 0 100px -20px ${accent}66, 0 20px 40px -18px rgba(61,58,53,0.35)`,
+            }}
+          >
+            <div
+              className="relative w-full h-full rounded-full overflow-hidden"
+              style={{ boxShadow: `inset 0 0 0 1px ${accent}` }}
+            >
+              <motion.img
+                src={frame2.publicUrl}
+                alt={frame2.caption ?? ""}
+                loading="lazy"
+                className="w-full h-full object-cover"
+                animate={reduce ? undefined : { y: [0, 6, 0] }}
+                transition={{ duration: 7, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <figcaption
+                className="absolute bottom-2 inset-x-0 text-center text-[10px] uppercase tracking-[0.3em]"
+                style={{ color: accent, textShadow: "0 1px 4px rgba(253,252,249,0.9)" }}
+              >
+                {frame2.caption ?? "Halo"}
+              </figcaption>
+            </div>
+          </motion.figure>
+        )}
+
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.8, ease: EASE }}
+            whileHover={reduce ? undefined : { y: -4 }}
+            className="hidden lg:block absolute left-[9%] bottom-[18%] w-44 h-44"
+            style={{
+              background: "rgba(253,252,249,0.85)",
+              padding: "10px",
+              border: `1px solid ${accent}`,
+              boxShadow: `0 30px 50px -20px rgba(61,58,53,0.5), 0 8px 20px -12px rgba(61,58,53,0.4), 0 0 40px -12px ${accent}44`,
+            }}
+          >
+            <motion.img
+              src={frame3.publicUrl}
+              alt={frame3.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover"
+              animate={reduce ? undefined : { y: [0, -4, 0] }}
+              transition={{ duration: 8, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <figcaption
+              className="absolute -bottom-6 inset-x-0 text-center text-[10px] uppercase tracking-[0.3em]"
+              style={{ color: accent }}
+            >
+              {frame3.caption ?? "Marble"}
+            </figcaption>
+          </motion.figure>
+        )}
+
         <motion.div style={reduce ? undefined : { y: heroTextY, opacity: heroOpacity }} className="relative z-10 px-6 text-center">
+          {/* Gold hairline ornament above the title — ✦ between hairlines. */}
+          <div className="mb-6 flex items-center justify-center gap-3 opacity-85">
+            <span className="h-px w-12 sm:w-20" style={{ background: accent }} />
+            <span className="text-base" style={{ color: accent }}>✦</span>
+            <span className="h-px w-12 sm:w-20" style={{ background: accent }} />
+          </div>
+
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -215,11 +338,19 @@ export const EmpyreanTemplate: TemplateComponent = ({ event, subEvents, media })
               </span>
             ))}
           </h1>
+
+          {/* Gold hairline ornament below the title — ☙ between hairlines. */}
+          <div className="mt-8 flex items-center justify-center gap-3 opacity-80">
+            <span className="h-px w-12 sm:w-20" style={{ background: accent }} />
+            <span className="text-base" style={{ color: accent }}>☙</span>
+            <span className="h-px w-12 sm:w-20" style={{ background: accent }} />
+          </div>
+
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 1.2 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-4 text-[11px] uppercase tracking-[0.5em] opacity-70"
+            className="mt-8 flex flex-wrap items-center justify-center gap-4 text-[11px] uppercase tracking-[0.5em] opacity-70"
           >
             {event.mainDate && (
               <span>{new Date(event.mainDate).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</span>
@@ -227,6 +358,39 @@ export const EmpyreanTemplate: TemplateComponent = ({ event, subEvents, media })
             {event.city && <span aria-hidden style={{ color: accent }}>✦</span>}
             {event.city && <span>{event.city}</span>}
           </motion.div>
+
+          {/* Mobile-only compact collage — 3 small dual-ring circles below the title. */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="md:hidden mt-10 flex items-center justify-center gap-4">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`mob-${i}`}
+                  initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.15 }}
+                  className="relative w-16 h-16 rounded-full"
+                  style={{
+                    border: `1.5px solid ${accent}`,
+                    padding: "3px",
+                    background: "rgba(253,252,249,0.6)",
+                    boxShadow: `0 6px 16px -8px rgba(61,58,53,0.5), 0 0 24px -6px ${accent}55`,
+                  }}
+                >
+                  <div
+                    className="w-full h-full rounded-full overflow-hidden"
+                    style={{ boxShadow: `inset 0 0 0 1px ${accent}` }}
+                  >
+                    <img
+                      src={f!.publicUrl}
+                      alt={f!.caption ?? ""}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </motion.figure>
+              ))}
+            </div>
+          )}
         </motion.div>
       </section>
 

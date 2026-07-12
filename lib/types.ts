@@ -96,6 +96,16 @@ export type EventData = {
   hideEvents?: boolean;
   hideGallery?: boolean;
   hideVenue?: boolean;
+
+  /** Opt-in floating photo collage on the hero — small circular / framed
+   *  cutouts from the gallery drift around the hero title. Default
+   *  (undefined/false) = OFF: the hero is just the hero image + title.
+   *  TRUE = show the collage. Customer can toggle it in the editor;
+   *  demos leave it OFF so screenshots show the clean hero. Best used
+   *  with photos of details (rings, dresses, hands, flowers) rather
+   *  than full-body couple portraits. */
+  showHeroFrames?: boolean;
+
   /** Countdown timer visibility. Default (undefined/false) = show. TRUE = hide
    *  the countdown on the live site. Applies to every template. */
   hideTimer?: boolean;

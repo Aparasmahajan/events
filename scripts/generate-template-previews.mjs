@@ -109,6 +109,100 @@ const TEMPLATES = [
   { id: "midnighttokyo", code: "DEMO-MIDNIGHTTOKYO", type: "party" },
 ];
 
+// Full (template → supported event types) map — mirrored from
+// `components/templates/metadata.ts` (each `TemplateMeta.eventTypes`). Kept
+// inline so the script has no runtime dependency on `/api/templates`, which
+// in dev mode may 500 before it has been compiled. If you add a template or
+// change its eventTypes, sync this map or regenerate it via:
+//   npx tsx -e "import('./components/templates/metadata.ts').then(m => console.log(JSON.stringify(Object.fromEntries(m.TEMPLATES_META.map(t => [t.id, t.eventTypes])), null, 2)))"
+const EVENT_TYPES_BY_TEMPLATE = {
+  creatorscanvas: ["wedding", "engagement", "anniversary"],
+  timefracture: ["wedding", "engagement", "anniversary"],
+  gravityzero: ["wedding", "engagement", "anniversary"],
+  memorydimension: ["wedding", "engagement", "anniversary"],
+  infinitycathedral: ["wedding", "engagement", "anniversary"],
+  moonlit: ["wedding", "engagement", "anniversary"],
+  skytemple: ["wedding", "engagement", "anniversary"],
+  oceanpalace: ["wedding", "engagement", "anniversary"],
+  symphony: ["wedding", "anniversary"],
+  empyrean: ["wedding", "engagement", "anniversary"],
+  prism: ["wedding", "engagement", "anniversary"],
+  aurora: ["wedding", "engagement", "anniversary"],
+  obsidian: ["wedding", "engagement", "anniversary"],
+  celestia: ["wedding", "engagement", "anniversary"],
+  royal: ["wedding", "engagement", "anniversary"],
+  minimal: ["wedding", "corporate", "anniversary", "engagement"],
+  modern: ["wedding", "birthday", "corporate", "engagement"],
+  pastel: ["wedding", "engagement", "anniversary", "birthday"],
+  skyrealm: ["wedding", "engagement"],
+  cathedral: ["wedding", "anniversary"],
+  sakura: ["wedding", "engagement"],
+  versailles: ["wedding", "anniversary"],
+  fresco: ["wedding", "anniversary"],
+  mirage: ["wedding", "engagement"],
+  icepalace: ["wedding", "engagement"],
+  galaxyopera: ["wedding", "award-ceremony"],
+  infinity: ["engagement", "anniversary", "wedding"],
+  lovestars: ["engagement", "anniversary", "wedding"],
+  garden: ["engagement", "wedding", "anniversary"],
+  horizon: ["engagement", "anniversary", "wedding"],
+  promise: ["engagement", "anniversary", "wedding"],
+  tworivers: ["engagement", "anniversary", "wedding"],
+  mirrorworlds: ["engagement", "wedding"],
+  infinitytrain: ["engagement", "anniversary", "wedding"],
+  lanterns: ["engagement", "wedding"],
+  glassrose: ["engagement", "anniversary", "wedding"],
+  secretgalaxy: ["engagement", "wedding"],
+  library: ["anniversary", "wedding"],
+  chapters: ["anniversary", "wedding"],
+  timecapsule: ["anniversary"],
+  treeoflife: ["anniversary", "wedding"],
+  endlessclock: ["anniversary"],
+  toybox: ["birthday"],
+  timemachine: ["birthday", "anniversary"],
+  carnival: ["birthday", "party"],
+  dreamfactory: ["birthday"],
+  orbit: ["birthday"],
+  arcade: ["birthday", "party"],
+  vibrant: ["birthday", "engagement", "anniversary", "wedding"],
+  cartoon: ["birthday"],
+  bricktown: ["birthday"],
+  treasure: ["birthday", "party"],
+  themepark: ["birthday", "party"],
+  candyland: ["birthday"],
+  robocity: ["birthday"],
+  spacemission: ["birthday"],
+  jungle: ["birthday", "party"],
+  quantum: ["corporate", "product-launch"],
+  neural: ["corporate", "product-launch"],
+  genesis: ["product-launch", "corporate"],
+  unveil: ["product-launch", "corporate"],
+  nexus: ["product-launch", "corporate"],
+  pinnacle: ["corporate"],
+  immortals: ["award-ceremony", "corporate"],
+  odeon: ["award-ceremony", "corporate"],
+  luminary: ["award-ceremony", "corporate"],
+  digitalcity: ["corporate", "networking-event"],
+  quantumlab: ["corporate", "product-launch"],
+  missioncontrol: ["corporate", "product-launch"],
+  secretlab: ["product-launch"],
+  portal: ["product-launch"],
+  evolution: ["product-launch", "corporate"],
+  goldenuniverse: ["award-ceremony"],
+  halloffame: ["award-ceremony", "corporate"],
+  ecosystem: ["networking-event", "corporate"],
+  constella: ["networking-event", "corporate"],
+  converge: ["networking-event", "corporate"],
+  infinityclub: ["party", "birthday"],
+  metropolis: ["party", "birthday"],
+  after: ["party", "birthday"],
+  synapse: ["networking-event", "corporate"],
+  futurecity: ["networking-event", "corporate"],
+  festival: ["party", "birthday"],
+  neonjungle: ["party"],
+  midnighttokyo: ["party", "birthday"],
+};
+
 // CLI flags (cross-platform — no env-var prefixes needed on Windows):
 //   --mobile          capture a phone-shaped viewport (390×844) instead of 1200×900
 //   --out <dir>       output folder (default depends on --mobile)
@@ -151,15 +245,26 @@ async function main() {
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
 
-  // Fetch each template's full event-type list so we can render a preview per
+  // Each template's supported event types drives one screenshot per
   // (template × event type) — festival's birthday card ≠ its party card.
-  const typeMap = {};
+  // Source of truth is the inline `EVENT_TYPES_BY_TEMPLATE` map (mirrored
+  // from `components/templates/metadata.ts`). We still opportunistically
+  // try `/api/templates` so a running dev server with fresher metadata can
+  // override the inline map — but never fail the run when the endpoint is
+  // down (e.g. before that route has been compiled in dev).
+  const typeMap = { ...EVENT_TYPES_BY_TEMPLATE };
   try {
     const res = await fetch(`${BASE_URL}/api/templates`);
-    const json = await res.json();
-    for (const t of json.templates ?? []) typeMap[t.id] = t.eventTypes ?? [];
+    if (res.ok) {
+      const json = await res.json();
+      for (const t of json.templates ?? []) {
+        if (Array.isArray(t.eventTypes) && t.eventTypes.length) typeMap[t.id] = t.eventTypes;
+      }
+    } else {
+      console.warn(`! /api/templates returned HTTP ${res.status}; falling back to inline map.`);
+    }
   } catch (err) {
-    console.warn(`! Couldn't fetch /api/templates (${err.message}); using each entry's single type.`);
+    console.warn(`! Couldn't fetch /api/templates (${err.message}); falling back to inline map.`);
   }
 
   const browser = await chromium.launch({ headless: true });

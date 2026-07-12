@@ -229,6 +229,20 @@ export const MoonlitTemplate: TemplateComponent = ({ event, subEvents, media }) 
 
   const names = [event.person1Name, event.person2Name].filter(Boolean).join("  ❀  ");
 
+  // Art-directed hero collage — three photos rendered as hanging paper lanterns
+  // (frame1, frame2) and an ancient carved stone gate (frame3). Reinforces the
+  // template's lantern-rise motif; degrades gracefully with < 3 gallery photos.
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
+
+  // Tiny extra lanterns drifting up from the bottom of the hero — deterministic
+  // positions/delays so SSR renders match the client.
+  const HERO_LANTERNS = Array.from({ length: 7 }, (_, i) => ({
+    x: `${(i * 13 + 8) % 92 + 4}%`,
+    delay: i * 0.9,
+    dur: 12 + (i % 3) * 2,
+    size: 10 + (i % 3) * 3,
+  }));
+
   return (
     <div
       className="relative min-h-screen overflow-x-clip bg-[#0d1a2f] font-serif text-[#f0f3f8] antialiased"
@@ -238,10 +252,17 @@ export const MoonlitTemplate: TemplateComponent = ({ event, subEvents, media }) 
       <ScrollProgress color={accent} />
 
       {/* ─── HERO ─── */}
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[680px] items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28">
         <motion.div style={reduce ? undefined : { scale: heroScale }} className="absolute inset-0">
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-35" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0d1a2f] via-[#0d1a2f]/60 to-[#0d1a2f]/30" />
+          {/* Deep midnight-navy vignette */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(13,26,47,0.75) 0%, rgba(13,26,47,0.35) 40%, rgba(13,26,47,0.9) 100%), radial-gradient(circle at 50% 40%, transparent 30%, rgba(6,12,24,0.55) 100%)",
+            }}
+          />
         </motion.div>
 
         <motion.div
@@ -264,7 +285,189 @@ export const MoonlitTemplate: TemplateComponent = ({ event, subEvents, media }) 
           />
         </motion.div>
 
+        {/* ─── Tiny lantern-rise from bottom (deterministic) ─── */}
+        {!reduce && (
+          <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+            {HERO_LANTERNS.map((l, i) => (
+              <motion.span
+                key={`hero-lan-${i}`}
+                className="absolute rounded-[35%]"
+                style={{
+                  left: l.x,
+                  bottom: "-6vh",
+                  width: l.size,
+                  height: l.size * 1.35,
+                  background: "radial-gradient(circle at 50% 40%, #ffe8b8, #f4c67a 55%, #a3722f 100%)",
+                  boxShadow: "0 0 14px #f4c67a, 0 0 30px rgba(244,198,122,0.55)",
+                }}
+                animate={{ y: [0, -700], opacity: [0, 0.9, 0.9, 0] }}
+                transition={{ duration: l.dur, delay: l.delay, repeat: Infinity, ease: "linear", times: [0, 0.15, 0.85, 1] }}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* ─── Frame 1: hanging lantern (top-left) ─── */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.3, ease: EASE }}
+            className="hidden md:block absolute left-[6%] top-[14%] w-40 lg:w-52"
+            style={{ filter: "drop-shadow(0 0 20px rgba(244, 198, 122, 0.5))" }}
+          >
+            {/* Lantern top: loop + trapezoid */}
+            <svg viewBox="0 0 100 34" className="mx-auto block w-16 lg:w-20" aria-hidden>
+              <path d="M50 2 A 4 4 0 1 1 50 10" fill="none" stroke="#f4c67a" strokeWidth="1.2" />
+              <line x1="50" y1="10" x2="50" y2="14" stroke="#f4c67a" strokeWidth="1" />
+              <path d="M28 14 L72 14 L64 30 L36 30 Z" fill="#1a2540" stroke="#f4c67a" strokeWidth="1.2" />
+              <line x1="36" y1="30" x2="64" y2="30" stroke="#f4c67a" strokeWidth="1.2" />
+            </svg>
+            <motion.div
+              className="relative overflow-hidden"
+              style={{
+                border: "1.5px solid #f4c67a",
+                background: "#0d1a2f",
+                boxShadow: "inset 0 0 20px rgba(244,198,122,0.15), 0 20px 40px -12px rgba(0,0,0,0.6)",
+              }}
+              animate={reduce ? undefined : { y: [0, -8, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src={frame1.publicUrl}
+                alt={frame1.caption ?? ""}
+                loading="lazy"
+                className="aspect-[3/4] w-full object-cover"
+              />
+            </motion.div>
+            {/* Lantern base */}
+            <svg viewBox="0 0 100 18" className="mx-auto -mt-px block w-20 lg:w-24" aria-hidden>
+              <path d="M18 0 L82 0 L74 12 L26 12 Z" fill="#1a2540" stroke="#f4c67a" strokeWidth="1.2" />
+              <line x1="40" y1="12" x2="60" y2="12" stroke="#f4c67a" strokeWidth="1" />
+              <line x1="50" y1="12" x2="50" y2="17" stroke="#f4c67a" strokeWidth="0.8" />
+            </svg>
+            <figcaption
+              className="mt-2 text-center text-[10px] uppercase tracking-[0.35em]"
+              style={{ color: "#f4c67a", textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}
+            >
+              {frame1.caption ?? "Lantern I"}
+            </figcaption>
+          </motion.figure>
+        )}
+
+        {/* ─── Frame 2: hanging lantern (top-right), larger, opposite drift ─── */}
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.55, ease: EASE }}
+            className="hidden md:block absolute right-[7%] top-[24%] w-44 lg:w-60"
+            style={{ filter: "drop-shadow(0 0 22px rgba(244, 198, 122, 0.55))" }}
+          >
+            <svg viewBox="0 0 100 34" className="mx-auto block w-16 lg:w-20" aria-hidden>
+              <path d="M50 2 A 4 4 0 1 1 50 10" fill="none" stroke="#f4c67a" strokeWidth="1.2" />
+              <line x1="50" y1="10" x2="50" y2="14" stroke="#f4c67a" strokeWidth="1" />
+              <path d="M26 14 L74 14 L66 30 L34 30 Z" fill="#1a2540" stroke="#f4c67a" strokeWidth="1.2" />
+              <line x1="34" y1="30" x2="66" y2="30" stroke="#f4c67a" strokeWidth="1.2" />
+            </svg>
+            <motion.div
+              className="relative overflow-hidden"
+              style={{
+                border: "1.5px solid #f4c67a",
+                background: "#0d1a2f",
+                boxShadow: "inset 0 0 22px rgba(244,198,122,0.18), 0 22px 44px -12px rgba(0,0,0,0.65)",
+              }}
+              animate={reduce ? undefined : { y: [0, -8, 0] }}
+              transition={{ duration: 6.5, delay: 1.2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src={frame2.publicUrl}
+                alt={frame2.caption ?? ""}
+                loading="lazy"
+                className="aspect-[3/4] w-full object-cover"
+              />
+            </motion.div>
+            <svg viewBox="0 0 100 18" className="mx-auto -mt-px block w-24 lg:w-28" aria-hidden>
+              <path d="M16 0 L84 0 L76 12 L24 12 Z" fill="#1a2540" stroke="#f4c67a" strokeWidth="1.2" />
+              <line x1="38" y1="12" x2="62" y2="12" stroke="#f4c67a" strokeWidth="1" />
+              <line x1="50" y1="12" x2="50" y2="17" stroke="#f4c67a" strokeWidth="0.8" />
+            </svg>
+            <figcaption
+              className="mt-2 text-center text-[10px] uppercase tracking-[0.35em]"
+              style={{ color: "#f4c67a", textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}
+            >
+              {frame2.caption ?? "Lantern II"}
+            </figcaption>
+          </motion.figure>
+        )}
+
+        {/* ─── Frame 3: carved stone gate (bottom-left) ─── */}
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 30, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.8, ease: EASE }}
+            className="hidden lg:block absolute left-[9%] bottom-[14%] w-44"
+            style={{ filter: "drop-shadow(0 0 18px rgba(200,212,232,0.35))" }}
+          >
+            {/* Stone arch top with etched runes */}
+            <svg viewBox="0 0 100 32" className="block w-full" aria-hidden>
+              <path
+                d="M6 32 L6 20 A 44 44 0 0 1 94 20 L94 32 Z"
+                fill="#1a2540"
+                stroke="#c8d4e8"
+                strokeWidth="1.2"
+              />
+              <circle cx="30" cy="18" r="0.9" fill="#c8d4e8" />
+              <circle cx="50" cy="12" r="0.9" fill="#c8d4e8" />
+              <circle cx="70" cy="18" r="0.9" fill="#c8d4e8" />
+              <line x1="20" y1="24" x2="26" y2="24" stroke="#c8d4e8" strokeWidth="0.6" />
+              <line x1="74" y1="24" x2="80" y2="24" stroke="#c8d4e8" strokeWidth="0.6" />
+            </svg>
+            <div
+              className="relative overflow-hidden"
+              style={{
+                border: "1.5px solid #c8d4e8",
+                borderTop: "none",
+                borderBottom: "none",
+                background: "#0d1a2f",
+                boxShadow: "inset 0 0 20px rgba(200,212,232,0.1), 0 24px 48px -12px rgba(0,0,0,0.7)",
+              }}
+            >
+              <img
+                src={frame3.publicUrl}
+                alt={frame3.caption ?? ""}
+                loading="lazy"
+                className="aspect-[3/4] w-full object-cover"
+              />
+            </div>
+            {/* Stone base */}
+            <svg viewBox="0 0 100 12" className="block w-full" aria-hidden>
+              <path d="M2 0 L98 0 L98 10 L2 10 Z" fill="#1a2540" stroke="#c8d4e8" strokeWidth="1.2" />
+              <line x1="20" y1="5" x2="80" y2="5" stroke="#c8d4e8" strokeWidth="0.4" opacity="0.6" />
+            </svg>
+            <figcaption
+              className="mt-2 text-center text-[10px] uppercase tracking-[0.35em]"
+              style={{ color: "#c8d4e8", textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}
+            >
+              {frame3.caption ?? "The Gate"}
+            </figcaption>
+          </motion.figure>
+        )}
+
         <motion.div style={reduce ? undefined : { y: heroTextY, opacity: heroOpacity }} className="relative z-10 px-6 text-center">
+          {/* Crescent moon ornament above title */}
+          <div className="mb-4 flex items-center justify-center gap-3 opacity-80">
+            <span className="h-px w-10 sm:w-16" style={{ background: `${accent}88` }} />
+            <span
+              className="text-xl"
+              style={{ color: "#f0f3f8", filter: "drop-shadow(0 0 8px rgba(200,212,232,0.6))" }}
+            >
+              ☾
+            </span>
+            <span className="h-px w-10 sm:w-16" style={{ background: `${accent}88` }} />
+          </div>
+
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -281,6 +484,19 @@ export const MoonlitTemplate: TemplateComponent = ({ event, subEvents, media }) 
               </span>
             ))}
           </h1>
+
+          {/* Four-point star ornament below title */}
+          <div className="mt-6 flex items-center justify-center gap-3 opacity-70">
+            <span className="h-px w-14 sm:w-20" style={{ background: `${accent}66` }} />
+            <span
+              className="text-sm"
+              style={{ color: "#f0f3f8", filter: "drop-shadow(0 0 6px rgba(200,212,232,0.5))" }}
+            >
+              ⋆
+            </span>
+            <span className="h-px w-14 sm:w-20" style={{ background: `${accent}66` }} />
+          </div>
+
           {names && (
             <motion.p
               initial={reduce ? false : { opacity: 0 }}
@@ -305,6 +521,46 @@ export const MoonlitTemplate: TemplateComponent = ({ event, subEvents, media }) 
             {event.mainStartTime && <span>{event.mainStartTime}</span>}
             {event.city && <><span className="opacity-60">❀</span><span>{event.city}</span></>}
           </motion.div>
+
+          {/* Mobile-only compact lantern-thumb row (desktop frames are hidden) */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="mt-10 flex items-start justify-center gap-4 md:hidden">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`mob-${i}`}
+                  initial={reduce ? false : { opacity: 0, scale: 0.6, y: -6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.15 }}
+                  className="w-20"
+                  style={{ filter: "drop-shadow(0 0 12px rgba(244, 198, 122, 0.45))" }}
+                >
+                  <svg viewBox="0 0 100 22" className="mx-auto block w-10" aria-hidden>
+                    <path d="M50 2 A 3 3 0 1 1 50 8" fill="none" stroke="#f4c67a" strokeWidth="1.2" />
+                    <line x1="50" y1="8" x2="50" y2="10" stroke="#f4c67a" strokeWidth="1" />
+                    <path d="M30 10 L70 10 L62 20 L38 20 Z" fill="#1a2540" stroke="#f4c67a" strokeWidth="1.2" />
+                  </svg>
+                  <div
+                    className="overflow-hidden"
+                    style={{
+                      border: "1.2px solid #f4c67a",
+                      background: "#0d1a2f",
+                      boxShadow: "0 8px 20px -8px rgba(0,0,0,0.7)",
+                    }}
+                  >
+                    <img
+                      src={f!.publicUrl}
+                      alt={f!.caption ?? ""}
+                      loading="lazy"
+                      className="aspect-[3/4] w-full object-cover"
+                    />
+                  </div>
+                  <svg viewBox="0 0 100 12" className="mx-auto -mt-px block w-12" aria-hidden>
+                    <path d="M22 0 L78 0 L70 8 L30 8 Z" fill="#1a2540" stroke="#f4c67a" strokeWidth="1.2" />
+                  </svg>
+                </motion.figure>
+              ))}
+            </div>
+          )}
         </motion.div>
       </section>
 

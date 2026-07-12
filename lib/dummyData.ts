@@ -21,6 +21,52 @@ const SAMPLES = {
   coupleHands: UNSPLASH("photo-1525258946800-98cfd641d0de", 1200),
   conference: UNSPLASH("photo-1540575467063-178a50c2df87", 1200),
   confetti: UNSPLASH("photo-1530103862676-de8c9debad1d", 1200),
+  // Indian / Hindu wedding photos — the platform's primary market. Hosted
+  // locally in public/samples/ because Wikimedia rate-limits hotlinks and
+  // Unsplash's random-ID scheme kept giving us false positives.
+  //
+  // DEMO POLICY: only *non-people* ritual/decoration photos are used in
+  // demos and gallery (customers upload their own pre-wedding-shoot photos
+  // for the people shots). The `indianCouple`/`indianBride`/etc. entries
+  // remain here so templates that reference them by name don't break, but
+  // are not used by `indianWeddingGallery()` below.
+  indianMandap: "/samples/indian-mandap.jpg",
+  indianMandapDecor: "/samples/indian-mandap-decor.jpg",
+  indianMandapFlowers: "/samples/mandap-flowers.jpg",
+  indianMehndi: "/samples/mehndi-hands.jpg",
+  indianMehndiDetail: "/samples/mehndi-detail.jpg",
+  indianLotus: "/samples/lotus-decor.jpg",
+  indianRangoli: "/samples/rangoli.jpg",
+  indianDiya: "/samples/diya-lamps.jpg",
+  indianFlowers: "/samples/wedding-flowers.jpg",
+  indianPuja: "/samples/puja-offerings.jpg",
+  indianFire: "/samples/indian-fire.jpg",
+  // Variety hero photos — universal wedding details / atmospheric shots
+  // that imply human joy without showing specific faces. Used to give
+  // each wedding template a distinct hero matching its aesthetic.
+  weddingRingsRoses: "/samples/rings-roses.jpg",
+  weddingShoes: "/samples/wedding-shoes.jpg",
+  bridalLehenga: "/samples/bridal-lehenga.jpg",
+  weddingCake: "/samples/wedding-cake.jpg",
+  chandelier: "/samples/chandelier.jpg",
+  stainedGlass: "/samples/stained-glass.jpg",
+  auroraSky: "/samples/aurora-sky.jpg",
+  sakuraBranch: "/samples/sakura-branch.jpg",
+  desertDunes: "/samples/desert-dunes.jpg",
+  marbleColumns: "/samples/marble-columns.jpg",
+  coralReef: "/samples/coral-reef.jpg",
+  roseWindow: "/samples/rose-window.jpg",
+  // People-shots — retained for back-compat with any template that reads
+  // them by name, but NOT surfaced in the demo gallery. Customers replace
+  // these with their own pre-wedding shoot.
+  indianCouple: "/samples/indian-couple.jpg",
+  indianBride: "/samples/indian-bride.jpg",
+  indianVarmala: "/samples/indian-varmala.jpg",
+  indianVarmalaRitual: "/samples/indian-varmala-ritual.jpg",
+  indianJaimala: "/samples/indian-jaimala.jpg",
+  indianSaatPhere: "/samples/indian-saat-phere.jpg",
+  indianCeremony: "/samples/indian-ceremony.jpg",
+  indianBrideGroom: "/samples/indian-bride-groom.jpg",
 } as const;
 
 export type DemoBundle = {
@@ -54,6 +100,43 @@ function hero(code: string, id: string): MediaItem {
   };
 }
 
+// Same shape as `hero()` but takes a full URL — used when the hero image
+// lives outside Unsplash (e.g. Wikimedia Commons for the Indian wedding demo).
+function heroUrl(code: string, url: string): MediaItem {
+  return {
+    eventCode: code,
+    mediaType: "image",
+    section: "hero",
+    fileName: "hero.jpg",
+    publicUrl: url,
+    sortOrder: 0,
+  };
+}
+
+// Curated 8-photo Indian wedding gallery reused across every wedding demo.
+// Order matters: the first three feed art-directed hero collages downstream
+// (circular medallion + circular medallion + polaroid detail).
+// Curated 8-photo demo gallery — ritual + decoration details only, no faces.
+// Customers upload their own pre-wedding-shoot people photos through the
+// editor; the demo shows what a *decorated* wedding site looks like without
+// pretending to be a specific couple.
+function indianWeddingGallery(
+  code: string,
+  extra?: { url: string; caption?: string }[],
+): MediaItem[] {
+  return gallery(code, [
+    { url: SAMPLES.indianMehndi, caption: "Mehndi" },
+    { url: SAMPLES.indianMandapFlowers, caption: "Mandap" },
+    { url: SAMPLES.indianFire, caption: "The sacred fire" },
+    { url: SAMPLES.indianFlowers, caption: "Flowers" },
+    { url: SAMPLES.indianRangoli, caption: "Rangoli" },
+    { url: SAMPLES.indianDiya, caption: "Diyas" },
+    { url: SAMPLES.indianLotus, caption: "Lotus buds" },
+    { url: SAMPLES.indianPuja, caption: "Puja thali" },
+    ...(extra ?? []),
+  ]);
+}
+
 // ---------- ROYAL — WED-2026-0001 ----------
 
 const ROYAL_CODE = "DEMO-ROYAL";
@@ -62,15 +145,14 @@ const royal: DemoBundle = {
     eventCode: ROYAL_CODE,
     eventType: "wedding",
     templateId: "royal",
-    eventTitle: "Rahul weds Priya",
-    person1Name: "Rahul",
-    person2Name: "Priya",
+    eventTitle: "The Groom weds The Bride",
+    person1Name: "The Groom",
+    person2Name: "The Bride",
     tentativeDate: "2026-12-14",
     city: "Udaipur",
     isActive: true,
     slug: ROYAL_CODE,
-    heroImageUrl: UNSPLASH("photo-1519741497674-611481863552"),
-    tagline: "Two souls. One forever.",
+    heroImageUrl: SAMPLES.indianMandap, tagline: "Two souls. One forever.",
     invitationMessage:
       "With the blessings of our families, we joyfully invite you to celebrate the beginning of our forever.",
     aboutStory:
@@ -99,17 +181,8 @@ const royal: DemoBundle = {
     { eventCode: ROYAL_CODE, order: 5, name: "Reception", date: "2026-12-15", startTime: "20:00", endTime: "00:00", venueName: "Grand Ballroom", venueAddress: "Lake Pichola, Udaipur", dressCode: "Black-tie / Indo-western", description: "Cocktails, dinner and dancing.", icon: "🥂" },
   ],
   media: [
-    hero(ROYAL_CODE, "photo-1519741497674-611481863552"),
-    ...gallery(ROYAL_CODE, [
-      { url: SAMPLES.coupleEmbrace, caption: "First look" },
-      { url: SAMPLES.weddingScene, caption: "Mandap" },
-      { url: SAMPLES.coupleBehind, caption: "Family" },
-      { url: SAMPLES.ringsClose, caption: "Pheras" },
-      { url: SAMPLES.pinkFlowers, caption: "Reception" },
-      { url: SAMPLES.bouquet, caption: "Bride" },
-      { url: SAMPLES.coupleHands, caption: "Groom" },
-      { url: SAMPLES.coupleSunset, caption: "Together" },
-    ]),
+    heroUrl(ROYAL_CODE, SAMPLES.indianMandap),
+    ...indianWeddingGallery(ROYAL_CODE),
   ],
 };
 
@@ -128,8 +201,7 @@ const minimal: DemoBundle = {
     city: "Goa",
     isActive: true,
     slug: MINIMAL_CODE,
-    heroImageUrl: UNSPLASH("photo-1511795409834-ef04bbd61622"),
-    tagline: "A quiet kind of joy.",
+    heroImageUrl: SAMPLES.weddingShoes, tagline: "A quiet kind of joy.",
     invitationMessage:
       "Two of us, our closest people, the sea. We'd love you to be there.",
     aboutStory:
@@ -153,13 +225,8 @@ const minimal: DemoBundle = {
     { eventCode: MINIMAL_CODE, order: 3, name: "Dinner", date: "2026-11-08", startTime: "19:30", endTime: "22:00", venueName: "Long table on the terrace", venueAddress: "Casa da Praia, Anjuna", description: "One long table, candlelight, the people we love.", icon: "🕯️" },
   ],
   media: [
-    hero(MINIMAL_CODE, "photo-1511795409834-ef04bbd61622"),
-    ...gallery(MINIMAL_CODE, [
-      { url: SAMPLES.coupleSunset, caption: "Together" },
-      { url: SAMPLES.weddingRings, caption: "Slow morning" },
-      { url: SAMPLES.coupleHands, caption: "First look" },
-      { url: SAMPLES.bouquet, caption: "By the sea" },
-    ]),
+    heroUrl(MINIMAL_CODE, SAMPLES.indianCouple),
+    ...indianWeddingGallery(MINIMAL_CODE),
   ],
 };
 
@@ -329,8 +396,7 @@ const aurora: DemoBundle = {
     city: "Udaipur",
     isActive: true,
     slug: AURORA_CODE,
-    heroImageUrl: UNSPLASH("photo-1606216794074-735e91aa2c92"),
-    tagline: "Two orbits, one light.",
+    heroImageUrl: SAMPLES.auroraSky, tagline: "Two orbits, one light.",
     invitationMessage:
       "Beneath a sky we'll never forget, we ask you to witness the night two stories become one.",
     aboutStory:
@@ -356,17 +422,8 @@ const aurora: DemoBundle = {
     { eventCode: AURORA_CODE, order: 4, name: "Aurora Reception", date: "2026-12-20", startTime: "21:00", endTime: "23:59", venueName: "Skyfield Lawn", venueAddress: "Udaipur", dressCode: "Cocktail", description: "Champagne, light installations and dancing until the stars give up.", icon: "🥂" },
   ],
   media: [
-    hero(AURORA_CODE, "photo-1606216794074-735e91aa2c92"),
-    ...gallery(AURORA_CODE, [
-      { url: SAMPLES.coupleBehind, caption: "The long way round" },
-      { url: SAMPLES.coupleEmbrace, caption: "Certainty" },
-      { url: SAMPLES.coupleSunset, caption: "Golden hour" },
-      { url: SAMPLES.weddingScene, caption: "The pavilion" },
-      { url: SAMPLES.ringsClose, caption: "The promise" },
-      { url: SAMPLES.coupleHands, caption: "Held" },
-      { url: SAMPLES.bouquet, caption: "Bloom" },
-      { url: SAMPLES.pinkFlowers, caption: "After" },
-    ]),
+    heroUrl(AURORA_CODE, SAMPLES.indianCeremony),
+    ...indianWeddingGallery(AURORA_CODE),
   ],
 };
 
@@ -385,8 +442,7 @@ const obsidian: DemoBundle = {
     city: "Mumbai",
     isActive: true,
     slug: OBSIDIAN_CODE,
-    heroImageUrl: UNSPLASH("photo-1519225421980-715cb0215aed"),
-    tagline: "An evening, in acts.",
+    heroImageUrl: SAMPLES.chandelier, tagline: "An evening, in acts.",
     invitationMessage:
       "No grand announcement. Only the people who matter, in a room that will remember the night.",
     aboutStory:
@@ -411,15 +467,8 @@ const obsidian: DemoBundle = {
     { eventCode: OBSIDIAN_CODE, order: 4, name: "After Dark", date: "2026-11-21", startTime: "22:30", endTime: "23:59", venueName: "The Vault", description: "The lights drop. The room opens.", icon: "♫" },
   ],
   media: [
-    hero(OBSIDIAN_CODE, "photo-1519225421980-715cb0215aed"),
-    ...gallery(OBSIDIAN_CODE, [
-      { url: SAMPLES.coupleEmbrace, caption: "01 — The look" },
-      { url: SAMPLES.weddingScene, caption: "02 — The room" },
-      { url: SAMPLES.coupleBehind, caption: "03 — The exit" },
-      { url: SAMPLES.ringsClose, caption: "04 — The vow" },
-      { url: SAMPLES.coupleHands, caption: "05 — Held" },
-      { url: SAMPLES.coupleSunset, caption: "06 — After" },
-    ]),
+    heroUrl(OBSIDIAN_CODE, SAMPLES.indianSaatPhere),
+    ...indianWeddingGallery(OBSIDIAN_CODE),
   ],
 };
 
@@ -438,8 +487,7 @@ const celestia: DemoBundle = {
     city: "Pondicherry",
     isActive: true,
     slug: CELESTIA_CODE,
-    heroImageUrl: UNSPLASH("photo-1465495976277-4387d4b0b4c6"),
-    tagline: "Written in the stars.",
+    heroImageUrl: SAMPLES.indianLotus, tagline: "Written in the stars.",
     invitationMessage:
       "Somewhere between a wish and a certainty, we found each other — and we'd love you there when we make it real.",
     aboutStory:
@@ -463,15 +511,8 @@ const celestia: DemoBundle = {
     { eventCode: CELESTIA_CODE, order: 3, name: "Dinner Under Stars", date: "2026-10-04", startTime: "19:00", endTime: "22:00", venueName: "Courtyard", description: "Long tables, fairy lights, a sky full of reasons.", icon: "✧" },
   ],
   media: [
-    hero(CELESTIA_CODE, "photo-1465495976277-4387d4b0b4c6"),
-    ...gallery(CELESTIA_CODE, [
-      { url: SAMPLES.pinkFlowers, caption: "Bloom" },
-      { url: SAMPLES.coupleSunset, caption: "Orbit" },
-      { url: SAMPLES.bouquet, caption: "Gather" },
-      { url: SAMPLES.coupleEmbrace, caption: "Certainty" },
-      { url: SAMPLES.weddingRings, caption: "Promise" },
-      { url: SAMPLES.coupleHands, caption: "Held" },
-    ]),
+    heroUrl(CELESTIA_CODE, SAMPLES.indianVarmalaRitual),
+    ...indianWeddingGallery(CELESTIA_CODE),
   ],
 };
 
@@ -697,8 +738,7 @@ const empyrean: DemoBundle = {
     city: "Rome",
     isActive: true,
     slug: EMPYREAN_CODE,
-    heroImageUrl: SAMPLES.coupleSunset,
-    tagline: "A love ascending.",
+    heroImageUrl: SAMPLES.marbleColumns, tagline: "A love ascending.",
     invitationMessage:
       "Beneath a sky that has watched every love that came before ours, we invite you to witness the one we are making now.",
     aboutStory:
@@ -722,15 +762,8 @@ const empyrean: DemoBundle = {
     { eventCode: EMPYREAN_CODE, order: 3, name: "Reception", date: "2026-11-14", startTime: "19:00", endTime: "22:00", venueName: "Villa Aurelia", dressCode: "Black-tie", description: "Dinner by candlelight in the marble hall.", icon: "♛" },
   ],
   media: [
-    hero(EMPYREAN_CODE, "photo-1519741497674-611481863552"),
-    ...gallery(EMPYREAN_CODE, [
-      { url: SAMPLES.coupleEmbrace, caption: "The vow" },
-      { url: SAMPLES.weddingRings, caption: "The rings" },
-      { url: SAMPLES.coupleBehind, caption: "Ascension" },
-      { url: SAMPLES.coupleSunset, caption: "Golden hour" },
-      { url: SAMPLES.pinkFlowers, caption: "Marble" },
-      { url: SAMPLES.bouquet, caption: "Bouquet" },
-    ]),
+    heroUrl(EMPYREAN_CODE, SAMPLES.indianMandapDecor),
+    ...indianWeddingGallery(EMPYREAN_CODE),
   ],
 };
 
@@ -749,8 +782,7 @@ const prism: DemoBundle = {
     city: "Copenhagen",
     isActive: true,
     slug: PRISM_CODE,
-    heroImageUrl: SAMPLES.coupleEmbrace,
-    tagline: "Light meets light.",
+    heroImageUrl: SAMPLES.stainedGlass, tagline: "Light meets light.",
     invitationMessage:
       "Light bends. Colors emerge. Two lives, refracted through one moment — we would love you there when it happens.",
     aboutStory:
@@ -774,14 +806,8 @@ const prism: DemoBundle = {
     { eventCode: PRISM_CODE, order: 3, name: "Reception", date: "2026-09-05", startTime: "19:00", endTime: "23:00", venueName: "Refshaleøen", description: "A long table under rainbow-refraction lighting.", icon: "✦" },
   ],
   media: [
-    hero(PRISM_CODE, "photo-1519225421980-715cb0215aed"),
-    ...gallery(PRISM_CODE, [
-      { url: SAMPLES.ringsClose, caption: "Refraction" },
-      { url: SAMPLES.coupleHands, caption: "Prism" },
-      { url: SAMPLES.coupleBehind, caption: "Light bend" },
-      { url: SAMPLES.weddingRings, caption: "Facets" },
-      { url: SAMPLES.coupleSunset, caption: "Iridescence" },
-    ]),
+    heroUrl(PRISM_CODE, SAMPLES.indianBride),
+    ...indianWeddingGallery(PRISM_CODE),
   ],
 };
 
@@ -1189,7 +1215,7 @@ const moonlit: DemoBundle = {
     eventCode: MOONLIT_CODE, eventType: "wedding", templateId: "moonlit",
     eventTitle: "Yuvraj & Ishika", person1Name: "Yuvraj", person2Name: "Ishika",
     tentativeDate: "2026-11-15", city: "Jaisalmer", isActive: true, slug: MOONLIT_CODE,
-    heroImageUrl: SAMPLES.coupleEmbrace, tagline: "Under one silver sky.",
+    heroImageUrl: SAMPLES.indianDiya, tagline: "Under one silver sky.",
     invitationMessage: "Beneath a moon that has lit every love before ours, and every kingdom before ours, we invite you into the night we've been walking toward.",
     aboutStory: "Two names carved into a glowing stone gate. A pathway lit by ten thousand candles. A kingdom holding its breath for the words that turn a promise into a covenant.",
     mainDate: "2026-11-15", mainStartTime: "19:00", mainEndTime: "23:59",
@@ -1203,12 +1229,7 @@ const moonlit: DemoBundle = {
     { eventCode: MOONLIT_CODE, order: 2, name: "The Vow", date: "2026-11-15", startTime: "20:00", endTime: "21:30", venueName: "Moon Pavilion", dressCode: "Ivory & silver", description: "Pheras beneath a full moon.", icon: "🌕" },
     { eventCode: MOONLIT_CODE, order: 3, name: "The Long Table", date: "2026-11-15", startTime: "22:00", endTime: "23:59", venueName: "Candle Corridor", description: "Dinner along a corridor of ten thousand candles.", icon: "🕯" },
   ],
-  media: [hero(MOONLIT_CODE, "photo-1519741497674-611481863552"), ...gallery(MOONLIT_CODE, [
-    { url: SAMPLES.coupleEmbrace, caption: "Silver light" },
-    { url: SAMPLES.coupleBehind, caption: "The path" },
-    { url: SAMPLES.coupleSunset, caption: "Moonrise" },
-    { url: SAMPLES.weddingScene, caption: "The gate" },
-  ])],
+  media: [heroUrl(MOONLIT_CODE, SAMPLES.indianFire), ...indianWeddingGallery(MOONLIT_CODE)],
 };
 
 const SKYTEMPLE_CODE = "DEMO-SKYTEMPLE";
@@ -1217,7 +1238,7 @@ const skytemple: DemoBundle = {
     eventCode: SKYTEMPLE_CODE, eventType: "wedding", templateId: "skytemple",
     eventTitle: "Advait & Divya", person1Name: "Advait", person2Name: "Divya",
     tentativeDate: "2026-10-11", city: "Santorini", isActive: true, slug: SKYTEMPLE_CODE,
-    heroImageUrl: SAMPLES.coupleSunset, tagline: "A wedding among the gods.",
+    heroImageUrl: SAMPLES.indianMandapDecor, tagline: "A wedding among the gods.",
     invitationMessage: "Above the world we knew, we found a room the sky agreed to hold for us. Come stand in it while we make our promise.",
     aboutStory: "Doors of marble opening onto cloud, a bridge of light between the two of us, and a small orchestra somewhere behind the sun. This is the day the sky lends us its temples.",
     mainDate: "2026-10-11", mainStartTime: "17:00", mainEndTime: "23:00",
@@ -1231,10 +1252,7 @@ const skytemple: DemoBundle = {
     { eventCode: SKYTEMPLE_CODE, order: 2, name: "The Ceremony", date: "2026-10-11", startTime: "18:00", endTime: "19:30", venueName: "Sky Terrace", dressCode: "Ivory & gold", description: "Vows exchanged on a bridge above the clouds.", icon: "✦" },
     { eventCode: SKYTEMPLE_CODE, order: 3, name: "Feast Above the Clouds", date: "2026-10-11", startTime: "20:00", endTime: "23:00", venueName: "The Sanctuary", description: "A long dinner among the temples.", icon: "🕊" },
   ],
-  media: [hero(SKYTEMPLE_CODE, "photo-1519741497674-611481863552"), ...gallery(SKYTEMPLE_CODE, [
-    { url: SAMPLES.coupleSunset, caption: "Ascent" }, { url: SAMPLES.coupleEmbrace, caption: "The vow" },
-    { url: SAMPLES.pinkFlowers, caption: "Clouds" }, { url: SAMPLES.coupleBehind, caption: "The bridge" },
-  ])],
+  media: [heroUrl(SKYTEMPLE_CODE, SAMPLES.indianMandap), ...indianWeddingGallery(SKYTEMPLE_CODE)],
 };
 
 const OCEANPALACE_CODE = "DEMO-OCEANPALACE";
@@ -1243,7 +1261,7 @@ const oceanpalace: DemoBundle = {
     eventCode: OCEANPALACE_CODE, eventType: "wedding", templateId: "oceanpalace",
     eventTitle: "Vihaan & Anaya", person1Name: "Vihaan", person2Name: "Anaya",
     tentativeDate: "2026-08-22", city: "Maldives", isActive: true, slug: OCEANPALACE_CODE,
-    heroImageUrl: SAMPLES.coupleHands, tagline: "Two tides, one shore.",
+    heroImageUrl: SAMPLES.coralReef, tagline: "Two tides, one shore.",
     invitationMessage: "Somewhere between the surface and the deep, the light writes its own kind of vow. Come see it with us.",
     aboutStory: "A palace nobody built and everyone can feel. The room hums like a shell. Every promise arrives on a slow current.",
     mainDate: "2026-08-22", mainStartTime: "16:00", mainEndTime: "22:00",
@@ -1257,10 +1275,7 @@ const oceanpalace: DemoBundle = {
     { eventCode: OCEANPALACE_CODE, order: 2, name: "The Ceremony", date: "2026-08-22", startTime: "16:00", endTime: "17:30", venueName: "Reef Deck", dressCode: "Aquamarine & pearl", description: "Vows over the water at high tide.", icon: "🌊" },
     { eventCode: OCEANPALACE_CODE, order: 3, name: "Bioluminescent Dinner", date: "2026-08-22", startTime: "19:00", endTime: "22:00", venueName: "The Lagoon", description: "Long table lit by the water itself.", icon: "✧" },
   ],
-  media: [hero(OCEANPALACE_CODE, "photo-1465495976277-4387d4b0b4c6"), ...gallery(OCEANPALACE_CODE, [
-    { url: SAMPLES.coupleHands, caption: "Beneath the surface" }, { url: SAMPLES.coupleSunset, caption: "Golden water" },
-    { url: SAMPLES.coupleEmbrace, caption: "Two tides" }, { url: SAMPLES.pinkFlowers, caption: "Coral" },
-  ])],
+  media: [heroUrl(OCEANPALACE_CODE, SAMPLES.indianBride), ...indianWeddingGallery(OCEANPALACE_CODE)],
 };
 
 const SYMPHONY_CODE = "DEMO-SYMPHONY";
@@ -1269,7 +1284,7 @@ const symphony: DemoBundle = {
     eventCode: SYMPHONY_CODE, eventType: "wedding", templateId: "symphony",
     eventTitle: "Rehan & Zoya", person1Name: "Rehan", person2Name: "Zoya",
     tentativeDate: "2026-09-27", city: "Vienna", isActive: true, slug: SYMPHONY_CODE,
-    heroImageUrl: SAMPLES.coupleBehind, tagline: "In four movements.",
+    heroImageUrl: SAMPLES.indianFire, tagline: "In four movements.",
     invitationMessage: "Every love has a score. Ours has been rehearsing since the day we met. Come hear the first performance.",
     aboutStory: "Movement I — the meeting. Movement II — the long slow verse. Movement III — the crescendo. Movement IV — you, walking down the aisle, all instruments held on the same note.",
     mainDate: "2026-09-27", mainStartTime: "18:00", mainEndTime: "23:00",
@@ -1284,10 +1299,7 @@ const symphony: DemoBundle = {
     { eventCode: SYMPHONY_CODE, order: 3, name: "III — Feast", date: "2026-09-27", startTime: "20:30", endTime: "22:00", venueName: "The Long Room", description: "Dinner scored by the full ensemble.", icon: "♬" },
     { eventCode: SYMPHONY_CODE, order: 4, name: "IV — Finale", date: "2026-09-27", startTime: "22:00", endTime: "23:00", venueName: "The Ballroom", description: "The last movement is a dance.", icon: "♩" },
   ],
-  media: [hero(SYMPHONY_CODE, "photo-1606216794074-735e91aa2c92"), ...gallery(SYMPHONY_CODE, [
-    { url: SAMPLES.coupleBehind, caption: "Prelude" }, { url: SAMPLES.coupleEmbrace, caption: "Crescendo" },
-    { url: SAMPLES.weddingScene, caption: "Hall" }, { url: SAMPLES.coupleSunset, caption: "Finale" },
-  ])],
+  media: [heroUrl(SYMPHONY_CODE, SAMPLES.indianCeremony), ...indianWeddingGallery(SYMPHONY_CODE)],
 };
 
 const INFINITY_CODE = "DEMO-INFINITY";
@@ -1646,7 +1658,7 @@ const skyrealm: DemoBundle = {
     eventCode: SKYREALM_CODE, eventType: "wedding", templateId: "skyrealm",
     eventTitle: "Aarav & Niyati", person1Name: "Aarav", person2Name: "Niyati",
     tentativeDate: "2026-09-19", city: "Interlaken", isActive: true, slug: SKYREALM_CODE,
-    heroImageUrl: SAMPLES.coupleSunset, tagline: "Above the world, together.",
+    heroImageUrl: SAMPLES.indianMandapFlowers, tagline: "Above the world, together.",
     invitationMessage: "We found a place above the clouds where two islands meet by one bridge. Come cross it with us.",
     aboutStory: "Two islands drifted on separate winds for years. Then a marble bridge appeared between them, and the golden birds started circling like they'd been expecting this.",
     mainDate: "2026-09-19", mainStartTime: "16:00", mainEndTime: "22:00",
@@ -1660,10 +1672,7 @@ const skyrealm: DemoBundle = {
     { eventCode: SKYREALM_CODE, order: 2, name: "The Bridge Ceremony", date: "2026-09-19", startTime: "17:30", endTime: "19:00", venueName: "Sky Terrace", dressCode: "Sky blue & ivory", description: "Vows on the bridge between two kingdoms.", icon: "🕊" },
     { eventCode: SKYREALM_CODE, order: 3, name: "Dinner in the Clouds", date: "2026-09-19", startTime: "19:30", endTime: "22:00", venueName: "The Pavilion", description: "A long table with the Alps for wallpaper.", icon: "✦" },
   ],
-  media: [hero(SKYREALM_CODE, "photo-1519741497674-611481863552"), ...gallery(SKYREALM_CODE, [
-    { url: SAMPLES.coupleSunset, caption: "Above the clouds" }, { url: SAMPLES.coupleEmbrace, caption: "The bridge" },
-    { url: SAMPLES.coupleBehind, caption: "Two kingdoms" }, { url: SAMPLES.weddingScene, caption: "The pavilion" },
-  ])],
+  media: [heroUrl(SKYREALM_CODE, SAMPLES.indianMandapDecor), ...indianWeddingGallery(SKYREALM_CODE)],
 };
 
 const CATHEDRAL_CODE = "DEMO-CATHEDRAL";
@@ -1672,7 +1681,7 @@ const cathedral: DemoBundle = {
     eventCode: CATHEDRAL_CODE, eventType: "wedding", templateId: "cathedral",
     eventTitle: "Dev & Elena", person1Name: "Dev", person2Name: "Elena",
     tentativeDate: "2026-11-21", city: "Prague", isActive: true, slug: CATHEDRAL_CODE,
-    heroImageUrl: SAMPLES.coupleBehind, tagline: "Vows under a galaxy ceiling.",
+    heroImageUrl: SAMPLES.roseWindow, tagline: "Vows under a galaxy ceiling.",
     invitationMessage: "We are building a cathedral out of the stars we met under. Come sit in the front pew of the sky.",
     aboutStory: "Every window in this cathedral is a memory lit from behind. The ceiling is the night we first named the constellations wrong, on purpose.",
     mainDate: "2026-11-21", mainStartTime: "19:00", mainEndTime: "23:30",
@@ -1686,10 +1695,7 @@ const cathedral: DemoBundle = {
     { eventCode: CATHEDRAL_CODE, order: 2, name: "Vows Under the Stars", date: "2026-11-21", startTime: "20:00", endTime: "21:00", venueName: "The Great Hall", dressCode: "Midnight formal", description: "The exchange, beneath the galaxy ceiling.", icon: "✦" },
     { eventCode: CATHEDRAL_CODE, order: 3, name: "Midnight Feast", date: "2026-11-21", startTime: "21:30", endTime: "23:30", venueName: "The Crypt Hall", description: "Dinner where the echoes are kind.", icon: "★" },
   ],
-  media: [hero(CATHEDRAL_CODE, "photo-1606216794074-735e91aa2c92"), ...gallery(CATHEDRAL_CODE, [
-    { url: SAMPLES.coupleBehind, caption: "Stained glass" }, { url: SAMPLES.coupleEmbrace, caption: "The nave" },
-    { url: SAMPLES.weddingScene, caption: "Candlelight" }, { url: SAMPLES.ringsClose, caption: "The vow" },
-  ])],
+  media: [heroUrl(CATHEDRAL_CODE, SAMPLES.indianFire), ...indianWeddingGallery(CATHEDRAL_CODE)],
 };
 
 const SAKURA_CODE = "DEMO-SAKURA";
@@ -1698,7 +1704,7 @@ const sakura: DemoBundle = {
     eventCode: SAKURA_CODE, eventType: "wedding", templateId: "sakura",
     eventTitle: "Haruki & Meera", person1Name: "Haruki", person2Name: "Meera",
     tentativeDate: "2026-04-04", city: "Kyoto", isActive: true, slug: SAKURA_CODE,
-    heroImageUrl: SAMPLES.pinkFlowers, tagline: "A season made to stay.",
+    heroImageUrl: SAMPLES.sakuraBranch, tagline: "A season made to stay.",
     invitationMessage: "The blossoms only stay a few weeks each year — so we chose them to hold our forever. Come walk the petal path with us.",
     aboutStory: "We met when the trees were bare and stayed until they flowered. Every spring since has felt like the forest applauding.",
     mainDate: "2026-04-04", mainStartTime: "15:00", mainEndTime: "21:00",
@@ -1712,10 +1718,7 @@ const sakura: DemoBundle = {
     { eventCode: SAKURA_CODE, order: 2, name: "The Ceremony", date: "2026-04-04", startTime: "16:30", endTime: "18:00", venueName: "The Pavilion", description: "Vows while the petals do the confetti's job.", icon: "🏮" },
     { eventCode: SAKURA_CODE, order: 3, name: "Lantern Dinner", date: "2026-04-04", startTime: "18:30", endTime: "21:00", venueName: "The Garden Terrace", description: "Lanterns on, season noted, dinner long.", icon: "🕯" },
   ],
-  media: [hero(SAKURA_CODE, "photo-1465495976277-4387d4b0b4c6"), ...gallery(SAKURA_CODE, [
-    { url: SAMPLES.pinkFlowers, caption: "Full bloom" }, { url: SAMPLES.coupleEmbrace, caption: "The path" },
-    { url: SAMPLES.bouquet, caption: "Petals" }, { url: SAMPLES.coupleSunset, caption: "Last light" },
-  ])],
+  media: [heroUrl(SAKURA_CODE, SAMPLES.indianBride), ...indianWeddingGallery(SAKURA_CODE)],
 };
 
 const VERSAILLES_CODE = "DEMO-VERSAILLES";
@@ -1724,7 +1727,7 @@ const versailles: DemoBundle = {
     eventCode: VERSAILLES_CODE, eventType: "wedding", templateId: "versailles",
     eventTitle: "Armaan & Céline", person1Name: "Armaan", person2Name: "Céline",
     tentativeDate: "2026-06-20", city: "Paris", isActive: true, slug: VERSAILLES_CODE,
-    heroImageUrl: SAMPLES.weddingScene, tagline: "A palace for one evening.",
+    heroImageUrl: SAMPLES.weddingCake, tagline: "A palace for one evening.",
     invitationMessage: "The palace doors are open, the chandeliers are lit, and one seat in the hall of mirrors has your name on it.",
     aboutStory: "Some love stories rent a hall. Ours borrowed a palace — grand staircases, golden mirrors, and gardens that were clearly showing off.",
     mainDate: "2026-06-20", mainStartTime: "17:00", mainEndTime: "23:59",
@@ -1738,10 +1741,7 @@ const versailles: DemoBundle = {
     { eventCode: VERSAILLES_CODE, order: 2, name: "Hall of Mirrors Ceremony", date: "2026-06-20", startTime: "19:00", endTime: "20:30", venueName: "Hall of Mirrors", description: "Vows, reflected seventeen times.", icon: "👑" },
     { eventCode: VERSAILLES_CODE, order: 3, name: "The Royal Banquet", date: "2026-06-20", startTime: "21:00", endTime: "23:59", venueName: "Grand Ballroom", description: "Dinner under chandeliers, dancing under orders.", icon: "🥂" },
   ],
-  media: [hero(VERSAILLES_CODE, "photo-1519741497674-611481863552"), ...gallery(VERSAILLES_CODE, [
-    { url: SAMPLES.weddingScene, caption: "The hall" }, { url: SAMPLES.coupleEmbrace, caption: "The mirrors" },
-    { url: SAMPLES.bouquet, caption: "The gardens" }, { url: SAMPLES.coupleBehind, caption: "The staircase" },
-  ])],
+  media: [heroUrl(VERSAILLES_CODE, SAMPLES.indianMandapDecor), ...indianWeddingGallery(VERSAILLES_CODE)],
 };
 
 const FRESCO_CODE = "DEMO-FRESCO";
@@ -1750,7 +1750,7 @@ const fresco: DemoBundle = {
     eventCode: FRESCO_CODE, eventType: "wedding", templateId: "fresco",
     eventTitle: "Luca & Aisha", person1Name: "Luca", person2Name: "Aisha",
     tentativeDate: "2026-05-30", city: "Florence", isActive: true, slug: FRESCO_CODE,
-    heroImageUrl: SAMPLES.coupleEmbrace, tagline: "A love, painted.",
+    heroImageUrl: SAMPLES.weddingRingsRoses, tagline: "A love, painted.",
     invitationMessage: "Some loves get painted; ours insisted on it. Come stand inside the frame with us for one afternoon.",
     aboutStory: "The brush strokes started years ago — a café, a missed train, an argument about Caravaggio. Today the painting finally gets its gold frame.",
     mainDate: "2026-05-30", mainStartTime: "16:00", mainEndTime: "22:30",
@@ -1764,10 +1764,7 @@ const fresco: DemoBundle = {
     { eventCode: FRESCO_CODE, order: 2, name: "The Ceremony", date: "2026-05-30", startTime: "17:30", endTime: "19:00", venueName: "The Courtyard", dressCode: "Renaissance warm tones", description: "Vows under a ceiling someone spent a decade on.", icon: "🎨" },
     { eventCode: FRESCO_CODE, order: 3, name: "The Banquet", date: "2026-05-30", startTime: "19:30", endTime: "22:30", venueName: "The Long Hall", description: "Tuscan dinner, painted light, no dress rehearsal.", icon: "🍷" },
   ],
-  media: [hero(FRESCO_CODE, "photo-1519225421980-715cb0215aed"), ...gallery(FRESCO_CODE, [
-    { url: SAMPLES.coupleEmbrace, caption: "The frame" }, { url: SAMPLES.weddingScene, caption: "The hall" },
-    { url: SAMPLES.bouquet, caption: "Still life" }, { url: SAMPLES.coupleSunset, caption: "Golden hour" },
-  ])],
+  media: [heroUrl(FRESCO_CODE, SAMPLES.indianCouple), ...indianWeddingGallery(FRESCO_CODE)],
 };
 
 const MIRAGE_CODE = "DEMO-MIRAGE";
@@ -1776,7 +1773,7 @@ const mirage: DemoBundle = {
     eventCode: MIRAGE_CODE, eventType: "wedding", templateId: "mirage",
     eventTitle: "Zayd & Mariam", person1Name: "Zayd", person2Name: "Mariam",
     tentativeDate: "2026-11-27", city: "Dubai", isActive: true, slug: MIRAGE_CODE,
-    heroImageUrl: SAMPLES.coupleSunset, tagline: "Real as the desert night.",
+    heroImageUrl: SAMPLES.desertDunes, tagline: "Real as the desert night.",
     invitationMessage: "At the edge of the dunes, where the heat turns light into water, we found something real. Come toast it by firelight.",
     aboutStory: "The desert shows you things that aren't there. It showed us each other — and for once, the mirage stayed.",
     mainDate: "2026-11-27", mainStartTime: "17:00", mainEndTime: "23:59",
@@ -1790,10 +1787,7 @@ const mirage: DemoBundle = {
     { eventCode: MIRAGE_CODE, order: 2, name: "The Nikah", date: "2026-11-27", startTime: "19:00", endTime: "20:30", venueName: "The Oasis Pavilion", description: "Vows by firelight, witnessed by the dunes.", icon: "🔥" },
     { eventCode: MIRAGE_CODE, order: 3, name: "Feast Under the Stars", date: "2026-11-27", startTime: "21:00", endTime: "23:59", venueName: "The Majlis", description: "Long carpets, low tables, high spirits.", icon: "✦" },
   ],
-  media: [hero(MIRAGE_CODE, "photo-1519741497674-611481863552"), ...gallery(MIRAGE_CODE, [
-    { url: SAMPLES.coupleSunset, caption: "The dunes" }, { url: SAMPLES.coupleEmbrace, caption: "Firelight" },
-    { url: SAMPLES.coupleBehind, caption: "The oasis" }, { url: SAMPLES.ringsClose, caption: "The promise" },
-  ])],
+  media: [heroUrl(MIRAGE_CODE, SAMPLES.indianVarmala), ...indianWeddingGallery(MIRAGE_CODE)],
 };
 
 const ICEPALACE_CODE = "DEMO-ICEPALACE";
@@ -1802,7 +1796,7 @@ const icepalace: DemoBundle = {
     eventCode: ICEPALACE_CODE, eventType: "wedding", templateId: "icepalace",
     eventTitle: "Erik & Priya", person1Name: "Erik", person2Name: "Priya",
     tentativeDate: "2026-12-12", city: "Tromsø", isActive: true, slug: ICEPALACE_CODE,
-    heroImageUrl: SAMPLES.coupleBehind, tagline: "Warmth, kept in ice.",
+    heroImageUrl: SAMPLES.auroraSky, tagline: "Warmth, kept in ice.",
     invitationMessage: "In a palace of ice under a green-lit sky, we're making the warmest promise of our lives. Bring your coat and your best toast.",
     aboutStory: "One of us grew up with snow, the other met it at 25 and took its side immediately. The aurora agreed to do the lighting.",
     mainDate: "2026-12-12", mainStartTime: "17:00", mainEndTime: "22:30",
@@ -1816,10 +1810,7 @@ const icepalace: DemoBundle = {
     { eventCode: ICEPALACE_CODE, order: 2, name: "The Ceremony", date: "2026-12-12", startTime: "17:00", endTime: "18:30", venueName: "The Ice Dome", dressCode: "Winter white & silver", description: "Vows in a hall carved from the lake itself.", icon: "💠" },
     { eventCode: ICEPALACE_CODE, order: 3, name: "The Warm Feast", date: "2026-12-12", startTime: "19:00", endTime: "22:30", venueName: "The Lodge", description: "Fireplaces, long tables, extremely committed soup.", icon: "🔥" },
   ],
-  media: [hero(ICEPALACE_CODE, "photo-1606216794074-735e91aa2c92"), ...gallery(ICEPALACE_CODE, [
-    { url: SAMPLES.coupleBehind, caption: "Green sky" }, { url: SAMPLES.coupleEmbrace, caption: "The dome" },
-    { url: SAMPLES.coupleSunset, caption: "The lake" }, { url: SAMPLES.ringsClose, caption: "Cold hands, warm vow" },
-  ])],
+  media: [heroUrl(ICEPALACE_CODE, SAMPLES.indianBride), ...indianWeddingGallery(ICEPALACE_CODE)],
 };
 
 const GALAXYOPERA_CODE = "DEMO-GALAXYOPERA";
@@ -1828,7 +1819,7 @@ const galaxyopera: DemoBundle = {
     eventCode: GALAXYOPERA_CODE, eventType: "wedding", templateId: "galaxyopera",
     eventTitle: "Vikram & Sofia", person1Name: "Vikram", person2Name: "Sofia",
     tentativeDate: "2026-10-17", city: "Milan", isActive: true, slug: GALAXYOPERA_CODE,
-    heroImageUrl: SAMPLES.coupleEmbrace, tagline: "The curtain rises tonight.",
+    heroImageUrl: SAMPLES.chandelier, tagline: "The curtain rises tonight.",
     invitationMessage: "The curtain rises on the one performance we've rehearsed our whole lives. Your seat is in the front row of the universe.",
     aboutStory: "An opera house adrift in space — velvet curtains parting on nebulae, chandeliers made of small patient planets. We supply the duet.",
     mainDate: "2026-10-17", mainStartTime: "18:30", mainEndTime: "23:59",
@@ -1842,10 +1833,7 @@ const galaxyopera: DemoBundle = {
     { eventCode: GALAXYOPERA_CODE, order: 2, name: "The Duet", date: "2026-10-17", startTime: "20:00", endTime: "21:30", venueName: "Main Stage", description: "Vows, center stage, curtain up.", icon: "🎭" },
     { eventCode: GALAXYOPERA_CODE, order: 3, name: "The Encore", date: "2026-10-17", startTime: "22:00", endTime: "23:59", venueName: "The Ballroom", description: "Dinner and dancing until the house lights give up.", icon: "✦" },
   ],
-  media: [hero(GALAXYOPERA_CODE, "photo-1519225421980-715cb0215aed"), ...gallery(GALAXYOPERA_CODE, [
-    { url: SAMPLES.coupleEmbrace, caption: "Center stage" }, { url: SAMPLES.coupleBehind, caption: "The balcony" },
-    { url: SAMPLES.weddingScene, caption: "The house" }, { url: SAMPLES.coupleSunset, caption: "Curtain call" },
-  ])],
+  media: [heroUrl(GALAXYOPERA_CODE, SAMPLES.indianCeremony), ...indianWeddingGallery(GALAXYOPERA_CODE)],
 };
 
 const TWORIVERS_CODE = "DEMO-TWORIVERS";

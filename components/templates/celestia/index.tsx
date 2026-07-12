@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
 import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { Countdown } from "@/components/ui/Countdown";
@@ -137,6 +137,20 @@ export const CelestiaTemplate: TemplateComponent = ({ event, subEvents, media })
 
   const sorted = [...subEvents].sort((a, b) => a.order - b.order);
 
+  const galleryItems = gallery;
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
+  const rmotion = useReducedMotion();
+
+  // 6 deterministic wish-orb positions along the bottom of the hero
+  const wishOrbs = [
+    { left: "8%",  size: 4, delay: 0, dur: 9,  color: "#c9b8f0" },
+    { left: "22%", size: 3, delay: 1.4, dur: 11, color: "#a9d3e6" },
+    { left: "36%", size: 5, delay: 0.6, dur: 10, color: "#c9b8f0" },
+    { left: "54%", size: 3, delay: 2.1, dur: 12, color: "#a9d3e6" },
+    { left: "70%", size: 6, delay: 0.9, dur: 9.5, color: "#c9b8f0" },
+    { left: "86%", size: 4, delay: 1.7, dur: 10.5, color: "#a9d3e6" },
+  ];
+
   return (
     <div
       className="relative overflow-x-clip font-sans text-[#2a2540] antialiased"
@@ -163,41 +177,255 @@ export const CelestiaTemplate: TemplateComponent = ({ event, subEvents, media })
         />
       </div>
 
-      {/* ── PRELUDE — glass sphere ── */}
-      <section ref={heroRef} className="relative flex min-h-[100svh] flex-col items-center justify-center px-6 py-20 text-center">
-        <motion.p
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="font-script text-3xl text-[var(--accent)] sm:text-5xl"
-        >
-          {tagline}
-        </motion.p>
-
-        <div className="relative my-8 flex items-center justify-center">
-          <GlassSphere imageSrc={hero} alt={event.eventTitle} scrollRot={sphereRot} />
+      {/* ── PRELUDE — glass sphere + floating photo collage ── */}
+      <section ref={heroRef} className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 pb-24 text-center sm:pb-28">
+        {/* Base hero image with dusty-lavender vignette */}
+        <div aria-hidden className="absolute inset-0 -z-10">
+          <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl} alt={event.eventTitle} />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(201,184,240,0.35) 0%, rgba(169,211,230,0.18) 45%, rgba(42,37,64,0.55) 100%), radial-gradient(circle at 50% 42%, transparent 30%, rgba(42,37,64,0.35) 100%)",
+            }}
+          />
         </div>
 
-        <motion.h1
-          style={reduce ? undefined : { y: heroTextY }}
-          className="font-display text-[clamp(2.4rem,9vw,6.5rem)] font-medium leading-[0.92]"
-        >
-          <span>{event.person1Name}</span>
-          {event.person2Name && <span className="mx-3 font-script text-[0.5em] text-[var(--accent)]">and</span>}
-          {event.person2Name && <span>{event.person2Name}</span>}
-        </motion.h1>
+        {/* Frame 1 — crystal orb (top-left) */}
+        {frame1 && (
+          <motion.figure
+            initial={rmotion ? false : { opacity: 0, y: -20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none absolute left-[6%] top-[14%] hidden md:block"
+          >
+            {/* diffused violet glow ring */}
+            <div
+              aria-hidden
+              className="absolute inset-[-22%] rounded-full blur-3xl"
+              style={{ background: "radial-gradient(circle,#c9b8f0aa,transparent 65%)" }}
+            />
+            <motion.div
+              className="relative h-40 w-40 overflow-hidden rounded-full lg:h-56 lg:w-56"
+              style={{
+                border: "1px solid rgba(201,184,240,0.7)",
+                boxShadow:
+                  "0 20px 60px -20px rgba(80,70,120,0.5), inset 0 0 40px rgba(255,255,255,0.35)",
+              }}
+              animate={rmotion ? undefined : { y: [0, -10, 0], rotate: [0, 3, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src={frame1.publicUrl}
+                alt={frame1.caption ?? "Moment"}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              {/* inner sheen */}
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(circle at 32% 24%, rgba(255,255,255,0.55), rgba(255,255,255,0.05) 45%, transparent 65%)",
+                  opacity: 0.9,
+                }}
+              />
+              <div aria-hidden className="absolute inset-0 rounded-full ring-1 ring-white/60" />
+            </motion.div>
+          </motion.figure>
+        )}
 
-        {event.mainDate && (
-          <p className="mt-6 text-xs uppercase tracking-[0.5em] text-[#2a2540]/60">
-            {new Date(event.mainDate).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}
-            {event.city && ` · ${event.city}`}
-          </p>
+        {/* Frame 2 — oval capsule (top-right) */}
+        {frame2 && (
+          <motion.figure
+            initial={rmotion ? false : { opacity: 0, x: 20, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none absolute right-[7%] top-[18%] hidden md:block"
+          >
+            <div
+              aria-hidden
+              className="absolute inset-[-20%] blur-3xl"
+              style={{
+                background: "radial-gradient(circle,#a9d3e6aa,transparent 65%)",
+                borderRadius: "50% / 40%",
+              }}
+            />
+            <motion.div
+              className="relative h-56 w-40 overflow-hidden lg:h-72 lg:w-52"
+              style={{
+                borderRadius: "50% / 40%",
+                border: "1px solid rgba(169,211,230,0.75)",
+                boxShadow:
+                  "0 20px 60px -20px rgba(80,110,140,0.45), inset 0 0 30px rgba(255,255,255,0.25)",
+              }}
+              animate={rmotion ? undefined : { x: [0, 6, 0], y: [0, -4, 0] }}
+              transition={{ duration: 9, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src={frame2.publicUrl}
+                alt={frame2.caption ?? "Moment"}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.4), transparent 60%)",
+                }}
+              />
+            </motion.div>
+          </motion.figure>
         )}
-        {!event.hideTimer && !(event.timerCustom && event.timerStyle === "floating") && event.mainDate && (
-          <div className="mt-10 rounded-3xl bg-[#2a2540]/90 px-6 py-5 shadow-xl">
-            <Countdown target={`${event.mainDate}T${event.mainStartTime || "16:00"}:00`} label="Until we say yes" />
+
+        {/* Frame 3 — feather-edged rectangle (bottom-left) */}
+        {frame3 && (
+          <motion.figure
+            initial={rmotion ? false : { opacity: 0, y: 30, rotate: -4 }}
+            animate={{ opacity: 1, y: 0, rotate: -2 }}
+            transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={rmotion ? undefined : { rotate: 1, scale: 1.03 }}
+            className="pointer-events-none absolute bottom-[18%] left-[8%] hidden lg:block"
+          >
+            <motion.div
+              className="relative h-52 w-40 overflow-hidden rounded-[28px]"
+              style={{
+                WebkitMaskImage:
+                  "radial-gradient(closest-side, black 78%, transparent)",
+                maskImage:
+                  "radial-gradient(closest-side, black 78%, transparent)",
+                filter: "drop-shadow(0 20px 40px rgba(80,70,120,0.35))",
+              }}
+              animate={rmotion ? undefined : { y: [0, -6, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src={frame3.publicUrl}
+                alt={frame3.caption ?? "Moment"}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            </motion.div>
+          </motion.figure>
+        )}
+
+        {/* Wish orbs — 6 tiny lavender/ice-blue circles drifting up */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          {wishOrbs.map((o, i) => (
+            <motion.span
+              key={`wish-${i}`}
+              className="absolute rounded-full"
+              style={{
+                left: o.left,
+                bottom: "-2%",
+                width: o.size,
+                height: o.size,
+                background: o.color,
+                boxShadow: `0 0 8px ${o.color}, 0 0 16px ${o.color}88`,
+              }}
+              animate={rmotion ? undefined : { y: [0, -520], opacity: [0, 0.9, 0] }}
+              transition={{
+                duration: o.dur,
+                delay: o.delay,
+                repeat: Infinity,
+                ease: "easeOut",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Central title card with ornaments */}
+        <motion.div
+          initial={rmotion ? false : { opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="relative z-10 max-w-3xl text-center"
+        >
+          <div className="mb-5 flex items-center justify-center gap-3 opacity-80">
+            <span className="h-px w-10 sm:w-16" style={{ background: "#c9b8f0" }} />
+            <span className="text-lg" style={{ color: "#c9b8f0" }}>✧</span>
+            <span className="h-px w-10 sm:w-16" style={{ background: "#c9b8f0" }} />
           </div>
-        )}
+
+          <motion.p
+            initial={rmotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="font-script text-3xl text-[var(--accent)] sm:text-5xl"
+          >
+            {tagline}
+          </motion.p>
+
+          <div className="relative my-8 flex items-center justify-center">
+            <GlassSphere imageSrc={hero} alt={event.eventTitle} scrollRot={sphereRot} />
+          </div>
+
+          <motion.h1
+            style={rmotion ? undefined : { y: heroTextY }}
+            className="font-display text-[clamp(2.4rem,9vw,6.5rem)] font-medium leading-[0.92] text-white drop-shadow-[0_4px_20px_rgba(42,37,64,0.6)]"
+          >
+            <span>{event.person1Name}</span>
+            {event.person2Name && <span className="mx-3 font-script text-[0.5em] text-[var(--accent)]">and</span>}
+            {event.person2Name && <span>{event.person2Name}</span>}
+          </motion.h1>
+
+          {event.mainDate && (
+            <p className="mt-6 text-xs uppercase tracking-[0.5em] text-white/80">
+              {new Date(event.mainDate).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}
+              {event.city && ` · ${event.city}`}
+            </p>
+          )}
+
+          <div className="mt-6 flex items-center justify-center gap-3 opacity-70">
+            <span className="h-px w-16" style={{ background: "#a9d3e6" }} />
+            <span className="text-xs" style={{ color: "#a9d3e6" }}>⋆</span>
+            <span className="h-px w-16" style={{ background: "#a9d3e6" }} />
+          </div>
+
+          {/* Mobile-only trio — small glass-orb thumbs */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="mt-8 flex items-center justify-center gap-4 md:hidden">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`mob-${i}`}
+                  initial={rmotion ? false : { opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.15 }}
+                  className="relative h-16 w-16 overflow-hidden rounded-full"
+                  style={{
+                    border: "1px solid rgba(201,184,240,0.7)",
+                    boxShadow:
+                      "0 8px 20px -8px rgba(80,70,120,0.55), inset 0 0 20px rgba(255,255,255,0.3)",
+                  }}
+                >
+                  <img
+                    src={f!.publicUrl}
+                    alt={f!.caption ?? ""}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 32% 24%, rgba(255,255,255,0.55), transparent 60%)",
+                    }}
+                  />
+                </motion.figure>
+              ))}
+            </div>
+          )}
+
+          {!event.hideTimer && !(event.timerCustom && event.timerStyle === "floating") && event.mainDate && (
+            <div className="mt-10 inline-block rounded-3xl bg-[#2a2540]/85 px-6 py-5 shadow-xl backdrop-blur-md">
+              <Countdown target={`${event.mainDate}T${event.mainStartTime || "16:00"}:00`} label="Until we say yes" />
+            </div>
+          )}
+        </motion.div>
       </section>
 
       {/* ── INVITATION ── */}

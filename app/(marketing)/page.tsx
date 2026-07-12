@@ -17,7 +17,7 @@ export default async function LandingPage() {
   return (
     <UltimateModeWrapper>
     <main className="min-h-screen">
-      <Hero demoCode="WED-2026-0001" />
+      <Hero demoCode="DEMO-ROYAL" />
 
       {/* How it works */}
       <section id="how" className="py-24 px-6 max-w-6xl mx-auto">

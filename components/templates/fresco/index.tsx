@@ -173,6 +173,8 @@ export const FrescoTemplate: TemplateComponent = ({ event, subEvents, media }) =
   const heroTextY = useTransform(heroP, [0, 0.5], [0, -40]);
   const heroOpacity = useTransform(heroP, [0, 0.5], [1, 0]);
 
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
+
   const showStory = !event.hideStory;
   const showJourney = !event.hideEvents && subEvents.length > 0;
   const showVenue = !event.hideVenue;
@@ -187,7 +189,7 @@ export const FrescoTemplate: TemplateComponent = ({ event, subEvents, media }) =
       <ScrollProgress color={accent} />
 
       {/* ─── I. THE HERO CANVAS ─── */}
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[620px] items-center justify-center overflow-hidden px-4 py-10">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-4 py-10 pb-24 sm:pb-28">
         <div
           className="relative h-full w-full max-w-6xl overflow-hidden p-2 shadow-[0_30px_60px_rgba(46,36,24,0.45)] sm:p-3"
           style={{ background: `linear-gradient(135deg, ${GOLD}, #8a6a24 40%, #d9b96a 65%, ${GOLD})` }}
@@ -197,6 +199,63 @@ export const FrescoTemplate: TemplateComponent = ({ event, subEvents, media }) =
               <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="sepia-[0.25]" />
               <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, rgba(46,36,24,0.15), rgba(46,36,24,0.05) 40%, rgba(46,36,24,0.65))` }} />
             </motion.div>
+
+            {/* Ceremony frames — 3 oil-painting "plates" on the wall */}
+            {frame1 && (
+              <motion.figure
+                initial={reduce ? false : { opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.1, delay: 0.4, ease: EASE }}
+                className="hidden md:flex absolute left-[4%] top-[8%] gap-1 z-20 p-2 shadow-2xl"
+                style={{ background: `linear-gradient(135deg, ${GOLD}, #8a6a24 60%, ${GOLD})` }}
+              >
+                <div className="w-6 h-24 lg:h-32 flex items-center justify-center opacity-70" style={{ background: CANVAS, color: UMBER, fontFamily: "serif", fontSize: 8 }}>❦</div>
+                <div className="w-24 lg:w-32 h-24 lg:h-32 border" style={{ borderColor: "#f0e0ae" }}>
+                  <img src={frame1.publicUrl} alt={frame1.caption ?? ""} loading="lazy" className="w-full h-full object-cover sepia-[0.15]" />
+                </div>
+                <div className="w-6 h-24 lg:h-32 flex items-center justify-center opacity-70" style={{ background: CANVAS, color: UMBER, fontFamily: "serif", fontSize: 8 }}>❦</div>
+              </motion.figure>
+            )}
+
+            {frame2 && (
+              <motion.figure
+                initial={reduce ? false : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.1, delay: 0.6, ease: EASE }}
+                whileHover={reduce ? undefined : { rotate: -1 }}
+                className="hidden md:block absolute right-[5%] top-[10%] w-32 lg:w-40 z-20"
+              >
+                <div
+                  className="p-3 shadow-2xl"
+                  style={{
+                    background: `linear-gradient(135deg, ${GOLD}, #8a6a24 60%, ${GOLD})`,
+                    borderRadius: "50%",
+                  }}
+                >
+                  <div className="w-full aspect-[3/4] overflow-hidden border" style={{ borderRadius: "50%", borderColor: "#f0e0ae" }}>
+                    <img src={frame2.publicUrl} alt={frame2.caption ?? ""} loading="lazy" className="w-full h-full object-cover sepia-[0.15]" />
+                  </div>
+                </div>
+                <div className="mt-1 mx-auto w-24 text-center text-[9px] uppercase tracking-[0.3em] py-1 px-2" style={{ background: "#8a6a24", color: CANVAS, fontFamily: "serif" }}>
+                  Plate II
+                </div>
+              </motion.figure>
+            )}
+
+            {frame3 && (
+              <motion.figure
+                initial={reduce ? false : { opacity: 0, rotate: -6 }}
+                animate={{ opacity: 1, rotate: -2 }}
+                transition={{ duration: 1.1, delay: 0.85, ease: EASE }}
+                className="hidden lg:block absolute left-[6%] bottom-[18%] w-40 z-20 p-2 shadow-2xl"
+                style={{ background: `linear-gradient(135deg, ${GOLD}, #8a6a24 60%, ${GOLD})` }}
+              >
+                <div className="overflow-hidden border" style={{ borderColor: "#f0e0ae", clipPath: "path('M0,32 A80,32 0 0 1 160,32 L160,192 L0,192 Z')", height: 168 }}>
+                  <img src={frame3.publicUrl} alt={frame3.caption ?? ""} loading="lazy" className="w-full h-full object-cover sepia-[0.15]" />
+                </div>
+                <div className="mt-1 text-center text-[9px] uppercase tracking-[0.3em] py-1" style={{ color: CANVAS, fontFamily: "serif" }}>Plate III</div>
+              </motion.figure>
+            )}
             <motion.div style={reduce ? undefined : { y: heroTextY, opacity: heroOpacity }} className="relative z-10 flex h-full flex-col items-center justify-end pb-14 text-center">
               <motion.p
                 initial={reduce ? false : { opacity: 0, y: 12 }}

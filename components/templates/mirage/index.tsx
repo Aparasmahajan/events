@@ -122,6 +122,7 @@ export const MirageTemplate: TemplateComponent = ({ event, subEvents, media }) =
   const aboutStory = event.aboutStory?.trim() || "Our story began like a mirage — a glimpse across a crowded room that turned out to be beautifully, impossibly real. Now we cross the desert together, toward a palace of our own making.";
   const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=1600&q=80";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
 
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -141,11 +142,103 @@ export const MirageTemplate: TemplateComponent = ({ event, subEvents, media }) =
     >
       <ScrollProgress color={accent} />
 
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[620px] items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28">
         <div className="absolute inset-0">
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-35" />
           <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${DUSK}66 0%, transparent 40%, #d9a95e26 70%, ${DUSK}cc 100%)` }} />
         </div>
+
+        {/* Ceremony frames — Arabian arches, khatam-clipped stars, lantern flame */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, scale: 0.9, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.4, ease: EASE }}
+            className="hidden md:block absolute left-[6%] top-[14%] w-36 h-44 lg:w-44 lg:h-56 z-20 overflow-hidden shadow-2xl"
+            style={{
+              borderRadius: "50% 50% 8% 8% / 60% 60% 8% 8%",
+              border: `2px solid ${accent}`,
+              boxShadow: `0 0 0 3px ${TERRACOTTA}55, 0 20px 40px -12px rgba(0,0,0,0.6)`,
+            }}
+          >
+            <motion.img
+              src={frame1.publicUrl}
+              alt={frame1.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover"
+              animate={reduce ? undefined : { filter: ["brightness(1)", "brightness(1.06)", "brightness(1)"] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.figure>
+        )}
+
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, rotate: -12 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            transition={{ duration: 1.1, delay: 0.6, ease: EASE }}
+            className="hidden md:block absolute right-[6%] top-[16%] w-40 h-40 lg:w-52 lg:h-52 z-20"
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                background: `radial-gradient(circle, ${accent}55, transparent 70%)`,
+                filter: "blur(14px)",
+              }}
+            />
+            <motion.div
+              className="relative w-full h-full overflow-hidden"
+              style={{
+                clipPath: "polygon(50% 0%, 65% 20%, 100% 20%, 80% 40%, 100% 50%, 80% 60%, 100% 80%, 65% 80%, 50% 100%, 35% 80%, 0% 80%, 20% 60%, 0% 50%, 20% 40%, 0% 20%, 35% 20%)",
+              }}
+              animate={reduce ? undefined : { rotate: [0, 3, 0] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src={frame2.publicUrl}
+                alt={frame2.caption ?? ""}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          </motion.figure>
+        )}
+
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.85, ease: EASE }}
+            className="hidden lg:flex absolute left-[8%] bottom-[24%] flex-col items-center z-20"
+          >
+            {/* Hanging brass lamp with flickering flame */}
+            <div className="flex flex-col items-center mb-1">
+              <div className="w-px h-6" style={{ background: accent, opacity: 0.6 }} />
+              <div className="w-8 h-1.5 rounded-sm" style={{ background: `linear-gradient(90deg, #8a5a34, ${accent}, #8a5a34)` }} />
+              <motion.div
+                className="w-2 h-3 rounded-full mt-0.5"
+                style={{ background: "radial-gradient(circle at 40% 30%, #ffd77a, #ff8a3c 60%, transparent 90%)", filter: "blur(0.5px)" }}
+                animate={reduce ? undefined : { scale: [1, 1.15, 0.95, 1.1, 1], opacity: [0.9, 1, 0.85, 1, 0.9] }}
+                transition={{ duration: 1.6, repeat: Infinity }}
+              />
+            </div>
+            <div
+              className="w-36 h-24 overflow-hidden shadow-2xl"
+              style={{
+                border: `2px solid ${accent}`,
+                boxShadow: `0 0 40px -8px ${accent}88, 0 20px 40px -12px rgba(0,0,0,0.6)`,
+              }}
+            >
+              <img
+                src={frame3.publicUrl}
+                alt={frame3.caption ?? ""}
+                loading="lazy"
+                className="w-full h-full object-cover"
+                style={{ filter: "brightness(1.1) saturate(1.1)" }}
+              />
+            </div>
+          </motion.figure>
+        )}
         {!reduce && (
           <motion.div
             aria-hidden

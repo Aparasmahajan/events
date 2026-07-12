@@ -234,6 +234,11 @@ export const SymphonyTemplate: TemplateComponent = ({ event, subEvents, media })
   const invitationMessage = event.invitationMessage?.trim() || "Under a sky rehearsed for centuries, two melodies find their harmony. You are invited to witness the score come alive.";
   const aboutStory = event.aboutStory?.trim() || "Every love is composed in movements — an overture of first glances, an adagio of quiet mornings, a crescendo of vows. Ours has arrived at its finale, and we would be honoured to have you in the audience.";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
+  // Opt-in hero collage — gated on event.showHeroFrames so demos and the
+  // default customer experience show a clean hero, not photos overlaid on it.
+  const frame1 = event.showHeroFrames ? galleryItems[0] : undefined;
+  const frame2 = event.showHeroFrames ? galleryItems[1] : undefined;
+  const frame3 = event.showHeroFrames ? galleryItems[2] : undefined;
   const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=80";
 
   useEffect(() => {
@@ -264,17 +269,189 @@ export const SymphonyTemplate: TemplateComponent = ({ event, subEvents, media })
       <CelestialField reduce={reduce} pulse={pulse} />
       <ScrollProgress color={accent} />
 
-      {/* Hero */}
-      <section ref={heroRef} className="relative h-[100svh] min-h-[640px] flex items-center justify-center overflow-hidden">
+      {/* Hero — celestial symphony collage */}
+      <section ref={heroRef} className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pb-24 sm:pb-28">
         <motion.div style={reduce ? undefined : { scale: heroScale }} className="absolute inset-0">
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-40" />
-          <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, transparent 20%, #0f0a2a 85%)" }} />
+          {/* Deep-space vignette */}
+          <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, transparent 15%, rgba(15,10,42,0.75) 65%, #0f0a2a 100%)" }} />
         </motion.div>
 
         <MusicStaff accent={accent} reduce={reduce} />
         <FloatingNotes reduce={reduce} accent={accent} />
 
+        {/* Frame 1 — medallion sitting ON a music-staff line (top-left) */}
+        {frame1 && (
+          <div className="hidden md:block absolute left-[5%] top-[16%] w-44 lg:w-60 pointer-events-none">
+            {/* Staff lines running behind & through the medallion, extending past frame */}
+            <svg
+              aria-hidden
+              className="absolute left-[-40%] right-[-40%] top-1/2 -translate-y-1/2 h-24 w-[180%]"
+              viewBox="0 0 180 20"
+              preserveAspectRatio="none"
+            >
+              {[0, 1, 2, 3, 4].map((i) => (
+                <line
+                  key={i}
+                  x1="0"
+                  x2="180"
+                  y1={4 + i * 3}
+                  y2={4 + i * 3}
+                  stroke={gold}
+                  strokeWidth="0.12"
+                  opacity="0.55"
+                  vectorEffect="non-scaling-stroke"
+                />
+              ))}
+            </svg>
+            <motion.figure
+              initial={reduce ? false : { opacity: 0, y: -18, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1.1, delay: 0.3, ease: EASE }}
+              className="relative w-full aspect-square rounded-full overflow-hidden pointer-events-auto"
+              style={{
+                border: `2px solid ${gold}`,
+                boxShadow: `0 0 0 4px rgba(15,10,42,0.6), 0 20px 40px -12px rgba(0,0,0,0.6), 0 0 50px -10px ${accent}88`,
+              }}
+            >
+              <motion.img
+                src={frame1.publicUrl}
+                alt={frame1.caption ?? ""}
+                loading="lazy"
+                className="w-full h-full object-cover"
+                animate={reduce ? undefined : { y: [0, -5, 0] }}
+                transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <figcaption
+                className="absolute bottom-1 inset-x-0 text-center text-[9px] uppercase tracking-[0.3em] py-1"
+                style={{ color: gold, textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}
+              >
+                {frame1.caption ?? "Adagio"}
+              </figcaption>
+            </motion.figure>
+          </div>
+        )}
+
+        {/* Frame 2 — whole-note glyph frame (top-right), slow rotate */}
+        {frame2 && (
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.55, ease: EASE }}
+            className="hidden md:block absolute right-[6%] top-[20%] w-40 lg:w-52"
+          >
+            <motion.div
+              animate={reduce ? undefined : { rotate: 360 }}
+              transition={{ duration: 720, repeat: Infinity, ease: "linear" }}
+              className="relative w-full aspect-square"
+            >
+              {/* Stem + flag SVG attached to top-right of the circle */}
+              <svg
+                aria-hidden
+                className="absolute inset-0 w-full h-full overflow-visible"
+                viewBox="0 0 100 100"
+              >
+                {/* stem */}
+                <line
+                  x1="88"
+                  y1="18"
+                  x2="88"
+                  y2="-24"
+                  stroke={gold}
+                  strokeWidth="1.2"
+                  vectorEffect="non-scaling-stroke"
+                />
+                {/* flag */}
+                <path
+                  d="M88,-24 C96,-18 100,-10 96,-2"
+                  stroke={gold}
+                  strokeWidth="1.6"
+                  fill="none"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+              <figure
+                className="relative w-full h-full rounded-full overflow-hidden"
+                style={{
+                  border: `2px solid ${gold}`,
+                  boxShadow: `0 0 0 4px rgba(15,10,42,0.6), 0 20px 40px -12px rgba(0,0,0,0.6), 0 0 50px -10px ${accent}88`,
+                }}
+              >
+                <img
+                  src={frame2.publicUrl}
+                  alt={frame2.caption ?? ""}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+                <figcaption
+                  className="absolute bottom-1 inset-x-0 text-center text-[9px] uppercase tracking-[0.3em] py-1"
+                  style={{ color: gold, textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}
+                >
+                  {frame2.caption ?? "Andante"}
+                </figcaption>
+              </figure>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Frame 3 — treble-clef-flanked rectangular frame (bottom-left) */}
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.8, ease: EASE }}
+            className="hidden lg:flex absolute left-[7%] bottom-[14%] items-center gap-3"
+          >
+            {/* Treble clef glyph */}
+            <span
+              aria-hidden
+              className="font-display leading-none select-none"
+              style={{
+                fontSize: "6rem",
+                color: gold,
+                textShadow: `0 0 20px ${accent}88`,
+                lineHeight: 0.85,
+              }}
+            >
+              𝄞
+            </span>
+            <div
+              className="relative w-40 h-52 overflow-hidden rounded-sm"
+              style={{
+                border: `1.5px solid ${gold}`,
+                boxShadow: `0 20px 40px -12px rgba(0,0,0,0.7), 0 0 40px -10px ${accent}66`,
+              }}
+            >
+              <img
+                src={frame3.publicUrl}
+                alt={frame3.caption ?? ""}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+              <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 55%, rgba(15,10,42,0.85) 100%)" }} />
+              <figcaption
+                className="absolute bottom-2 inset-x-0 text-center text-[9px] uppercase tracking-[0.3em]"
+                style={{ color: gold }}
+              >
+                {frame3.caption ?? "Cadenza"}
+              </figcaption>
+            </div>
+          </motion.figure>
+        )}
+
         <motion.div style={reduce ? undefined : { y: heroTextY, opacity: heroOpacity }} className="relative z-10 px-6 text-center">
+          {/* Ornament: ♪ above title */}
+          <motion.div
+            aria-hidden
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 0.85 }}
+            transition={{ duration: 1, delay: 0.15 }}
+            className="mb-3 flex items-center justify-center gap-3"
+          >
+            <span className="h-px w-10 sm:w-14" style={{ background: `linear-gradient(90deg, transparent, ${accent})` }} />
+            <span className="font-display text-xl" style={{ color: accent, textShadow: `0 0 12px ${accent}` }}>♪</span>
+            <span className="h-px w-10 sm:w-14" style={{ background: `linear-gradient(90deg, ${accent}, transparent)` }} />
+          </motion.div>
           <motion.p
             initial={reduce ? false : { opacity: 0, letterSpacing: "0.2em" }}
             animate={{ opacity: 1, letterSpacing: "0.55em" }}
@@ -299,11 +476,23 @@ export const SymphonyTemplate: TemplateComponent = ({ event, subEvents, media })
               </>
             )}
           </motion.h1>
+          {/* Ornament: ♫ below title */}
+          <motion.div
+            aria-hidden
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 0.75 }}
+            transition={{ duration: 1, delay: 0.9 }}
+            className="mt-6 flex items-center justify-center gap-3"
+          >
+            <span className="h-px w-12 sm:w-16" style={{ background: `linear-gradient(90deg, transparent, ${gold})` }} />
+            <span className="font-display text-lg" style={{ color: gold }}>♫</span>
+            <span className="h-px w-12 sm:w-16" style={{ background: `linear-gradient(90deg, ${gold}, transparent)` }} />
+          </motion.div>
           <motion.div
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 1 }}
-            className="mt-10 flex flex-wrap justify-center gap-6 text-xs uppercase tracking-[0.4em] opacity-80"
+            className="mt-8 flex flex-wrap justify-center gap-6 text-xs uppercase tracking-[0.4em] opacity-80"
           >
             {event.mainDate && (
               <span>{new Date(event.mainDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
@@ -312,6 +501,27 @@ export const SymphonyTemplate: TemplateComponent = ({ event, subEvents, media })
             {event.mainStartTime && <span>{event.mainStartTime}</span>}
             {event.city && (<><span style={{ color: accent }}>✦</span><span>{event.city}</span></>)}
           </motion.div>
+
+          {/* Mobile-only compact collage — 3 gold-ring circular thumbs */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="md:hidden mt-10 flex items-center justify-center gap-4">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`mob-${i}`}
+                  initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.15 }}
+                  className="w-16 h-16 rounded-full overflow-hidden"
+                  style={{
+                    border: `2px solid ${gold}`,
+                    boxShadow: `0 8px 20px -8px rgba(0,0,0,0.7), 0 0 24px -6px ${accent}88`,
+                  }}
+                >
+                  <img src={f!.publicUrl} alt={f!.caption ?? ""} loading="lazy" className="w-full h-full object-cover" />
+                </motion.figure>
+              ))}
+            </div>
+          )}
         </motion.div>
 
         {!reduce && (

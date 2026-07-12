@@ -36,8 +36,7 @@ export const royalMeta: TemplateMeta = {
       "With the blessings of our families, we invite you to share in the joy of our wedding celebration.",
     tagline: "Two souls. One forever.",
     accentColor: "#a3792c",
-    heroImage:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/indian-mandap.jpg",
     aboutStory:
       "A love written in monsoons, mountains and quiet evenings. Today, we make it official.",
   },
@@ -99,7 +98,7 @@ export const vibrantMeta: TemplateMeta = {
   codename: "Vibrant Pop",
   description:
     "Bright, chaotic, joyful. Confetti energy — for birthdays, kids' parties, and small engagements that want a lot of pink.",
-  eventTypes: ["birthday", "engagement", "anniversary"],
+  eventTypes: ["birthday", "engagement", "anniversary", "wedding"],
   tags: ["vibrant", "cool", "appealing", "playful", "festive", "bold"],
   keywords: [
     "birthday", "kids birthday", "first birthday", "party", "pink", "playful",
@@ -2293,7 +2292,155 @@ export const midnighttokyoMeta: TemplateMeta = {
   },
 };
 
+// ─── Signature wedding experiences (Awwwards-tier) ───
+export const creatorscanvasMeta: TemplateMeta = {
+  id: "creatorscanvas",
+  name: "The Creator's Canvas",
+  codename: "Creator's Canvas",
+  description:
+    "The wedding is painted into existence as you scroll — line-art drawn stroke by stroke, names handwritten live, photos revealed from pencil sketch to full colour.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["artistic", "cinematic", "interactive", "editorial", "elegant", "premium"],
+  keywords: [
+    "artistic wedding", "sketch wedding", "painted", "hand-drawn", "illustration",
+    "line art", "pencil", "watercolor", "gallery wedding", "art studio",
+  ],
+  icon: "🎨",
+  vibe: { label: "Studio Canvas", color: "#4a6fa5" },
+  previewImage:
+    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage:
+      "Some love stories are written. Ours is being drawn — one stroke at a time, with you in every frame.",
+    tagline: "Painted into being.",
+    accentColor: "#4a6fa5",
+    heroImage:
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "A blank page, a first line, and years of colour since. We'd love you in the picture as we sign the final stroke.",
+  },
+};
+
+export const timefractureMeta: TemplateMeta = {
+  id: "timefracture",
+  name: "Time Fracture",
+  codename: "Fracture",
+  description:
+    "A wedding where time is broken and repaired as you scroll — frozen fragments assemble, clocks reverse, and each section lives in a different era from childhood to forever.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["cinematic", "interactive", "bold", "modern", "premium", "cool"],
+  keywords: [
+    "time", "fragments", "shattered glass", "sci-fi wedding", "cinematic",
+    "eras", "past to future", "frozen", "reverse time", "epic wedding",
+  ],
+  icon: "⏳",
+  vibe: { label: "Time Fracture", color: "#d4a24e" },
+  previewImage:
+    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage:
+      "Every moment led here. Scroll back through the fractures of time with us — and forward, into the day it all mends.",
+    tagline: "Time, rewritten.",
+    accentColor: "#d4a24e",
+    heroImage:
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Rewind far enough and it's two strangers on the same street. Fast-forward and it's forever. This is the moment the timeline knots.",
+  },
+};
+
+export const gravityzeroMeta: TemplateMeta = {
+  id: "gravityzero",
+  name: "Gravity Zero",
+  codename: "Zero-G",
+  description:
+    "A weightless wedding in another universe — floating architecture, photos orbiting a crystal core, scroll that changes gravity and a camera that leans with your cursor.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["cinematic", "interactive", "cool", "bold", "premium", "modern"],
+  keywords: [
+    "space wedding", "zero gravity", "floating", "weightless", "orbit",
+    "sci-fi", "astronaut", "levitation", "cosmic wedding", "otherworldly",
+  ],
+  icon: "🌀",
+  vibe: { label: "Zero-G", color: "#7fb7d8" },
+  previewImage:
+    "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage:
+      "Leave the ground behind. Come float with us where nothing falls — least of all, us.",
+    tagline: "Nothing touches the ground.",
+    accentColor: "#7fb7d8",
+    heroImage:
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Somewhere gravity gave up and we just kept rising. Orbit our little universe for an evening — dress code: astronaut-formal.",
+  },
+};
+
+export const memorydimensionMeta: TemplateMeta = {
+  id: "memorydimension",
+  name: "Memory Dimension",
+  codename: "Memory Dimension",
+  description:
+    "Memories float as glowing crystals in a four-dimensional archive — the camera drifts through them, each photograph a world you can open. Volumetric, cinematic, deep.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["cinematic", "interactive", "premium", "cool", "artistic", "bold"],
+  keywords: [
+    "memories", "archive", "crystal", "4D", "immersive", "volumetric",
+    "cinematic wedding", "gallery wedding", "time capsule wedding", "photo dimension",
+  ],
+  icon: "🔮",
+  vibe: { label: "Memory Archive", color: "#9b8cff" },
+  previewImage:
+    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage:
+      "Step inside the archive of us — every crystal a memory, every memory a reason we're saying yes.",
+    tagline: "Walk through our memories.",
+    accentColor: "#9b8cff",
+    heroImage:
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Each memory is kept in its own light — the first look, the long drive, the quiet yes. Drift through them and end at the brightest one.",
+  },
+};
+
+export const infinitycathedralMeta: TemplateMeta = {
+  id: "infinitycathedral",
+  name: "Infinity Cathedral",
+  codename: "Infinity Cathedral",
+  description:
+    "A wedding inside an impossible cathedral that rebuilds itself as you scroll — columns to infinity, stained-glass galleries, marble timelines, and a final reveal into a universe of stars.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["cinematic", "luxurious", "interactive", "premium", "bold", "elegant"],
+  keywords: [
+    "cathedral", "impossible architecture", "endless columns", "stained glass",
+    "marble", "sacred wedding", "grand wedding", "epic wedding", "constellation",
+    "starry ceiling",
+  ],
+  icon: "⛪",
+  vibe: { label: "Infinity Cathedral", color: "#d8b46a" },
+  previewImage:
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+  defaults: {
+    invitationMessage:
+      "Enter a cathedral that was never built and cannot fall — and stay until the ceiling opens onto forever.",
+    tagline: "Where forever is the architecture.",
+    accentColor: "#d8b46a",
+    heroImage:
+      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Every column is a year, every window a memory of light. Walk the nave with us to the altar, and watch the roof give way to stars.",
+  },
+};
+
 export const TEMPLATES_META: TemplateMeta[] = [
+  // Signature wedding experiences
+  creatorscanvasMeta,
+  timefractureMeta,
+  gravityzeroMeta,
+  memorydimensionMeta,
+  infinitycathedralMeta,
   // Wedding & romantic
   moonlitMeta,
   skytempleMeta,
