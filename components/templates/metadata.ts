@@ -453,7 +453,7 @@ export const promiseMeta: TemplateMeta = {
   codename: "Promise",
   description:
     "Two lives, two typographic worlds, converging into one as the page scrolls. For engagements that want to feel like the exact moment.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["romantic", "elegant", "cinematic", "modern", "artistic", "editorial"],
   keywords: [
     "engagement", "proposal", "roka", "engagement party", "just engaged",
@@ -765,7 +765,7 @@ export const infinityMeta: TemplateMeta = {
   codename: "Infinity",
   description:
     "Two glowing rings crossing universes, closing in on each other as the page scrolls, meeting in a single infinite ring. A cinematic engagement announcement.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["luxurious", "romantic", "cinematic", "modern", "editorial", "premium"],
   keywords: [
     "engagement", "ring ceremony", "roka", "infinity", "eternal ring",
@@ -794,7 +794,7 @@ export const lovestarsMeta: TemplateMeta = {
   codename: "Lovestars",
   description:
     "Memories drawn as stars that connect into a constellation as you scroll — the moment of the proposal becomes an exploding galaxy. Two destinies written in the sky.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["celestial", "romantic", "cinematic", "artistic", "interactive", "modern"],
   keywords: [
     "engagement", "astronomy", "constellation", "stars", "galaxy",
@@ -1430,7 +1430,7 @@ export const tworiversMeta: TemplateMeta = {
   codename: "Confluence",
   description:
     "Two rivers flow separately down the page and merge into one ocean as you scroll, lotus flowers drifting on the current. A gentle metaphor for engagements and anniversaries.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["romantic", "organic", "artistic", "elegant", "cinematic", "appealing"],
   keywords: [
     "two rivers", "confluence", "engagement", "lotus", "river",
@@ -1488,7 +1488,7 @@ export const infinitytrainMeta: TemplateMeta = {
   codename: "The Grand Line",
   description:
     "A luxury train travelling through memories — each coach a chapter, windows showing changing landscapes. For engagements and anniversaries told as a journey.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["cinematic", "luxurious", "romantic", "traditional", "artistic", "premium"],
   keywords: [
     "train journey", "orient express", "luxury train", "vintage travel",
@@ -1546,7 +1546,7 @@ export const glassroseMeta: TemplateMeta = {
   codename: "Rosaline",
   description:
     "The entire site lives inside a giant crystal rose — petals become sections and the flower blooms open as you scroll. For engagements and anniversaries with delicate drama.",
-  eventTypes: ["engagement", "anniversary"],
+  eventTypes: ["engagement", "anniversary", "wedding"],
   tags: ["glass", "romantic", "elegant", "artistic", "luxurious", "pastel"],
   keywords: [
     "crystal rose", "glass flower", "blooming", "rose engagement",
@@ -1575,7 +1575,7 @@ export const secretgalaxyMeta: TemplateMeta = {
   codename: "Andromeda",
   description:
     "A hidden galaxy discovered by two people — stars form rings, constellations write your names across deep violet space. For engagements that feel like a private universe.",
-  eventTypes: ["engagement"],
+  eventTypes: ["engagement", "wedding"],
   tags: ["celestial", "romantic", "cinematic", "interactive", "artistic", "cool"],
   keywords: [
     "galaxy engagement", "secret", "andromeda", "constellation names",
@@ -2386,8 +2386,50 @@ export function getTemplateMeta(id: string): TemplateMeta | undefined {
   return TEMPLATES_META.find((t) => t.id === id);
 }
 
+/** Alphabetical A–Z by display name — the default order for every listing. */
+const byName = (a: TemplateMeta, b: TemplateMeta) => a.name.localeCompare(b.name);
+
+/** Curated "featured" order — the most attention-grabbing templates lead, then
+ *  everything else falls in A–Z. Reorder / extend this to promote templates. */
+export const FEATURED_ORDER: string[] = [
+  "aurora",
+  "obsidian",
+  "celestia",
+  "royal",
+  "galaxyopera",
+  "luminary",
+  "immortals",
+  "midnighttokyo",
+  "vibrant",
+  "cartoon",
+  "modern",
+  "minimal",
+  "pastel",
+];
+
+export type TemplateSort = "featured" | "az" | "random";
+
+/** Order a list of templates by the chosen strategy (used by the listings).
+ *  `featuredIds` (from the admin-managed Featured sheet, per event type) wins
+ *  for the "featured" mode; otherwise the built-in FEATURED_ORDER is used. */
+export function sortTemplates(
+  list: TemplateMeta[],
+  mode: TemplateSort,
+  featuredIds?: string[],
+): TemplateMeta[] {
+  if (mode === "az") return [...list].sort(byName);
+  if (mode === "random") return [...list].sort(() => Math.random() - 0.5);
+  const order = featuredIds && featuredIds.length > 0 ? featuredIds : FEATURED_ORDER;
+  const rank = new Map(order.map((id, i) => [id, i]));
+  return [...list].sort((a, b) => {
+    const ra = rank.has(a.id) ? (rank.get(a.id) as number) : Infinity;
+    const rb = rank.has(b.id) ? (rank.get(b.id) as number) : Infinity;
+    return ra !== rb ? ra - rb : byName(a, b);
+  });
+}
+
 export function getTemplatesForEventType(eventType: EventType): TemplateMeta[] {
-  return TEMPLATES_META.filter((t) => t.eventTypes.includes(eventType));
+  return TEMPLATES_META.filter((t) => t.eventTypes.includes(eventType)).sort(byName);
 }
 
 export function filterTemplates(opts: {
@@ -2398,7 +2440,7 @@ export function filterTemplates(opts: {
     if (opts.eventType && !t.eventTypes.includes(opts.eventType)) return false;
     if (opts.tags && opts.tags.length > 0 && !opts.tags.some((tag) => t.tags.includes(tag))) return false;
     return true;
-  });
+  }).sort(byName);
 }
 
 /**

@@ -2,15 +2,29 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { TAG_LABELS, scoreTemplateMatch } from "@/components/templates/metadata";
+import {
+  TAG_LABELS,
+  scoreTemplateMatch,
+  sortTemplates,
+  type TemplateSort,
+} from "@/components/templates/metadata";
+import { TemplateThumb } from "@/components/ui/TemplateThumb";
 import type { EventType, TemplateMeta, TemplateTag } from "@/lib/types";
+
+const SORT_OPTIONS: { key: TemplateSort; label: string }[] = [
+  { key: "featured", label: "Featured" },
+  { key: "az", label: "A–Z" },
+  { key: "random", label: "Surprise me" },
+];
 
 type Props = {
   eventType: EventType;
   initialTemplates: TemplateMeta[];
+  /** Curated order for this event type (from the admin Featured sheet). */
+  featuredIds?: string[];
 };
 
-export function TemplatePicker({ eventType, initialTemplates }: Props) {
+export function TemplatePicker({ eventType, initialTemplates, featuredIds }: Props) {
   const allTags = useMemo(() => {
     const set = new Set<TemplateTag>();
     initialTemplates.forEach((t) => t.tags.forEach((tag) => set.add(tag)));
@@ -19,6 +33,7 @@ export function TemplatePicker({ eventType, initialTemplates }: Props) {
 
   const [selected, setSelected] = useState<TemplateTag[]>([]);
   const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<TemplateSort>("featured");
 
   const toggle = (tag: TemplateTag) =>
     setSelected((cur) =>
@@ -34,17 +49,36 @@ export function TemplatePicker({ eventType, initialTemplates }: Props) {
             selected.some((tag) => t.tags.includes(tag)),
           );
 
-    if (!query.trim()) return tagFiltered;
+    // Default order follows the chosen sort. Search still ranks by relevance.
+    if (!query.trim()) return sortTemplates(tagFiltered, sort, featuredIds);
 
     return tagFiltered
       .map((t) => ({ t, score: scoreTemplateMatch(t, query) }))
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score)
       .map((x) => x.t);
-  }, [selected, initialTemplates, query]);
+  }, [selected, initialTemplates, query, sort, featuredIds]);
 
   return (
     <>
+      {/* Sort control */}
+      <div className="flex flex-wrap items-center gap-2 mb-4 text-xs">
+        <span className="uppercase tracking-widest opacity-50 mr-1">Sort</span>
+        {SORT_OPTIONS.map((o) => (
+          <button
+            key={o.key}
+            onClick={() => setSort(o.key)}
+            className={`px-3 py-1.5 rounded-full border transition ${
+              sort === o.key
+                ? "bg-neutral-900 text-white border-neutral-900"
+                : "bg-white text-neutral-700 border-black/15 hover:border-black/40"
+            }`}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+
       {/* Search box — free-text describe-what-you-want */}
       <div className="mb-6">
         <label className="block">
@@ -130,10 +164,13 @@ export function TemplatePicker({ eventType, initialTemplates }: Props) {
               key={t.id}
               className="group rounded-2xl overflow-hidden border border-black/10 hover:border-black/40 hover:shadow-lg transition bg-white flex flex-col"
             >
-              <Link href={`/events/${eventType}/${t.id}`} className="block">
-                <div
-                  className="aspect-[4/3] bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                  style={{ backgroundImage: `url('${t.previewImage}')` }}
+              <Link href={`/events/${eventType}/${t.id}`} className="block overflow-hidden">
+                <TemplateThumb
+                  eventType={eventType}
+                  id={t.id}
+                  fallback={t.previewImage}
+                  alt={t.name}
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </Link>
               <div className="p-5 flex-1 flex flex-col">

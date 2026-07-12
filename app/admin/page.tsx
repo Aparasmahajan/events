@@ -34,6 +34,15 @@ export default async function AdminDashboard() {
         <Stat label="Live: stopped" value={counts.liveStopped} href="/admin/events" />
       </div>
 
+      <section className="mt-10 flex flex-wrap gap-3">
+        <Link href="/admin/featured" className="text-sm px-4 py-2 rounded-full border border-black/15 hover:bg-black/5">
+          ★ Curate featured templates
+        </Link>
+        <Link href="/admin/events" className="text-sm px-4 py-2 rounded-full border border-black/15 hover:bg-black/5">
+          Live events
+        </Link>
+      </section>
+
       <section className="mt-12">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-display text-2xl">Recent enquiries</h2>

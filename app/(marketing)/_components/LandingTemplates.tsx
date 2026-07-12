@@ -3,8 +3,20 @@
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState } from "react";
-import { TAG_LABELS, TEMPLATES_META, scoreTemplateMatch } from "@/components/templates/metadata";
+import {
+  TAG_LABELS,
+  TEMPLATES_META,
+  scoreTemplateMatch,
+  sortTemplates,
+  type TemplateSort,
+} from "@/components/templates/metadata";
 import type { TemplateTag } from "@/lib/types";
+
+const SORT_OPTIONS: { key: TemplateSort; label: string }[] = [
+  { key: "featured", label: "Featured" },
+  { key: "az", label: "A–Z" },
+  { key: "random", label: "Surprise me" },
+];
 
 const FEATURED_TAGS: TemplateTag[] = [
   "cool",
@@ -28,24 +40,26 @@ const FEATURED_TAGS: TemplateTag[] = [
   "artistic",
 ];
 
-export function LandingTemplates() {
+export function LandingTemplates({ featuredIds }: { featuredIds?: string[] }) {
   const reduce = useReducedMotion();
   const [tag, setTag] = useState<TemplateTag | "all">("all");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
+  const [sort, setSort] = useState<TemplateSort>("featured");
 
   const filtered = useMemo(() => {
     const tagFiltered =
       tag === "all"
         ? TEMPLATES_META
         : TEMPLATES_META.filter((t) => t.tags.includes(tag));
-    if (!query.trim()) return tagFiltered;
+    // Default order follows the chosen sort. Search still ranks by relevance.
+    if (!query.trim()) return sortTemplates(tagFiltered, sort, featuredIds);
     return tagFiltered
       .map((t) => ({ t, score: scoreTemplateMatch(t, query) }))
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score)
       .map((x) => x.t);
-  }, [tag, query]);
+  }, [tag, query, sort, featuredIds]);
 
   // When user is actively searching or filtering by tag, show every match.
   // Otherwise show a curated first page — 2 on mobile, 6 on desktop —
@@ -81,6 +95,23 @@ export function LandingTemplates() {
             )}
           </div>
         </label>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-2 mb-5 text-xs">
+        <span className="uppercase tracking-widest opacity-50 mr-1">Sort</span>
+        {SORT_OPTIONS.map((o) => (
+          <button
+            key={o.key}
+            onClick={() => setSort(o.key)}
+            className={`px-3 py-1.5 rounded-full border transition ${
+              sort === o.key
+                ? "bg-neutral-900 text-white border-neutral-900"
+                : "bg-white text-neutral-700 border-black/15 hover:border-black/40"
+            }`}
+          >
+            {o.label}
+          </button>
+        ))}
       </div>
 
       <div className="flex flex-wrap justify-center gap-2 mb-10">
