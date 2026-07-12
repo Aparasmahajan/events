@@ -170,7 +170,7 @@ export const AfterTemplate: TemplateComponent = ({ event, subEvents, media }) =>
   const invitationMessage = event.invitationMessage?.trim() || "You know the address. You know the vibe. The rest is up to the night.";
   const aboutStory = event.aboutStory?.trim() || "";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
-  const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1578645635737-6a88f7060a3e?auto=format&fit=crop&w=1600&q=80";
+  const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1600&q=80";
 
   useEffect(() => {
     if (reduce) return;
