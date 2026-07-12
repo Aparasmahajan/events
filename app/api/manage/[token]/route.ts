@@ -53,6 +53,11 @@ const EVENT_TO_COL: Partial<
   hideEvents: "HIDE_EVENTS",
   hideGallery: "HIDE_GALLERY",
   hideVenue: "HIDE_VENUE",
+  hideTimer: "HIDE_TIMER",
+  timerStyle: "TIMER_STYLE",
+  timerDesign: "TIMER_DESIGN",
+  timerPosition: "TIMER_POSITION",
+  timerCustom: "TIMER_CUSTOM",
 };
 
 const BOOL_COLS = new Set<keyof typeof LIVE_COL>([
@@ -62,6 +67,8 @@ const BOOL_COLS = new Set<keyof typeof LIVE_COL>([
   "HIDE_EVENTS",
   "HIDE_GALLERY",
   "HIDE_VENUE",
+  "HIDE_TIMER",
+  "TIMER_CUSTOM",
 ]);
 
 export async function PATCH(req: Request, ctx: { params: { token: string } }) {

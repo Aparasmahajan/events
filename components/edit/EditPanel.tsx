@@ -6,6 +6,7 @@ import type { EventData, EventType, MediaItem, SubEvent } from "@/lib/types";
 import type { EditableData } from "./EditableShell";
 import { TEMPLATES_META } from "@/components/templates/metadata";
 import { AddPhotosModal } from "./AddPhotosModal";
+import { TIMER_DESIGNS } from "@/components/ui/EventCountdown";
 
 type Props = {
   data: EditableData;
@@ -474,6 +475,104 @@ export function EditPanel({
                   checked={!data.event.hideVenue}
                   onChange={(v) => patchEvent({ hideVenue: !v })}
                 />
+                <Toggle
+                  label="Countdown timer"
+                  checked={!data.event.hideTimer}
+                  onChange={(v) => patchEvent({ hideTimer: !v })}
+                />
+                {!data.event.hideTimer && (
+                  <Toggle
+                    label="Customize timer"
+                    checked={!!data.event.timerCustom}
+                    onChange={(v) => patchEvent({ timerCustom: v })}
+                  />
+                )}
+                {!data.event.hideTimer && data.event.timerCustom && (
+                  <div className="pl-1">
+                    <span className="block text-[11px] opacity-60 mb-1.5">Timer position</span>
+                    <div className="grid grid-cols-2 gap-1">
+                      {(
+                        [
+                          { key: "floating", label: "Floating" },
+                          { key: "fixed", label: "Fixed" },
+                        ] as const
+                      ).map((opt) => {
+                        const active = (data.event.timerStyle ?? "fixed") === opt.key;
+                        return (
+                          <button
+                            key={opt.key}
+                            type="button"
+                            onClick={() => patchEvent({ timerStyle: opt.key })}
+                            className={`text-xs px-2 py-1.5 rounded-md border transition ${
+                              active
+                                ? "bg-neutral-900 text-white border-neutral-900"
+                                : "bg-white border-black/15 hover:border-black/40"
+                            }`}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <p className="text-[10px] opacity-50 mt-1.5 leading-snug">
+                      Floating = sticky chip that follows the scroll. Fixed = sits on the hero.
+                    </p>
+                  </div>
+                )}
+                {!data.event.hideTimer && data.event.timerCustom && (
+                  <div className="pl-1">
+                    <span className="block text-[11px] opacity-60 mb-1.5">Position on hero</span>
+                    <div className="grid grid-cols-3 gap-1">
+                      {(
+                        [
+                          { key: "left", label: "Left" },
+                          { key: "center", label: "Center" },
+                          { key: "right", label: "Right" },
+                        ] as const
+                      ).map((opt) => {
+                        const active = (data.event.timerPosition ?? "center") === opt.key;
+                        return (
+                          <button
+                            key={opt.key}
+                            type="button"
+                            onClick={() => patchEvent({ timerPosition: opt.key })}
+                            className={`text-xs px-2 py-1.5 rounded-md border transition ${
+                              active
+                                ? "bg-neutral-900 text-white border-neutral-900"
+                                : "bg-white border-black/15 hover:border-black/40"
+                            }`}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                {!data.event.hideTimer && data.event.timerCustom && (
+                  <div className="pl-1">
+                    <span className="block text-[11px] opacity-60 mb-1.5">Countdown design</span>
+                    <div className="grid grid-cols-3 gap-1">
+                      {TIMER_DESIGNS.map((d) => {
+                        const active = (data.event.timerDesign ?? "glass") === d.key;
+                        return (
+                          <button
+                            key={d.key}
+                            type="button"
+                            onClick={() => patchEvent({ timerDesign: d.key })}
+                            className={`text-[11px] px-2 py-1.5 rounded-md border transition ${
+                              active
+                                ? "bg-neutral-900 text-white border-neutral-900"
+                                : "bg-white border-black/15 hover:border-black/40"
+                            }`}
+                          >
+                            {d.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
                 <Toggle
                   label="RSVP"
                   checked={!!data.event.rsvpEnabled}

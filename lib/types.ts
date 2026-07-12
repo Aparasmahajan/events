@@ -96,6 +96,24 @@ export type EventData = {
   hideEvents?: boolean;
   hideGallery?: boolean;
   hideVenue?: boolean;
+  /** Countdown timer visibility. Default (undefined/false) = show. TRUE = hide
+   *  the countdown on the live site. Applies to every template. */
+  hideTimer?: boolean;
+  /** How the countdown is positioned:
+   *  - "floating": a sticky chip that stays on screen as you scroll
+   *  - "fixed": a static countdown band that sits in the page and scrolls away
+   *  Default (unset) = each template's natural choice (flagship templates show
+   *  their built-in hero timer; others float). */
+  timerStyle?: "floating" | "fixed";
+  /** Which countdown design to render. Default "glass". See TIMER_DESIGNS in
+   *  components/ui/EventCountdown.tsx. */
+  timerDesign?: "glass" | "minimal" | "flip" | "rings" | "neon" | "elegant";
+  /** Horizontal position along the bottom of the hero. "fixed" sits there;
+   *  "floating" floats at that corner. Default "center". */
+  timerPosition?: "left" | "center" | "right";
+  /** When false/unset the template's own appropriate timer is used. When true,
+   *  the customer's timerStyle / timerDesign / timerPosition choices apply. */
+  timerCustom?: boolean;
 };
 
 export type SubEvent = {
@@ -149,10 +167,20 @@ export type TemplateVibe = {
 
 export type TemplateMeta = {
   id: string;
+  /** Customer-friendly title shown on picker cards (e.g. "Cinematic Wedding"). */
   name: string;
+  /** Optional poetic identity kept for personality (e.g. "Aurora"). Shown as
+   *  a small subtitle on cards. Falls back to nothing when unset. */
+  codename?: string;
+  /** Plain-English one-liner — "who / when to use this". */
   description: string;
   eventTypes: EventType[];
   tags: TemplateTag[];
+  /** Free-text search terms — synonyms + use-case phrases customers might
+   *  type into the picker search box (e.g. ["indian wedding", "haldi", "big
+   *  fat", "gold"]). Contributes the highest weight in relevance scoring
+   *  after the name itself. */
+  keywords?: string[];
   previewImage: string;
   defaults: TemplateDefaults;
   /** Emoji / symbol for the template card visual */

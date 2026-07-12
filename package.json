@@ -6,16 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "previews": "node scripts/generate-template-previews.mjs",
+    "previews:mobile": "node scripts/generate-template-previews.mjs --mobile --out public/template-previews-mobile"
   },
   "dependencies": {
+    "framer-motion": "^11.3.19",
+    "googleapis": "^140.0.1",
+    "leaflet": "^1.9.4",
     "next": "14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "framer-motion": "^11.3.19",
-    "react-leaflet": "^4.2.1",
-    "leaflet": "^1.9.4",
-    "googleapis": "^140.0.1"
+    "react-leaflet": "^4.2.1"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.12",
@@ -25,6 +27,7 @@
     "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
+    "playwright": "^1.61.1",
     "postcss": "^8.4.40",
     "tailwindcss": "^3.4.7",
     "typescript": "^5.5.4"

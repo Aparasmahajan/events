@@ -10,7 +10,7 @@ type Params = { type: string; templateId: string };
 /**
  * Type-aware template preview. Renders the chosen template with demo content
  * that matches the chosen event type — so /events/birthday/modern shows the
- * Modern template with a *birthday* story, not the corporate Azalio demo that
+ * Modern template with a *birthday* story, not the corporate Mahajan demo that
  * happens to be Modern's seed event.
  */
 export default function TemplatePreviewPage({ params }: { params: Params }) {
