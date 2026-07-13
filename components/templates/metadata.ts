@@ -87,8 +87,7 @@ export const modernMeta: TemplateMeta = {
     invitationMessage: "Some moments deserve a soundtrack. This is one of them.",
     tagline: "It's happening.",
     accentColor: "#7c3aed",
-    heroImage:
-      "https://images.unsplash.com/photo-1494203484021-3c454daf695d?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/lotus-decor.jpg",
   },
 };
 
@@ -112,8 +111,9 @@ export const vibrantMeta: TemplateMeta = {
     invitationMessage: "Confetti, cake and chaos — you're in.",
     tagline: "Let's party!",
     accentColor: "#ff5fa2",
-    heroImage:
-      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    // Colourful rangoli — bright, festive and unmistakably a celebration, to
+    // match this template's playful, high-energy palette.
+    heroImage: "/samples/rangoli.jpg",
   },
 };
 
@@ -163,8 +163,7 @@ export const auroraMeta: TemplateMeta = {
       "Beneath a sky we'll never forget, we ask you to witness the night two stories become one.",
     tagline: "Two orbits, one light.",
     accentColor: "#d8b46a",
-    heroImage:
-      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/indian-mandap-decor.jpg",
     aboutStory:
       "It began as a small gravity — a glance that bent the evening. Years later the pull is a certainty, and we'd like the people we love around us when we name it out loud.",
   },
@@ -191,8 +190,7 @@ export const obsidianMeta: TemplateMeta = {
       "No grand announcement. Only the people who matter, in a room that will remember the night.",
     tagline: "An evening, in acts.",
     accentColor: "#b5763a",
-    heroImage:
-      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/diya-lamps.jpg",
     aboutStory:
       "We are not for spectacle. We are for the long table, the low light, the last song — and the few who'll still be dancing when it plays.",
   },
@@ -219,8 +217,7 @@ export const celestiaMeta: TemplateMeta = {
       "Somewhere between a wish and a certainty, we found each other — and we'd love you there when we make it real.",
     tagline: "Written in the stars.",
     accentColor: "#7c6bb0",
-    heroImage:
-      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/lotus-decor.jpg",
     aboutStory:
       "A slow orbit of small coincidences that stopped feeling like coincidence. This is the part where two paths quietly become one.",
   },
@@ -355,8 +352,7 @@ export const empyreanMeta: TemplateMeta = {
       "Beneath a sky that has watched every love that came before ours, we invite you to witness the one we are making now.",
     tagline: "A love ascending.",
     accentColor: "#c8a460",
-    heroImage:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/mandap-flowers.jpg",
     aboutStory:
       "Some love stories are written on paper. Ours was written in light — the kind that pours through stained glass at four in the afternoon, when nobody is watching but the room already knows.",
   },
@@ -383,8 +379,7 @@ export const prismMeta: TemplateMeta = {
       "Light bends. Colors emerge. Two lives, refracted through one moment — we would love you there when it happens.",
     tagline: "Light meets light.",
     accentColor: "#7ea8ff",
-    heroImage:
-      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=1600&q=80",
     aboutStory:
       "A prism doesn't invent color — it reveals what was always in the light. Our years together have felt exactly like that.",
   },
@@ -495,8 +490,7 @@ export const chaptersMeta: TemplateMeta = {
       "A story worth its own book — and you're in almost every chapter. Come help us bind another year to the shelf.",
     tagline: "Volume the next.",
     accentColor: "#a68b5b",
-    heroImage:
-      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/wedding-cake.jpg",
     aboutStory:
       "Twenty-five years of small mornings, wrong turns, right choices, and one shared soundtrack that has somehow held it all together.",
   },
@@ -692,8 +686,7 @@ export const skytempleMeta: TemplateMeta = {
       "Above the world we knew, we found a room the sky agreed to hold for us. Come stand in it while we make our promise.",
     tagline: "A wedding among the gods.",
     accentColor: "#e6c988",
-    heroImage:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/indian-mandap.jpg",
     aboutStory:
       "Doors of marble opening onto cloud, a bridge of light between the two of us, and a small orchestra somewhere behind the sun. This is the day the sky lends us its temples.",
   },
@@ -750,8 +743,7 @@ export const symphonyMeta: TemplateMeta = {
       "Every love has a score. Ours has been rehearsing since the day we met. Come hear the first performance.",
     tagline: "In four movements.",
     accentColor: "#b48eff",
-    heroImage:
-      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/lotus-decor.jpg",
     aboutStory:
       "Movement I — the meeting. Movement II — the long slow verse. Movement III — the crescendo. Movement IV — you, walking down the aisle, all instruments held on the same note.",
   },
@@ -1011,8 +1003,7 @@ export const libraryMeta: TemplateMeta = {
       "Twenty-something books, one shelf, one very long argument about whose fault the good years were. Come read a few chapters with us.",
     tagline: "Volume the next.",
     accentColor: "#7c5a2e",
-    heroImage:
-      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/wedding-shoes.jpg",
     aboutStory:
       "Books lined up like the years that made them. Butterflies escaping the letters. A staircase to the next chapter that only opens when both of us walk on it.",
   },
@@ -1241,8 +1232,7 @@ export const cathedralMeta: TemplateMeta = {
       "We are building a cathedral out of the stars we met under. Come sit in the front pew of the sky.",
     tagline: "Vows under a galaxy ceiling.",
     accentColor: "#4a5fc1",
-    heroImage:
-      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/mandap-flowers.jpg",
     aboutStory:
       "Every window in this cathedral is a memory lit from behind. The ceiling is the night we first named the constellations wrong, on purpose.",
   },
@@ -1270,8 +1260,7 @@ export const sakuraMeta: TemplateMeta = {
       "The blossoms only stay a few weeks each year — so we chose them to hold our forever. Come walk the petal path with us.",
     tagline: "A season made to stay.",
     accentColor: "#e88aa8",
-    heroImage:
-      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/mehndi-detail.jpg",
     aboutStory:
       "We met when the trees were bare and stayed until they flowered. Every spring since has felt like the forest applauding.",
   },
@@ -1299,8 +1288,7 @@ export const versaillesMeta: TemplateMeta = {
       "The palace doors are open, the chandeliers are lit, and one seat in the hall of mirrors has your name on it.",
     tagline: "A palace for one evening.",
     accentColor: "#c9a13b",
-    heroImage:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/wedding-cake.jpg",
     aboutStory:
       "Room by gilded room, our story walks ahead of us — up the staircase, past the mirrors, out into a garden that has been waiting three hundred years for this dance.",
   },
@@ -1328,8 +1316,7 @@ export const frescoMeta: TemplateMeta = {
       "Some loves get painted; ours insisted on it. Come stand inside the frame with us for one afternoon.",
     tagline: "A love, painted.",
     accentColor: "#b0722f",
-    heroImage:
-      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/mehndi-detail.jpg",
     aboutStory:
       "The first brush stroke was a glance across a crowded room. Every year since has added another layer of gold leaf.",
   },
@@ -1386,8 +1373,9 @@ export const icepalaceMeta: TemplateMeta = {
       "In a palace of ice under a green-lit sky, we're making the warmest promise of our lives. Bring your coat and your best toast.",
     tagline: "Warmth, kept in ice.",
     accentColor: "#8fd4e8",
-    heroImage:
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80",
+    // An elegant tiered wedding cake in a candlelit ballroom — a clear, premium
+    // wedding scene in place of the old abstract winter shot.
+    heroImage: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1600&q=80",
     aboutStory:
       "The lake froze the winter we met, and we walked on it anyway. Some things hold when you trust them.",
   },
@@ -1502,8 +1490,7 @@ export const infinitytrainMeta: TemplateMeta = {
       "Our train leaves from the platform where we first met and doesn't stop until forever. Your ticket is attached.",
     tagline: "All aboard, no last stop.",
     accentColor: "#b08d3f",
-    heroImage:
-      "https://images.unsplash.com/photo-1494203484021-3c454daf695d?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/wedding-shoes.jpg",
     aboutStory:
       "Coach one holds the first hello. Coach two, the long slow years. Keep walking toward the lamp-lit dining car — that's where we are now.",
   },
@@ -1531,8 +1518,7 @@ export const lanternsMeta: TemplateMeta = {
       "We're sending a thousand lanterns up with one wish inside each of them — and the wish is the same in every one. Come light yours with us.",
     tagline: "One wish, a thousand lights.",
     accentColor: "#e8a545",
-    heroImage:
-      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/diya-lamps.jpg",
     aboutStory:
       "Every memory we've made is warm enough to fly. Tonight we let them all go at once and watch the lake double the sky.",
   },
@@ -1560,8 +1546,7 @@ export const glassroseMeta: TemplateMeta = {
       "Some flowers wilt; we grew one out of glass instead. Come watch it open, one petal at a time.",
     tagline: "A rose that keeps.",
     accentColor: "#d66a8a",
-    heroImage:
-      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/rings-roses.jpg",
     aboutStory:
       "Petal by petal we built something transparent enough to see all the way through, and strong enough to keep the light inside.",
   },
@@ -1589,8 +1574,7 @@ export const secretgalaxyMeta: TemplateMeta = {
       "We found a galaxy nobody else had named, so we gave it both our names. Come see the coordinates.",
     tagline: "A universe of two.",
     accentColor: "#7b5ce8",
-    heroImage:
-      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/lotus-decor.jpg",
     aboutStory:
       "Astronomers say most galaxies go undiscovered. Ours stayed hidden until the night two telescopes pointed at the same patch of sky.",
   },
@@ -2307,15 +2291,15 @@ export const creatorscanvasMeta: TemplateMeta = {
   ],
   icon: "🎨",
   vibe: { label: "Studio Canvas", color: "#4a6fa5" },
-  previewImage:
-    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/samples/mehndi-hands.jpg",
   defaults: {
     invitationMessage:
       "Some love stories are written. Ours is being drawn — one stroke at a time, with you in every frame.",
     tagline: "Painted into being.",
     accentColor: "#4a6fa5",
-    heroImage:
-      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1600&q=80",
+    // Bridal henna — intricate line-work drawn by hand, the literal wedding
+    // expression of this template's sketch→paint, drawn-by-hand aesthetic.
+    heroImage: "/samples/mehndi-hands.jpg",
     aboutStory:
       "A blank page, a first line, and years of colour since. We'd love you in the picture as we sign the final stroke.",
   },
@@ -2335,15 +2319,15 @@ export const timefractureMeta: TemplateMeta = {
   ],
   icon: "⏳",
   vibe: { label: "Time Fracture", color: "#d4a24e" },
-  previewImage:
-    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/samples/diya-lamps.jpg",
   defaults: {
     invitationMessage:
       "Every moment led here. Scroll back through the fractures of time with us — and forward, into the day it all mends.",
     tagline: "Time, rewritten.",
     accentColor: "#d4a24e",
-    heroImage:
-      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
+    // Rows of diya flames glowing on black — a wedding ritual in the template's
+    // exact gold-on-dark palette, warm and cinematic.
+    heroImage: "/samples/diya-lamps.jpg",
     aboutStory:
       "Rewind far enough and it's two strangers on the same street. Fast-forward and it's forever. This is the moment the timeline knots.",
   },
@@ -2363,15 +2347,15 @@ export const gravityzeroMeta: TemplateMeta = {
   ],
   icon: "🌀",
   vibe: { label: "Zero-G", color: "#7fb7d8" },
-  previewImage:
-    "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/samples/rings-roses.jpg",
   defaults: {
     invitationMessage:
       "Leave the ground behind. Come float with us where nothing falls — least of all, us.",
     tagline: "Nothing touches the ground.",
     accentColor: "#7fb7d8",
-    heroImage:
-      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1600&q=80",
+    // Gold rings with roses on a bright white ground — clean, light and airy to
+    // suit this template's weightless pale-blue palette.
+    heroImage: "/samples/rings-roses.jpg",
     aboutStory:
       "Somewhere gravity gave up and we just kept rising. Orbit our little universe for an evening — dress code: astronaut-formal.",
   },
@@ -2391,15 +2375,15 @@ export const memorydimensionMeta: TemplateMeta = {
   ],
   icon: "🔮",
   vibe: { label: "Memory Archive", color: "#9b8cff" },
-  previewImage:
-    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/samples/lotus-decor.jpg",
   defaults: {
     invitationMessage:
       "Step inside the archive of us — every crystal a memory, every memory a reason we're saying yes.",
     tagline: "Walk through our memories.",
     accentColor: "#9b8cff",
-    heroImage:
-      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
+    // Lotus and roses in deep shadow — dreamy blooms suspended in the dark, for
+    // this template's deep, memory-archive mood.
+    heroImage: "/samples/lotus-decor.jpg",
     aboutStory:
       "Each memory is kept in its own light — the first look, the long drive, the quiet yes. Drift through them and end at the brightest one.",
   },
@@ -2420,15 +2404,15 @@ export const infinitycathedralMeta: TemplateMeta = {
   ],
   icon: "⛪",
   vibe: { label: "Infinity Cathedral", color: "#d8b46a" },
-  previewImage:
-    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+  previewImage: "/samples/mandap-flowers.jpg",
   defaults: {
     invitationMessage:
       "Enter a cathedral that was never built and cannot fall — and stay until the ceiling opens onto forever.",
     tagline: "Where forever is the architecture.",
     accentColor: "#d8b46a",
-    heroImage:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80",
+    // A grand pillared wedding hall — carved gold mandap columns and a long
+    // aisle, the wedding echo of this template's endless-columns architecture.
+    heroImage: "/samples/mandap-flowers.jpg",
     aboutStory:
       "Every column is a year, every window a memory of light. Walk the nave with us to the altar, and watch the roof give way to stars.",
   },

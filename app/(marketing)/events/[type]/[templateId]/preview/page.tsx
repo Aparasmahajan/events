@@ -20,10 +20,24 @@ export default function TemplatePreviewPage({ params }: { params: Params }) {
   if (!meta || !meta.eventTypes.includes(eventType)) notFound();
 
   const bundle = dummyForEventType(eventType);
+
+  // The demo bundle is shared across every template of this event type, so its
+  // hero (e.g. the wedding mandap) would otherwise appear on ALL wedding
+  // templates — burying each template's own aesthetic. For the romance family,
+  // show the template's signature hero (meta.defaults.heroImage) instead, so
+  // every preview looks like *itself* (Time Fracture gets its cosmic twilight,
+  // Gravity Zero its crystal chandelier, and so on).
+  const ROMANCE = ["wedding", "engagement", "anniversary"];
+  const heroOverride =
+    ROMANCE.includes(eventType) && meta.defaults.heroImage
+      ? meta.defaults.heroImage
+      : bundle.event.heroImageUrl;
+
   const event = {
     ...bundle.event,
     eventType,
     templateId: meta.id,
+    heroImageUrl: heroOverride,
     // Drop the source demo's accent so the template renders in its own palette.
     themeAccentColor: undefined,
   };

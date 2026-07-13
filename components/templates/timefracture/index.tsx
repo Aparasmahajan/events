@@ -273,7 +273,11 @@ export const TimeFractureTemplate: TemplateComponent = ({ event, subEvents, medi
               </h2>
             </div>
 
-            <ol className="relative mx-auto mt-14 flex flex-col gap-10 md:mt-24 md:block md:h-[720px]">
+            <ol
+              className={`relative mx-auto mt-14 flex flex-col gap-10 md:mt-24 ${
+                reduce ? "" : "md:block md:h-[720px]"
+              }`}
+            >
               {sortedEvents.map((se, i) => {
                 // Spiral: angle advances, radius grows with index.
                 const angle = -90 + i * 62; // degrees
@@ -284,7 +288,11 @@ export const TimeFractureTemplate: TemplateComponent = ({ event, subEvents, medi
                 return (
                   <motion.li
                     key={`${se.order}-${i}`}
-                    className="md:absolute md:w-[19rem] md:-translate-x-1/2 md:-translate-y-1/2"
+                    className={
+                      reduce
+                        ? "mx-auto w-full max-w-md"
+                        : "md:absolute md:w-[19rem] md:-translate-x-1/2 md:-translate-y-1/2"
+                    }
                     style={
                       reduce
                         ? undefined
@@ -383,7 +391,11 @@ export const TimeFractureTemplate: TemplateComponent = ({ event, subEvents, medi
                       <EditableImage
                         section="gallery"
                         src={m.publicUrl}
+                        replaceAssetId={m.driveFileId}
                         alt={m.caption || `Gallery photo ${i + 1}`}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 33vw"
+                        className="object-cover"
                       />
                     </motion.div>
                   ))

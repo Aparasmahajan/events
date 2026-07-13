@@ -27,6 +27,14 @@ import path from "node:path";
 // real customer enquiries (which are always <PREFIX>-<YEAR>-<SEQ>). Change
 // these together with the *_CODE constants in lib/dummyData.ts.
 const TEMPLATES = [
+  // Flagship wedding templates (Awwwards-tier). Primary type = wedding so the
+  // shared landing copy is the wedding capture; EVENT_TYPES_BY_TEMPLATE fans
+  // each out to engagement + anniversary too.
+  { id: "creatorscanvas", code: "DEMO-CREATORSCANVAS", type: "wedding" },
+  { id: "timefracture", code: "DEMO-TIMEFRACTURE", type: "wedding" },
+  { id: "gravityzero", code: "DEMO-GRAVITYZERO", type: "wedding" },
+  { id: "memorydimension", code: "DEMO-MEMORYDIMENSION", type: "wedding" },
+  { id: "infinitycathedral", code: "DEMO-INFINITYCATHEDRAL", type: "wedding" },
   { id: "royal", code: "DEMO-ROYAL", type: "wedding" },
   { id: "minimal", code: "DEMO-MINIMAL", type: "wedding" },
   { id: "modern", code: "DEMO-MODERN", type: "wedding" },
