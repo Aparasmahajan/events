@@ -1254,13 +1254,13 @@ export const sakuraMeta: TemplateMeta = {
   ],
   icon: "🌸",
   vibe: { label: "Sakura", color: "#e88aa8" },
-  previewImage: "/template-previews/sakura.jpg",
+  previewImage: "/samples/sakura-branch.jpg",
   defaults: {
     invitationMessage:
       "The blossoms only stay a few weeks each year — so we chose them to hold our forever. Come walk the petal path with us.",
     tagline: "A season made to stay.",
     accentColor: "#e88aa8",
-    heroImage: "/samples/mehndi-detail.jpg",
+    heroImage: "/samples/sakura-branch.jpg",
     aboutStory:
       "We met when the trees were bare and stayed until they flowered. Every spring since has felt like the forest applauding.",
   },
@@ -1310,13 +1310,13 @@ export const frescoMeta: TemplateMeta = {
   ],
   icon: "🎨",
   vibe: { label: "Renaissance", color: "#b0722f" },
-  previewImage: "/template-previews/fresco.jpg",
+  previewImage: "/samples/chandelier.jpg",
   defaults: {
     invitationMessage:
       "Some loves get painted; ours insisted on it. Come stand inside the frame with us for one afternoon.",
     tagline: "A love, painted.",
     accentColor: "#b0722f",
-    heroImage: "/samples/mehndi-detail.jpg",
+    heroImage: "/samples/chandelier.jpg",
     aboutStory:
       "The first brush stroke was a glance across a crowded room. Every year since has added another layer of gold leaf.",
   },
@@ -2291,7 +2291,7 @@ export const creatorscanvasMeta: TemplateMeta = {
   ],
   icon: "🎨",
   vibe: { label: "Studio Canvas", color: "#4a6fa5" },
-  previewImage: "/samples/mehndi-hands.jpg",
+  previewImage: "/samples/rings-roses.jpg",
   defaults: {
     invitationMessage:
       "Some love stories are written. Ours is being drawn — one stroke at a time, with you in every frame.",
@@ -2299,7 +2299,7 @@ export const creatorscanvasMeta: TemplateMeta = {
     accentColor: "#4a6fa5",
     // Bridal henna — intricate line-work drawn by hand, the literal wedding
     // expression of this template's sketch→paint, drawn-by-hand aesthetic.
-    heroImage: "/samples/mehndi-hands.jpg",
+    heroImage: "/samples/rings-roses.jpg",
     aboutStory:
       "A blank page, a first line, and years of colour since. We'd love you in the picture as we sign the final stroke.",
   },
