@@ -2319,7 +2319,7 @@ export const timefractureMeta: TemplateMeta = {
   ],
   icon: "⏳",
   vibe: { label: "Time Fracture", color: "#d4a24e" },
-  previewImage: "/samples/diya-lamps.jpg",
+  previewImage: "/samples/indian-couple.jpg",
   defaults: {
     invitationMessage:
       "Every moment led here. Scroll back through the fractures of time with us — and forward, into the day it all mends.",
@@ -2327,7 +2327,7 @@ export const timefractureMeta: TemplateMeta = {
     accentColor: "#d4a24e",
     // Rows of diya flames glowing on black — a wedding ritual in the template's
     // exact gold-on-dark palette, warm and cinematic.
-    heroImage: "/samples/diya-lamps.jpg",
+    heroImage: "/samples/indian-couple.jpg",
     aboutStory:
       "Rewind far enough and it's two strangers on the same street. Fast-forward and it's forever. This is the moment the timeline knots.",
   },

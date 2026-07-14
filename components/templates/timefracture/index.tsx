@@ -170,7 +170,14 @@ export const TimeFractureTemplate: TemplateComponent = ({ event, subEvents, medi
         ref={heroRef}
         className="relative flex min-h-[100svh] flex-col items-center justify-center px-4 pb-28 pt-20 text-center"
       >
-        <div className="relative mx-auto aspect-[4/5] w-full max-w-md sm:max-w-lg md:max-w-xl">
+        {/* Ambient full-bleed hero — fills the wide-desktop margins so the
+            fractured card never floats in an empty navy sea. */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <img src={hero} alt="" className="h-full w-full scale-125 object-cover opacity-20 blur-3xl" />
+          <div className="absolute inset-0" style={{ background: "rgba(11,10,31,0.6)" }} />
+        </div>
+
+        <div className="relative z-10 mx-auto aspect-[4/5] w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
           {/* Base whole image (assembled state / reduced-motion fallback) */}
           <div className="absolute inset-0 overflow-hidden rounded-[2rem] ring-1 ring-white/10 shadow-2xl">
             <HeroMedia

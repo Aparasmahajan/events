@@ -124,15 +124,15 @@ function indianWeddingGallery(
   code: string,
   extra?: { url: string; caption?: string }[],
 ): MediaItem[] {
+  // A clean, aesthetic set — no mehndi/henna, no cluttered snapshots. Elegant
+  // wedding detail + decor shots that look good in any template's gallery.
   return gallery(code, [
-    { url: SAMPLES.indianMehndi, caption: "Mehndi" },
-    { url: SAMPLES.indianMandapFlowers, caption: "Mandap" },
-    { url: SAMPLES.indianFire, caption: "The sacred fire" },
-    { url: SAMPLES.indianFlowers, caption: "Flowers" },
+    { url: SAMPLES.weddingRingsRoses, caption: "The rings" },
+    { url: SAMPLES.indianMandapFlowers, caption: "The mandap" },
+    { url: SAMPLES.indianDiya, caption: "Diyas at dusk" },
+    { url: SAMPLES.indianLotus, caption: "Blooms" },
+    { url: SAMPLES.weddingCake, caption: "The celebration" },
     { url: SAMPLES.indianRangoli, caption: "Rangoli" },
-    { url: SAMPLES.indianDiya, caption: "Diyas" },
-    { url: SAMPLES.indianLotus, caption: "Lotus buds" },
-    { url: SAMPLES.indianPuja, caption: "Puja thali" },
     ...(extra ?? []),
   ]);
 }
