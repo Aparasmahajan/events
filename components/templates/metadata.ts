@@ -373,13 +373,13 @@ export const prismMeta: TemplateMeta = {
   ],
   icon: "💎",
   vibe: { label: "Crystalline", color: "#7ea8ff" },
-  previewImage: "/template-previews/prism.jpg",
+  previewImage: "/samples/rings-roses.jpg",
   defaults: {
     invitationMessage:
       "Light bends. Colors emerge. Two lives, refracted through one moment — we would love you there when it happens.",
     tagline: "Light meets light.",
     accentColor: "#7ea8ff",
-    heroImage: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=1600&q=80",
+    heroImage: "/samples/rings-roses.jpg",
     aboutStory:
       "A prism doesn't invent color — it reveals what was always in the light. Our years together have felt exactly like that.",
   },
