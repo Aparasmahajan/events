@@ -43,12 +43,15 @@ const HERO_SHARDS: Shard[] = [
 ];
 
 // Eras that tint the page as time is repaired.
+// A cohesive deep-purple progression — indigo → violet → royal → plum (the
+// wedding, the richest note) → settling back to violet. All kept dark for
+// strong contrast against the amber/gold/white type.
 const ERAS = [
-  { key: "childhood", label: "Childhood", tint: "rgba(30, 27, 75, 0.55)" },
-  { key: "proposal", label: "The Proposal", tint: "rgba(76, 29, 82, 0.45)" },
-  { key: "engagement", label: "The Engagement", tint: "rgba(120, 53, 45, 0.4)" },
-  { key: "wedding", label: "The Wedding", tint: "rgba(146, 92, 30, 0.35)" },
-  { key: "forever", label: "Forever", tint: "rgba(191, 160, 120, 0.28)" },
+  { key: "childhood", label: "Childhood", tint: "rgba(24, 20, 55, 0.62)" },
+  { key: "proposal", label: "The Proposal", tint: "rgba(43, 26, 71, 0.72)" },
+  { key: "engagement", label: "The Engagement", tint: "rgba(58, 30, 84, 0.70)" },
+  { key: "wedding", label: "The Wedding", tint: "rgba(78, 38, 100, 0.66)" },
+  { key: "forever", label: "Forever", tint: "rgba(48, 28, 78, 0.70)" },
 ] as const;
 
 function formatEventDate(value?: string | null): string {
@@ -125,7 +128,7 @@ export const TimeFractureTemplate: TemplateComponent = ({ event, subEvents, medi
           className="pointer-events-none fixed inset-0 -z-10"
           style={{
             background:
-              "linear-gradient(180deg, #1e1b4b 0%, #4c1d5a 45%, #7c4a1e 80%, #d9b48a 100%)",
+              "linear-gradient(180deg, #14122e 0%, #2b1a47 42%, #3e1f5c 72%, #241436 100%)",
           }}
         />
       ) : (
@@ -280,37 +283,15 @@ export const TimeFractureTemplate: TemplateComponent = ({ event, subEvents, medi
               </h2>
             </div>
 
-            <ol
-              className={`relative mx-auto mt-14 flex flex-col gap-10 md:mt-24 ${
-                reduce ? "" : "md:block md:h-[720px]"
-              }`}
-            >
+            <ol className="relative mx-auto mt-14 flex max-w-md flex-col gap-6 md:mt-16">
               {sortedEvents.map((se, i) => {
-                // Spiral: angle advances, radius grows with index.
-                const angle = -90 + i * 62; // degrees
-                const radius = 90 + i * 46; // px
-                const rad = (angle * Math.PI) / 180;
-                const left = 50 + (radius * Math.cos(rad)) / 7.2; // % of width
-                const top = 50 + (radius * Math.sin(rad)) / 7.2; // % of height
                 return (
                   <motion.li
                     key={`${se.order}-${i}`}
-                    className={
-                      reduce
-                        ? "mx-auto w-full max-w-md"
-                        : "md:absolute md:w-[19rem] md:-translate-x-1/2 md:-translate-y-1/2"
-                    }
-                    style={
-                      reduce
-                        ? undefined
-                        : { left: `${left}%`, top: `${top}%` }
-                    }
-                    initial={reduce ? false : { opacity: 0, scale: 0.7, rotate: -8 }}
-                    whileInView={
-                      reduce ? undefined : { opacity: 1, scale: 1, rotate: 0 }
-                    }
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ duration: 0.8, ease: EASE }}
+                    className="w-full"
+                    initial={reduce ? false : { opacity: 0, y: 24 }}
+                    animate={reduce ? undefined : { opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: EASE, delay: Math.min(i * 0.12, 0.6) }}
                   >
                     <div className="rounded-2xl border border-white/12 bg-white/5 p-5 backdrop-blur-sm">
                       <div className="flex items-center gap-2 text-[var(--accent)]">
@@ -374,26 +355,9 @@ export const TimeFractureTemplate: TemplateComponent = ({ event, subEvents, medi
                     <motion.div
                       key={m.driveFileId ?? m.fileName ?? i}
                       className="relative aspect-square overflow-hidden rounded-xl ring-1 ring-white/10 will-change-transform"
-                      initial={
-                        reduce
-                          ? false
-                          : {
-                              opacity: 0,
-                              clipPath: "polygon(50% 0, 50% 0, 50% 100%, 50% 100%)",
-                              rotate: i % 2 ? 6 : -6,
-                            }
-                      }
-                      whileInView={
-                        reduce
-                          ? undefined
-                          : {
-                              opacity: 1,
-                              clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                              rotate: 0,
-                            }
-                      }
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.9, ease: EASE, delay: (i % 3) * 0.08 }}
+                      initial={reduce ? false : { opacity: 0, scale: 0.92, rotate: i % 2 ? 4 : -4 }}
+                      animate={reduce ? undefined : { opacity: 1, scale: 1, rotate: 0 }}
+                      transition={{ duration: 0.7, ease: EASE, delay: Math.min(i * 0.08, 0.5) }}
                     >
                       <EditableImage
                         section="gallery"
@@ -496,16 +460,12 @@ function EraSection({
     <motion.section
       className="relative px-4 py-24 md:py-32"
       style={{ backgroundColor: era.tint }}
-      initial={
-        reduce
-          ? false
-          : { opacity: 0, clipPath: "inset(0% 0% 100% 0%)", scale: 0.98 }
-      }
-      whileInView={
-        reduce ? undefined : { opacity: 1, clipPath: "inset(0% 0% 0% 0%)", scale: 1 }
-      }
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 1, ease: EASE }}
+      // Reveal on mount (not whileInView) — the scroll-triggered variant proved
+      // unreliable on this page and left whole sections invisible. This always
+      // shows the content.
+      initial={reduce ? false : { opacity: 0, y: 40 }}
+      animate={reduce ? undefined : { opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: EASE }}
     >
       {children}
     </motion.section>
