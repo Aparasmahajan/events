@@ -13,6 +13,12 @@ type AccessAlertOpts = {
   userAgent?: string;
 };
 
+function isTrue(v: string | undefined): boolean {
+  if (!v) return false;
+  const s = v.trim().toLowerCase();
+  return s === "1" || s === "true" || s === "yes" || s === "on";
+}
+
 async function sendViaResend(opts: {
   to: string;
   subject: string;
@@ -26,6 +32,14 @@ async function sendViaResend(opts: {
   if (!apiKey) {
     console.log(opts.fallbackDevLog);
     return { ok: true, dev: true };
+  }
+
+  // Optional admin visibility in prod — set LOG_OTP=1 (or "true") in your
+  // env to also print the code alongside the successful send. Useful when
+  // support has to help a customer who can't find the email. Off by
+  // default because OTPs in logs weaken the "one-time secret" guarantee.
+  if (isTrue(process.env.LOG_OTP)) {
+    console.log(opts.fallbackDevLog + "  [SENT via Resend]");
   }
 
   try {
