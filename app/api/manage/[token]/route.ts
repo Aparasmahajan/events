@@ -58,6 +58,7 @@ const EVENT_TO_COL: Partial<
   timerDesign: "TIMER_DESIGN",
   timerPosition: "TIMER_POSITION",
   timerCustom: "TIMER_CUSTOM",
+  photoFrame: "PHOTO_FRAME",
 };
 
 const BOOL_COLS = new Set<keyof typeof LIVE_COL>([

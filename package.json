@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "previews": "node scripts/generate-template-previews.mjs",
-    "previews:mobile": "node scripts/generate-template-previews.mjs --mobile --out public/template-previews-mobile"
+    "previews:mobile": "node scripts/generate-template-previews.mjs --mobile --out public/template-previews-mobile",
+    "render": "node scripts/render-pipeline.mjs",
+    "render:dry": "node scripts/render-pipeline.mjs --dry-run",
+    "render:batch": "node scripts/render-pipeline.mjs --batch",
+    "render:local": "node scripts/render-pipeline.mjs --backend playwright --voice none"
   },
   "dependencies": {
     "framer-motion": "^11.3.19",

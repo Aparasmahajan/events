@@ -2577,6 +2577,620 @@ const midnighttokyo: DemoBundle = {
   media: [],
 };
 
+// ---------- LOOM — DEMO-LOOM ----------
+
+const LOOM_CODE = "DEMO-LOOM";
+const loom: DemoBundle = {
+  event: {
+    eventCode: LOOM_CODE, eventType: "wedding", templateId: "loom",
+    eventTitle: "Aarav & Ishani", person1Name: "Aarav", person2Name: "Ishani",
+    tentativeDate: "2027-03-06", city: "Varanasi", isActive: true, slug: LOOM_CODE,
+    heroImageUrl: SAMPLES.bridalLehenga, tagline: "Two threads, one cloth",
+    invitationMessage: "Our families have been weaving toward this day for a long time. Come stand with us while the last thread goes in.",
+    aboutStory: "Ishani's grandmother wove a sari for a wedding that was still forty years away. It has been waiting in a steel trunk in Varanasi ever since. On the sixth of March it finally gets worn.",
+    mainDate: "2027-03-06", mainStartTime: "18:30", mainEndTime: "23:30",
+    themeAccentColor: "#a8323e",
+    venueName: "Brijrama Haveli", venueAddress: "Darbhanga Ghat, Varanasi, Uttar Pradesh",
+    mapLink: "https://maps.google.com/?q=Darbhanga+Ghat+Varanasi", latitude: 25.3072, longitude: 83.0107,
+    contactName: "Aarav & Ishani", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/loom-rsvp",
+  },
+  subEvents: [
+    { eventCode: LOOM_CODE, order: 1, name: "Thread Ceremony", date: "2027-03-04", startTime: "10:00", endTime: "12:00", venueName: "The Courtyard", dressCode: "Undyed cotton", description: "The first warp is set on the family loom. Bring steady hands.", icon: "🧵" },
+    { eventCode: LOOM_CODE, order: 2, name: "Mehndi on the Terrace", date: "2027-03-04", startTime: "16:00", endTime: "20:00", venueName: "River Terrace", dressCode: "Turmeric & madder", description: "Henna, chaat, and the loudest aunties in three districts.", icon: "🪔" },
+    { eventCode: LOOM_CODE, order: 3, name: "Sangeet", date: "2027-03-05", startTime: "19:30", endTime: "00:30", venueName: "The Long Hall", dressCode: "Indigo", description: "Cousins have rehearsed. There is no stopping them now.", icon: "🥁" },
+    { eventCode: LOOM_CODE, order: 4, name: "The Pheras", date: "2027-03-06", startTime: "18:30", endTime: "21:00", venueName: "Ghat Mandap", dressCode: "Banarasi silk", description: "Seven rounds, one cloth, forty years of waiting.", icon: "🔥" },
+    { eventCode: LOOM_CODE, order: 5, name: "Vidaai Breakfast", date: "2027-03-07", startTime: "08:00", endTime: "10:30", venueName: "The Riverside Deck", description: "Kachori, chai, and a boat back up the river.", icon: "🛶" },
+  ],
+  media: [heroUrl(LOOM_CODE, SAMPLES.bridalLehenga), ...indianWeddingGallery(LOOM_CODE)],
+};
+
+// ---------- ANALOG — DEMO-ANALOG ----------
+
+const ANALOG_CODE = "DEMO-ANALOG";
+const analog: DemoBundle = {
+  event: {
+    eventCode: ANALOG_CODE, eventType: "wedding", templateId: "analog",
+    eventTitle: "Dev & Naina", person1Name: "Dev", person2Name: "Naina",
+    tentativeDate: "2027-02-13", city: "Mumbai", isActive: true, slug: ANALOG_CODE,
+    heroImageUrl: SAMPLES.weddingShoes, tagline: "One roll, one day",
+    invitationMessage: "No stage, no spectacle — just the people who matter in the room where we sign. Come be in the frame.",
+    aboutStory: "Eleven years, four apartments, one camera that has never had a working light meter. We are getting married at 11am and eating on a rooftop by eight.",
+    mainDate: "2027-02-13", mainStartTime: "11:00", mainEndTime: "23:00",
+    themeAccentColor: "#c0392f",
+    venueName: "Bandra Registry & The Rooftop", venueAddress: "Bandra West, Mumbai, Maharashtra",
+    mapLink: "https://maps.google.com/?q=Bandra+West+Mumbai", latitude: 19.0596, longitude: 72.8295,
+    contactName: "Naina", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "hello@example.com",
+  },
+  subEvents: [
+    { eventCode: ANALOG_CODE, order: 1, name: "Registry at Eleven", date: "2027-02-13", startTime: "11:00", endTime: "12:00", venueName: "Bandra Registry", dressCode: "Whatever you'd wear to lunch", description: "Two signatures, twelve witnesses, one very bored official.", icon: "✍️" },
+    { eventCode: ANALOG_CODE, order: 2, name: "Family Lunch", date: "2027-02-13", startTime: "12:30", endTime: "15:30", venueName: "Gomantak, Khar", description: "Fish thali. No speeches. This is non-negotiable.", icon: "🍛" },
+    { eventCode: ANALOG_CODE, order: 3, name: "Rooftop Dinner", date: "2027-02-13", startTime: "19:30", endTime: "23:00", venueName: "The Rooftop", dressCode: "Dark colours, flat shoes", description: "String lights, one long table, someone's playlist on shuffle.", icon: "🍷" },
+    { eventCode: ANALOG_CODE, order: 4, name: "The Late Walk", date: "2027-02-13", startTime: "23:00", venueName: "Carter Road", description: "For whoever is still standing. Sea, seekh rolls, silence.", icon: "🌙" },
+  ],
+  media: [heroUrl(ANALOG_CODE, SAMPLES.weddingShoes), ...gallery(ANALOG_CODE, [
+    { url: SAMPLES.weddingRingsRoses, caption: "11:02" }, { url: SAMPLES.weddingShoes, caption: "borrowed" },
+    { url: SAMPLES.indianFlowers, caption: "the aunt's flowers" }, { url: SAMPLES.weddingCake, caption: "rooftop, 21:40" },
+    { url: SAMPLES.indianDiya, caption: "string lights" }, { url: SAMPLES.indianLotus, caption: "table 1" },
+    { url: PICSUM(`${ANALOG_CODE}-street`, 1200, 1200), caption: "carter road" },
+    { url: PICSUM(`${ANALOG_CODE}-rooftop`, 1200, 1200), caption: "end of roll" },
+  ])],
+};
+
+// ---------- LOCKER — DEMO-LOCKER ----------
+
+const LOCKER_CODE = "DEMO-LOCKER";
+const locker: DemoBundle = {
+  event: {
+    eventCode: LOCKER_CODE, eventType: "birthday", templateId: "locker",
+    eventTitle: "Anaya turns 16", person1Name: "Anaya",
+    tentativeDate: "2026-12-05", city: "Bengaluru", isActive: true, slug: LOCKER_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "the group chat has been planning this for weeks",
+    invitationMessage: "Okay so — it's happening. Come loud, come late if you must, but come. Bring nothing except yourself and a song request.",
+    aboutStory: "Sixteen years of being the one who starts things — the group projects, the trips, the 1am voice notes. This is the party for everyone who joined in.",
+    mainDate: "2026-12-05", mainStartTime: "17:00", mainEndTime: "23:30",
+    themeAccentColor: "#ee4f8b",
+    venueName: "The Terrace, 4th Block", venueAddress: "Koramangala 4th Block, Bengaluru",
+    mapLink: "https://maps.google.com/?q=Koramangala+4th+Block+Bengaluru", latitude: 12.9352, longitude: 77.6245,
+    contactName: "Anaya", contactPhone: "+91-98xxxxxxx", socialLink: "https://open.spotify.com/",
+    rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/anaya-16",
+  },
+  subEvents: [
+    { eventCode: LOCKER_CODE, order: 1, name: "Pre-Party Pizza", date: "2026-12-05", startTime: "17:00", endTime: "18:30", venueName: "Downstairs", dressCode: "Something you can dance in", description: "Four boxes. Pineapple discourse will not be entertained.", icon: "🍕" },
+    { eventCode: LOCKER_CODE, order: 2, name: "The Reveal", date: "2026-12-05", startTime: "18:45", endTime: "19:15", venueName: "The Terrace", description: "Lights off, phones up, cake in. Do not spoil it in the group.", icon: "🎂" },
+    { eventCode: LOCKER_CODE, order: 3, name: "Dance Floor", date: "2026-12-05", startTime: "19:15", endTime: "23:00", venueName: "The Terrace", description: "Playlist is open — add one song, not eleven.", icon: "🔊" },
+    { eventCode: LOCKER_CODE, order: 4, name: "Sleepover Shift", date: "2026-12-05", startTime: "23:00", endTime: "23:30", venueName: "The Living Room", dressCode: "Pyjamas, obviously", description: "For the six people whose parents already said yes.", icon: "🛏" },
+  ],
+  media: [heroUrl(LOCKER_CODE, SAMPLES.confetti), ...gallery(LOCKER_CODE, [
+    { url: PICSUM(`${LOCKER_CODE}-friends`, 1200, 1200), caption: "the day we broke the speaker" },
+    { url: SAMPLES.confetti, caption: "last year, allegedly calmer" },
+    { url: PICSUM(`${LOCKER_CODE}-trip`, 1200, 1200), caption: "school trip, no further comment" },
+    { url: PICSUM(`${LOCKER_CODE}-cake`, 1200, 1200), caption: "cake number one of three" },
+    { url: SAMPLES.pinkFlowers, caption: "she picked the colours herself" },
+    { url: PICSUM(`${LOCKER_CODE}-terrace`, 1200, 1200), caption: "the terrace, before anyone arrived" },
+  ])],
+};
+
+// ---------- MONSOON — DEMO-MONSOON ----------
+
+const MONSOON_CODE = "DEMO-MONSOON";
+const monsoon: DemoBundle = {
+  event: {
+    eventCode: MONSOON_CODE, eventType: "wedding", templateId: "monsoon",
+    eventTitle: "Rohan & Tara", person1Name: "Rohan", person2Name: "Tara",
+    tentativeDate: "2027-07-10", city: "Kochi", isActive: true, slug: MONSOON_CODE,
+    heroImageUrl: SAMPLES.indianFlowers, tagline: "Eight years of letters",
+    invitationMessage: "This is the last letter we send as two addresses. Come stand in the rain with us and watch it become one.",
+    aboutStory: "Two cities, one post office each, and a habit neither of us could break. Eight years of envelopes, and everything worth saying we said on paper first.",
+    mainDate: "2027-07-10", mainStartTime: "17:00", mainEndTime: "23:00",
+    themeAccentColor: "#1f4e79",
+    venueName: "Fort House, Fort Kochi", venueAddress: "Fort Kochi, Ernakulam, Kerala",
+    mapLink: "https://maps.google.com/?q=Fort+Kochi", latitude: 9.9658, longitude: 76.2422,
+    contactName: "Tara", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/monsoon-rsvp",
+  },
+  subEvents: [
+    { eventCode: MONSOON_CODE, order: 1, name: "Arrival Tea", date: "2027-07-09", startTime: "16:00", endTime: "18:00", venueName: "The Veranda", dressCode: "Something you don't mind getting wet", description: "Chai, banana fritters, and the first downpour of the week.", icon: "☕" },
+    { eventCode: MONSOON_CODE, order: 2, name: "Mehndi, Indoors", date: "2027-07-09", startTime: "18:30", endTime: "22:00", venueName: "The Long Room", description: "Henna by lamplight while it hammers on the roof.", icon: "🌿" },
+    { eventCode: MONSOON_CODE, order: 3, name: "The Ceremony", date: "2027-07-10", startTime: "17:00", endTime: "19:00", venueName: "The Courtyard, covered", dressCode: "Airmail blue if you have it", description: "Vows, and one deliberately unread letter each.", icon: "💍" },
+    { eventCode: MONSOON_CODE, order: 4, name: "Rain Dinner", date: "2027-07-10", startTime: "19:30", endTime: "23:00", venueName: "The Boathouse", description: "Long table, short speeches, thunder on schedule.", icon: "🍽" },
+  ],
+  media: [heroUrl(MONSOON_CODE, SAMPLES.indianFlowers), ...gallery(MONSOON_CODE, [
+    { url: SAMPLES.weddingRingsRoses, caption: "the ring, posted twice" },
+    { url: SAMPLES.indianFlowers, caption: "jasmine, Kochi market" },
+    { url: SAMPLES.indianDiya, caption: "lamps, indoors" },
+    { url: SAMPLES.indianLotus, caption: "after the rain" },
+    { url: PICSUM(`${MONSOON_CODE}-window`, 1200, 900), caption: "the window seat" },
+    { url: PICSUM(`${MONSOON_CODE}-boat`, 1200, 900), caption: "backwater crossing" },
+  ])],
+};
+
+// ---------- COURTYARD — DEMO-COURTYARD ----------
+
+const COURTYARD_CODE = "DEMO-COURTYARD";
+const courtyard: DemoBundle = {
+  event: {
+    eventCode: COURTYARD_CODE, eventType: "wedding", templateId: "courtyard",
+    eventTitle: "Vivek & Anjali", person1Name: "Vivek", person2Name: "Anjali",
+    tentativeDate: "2027-01-24", city: "Thrissur", isActive: true, slug: COURTYARD_CODE,
+    heroImageUrl: SAMPLES.indianDiya, tagline: "Four generations, one courtyard",
+    invitationMessage: "The house has seen every wedding in our family. Come sit on its veranda while it sees one more.",
+    aboutStory: "Laterite walls, a jackwood roof, and a square of open sky in the middle. Every important thing our family has decided was decided in that square — including this.",
+    mainDate: "2027-01-24", mainStartTime: "10:30", mainEndTime: "16:00",
+    themeAccentColor: "#9c4a2f",
+    venueName: "Thekkeveedu Tharavad", venueAddress: "Kuttanellur, Thrissur, Kerala",
+    mapLink: "https://maps.google.com/?q=Thrissur+Kerala", latitude: 10.5276, longitude: 76.2144,
+    contactName: "Vivek & Anjali", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/courtyard-rsvp",
+  },
+  subEvents: [
+    { eventCode: COURTYARD_CODE, order: 1, name: "Nalangu", date: "2027-01-22", startTime: "17:00", endTime: "19:30", venueName: "The Inner Courtyard", dressCode: "Cream and gold", description: "Turmeric, teasing, and the cousins' worst singing.", icon: "🌼" },
+    { eventCode: COURTYARD_CODE, order: 2, name: "Mehndi on the Veranda", date: "2027-01-23", startTime: "16:00", endTime: "20:00", venueName: "West Veranda", description: "Henna in the shade while the light moves across the floor.", icon: "🪔" },
+    { eventCode: COURTYARD_CODE, order: 3, name: "Muhurtham", date: "2027-01-24", startTime: "10:30", endTime: "11:30", venueName: "The Courtyard", dressCode: "Kasavu / off-white", description: "The auspicious hour. Please be seated by ten.", icon: "🔔" },
+    { eventCode: COURTYARD_CODE, order: 4, name: "Sadya Lunch", date: "2027-01-24", startTime: "12:00", endTime: "14:30", venueName: "The Dining Hall", description: "Banana leaf, twenty-four items, no negotiation on payasam.", icon: "🍛" },
+    { eventCode: COURTYARD_CODE, order: 5, name: "Evening Reception", date: "2027-01-24", startTime: "18:30", endTime: "22:00", venueName: "The Front Garden", dressCode: "Whatever you can dance in", description: "Lamps lit, chairs moved, floor cleared.", icon: "✨" },
+  ],
+  media: [heroUrl(COURTYARD_CODE, SAMPLES.indianDiya), ...indianWeddingGallery(COURTYARD_CODE)],
+};
+
+// ---------- SPICE ROUTE — DEMO-SPICEROUTE ----------
+
+const SPICEROUTE_CODE = "DEMO-SPICEROUTE";
+const spiceroute: DemoBundle = {
+  event: {
+    eventCode: SPICEROUTE_CODE, eventType: "wedding", templateId: "spiceroute",
+    eventTitle: "Kabir & Elena", person1Name: "Kabir", person2Name: "Elena",
+    tentativeDate: "2027-11-20", city: "Goa", isActive: true, slug: SPICEROUTE_CODE,
+    heroImageUrl: SAMPLES.weddingRingsRoses, tagline: "Two ports, one crossing",
+    invitationMessage: "Our families set out from opposite coasts — Lucknow and Lisbon. The chart says they meet here. Come watch us make landfall.",
+    aboutStory: "Two cities, four airports and one very patient set of parents. Everything since has been a slow, deliberate voyage toward the same harbour.",
+    mainDate: "2027-11-20", mainStartTime: "16:30", mainEndTime: "23:30",
+    themeAccentColor: "#2c6e73",
+    venueName: "Cabo Serai, Cabo de Rama", venueAddress: "Cabo de Rama, South Goa",
+    mapLink: "https://maps.google.com/?q=Cabo+de+Rama+Goa", latitude: 15.0894, longitude: 73.9203,
+    contactName: "Kabir", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/spiceroute-rsvp",
+  },
+  subEvents: [
+    { eventCode: SPICEROUTE_CODE, order: 1, name: "Welcome Anchorage", date: "2027-11-18", startTime: "18:00", endTime: "22:00", venueName: "The Jetty Bar", dressCode: "Linen", description: "Feni, kokum, and introductions in two languages.", icon: "⚓", latitude: 15.0021, longitude: 74.0011 },
+    { eventCode: SPICEROUTE_CODE, order: 2, name: "Mehndi at the Fort", date: "2027-11-19", startTime: "16:00", endTime: "20:00", venueName: "Cabo de Rama Fort", description: "Henna on the ramparts, the whole Arabian Sea behind you.", icon: "🌿", latitude: 15.0872, longitude: 73.9187 },
+    { eventCode: SPICEROUTE_CODE, order: 3, name: "Beach Ceremony", date: "2027-11-20", startTime: "16:30", endTime: "18:00", venueName: "Cola Beach", dressCode: "Barefoot", description: "Vows at the water line, timed to the tide.", icon: "💍", latitude: 15.1039, longitude: 73.9384 },
+    { eventCode: SPICEROUTE_CODE, order: 4, name: "Long Table Dinner", date: "2027-11-20", startTime: "19:30", endTime: "23:30", venueName: "The Cliff Deck", description: "One table, forty chairs, both grandmothers' recipes.", icon: "🍷", latitude: 15.0891, longitude: 73.9205 },
+    { eventCode: SPICEROUTE_CODE, order: 5, name: "Sunrise Farewell", date: "2027-11-21", startTime: "06:30", endTime: "09:00", venueName: "The Boat", description: "Coffee, dolphins if they feel like it, goodbyes.", icon: "🌅", latitude: 15.0755, longitude: 73.9012 },
+  ],
+  media: [heroUrl(SPICEROUTE_CODE, SAMPLES.weddingRingsRoses), ...gallery(SPICEROUTE_CODE, [
+    { url: SAMPLES.weddingRingsRoses, caption: "the rings" },
+    { url: SAMPLES.weddingShoes, caption: "left on the sand" },
+    { url: PICSUM(`${SPICEROUTE_CODE}-coast`, 1200, 900), caption: "the crossing" },
+    { url: PICSUM(`${SPICEROUTE_CODE}-fort`, 1200, 900), caption: "the fort at five" },
+    { url: SAMPLES.indianLotus, caption: "table flowers" },
+    { url: PICSUM(`${SPICEROUTE_CODE}-boat`, 1200, 900), caption: "the last morning" },
+  ])],
+};
+
+// ---------- JAALI — DEMO-JAALI ----------
+
+const JAALI_CODE = "DEMO-JAALI";
+const jaali: DemoBundle = {
+  event: {
+    eventCode: JAALI_CODE, eventType: "wedding", templateId: "jaali",
+    eventTitle: "Zain & Alia", person1Name: "Zain", person2Name: "Alia",
+    tentativeDate: "2027-12-12", city: "Jaipur", isActive: true, slug: JAALI_CODE,
+    heroImageUrl: SAMPLES.stainedGlass, tagline: "Light through carved stone",
+    invitationMessage: "With the blessings of both our families, we invite you to the courtyard — for the nikah, and for everything after it.",
+    aboutStory: "Geometry, patience and a great deal of tea. Our families took their time; the pattern that came out of it fits perfectly.",
+    mainDate: "2027-12-12", mainStartTime: "17:30", mainEndTime: "23:00",
+    themeAccentColor: "#1f4b8f",
+    venueName: "Narain Niwas Haveli", venueAddress: "Kanota Bagh, Narain Singh Road, Jaipur",
+    mapLink: "https://maps.google.com/?q=Narain+Niwas+Jaipur", latitude: 26.8931, longitude: 75.8117,
+    contactName: "Zain & Alia", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/jaali-rsvp",
+  },
+  subEvents: [
+    { eventCode: JAALI_CODE, order: 1, name: "Mehndi", date: "2027-12-10", startTime: "16:30", endTime: "21:00", venueName: "The Blue Courtyard", dressCode: "Cobalt & white", description: "Henna under the lattice, with the good tea.", icon: "🌿" },
+    { eventCode: JAALI_CODE, order: 2, name: "Nikah", date: "2027-12-12", startTime: "17:30", endTime: "19:00", venueName: "The Arched Hall", dressCode: "Formal, modest", description: "The contract, the qubool, and a very short speech.", icon: "🕌" },
+    { eventCode: JAALI_CODE, order: 3, name: "Walima Dinner", date: "2027-12-12", startTime: "19:30", endTime: "22:00", venueName: "The Garden Arcade", description: "Dum biryani, shahi tukda, and far too much of both.", icon: "🍽" },
+    { eventCode: JAALI_CODE, order: 4, name: "Qawwali Night", date: "2027-12-12", startTime: "22:00", endTime: "23:00", venueName: "The Terrace", description: "Cushions on the floor, one harmonium, no microphones.", icon: "🎶" },
+  ],
+  media: [heroUrl(JAALI_CODE, SAMPLES.stainedGlass), ...gallery(JAALI_CODE, [
+    { url: SAMPLES.stainedGlass, caption: "light through the screen" },
+    { url: SAMPLES.indianRangoli, caption: "the tilework" },
+    { url: SAMPLES.indianMandapFlowers, caption: "the arch" },
+    { url: SAMPLES.indianDiya, caption: "the terrace at dusk" },
+    { url: PICSUM(`${JAALI_CODE}-haveli`, 1200, 1500), caption: "the haveli" },
+    { url: PICSUM(`${JAALI_CODE}-tiles`, 1200, 1500), caption: "blue pottery" },
+  ])],
+};
+
+// ---------- POP-UP BOOK — DEMO-POPUPBOOK ----------
+
+const POPUPBOOK_CODE = "DEMO-POPUPBOOK";
+const popupbook: DemoBundle = {
+  event: {
+    eventCode: POPUPBOOK_CODE, eventType: "birthday", templateId: "popupbook",
+    eventTitle: "Ira turns 1", person1Name: "Ira",
+    tentativeDate: "2026-11-15", city: "Pune", isActive: true, slug: POPUPBOOK_CODE,
+    heroImageUrl: SAMPLES.pinkFlowers, tagline: "One whole year of you",
+    invitationMessage: "It has been a year of firsts, and we would like to spend the next few hours of it with the people who made it soft. Come for cake, stay for the nap.",
+    aboutStory: "Twelve months, four teeth, one small person with very firm opinions about dogs. This is the short version, in paper.",
+    mainDate: "2026-11-15", mainStartTime: "11:00", mainEndTime: "14:00",
+    themeAccentColor: "#f3b8a0",
+    venueName: "The Garden Clubhouse", venueAddress: "Baner, Pune, Maharashtra",
+    mapLink: "https://maps.google.com/?q=Baner+Pune", latitude: 18.5642, longitude: 73.7769,
+    contactName: "Meghna (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: POPUPBOOK_CODE, order: 1, name: "Cake Smash", date: "2026-11-15", startTime: "11:00", endTime: "11:30", venueName: "The Lawn", description: "One cake, one baby, zero survivors.", icon: "🎂" },
+    { eventCode: POPUPBOOK_CODE, order: 2, name: "Puppet Show", date: "2026-11-15", startTime: "11:45", endTime: "12:15", venueName: "The Shade Tree", description: "Twenty minutes, three puppets, one very confused audience.", icon: "🎭" },
+    { eventCode: POPUPBOOK_CODE, order: 3, name: "Garden Lunch", date: "2026-11-15", startTime: "12:30", endTime: "13:30", venueName: "The Long Table", description: "Grown-up food, small chairs.", icon: "🥗" },
+    { eventCode: POPUPBOOK_CODE, order: 4, name: "Nap Hour", date: "2026-11-15", startTime: "13:30", endTime: "14:00", venueName: "The Quiet Room", description: "Non-negotiable. For her, and honestly for us.", icon: "😴" },
+  ],
+  media: [heroUrl(POPUPBOOK_CODE, SAMPLES.pinkFlowers), ...gallery(POPUPBOOK_CODE, [
+    { url: PICSUM(`${POPUPBOOK_CODE}-m1`, 1000, 1000), caption: "month one" },
+    { url: PICSUM(`${POPUPBOOK_CODE}-m2`, 1000, 1000), caption: "month three" },
+    { url: SAMPLES.pinkFlowers, caption: "month five" },
+    { url: PICSUM(`${POPUPBOOK_CODE}-m4`, 1000, 1000), caption: "month seven" },
+    { url: PICSUM(`${POPUPBOOK_CODE}-m5`, 1000, 1000), caption: "month nine" },
+    { url: SAMPLES.confetti, caption: "month twelve" },
+  ])],
+};
+
+// ---------- SPEAKEASY — DEMO-SPEAKEASY ----------
+
+const SPEAKEASY_CODE = "DEMO-SPEAKEASY";
+const speakeasy: DemoBundle = {
+  event: {
+    eventCode: SPEAKEASY_CODE, eventType: "birthday", templateId: "speakeasy",
+    eventTitle: "Kabir turns 21", person1Name: "Kabir",
+    tentativeDate: "2026-10-17", city: "Delhi", isActive: true, slug: SPEAKEASY_CODE,
+    heroImageUrl: SAMPLES.chandelier, tagline: "No sign on the door",
+    invitationMessage: "There is a door with nothing written on it. Knock, say the name, and come down the stairs — the quartet starts at ten.",
+    aboutStory: "One night, one basement, one very good bartender. Dress like the decade and leave your phone in your pocket.",
+    mainDate: "2026-10-17", mainStartTime: "21:00", mainEndTime: "02:00",
+    themeAccentColor: "#c39a4d",
+    venueName: "The Cellar, Mehrauli", venueAddress: "Kalka Das Marg, Mehrauli, New Delhi",
+    mapLink: "https://maps.google.com/?q=Mehrauli+New+Delhi", latitude: 28.5245, longitude: 77.1855,
+    contactName: "Kabir", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/speakeasy-21",
+  },
+  subEvents: [
+    { eventCode: SPEAKEASY_CODE, order: 1, name: "Doors & Password", date: "2026-10-17", startTime: "21:00", endTime: "21:45", venueName: "The Unmarked Door", dressCode: "1920s, or your best attempt", description: "Say the name. There is no list, but there is a doorman.", icon: "🚪" },
+    { eventCode: SPEAKEASY_CODE, order: 2, name: "Live Quartet", date: "2026-10-17", startTime: "22:00", endTime: "23:00", venueName: "The Cellar Floor", description: "Four musicians, one very small stage.", icon: "🎺" },
+    { eventCode: SPEAKEASY_CODE, order: 3, name: "Cocktail Hour", date: "2026-10-17", startTime: "23:00", endTime: "00:30", venueName: "The Brass Bar", description: "Three drinks on the menu. All of them brown.", icon: "🥃" },
+    { eventCode: SPEAKEASY_CODE, order: 4, name: "The Late Set", date: "2026-10-18", startTime: "00:30", endTime: "02:00", venueName: "The Back Room", description: "For whoever is still upright at half twelve.", icon: "🎷" },
+  ],
+  media: [heroUrl(SPEAKEASY_CODE, SAMPLES.chandelier), ...gallery(SPEAKEASY_CODE, [
+    { url: SAMPLES.chandelier, caption: "The cellar" },
+    { url: PICSUM(`${SPEAKEASY_CODE}-bar`, 1200, 1500), caption: "The bar" },
+    { url: PICSUM(`${SPEAKEASY_CODE}-band`, 1200, 1500), caption: "The quartet" },
+    { url: PICSUM(`${SPEAKEASY_CODE}-door`, 1200, 1500), caption: "The door" },
+  ])],
+};
+
+// ---------- ALMANAC — DEMO-ALMANAC ----------
+
+const ALMANAC_CODE = "DEMO-ALMANAC";
+const almanac: DemoBundle = {
+  event: {
+    eventCode: ALMANAC_CODE, eventType: "birthday", templateId: "almanac",
+    eventTitle: "Sunil turns 60", person1Name: "Sunil",
+    tentativeDate: "2026-12-06", city: "Chandigarh", isActive: true, slug: ALMANAC_CODE,
+    heroImageUrl: SAMPLES.marbleColumns, tagline: "Sixty years, one edition",
+    invitationMessage: "The family is throwing a lunch, and the guest of honour has been told it is a quiet one. Please arrive before he does.",
+    aboutStory: "He has fixed every bicycle on the street, argued with every neighbour about cricket, and never once missed a birthday. This is the paper's tribute to a man who reads it back to front.",
+    mainDate: "2026-12-06", mainStartTime: "12:00", mainEndTime: "16:00",
+    themeAccentColor: "#24405e",
+    venueName: "The Garden, Sector 10", venueAddress: "Sector 10, Chandigarh",
+    mapLink: "https://maps.google.com/?q=Sector+10+Chandigarh", latitude: 30.7539, longitude: 76.7833,
+    contactName: "Priya (daughter)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "priya@example.com",
+  },
+  subEvents: [
+    { eventCode: ALMANAC_CODE, order: 1, name: "Arrival & Tea", date: "2026-12-06", startTime: "12:00", endTime: "12:45", venueName: "The Lawn", dressCode: "Sunday best", description: "Be seated before he walks in. He suspects nothing.", icon: "☕" },
+    { eventCode: ALMANAC_CODE, order: 2, name: "The Toasts", date: "2026-12-06", startTime: "13:00", endTime: "13:30", venueName: "The Marquee", description: "Three speeches, strictly two minutes each. It will not be honoured.", icon: "🥂" },
+    { eventCode: ALMANAC_CODE, order: 3, name: "Lunch", date: "2026-12-06", startTime: "13:30", endTime: "15:00", venueName: "The Long Tables", description: "Punjabi, plentiful, and no one leaves hungry.", icon: "🍛" },
+    { eventCode: ALMANAC_CODE, order: 4, name: "The Slideshow", date: "2026-12-06", startTime: "15:00", endTime: "16:00", venueName: "The Marquee", description: "Sixty years in ninety photographs. Bring tissues.", icon: "📽" },
+  ],
+  media: [heroUrl(ALMANAC_CODE, SAMPLES.marbleColumns), ...gallery(ALMANAC_CODE, [
+    { url: PICSUM(`${ALMANAC_CODE}-lead`, 1200, 1500), caption: "The guest of honour, 1994" },
+    { url: PICSUM(`${ALMANAC_CODE}-d1`, 1200, 900), caption: "First job, first scooter" },
+    { url: PICSUM(`${ALMANAC_CODE}-d2`, 1200, 900), caption: "The move to Chandigarh" },
+    { url: PICSUM(`${ALMANAC_CODE}-d3`, 1200, 900), caption: "Two daughters, one garden" },
+    { url: PICSUM(`${ALMANAC_CODE}-d4`, 1200, 900), caption: "Retirement, and the tomatoes" },
+  ])],
+};
+
+// ---------- MANGA — DEMO-MANGA ----------
+
+const MANGA_CODE = "DEMO-MANGA";
+const manga: DemoBundle = {
+  event: {
+    eventCode: MANGA_CODE, eventType: "birthday", templateId: "manga",
+    eventTitle: "Aryan turns 18", person1Name: "Aryan",
+    tentativeDate: "2026-09-26", city: "Hyderabad", isActive: true, slug: MANGA_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "The arc begins",
+    invitationMessage: "Every good arc has a filler episode. This is not one of them — show up, eat everything, lose at the tournament.",
+    aboutStory: "Eighteen volumes in and the protagonist still refuses to train. Somehow it keeps working out.",
+    mainDate: "2026-09-26", mainStartTime: "18:00", mainEndTime: "23:30",
+    themeAccentColor: "#e6352b",
+    venueName: "Level Up Arcade, Jubilee Hills", venueAddress: "Jubilee Hills, Hyderabad",
+    mapLink: "https://maps.google.com/?q=Jubilee+Hills+Hyderabad", latitude: 17.4326, longitude: 78.4071,
+    contactName: "Aryan", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/aryan-18",
+  },
+  subEvents: [
+    { eventCode: MANGA_CODE, order: 1, name: "Power-Up", date: "2026-09-26", startTime: "18:00", endTime: "18:45", venueName: "The Entrance", dressCode: "Cosplay welcome, not required", description: "Tokens handed out. Alliances formed immediately.", icon: "⚡" },
+    { eventCode: MANGA_CODE, order: 2, name: "Boss Fight", date: "2026-09-26", startTime: "19:00", endTime: "21:00", venueName: "The Tournament Floor", description: "Bracket on the wall. The birthday boy is seeded first, unfairly.", icon: "🎮" },
+    { eventCode: MANGA_CODE, order: 3, name: "Ramen Feast", date: "2026-09-26", startTime: "21:00", endTime: "22:30", venueName: "The Counter", description: "Slurping mandatory. Chopstick skill optional.", icon: "🍜" },
+    { eventCode: MANGA_CODE, order: 4, name: "After-Credits", date: "2026-09-26", startTime: "22:30", endTime: "23:30", venueName: "The Roof", description: "One episode. It always becomes four.", icon: "🌙" },
+  ],
+  media: [heroUrl(MANGA_CODE, SAMPLES.confetti), ...gallery(MANGA_CODE, [
+    { url: PICSUM(`${MANGA_CODE}-p1`, 1000, 1000), caption: "Chapter one" },
+    { url: SAMPLES.confetti, caption: "The tournament" },
+    { url: PICSUM(`${MANGA_CODE}-p2`, 1000, 1000), caption: "Rival appears" },
+    { url: PICSUM(`${MANGA_CODE}-p3`, 1000, 1000), caption: "Training montage" },
+    { url: PICSUM(`${MANGA_CODE}-p4`, 1000, 1000), caption: "Ramen, obviously" },
+    { url: PICSUM(`${MANGA_CODE}-p5`, 1000, 1000), caption: "To be continued" },
+  ])],
+};
+
+// ---------- MATCH DAY — DEMO-MATCHDAY ----------
+
+const MATCHDAY_CODE = "DEMO-MATCHDAY";
+const matchday: DemoBundle = {
+  event: {
+    eventCode: MATCHDAY_CODE, eventType: "birthday", templateId: "matchday",
+    eventTitle: "Rehan turns 10", person1Name: "Rehan",
+    tentativeDate: "2026-08-22", city: "Mumbai", isActive: true, slug: MATCHDAY_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Kick-off at five",
+    invitationMessage: "One match, one cake, one trophy that cost very little. Boots optional, shouting encouraged.",
+    aboutStory: "Plays up front, refuses to pass, celebrates like it's a final every single time. Today he gets the whole stadium.",
+    mainDate: "2026-08-22", mainStartTime: "17:00", mainEndTime: "20:00",
+    themeAccentColor: "#1f7a3f",
+    venueName: "Turf 11, Andheri", venueAddress: "Andheri West, Mumbai, Maharashtra",
+    mapLink: "https://maps.google.com/?q=Andheri+West+Mumbai", latitude: 19.1364, longitude: 72.8296,
+    contactName: "Sana (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: MATCHDAY_CODE, order: 1, name: "Warm-Up", date: "2026-08-22", startTime: "17:00", endTime: "17:20", venueName: "Pitch Side", dressCode: "Your team's shirt", description: "Bibs handed out. Teams argued over.", icon: "🧦" },
+    { eventCode: MATCHDAY_CODE, order: 2, name: "Kick-Off", date: "2026-08-22", startTime: "17:30", endTime: "18:30", venueName: "Turf 11", description: "Five-a-side, rolling subs, one very biased referee.", icon: "⚽" },
+    { eventCode: MATCHDAY_CODE, order: 3, name: "Half-Time Snacks", date: "2026-08-22", startTime: "18:30", endTime: "19:00", venueName: "The Dugout", description: "Orange slices, because tradition.", icon: "🍊" },
+    { eventCode: MATCHDAY_CODE, order: 4, name: "Trophy Ceremony", date: "2026-08-22", startTime: "19:00", endTime: "19:20", venueName: "The Centre Circle", description: "Everyone gets a medal. The captain gets the cup.", icon: "🏆" },
+    { eventCode: MATCHDAY_CODE, order: 5, name: "Full Time Cake", date: "2026-08-22", startTime: "19:20", endTime: "20:00", venueName: "The Clubhouse", description: "Pitch-shaped, green icing, ten candles.", icon: "🎂" },
+  ],
+  media: [heroUrl(MATCHDAY_CODE, SAMPLES.confetti), ...gallery(MATCHDAY_CODE, [
+    { url: PICSUM(`${MATCHDAY_CODE}-h1`, 1200, 900), caption: "Last season" },
+    { url: PICSUM(`${MATCHDAY_CODE}-h2`, 1200, 900), caption: "The hat-trick" },
+    { url: SAMPLES.confetti, caption: "Trophy day" },
+    { url: PICSUM(`${MATCHDAY_CODE}-h3`, 1200, 900), caption: "The squad" },
+    { url: PICSUM(`${MATCHDAY_CODE}-h4`, 1200, 900), caption: "Warming up" },
+    { url: PICSUM(`${MATCHDAY_CODE}-h5`, 1200, 900), caption: "Full time" },
+  ])],
+};
+
+// ---------- FEAST — DEMO-FEAST ----------
+
+const FEAST_CODE = "DEMO-FEAST";
+const feast: DemoBundle = {
+  event: {
+    eventCode: FEAST_CODE, eventType: "wedding", templateId: "feast",
+    eventTitle: "Nikhil & Divya", person1Name: "Nikhil", person2Name: "Divya",
+    tentativeDate: "2027-04-18", city: "Chennai", isActive: true, slug: FEAST_CODE,
+    heroImageUrl: SAMPLES.indianPuja, tagline: "Handed down, never written down",
+    invitationMessage: "Both our families argue about food and agree about very little else. Come eat with us while we settle it for good.",
+    aboutStory: "Her grandmother's rasam, his mother's kadhi, one shared kitchen and eleven years of borrowed pots. This is the menu that came out of it.",
+    mainDate: "2027-04-18", mainStartTime: "11:00", mainEndTime: "22:00",
+    themeAccentColor: "#7a3b23",
+    venueName: "Amethyst Courtyard", venueAddress: "Whites Road, Royapettah, Chennai",
+    mapLink: "https://maps.google.com/?q=Royapettah+Chennai", latitude: 13.0569, longitude: 80.2601,
+    contactName: "Divya", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/feast-rsvp",
+  },
+  subEvents: [
+    { eventCode: FEAST_CODE, order: 1, name: "Filter Coffee & Introductions", date: "2027-04-17", startTime: "07:30", endTime: "09:00", venueName: "The Verandah", dressCode: "Comfortable, you'll be eating", description: "Two families, one degree coffee, no agenda.", icon: "☕" },
+    { eventCode: FEAST_CODE, order: 2, name: "The Pickle Table", date: "2027-04-17", startTime: "17:00", endTime: "20:00", venueName: "The Long Kitchen", description: "Twelve jars, four generations, one blind tasting.", icon: "🫙" },
+    { eventCode: FEAST_CODE, order: 3, name: "The Ceremony", date: "2027-04-18", startTime: "11:00", endTime: "12:30", venueName: "Amethyst Courtyard", dressCode: "Silk, if you own it", description: "Short, early, and followed immediately by lunch.", icon: "🔥" },
+    { eventCode: FEAST_CODE, order: 4, name: "Sadya Lunch", date: "2027-04-18", startTime: "12:30", endTime: "15:00", venueName: "The Dining Hall", description: "Banana leaf, twenty-four items, payasam twice.", icon: "🍛" },
+    { eventCode: FEAST_CODE, order: 5, name: "One Long Table", date: "2027-04-18", startTime: "19:30", endTime: "22:00", venueName: "The Garden", dressCode: "Loose waistbands", description: "Forty chairs, both grandmothers' recipes, one very long table.", icon: "🍽" },
+  ],
+  media: [heroUrl(FEAST_CODE, SAMPLES.indianPuja), ...gallery(FEAST_CODE, [
+    { url: SAMPLES.indianPuja, caption: "the offerings" },
+    { url: SAMPLES.indianFlowers, caption: "market at six" },
+    { url: SAMPLES.weddingCake, caption: "dessert, disputed" },
+    { url: SAMPLES.indianLotus, caption: "table flowers" },
+    { url: PICSUM(`${FEAST_CODE}-kitchen`, 1200, 900), caption: "the kitchen at dawn" },
+    { url: PICSUM(`${FEAST_CODE}-spices`, 1200, 900), caption: "the tin, refilled" },
+  ])],
+};
+
+// ---------- PANCHANG — DEMO-PANCHANG ----------
+
+const PANCHANG_CODE = "DEMO-PANCHANG";
+const panchang: DemoBundle = {
+  event: {
+    eventCode: PANCHANG_CODE, eventType: "wedding", templateId: "panchang",
+    eventTitle: "Aditya & Sneha", person1Name: "Aditya", person2Name: "Sneha",
+    tentativeDate: "2027-02-07", city: "Nashik", isActive: true, slug: PANCHANG_CODE,
+    heroImageUrl: SAMPLES.indianPuja, tagline: "Written in the almanac",
+    invitationMessage: "The pandit checked twice and the families checked four times. The hour is fixed — please be seated before it.",
+    aboutStory: "Two charts, one auspicious hour, and a great deal of paperwork. What the almanac calls a match, we had already decided over four years of shared auto rides.",
+    mainDate: "2027-02-07", mainStartTime: "10:48", mainEndTime: "12:12",
+    themeAccentColor: "#b3271f",
+    venueName: "Wadi Vaishnavi Mangal Karyalaya", venueAddress: "Gangapur Road, Nashik, Maharashtra",
+    mapLink: "https://maps.google.com/?q=Gangapur+Road+Nashik", latitude: 19.9975, longitude: 73.7898,
+    contactName: "Aditya & Sneha", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/panchang-rsvp",
+  },
+  subEvents: [
+    { eventCode: PANCHANG_CODE, order: 1, name: "Ganesh Puja", date: "2027-02-05", startTime: "08:30", endTime: "10:00", venueName: "The Family Home", dressCode: "Traditional", description: "Everything begins here, as it should.", icon: "🪔" },
+    { eventCode: PANCHANG_CODE, order: 2, name: "Haldi", date: "2027-02-06", startTime: "10:00", endTime: "13:00", venueName: "The Courtyard", dressCode: "Yellow, and expendable", description: "Turmeric, cousins, no mercy.", icon: "🌼" },
+    { eventCode: PANCHANG_CODE, order: 3, name: "Sangeet", date: "2027-02-06", startTime: "19:30", endTime: "00:00", venueName: "The Hall", description: "Rehearsed dances that will not survive contact with the floor.", icon: "🥁" },
+    { eventCode: PANCHANG_CODE, order: 4, name: "Vivah Muhurat", date: "2027-02-07", startTime: "10:48", endTime: "12:12", venueName: "The Mandap", dressCode: "Formal traditional", description: "The fixed hour. Do not be the person walking in at 10:50.", icon: "🔯" },
+    { eventCode: PANCHANG_CODE, order: 5, name: "Reception", date: "2027-02-07", startTime: "19:00", endTime: "23:00", venueName: "The Lawn", description: "Photographs, sweets, and the receiving line of doom.", icon: "✨" },
+  ],
+  media: [heroUrl(PANCHANG_CODE, SAMPLES.indianPuja), ...indianWeddingGallery(PANCHANG_CODE)],
+};
+
+// ---------- IRANI — DEMO-IRANI ----------
+
+const IRANI_CODE = "DEMO-IRANI";
+const irani: DemoBundle = {
+  event: {
+    eventCode: IRANI_CODE, eventType: "wedding", templateId: "irani",
+    eventTitle: "Cyrus & Delna", person1Name: "Cyrus", person2Name: "Delna",
+    tentativeDate: "2027-01-16", city: "Mumbai", isActive: true, slug: IRANI_CODE,
+    heroImageUrl: SAMPLES.weddingCake, tagline: "Est. this Saturday",
+    invitationMessage: "We have booked the whole café — bentwood chairs, chequered floor, one very old ceiling fan. Come for the lagan, stay for the berry pulao.",
+    aboutStory: "We met at a corner table over bun maska and stayed until the cashier switched the lights off. Nine years later, the same table is reserved.",
+    mainDate: "2027-01-16", mainStartTime: "18:00", mainEndTime: "23:30",
+    themeAccentColor: "#c0392b",
+    venueName: "Kyani & Co.", venueAddress: "Jer Mahal, Dhobi Talao, Mumbai",
+    mapLink: "https://maps.google.com/?q=Dhobi+Talao+Mumbai", latitude: 18.9467, longitude: 72.8258,
+    contactName: "Delna", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/irani-rsvp",
+  },
+  subEvents: [
+    { eventCode: IRANI_CODE, order: 1, name: "Bun Maska & Chai", date: "2027-01-16", startTime: "17:00", endTime: "18:00", venueName: "The Front Room", dressCode: "Sunday best, sleeves rolled", description: "Arrive early. The good table goes fast.", icon: "☕" },
+    { eventCode: IRANI_CODE, order: 2, name: "The Lagan", date: "2027-01-16", startTime: "18:00", endTime: "19:00", venueName: "Under the Fan", description: "Short, sung, and over before the tea goes cold.", icon: "💍" },
+    { eventCode: IRANI_CODE, order: 3, name: "Berry Pulao", date: "2027-01-16", startTime: "19:30", endTime: "21:30", venueName: "The Back Room", description: "Patra ni machhi, then pulao, then regret.", icon: "🍚" },
+    { eventCode: IRANI_CODE, order: 4, name: "Dancing After Dessert", date: "2027-01-16", startTime: "21:30", endTime: "23:30", venueName: "Between the Tables", dressCode: "Shoes you can move in", description: "Chairs pushed back. One speech only, we promise.", icon: "🎶" },
+  ],
+  media: [heroUrl(IRANI_CODE, SAMPLES.weddingCake), ...gallery(IRANI_CODE, [
+    { url: SAMPLES.weddingCake, caption: "the cake, on the counter" },
+    { url: SAMPLES.weddingRingsRoses, caption: "the rings" },
+    { url: PICSUM(`${IRANI_CODE}-cafe`, 1200, 1500), caption: "the corner table" },
+    { url: PICSUM(`${IRANI_CODE}-fan`, 1200, 1500), caption: "the ceiling fan" },
+    { url: PICSUM(`${IRANI_CODE}-street`, 1200, 1500), caption: "dhobi talao" },
+    { url: SAMPLES.indianFlowers, caption: "flowers, delivered late" },
+  ])],
+};
+
+// ---------- LUDO — DEMO-LUDO ----------
+
+const LUDO_CODE = "DEMO-LUDO";
+const ludo: DemoBundle = {
+  event: {
+    eventCode: LUDO_CODE, eventType: "birthday", templateId: "ludo",
+    eventTitle: "Kabir turns 8", person1Name: "Kabir",
+    tentativeDate: "2026-11-28", city: "Gurgaon", isActive: true, slug: LUDO_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Four players, one afternoon",
+    invitationMessage: "Roll a six and you're in. There will be teams, there will be arguing about the rules, and there will be cake at the end.",
+    aboutStory: "Undefeated at Ludo since the age of five, largely because he changes the rules mid-game. Come try your luck.",
+    mainDate: "2026-11-28", mainStartTime: "16:00", mainEndTime: "19:30",
+    themeAccentColor: "#d94a3d",
+    venueName: "The Community Hall", venueAddress: "Sushant Lok Phase 1, Gurgaon",
+    mapLink: "https://maps.google.com/?q=Sushant+Lok+Gurgaon", latitude: 28.4663, longitude: 77.0862,
+    contactName: "Ritu (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: LUDO_CODE, order: 1, name: "Pick Your Colour", date: "2026-11-28", startTime: "16:00", endTime: "16:20", venueName: "The Doorway", dressCode: "Red, green, yellow or blue", description: "Teams drawn from a hat. No swapping.", icon: "🎨" },
+    { eventCode: LUDO_CODE, order: 2, name: "Round One: Ludo", date: "2026-11-28", startTime: "16:20", endTime: "17:15", venueName: "The Big Table", description: "Four boards running at once. Knockouts are real.", icon: "🎲" },
+    { eventCode: LUDO_CODE, order: 3, name: "Snakes & Ladders", date: "2026-11-28", startTime: "17:15", endTime: "18:00", venueName: "The Floor Mat", description: "One giant board. Players are the counters.", icon: "🐍" },
+    { eventCode: LUDO_CODE, order: 4, name: "Cake Break", date: "2026-11-28", startTime: "18:00", endTime: "18:30", venueName: "The Kitchen End", description: "Board-shaped cake. Eight candles.", icon: "🎂" },
+    { eventCode: LUDO_CODE, order: 5, name: "The Final", date: "2026-11-28", startTime: "18:30", endTime: "19:30", venueName: "The Big Table", dressCode: "Game face", description: "Winners' table. Medals for everyone anyway.", icon: "🏆" },
+  ],
+  media: [heroUrl(LUDO_CODE, SAMPLES.confetti), ...gallery(LUDO_CODE, [
+    { url: PICSUM(`${LUDO_CODE}-p1`, 1000, 1000), caption: "team red" },
+    { url: PICSUM(`${LUDO_CODE}-p2`, 1000, 1000), caption: "team green" },
+    { url: SAMPLES.confetti, caption: "last year's final" },
+    { url: PICSUM(`${LUDO_CODE}-p3`, 1000, 1000), caption: "the rules committee" },
+    { url: PICSUM(`${LUDO_CODE}-p4`, 1000, 1000), caption: "disputed move" },
+    { url: PICSUM(`${LUDO_CODE}-p5`, 1000, 1000), caption: "winner, allegedly" },
+  ])],
+};
+
+// ---------- TOUR — DEMO-TOUR ----------
+
+const TOUR_CODE = "DEMO-TOUR";
+const tour: DemoBundle = {
+  event: {
+    eventCode: TOUR_CODE, eventType: "birthday", templateId: "tour",
+    eventTitle: "Farah turns 30", person1Name: "Farah",
+    tentativeDate: "2026-10-03", city: "Bengaluru", isActive: true, slug: TOUR_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "One night only",
+    invitationMessage: "Doors at nine, headliner at eleven, and no support act. Bring the pass, bring the shouting.",
+    aboutStory: "Thirty years of being the person who makes the playlist, holds the aux cable, and refuses to leave before the encore. This is her show.",
+    mainDate: "2026-10-03", mainStartTime: "21:00", mainEndTime: "02:00",
+    themeAccentColor: "#ff3b30",
+    venueName: "The Humming Tree", venueAddress: "Indiranagar, Bengaluru",
+    mapLink: "https://maps.google.com/?q=Indiranagar+Bengaluru", latitude: 12.9719, longitude: 77.6412,
+    contactName: "Farah", contactPhone: "+91-98xxxxxxx", socialLink: "https://open.spotify.com/",
+    rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/farah-30",
+  },
+  subEvents: [
+    { eventCode: TOUR_CODE, order: 1, name: "Doors", date: "2026-10-03", startTime: "21:00", endTime: "21:45", venueName: "The Front Bar", dressCode: "Band tee encouraged", description: "Pass at the door. Wristbands, stamps, the usual.", icon: "🎟" },
+    { eventCode: TOUR_CODE, order: 2, name: "Opening Number", date: "2026-10-03", startTime: "22:00", endTime: "22:40", venueName: "Main Room", description: "Her actual band, first time in four years.", icon: "🎸" },
+    { eventCode: TOUR_CODE, order: 3, name: "The Headline Set", date: "2026-10-03", startTime: "23:00", endTime: "00:15", venueName: "Main Room", description: "Every song she has forced on us since college.", icon: "🎤" },
+    { eventCode: TOUR_CODE, order: 4, name: "Cake, Loudly", date: "2026-10-03", startTime: "00:15", endTime: "00:35", venueName: "The Stage", description: "Thirty candles, one fire marshal's nightmare.", icon: "🎂" },
+    { eventCode: TOUR_CODE, order: 5, name: "Encore / DJ", date: "2026-10-04", startTime: "00:35", endTime: "02:00", venueName: "Main Room", description: "Requests taken. Most ignored.", icon: "🎧" },
+  ],
+  media: [heroUrl(TOUR_CODE, SAMPLES.confetti), ...gallery(TOUR_CODE, [
+    { url: PICSUM(`${TOUR_CODE}-g1`, 1200, 1600), caption: "soundcheck" },
+    { url: SAMPLES.confetti, caption: "the crowd" },
+    { url: PICSUM(`${TOUR_CODE}-g2`, 1200, 1600), caption: "backstage" },
+    { url: PICSUM(`${TOUR_CODE}-g3`, 1200, 1600), caption: "the aux cable" },
+    { url: PICSUM(`${TOUR_CODE}-g4`, 1200, 1600), caption: "encore" },
+    { url: PICSUM(`${TOUR_CODE}-g5`, 1200, 1600), caption: "load-out, 3am" },
+  ])],
+};
+
+// ---------- NEW GAME+ — DEMO-NEWGAME ----------
+
+const NEWGAME_CODE = "DEMO-NEWGAME";
+const newgame: DemoBundle = {
+  event: {
+    eventCode: NEWGAME_CODE, eventType: "birthday", templateId: "newgame",
+    eventTitle: "Vihaan turns 19", person1Name: "Vihaan",
+    tentativeDate: "2026-09-12", city: "Pune", isActive: true, slug: NEWGAME_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Continue?",
+    invitationMessage: "A new save file has appeared. Bring snacks, bring a controller, and do not talk during the cutscenes.",
+    aboutStory: "Level nineteen. Still has not finished the tutorial. Party members welcome, healers preferred.",
+    mainDate: "2026-09-12", mainStartTime: "18:00", mainEndTime: "01:00",
+    themeAccentColor: "#ffd166",
+    venueName: "The Basement, Kalyani Nagar", venueAddress: "Kalyani Nagar, Pune, Maharashtra",
+    mapLink: "https://maps.google.com/?q=Kalyani+Nagar+Pune", latitude: 18.5477, longitude: 73.9032,
+    contactName: "Vihaan", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/newgame-19",
+  },
+  subEvents: [
+    { eventCode: NEWGAME_CODE, order: 1, name: "Character Select", date: "2026-09-12", startTime: "18:00", endTime: "18:30", venueName: "The Door", dressCode: "Comfortable, you'll be sitting", description: "Controllers assigned. Seniority means nothing.", icon: "🕹" },
+    { eventCode: NEWGAME_CODE, order: 2, name: "Co-op Campaign", date: "2026-09-12", startTime: "18:30", endTime: "20:30", venueName: "The Big Screen", description: "Four players, one screen, zero communication.", icon: "🎮" },
+    { eventCode: NEWGAME_CODE, order: 3, name: "Side Quest: Pizza", date: "2026-09-12", startTime: "20:30", endTime: "21:15", venueName: "The Kitchen", description: "Restores 40 HP. Pineapple debate resumes.", icon: "🍕" },
+    { eventCode: NEWGAME_CODE, order: 4, name: "Boss Fight", date: "2026-09-12", startTime: "21:15", endTime: "23:00", venueName: "The Big Screen", dressCode: "Rage-quit resistant", description: "Whoever beats it picks the next game.", icon: "⚔" },
+    { eventCode: NEWGAME_CODE, order: 5, name: "Post-Credits", date: "2026-09-13", startTime: "23:00", endTime: "01:00", venueName: "The Beanbags", description: "Cake, then something slow and story-driven.", icon: "🌙" },
+  ],
+  media: [heroUrl(NEWGAME_CODE, SAMPLES.confetti), ...gallery(NEWGAME_CODE, [
+    { url: PICSUM(`${NEWGAME_CODE}-i1`, 1000, 1000), caption: "save 01" },
+    { url: PICSUM(`${NEWGAME_CODE}-i2`, 1000, 1000), caption: "co-op run" },
+    { url: SAMPLES.confetti, caption: "level up" },
+    { url: PICSUM(`${NEWGAME_CODE}-i3`, 1000, 1000), caption: "the boss" },
+    { url: PICSUM(`${NEWGAME_CODE}-i4`, 1000, 1000), caption: "loot drop" },
+    { url: PICSUM(`${NEWGAME_CODE}-i5`, 1000, 1000), caption: "post-credits" },
+  ])],
+};
+
+// ---------- PIT LANE — DEMO-PITLANE ----------
+
+const PITLANE_CODE = "DEMO-PITLANE";
+const pitlane: DemoBundle = {
+  event: {
+    eventCode: PITLANE_CODE, eventType: "birthday", templateId: "pitlane",
+    eventTitle: "Arnav turns 9", person1Name: "Arnav",
+    tentativeDate: "2026-10-10", city: "Hyderabad", isActive: true, slug: PITLANE_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Lights out and away we go",
+    invitationMessage: "Helmets on. There will be karts, there will be a podium, and there will be an argument about who cut whose corner.",
+    aboutStory: "Knows every car on the road by its headlights, has strong opinions about tyre compounds, and has been practising his podium spray since March.",
+    mainDate: "2026-10-10", mainStartTime: "16:00", mainEndTime: "19:30",
+    themeAccentColor: "#d92b2b",
+    venueName: "Runway Karting, Gachibowli", venueAddress: "Gachibowli, Hyderabad, Telangana",
+    mapLink: "https://maps.google.com/?q=Gachibowli+Hyderabad", latitude: 17.4401, longitude: 78.3489,
+    contactName: "Sneha (Mum)", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: PITLANE_CODE, order: 1, name: "Scrutineering", date: "2026-10-10", startTime: "16:00", endTime: "16:20", venueName: "The Pit Wall", dressCode: "Closed shoes, no scarves", description: "Helmets fitted, race suits handed out, rules ignored.", icon: "🪖" },
+    { eventCode: PITLANE_CODE, order: 2, name: "Qualifying", date: "2026-10-10", startTime: "16:30", endTime: "17:10", venueName: "The Circuit", description: "Three laps each. Grid order decided, friendships tested.", icon: "⏱" },
+    { eventCode: PITLANE_CODE, order: 3, name: "The Main Race", date: "2026-10-10", startTime: "17:20", endTime: "18:10", venueName: "The Circuit", description: "Twelve laps, one safety car, zero mercy.", icon: "🏎" },
+    { eventCode: PITLANE_CODE, order: 4, name: "Podium & Cake", date: "2026-10-10", startTime: "18:15", endTime: "19:00", venueName: "The Podium", description: "Trophy, fizzy-drink spray, cake shaped like a tyre.", icon: "🏆" },
+    { eventCode: PITLANE_CODE, order: 5, name: "Cool-Down Lap", date: "2026-10-10", startTime: "19:00", endTime: "19:30", venueName: "The Café", description: "Fries, replays, and the great overtaking dispute.", icon: "🍟" },
+  ],
+  media: [heroUrl(PITLANE_CODE, SAMPLES.confetti), ...gallery(PITLANE_CODE, [
+    { url: PICSUM(`${PITLANE_CODE}-g1`, 1200, 900), caption: "Last year's grid" },
+    { url: PICSUM(`${PITLANE_CODE}-g2`, 1200, 900), caption: "Turn one" },
+    { url: SAMPLES.confetti, caption: "Podium spray" },
+    { url: PICSUM(`${PITLANE_CODE}-g3`, 1200, 900), caption: "The garage" },
+    { url: PICSUM(`${PITLANE_CODE}-g4`, 1200, 900), caption: "Fastest lap" },
+    { url: PICSUM(`${PITLANE_CODE}-g5`, 1200, 900), caption: "Chequered flag" },
+  ])],
+};
+
 // ---------- registry ----------
 
 export const DEMO_EVENTS: Record<string, DemoBundle> = {
@@ -2660,9 +3274,51 @@ export const DEMO_EVENTS: Record<string, DemoBundle> = {
   [FESTIVAL_CODE]: festival,
   [NEONJUNGLE_CODE]: neonjungle,
   [MIDNIGHTTOKYO_CODE]: midnighttokyo,
+  // Appended at the end on purpose: `dummyForEventType()` returns the FIRST
+  // bundle matching an event type, and that bundle is the shared demo content
+  // for every preview of that type. New demos go last so they never take that
+  // slot from royal (wedding) / vibrant (birthday).
+  [LOOM_CODE]: loom,
+  [ANALOG_CODE]: analog,
+  [LOCKER_CODE]: locker,
+  [MONSOON_CODE]: monsoon,
+  [COURTYARD_CODE]: courtyard,
+  [SPICEROUTE_CODE]: spiceroute,
+  [JAALI_CODE]: jaali,
+  [POPUPBOOK_CODE]: popupbook,
+  [SPEAKEASY_CODE]: speakeasy,
+  [ALMANAC_CODE]: almanac,
+  [MANGA_CODE]: manga,
+  [MATCHDAY_CODE]: matchday,
+  [FEAST_CODE]: feast,
+  [PANCHANG_CODE]: panchang,
+  [IRANI_CODE]: irani,
+  [LUDO_CODE]: ludo,
+  [TOUR_CODE]: tour,
+  [NEWGAME_CODE]: newgame,
+  [PITLANE_CODE]: pitlane,
 };
 
 export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
+  loom: LOOM_CODE,
+  analog: ANALOG_CODE,
+  locker: LOCKER_CODE,
+  monsoon: MONSOON_CODE,
+  courtyard: COURTYARD_CODE,
+  spiceroute: SPICEROUTE_CODE,
+  jaali: JAALI_CODE,
+  popupbook: POPUPBOOK_CODE,
+  speakeasy: SPEAKEASY_CODE,
+  almanac: ALMANAC_CODE,
+  manga: MANGA_CODE,
+  matchday: MATCHDAY_CODE,
+  feast: FEAST_CODE,
+  panchang: PANCHANG_CODE,
+  irani: IRANI_CODE,
+  ludo: LUDO_CODE,
+  tour: TOUR_CODE,
+  newgame: NEWGAME_CODE,
+  pitlane: PITLANE_CODE,
   nexus: NEXUS_CODE,
   pinnacle: PINNACLE_CODE,
   luminary: LUMINARY_CODE,

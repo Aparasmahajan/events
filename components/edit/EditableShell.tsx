@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { TemplateRouter } from "@/components/templates/TemplateRouter";
 import { EditPanel } from "./EditPanel";
@@ -192,6 +192,42 @@ export function EditableShell({
     : defaultTimerDesign(getTemplateMeta(templateId)?.tags ?? []);
   const timerPosition = timerCustom ? data.event.timerPosition || "center" : "center";
 
+  /* The fixed countdown is an overlay, so it can land on top of whatever the
+   * template drew — and every template formats its hero differently. Rather
+   * than trusting each one to reserve space, measure the hero here and hand the
+   * timer its real geometry; a CSS rule keyed off `data-timer-clearance`
+   * (app/globals.css) reserves the room at the bottom of that hero. Together
+   * they mean no template can put text under the timer. */
+  const hostRef = useRef<HTMLDivElement>(null);
+  const [hero, setHero] = useState<{ top: number; height: number } | null>(null);
+  const overlayTimer = !isInlineTimer && timerStyle === "fixed";
+
+  useEffect(() => {
+    if (!overlayTimer) {
+      setHero(null);
+      return;
+    }
+    const host = hostRef.current;
+    const heroEl = host?.querySelector("section");
+    if (!host || !heroEl) return;
+
+    const measure = () => {
+      const h = heroEl.getBoundingClientRect();
+      const base = host.getBoundingClientRect();
+      setHero({ top: Math.round(h.top - base.top), height: Math.round(h.height) });
+    };
+    measure();
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(heroEl);
+    ro.observe(host);
+    window.addEventListener("orientationchange", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("orientationchange", measure);
+    };
+  }, [overlayTimer, templateId, panelOpen, mounted]);
+
   return (
     <EditProvider
       enabled={!!editParam && !!uploadEndpoint}
@@ -204,19 +240,23 @@ export function EditableShell({
       clearDraft={clearDraft}
     >
       <div
+        ref={hostRef}
         style={{ paddingTop: topOffset || undefined }}
+        data-timer-clearance={overlayTimer ? "1" : undefined}
         className={`relative transition-[padding] duration-300 ${
           editParam && mounted && panelOpen ? "sm:pr-[420px]" : ""
         }`}
       >
         {/* Fixed (in-page) countdown band. Only for non-flagship templates —
             the flagship ones render their own fixed timer in the hero. */}
-        {!isInlineTimer && timerStyle === "fixed" && (
+        {overlayTimer && (
           <EventCountdown
             event={data.event}
             variant="fixed"
             design={timerDesign}
             position={timerPosition}
+            heroTop={hero?.top ?? null}
+            heroHeight={hero?.height ?? null}
           />
         )}
         <TemplateRouter

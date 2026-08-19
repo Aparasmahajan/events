@@ -276,6 +276,42 @@ Every template shows a countdown, controlled by five `Live` columns / `EventData
 - **`timerDesign`** (`Timer Design`) — one of `glass · minimal · flip · rings · neon · elegant`.
 - **`timerPosition`** (`Timer Position`) — `left · center · right` along the bottom of the hero (with edge margin; auto-centers on mobile so wide designs never overflow).
 
+### Starter schedule dates
+
+When an enquiry is approved (or the customer resets the schedule), the starter
+sub-events are copied from the chosen template's **demo bundle** — which carries the
+demo's own dates. `rebaseStarterSubEvents()` in `lib/sheets.ts` rebases them onto the
+event's own date (`MAIN_DATE`, else `TENTATIVE_DATE`) instead, so nobody opens a new
+event and finds a stray demo date in their schedule.
+
+- Day-to-day offsets are preserved, so a multi-day starter keeps its shape: the demo's
+  main day lands **on** the event date, the day-before items land the day before.
+- Single-day starters put every sub-event **on** the event date.
+- No event date yet → anchored ~30 days out, so the countdown still reads sensibly.
+- Sub-events with no date stay blank.
+
+Customers edit these freely afterwards; changing the event date later does **not**
+re-shift the schedule.
+
+### Photo frame (per-template decoration)
+
+Some templates draw a decorative frame **over** gallery photos. Toy Universe (`toybox`)
+wraps each photo as a ribboned present, which covers part of the picture — so the customer
+gets to choose.
+
+- **`photoFrame`** (col `Photo Frame`, Live col 62) — blank/`auto` = the template's own
+  default (gift wrap ON for Toy Universe), `giftwrap` = ribbon + bow, `none` = plain photo.
+- The editor only shows the **Photo frame** control for templates listed in
+  `PHOTO_FRAME_TEMPLATES` (`lib/types.ts`). Add a template there — with its frame options —
+  and the control appears for it with no other changes.
+- A "visibility" reset clears the column back to blank (= auto).
+
+**Sheet note:** the `Live` tab needs a `Photo Frame` header in column 62 (BJ). Reads and
+writes are by column index, so an unlabelled column still works — the header is for humans.
+`LIVE_LAST_COL` is now derived from `LIVE_COL` (`Math.max(...)`), which also fixed a
+pre-existing bug: it had been pinned to `RSVP_TYPE` (56), so the whole timer block (cols
+57–61) was written to the sheet and never read back.
+
 **Appropriate-by-default:** when `timerCustom` is off, the design is auto-picked from the template's own tags (`defaultTimerDesign()` in `EventCountdown.tsx`: neon→neon, royal/luxurious/elegant→elegant, minimal→minimal, playful/festive/vibrant→flip, cinematic/cool→glass). So each template gets a fitting timer with no per-template code.
 
 **Flagship templates** (`royal, minimal, modern, vibrant, pastel, aurora, obsidian, celestia`) build the timer into their hero — listed in `TEMPLATES_WITH_INLINE_TIMER` in `EditableShell.tsx`. They render their inline timer for `fixed`, and hide it (shell shows the floating chip) when the customer picks `floating`.

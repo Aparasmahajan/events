@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { EventData, EventType, MediaItem, SubEvent } from "@/lib/types";
+import { PHOTO_FRAME_TEMPLATES } from "@/lib/types";
 import type { EditableData } from "./EditableShell";
-import { TEMPLATES_META } from "@/components/templates/metadata";
+import { TEMPLATES_META, templateLabelForType } from "@/components/templates/metadata";
+import { TemplateThumb } from "@/components/ui/TemplateThumb";
 import { AddPhotosModal } from "./AddPhotosModal";
 import { TIMER_DESIGNS } from "@/components/ui/EventCountdown";
 
@@ -214,6 +216,10 @@ export function EditPanel({
 
   const patchEvent = (patch: Partial<EventData>) =>
     onChange({ ...data, event: { ...data.event, ...patch } });
+
+  // Only templates that actually draw a frame over gallery photos get the
+  // "Photo frame" control (Toy Universe's gift wrap today).
+  const frameOptions = PHOTO_FRAME_TEMPLATES[data.event.templateId];
 
   const patchSubEvent = (index: number, patch: Partial<SubEvent>) =>
     onChange({
@@ -737,6 +743,41 @@ export function EditPanel({
                 </Section>
               )}
 
+              {frameOptions && (
+                <Section title="Photo frame">
+                  <p className="text-xs opacity-70">
+                    This template can draw a decorative frame over your gallery photos.
+                    Turn it off if you&apos;d rather show the photos plain.
+                  </p>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {frameOptions.map((opt) => {
+                      const current = data.event.photoFrame ?? "auto";
+                      const active =
+                        current === opt.key ||
+                        (current === "auto" && opt.key === frameOptions[0].key);
+                      return (
+                        <button
+                          key={opt.key}
+                          type="button"
+                          onClick={() => patchEvent({ photoFrame: opt.key })}
+                          aria-pressed={active}
+                          className={`rounded-md border px-2 py-2 text-left text-xs transition ${
+                            active
+                              ? "border-neutral-900 bg-neutral-900 text-white"
+                              : "border-black/15 bg-white hover:border-black/40"
+                          }`}
+                        >
+                          <span className="block font-medium">{opt.label}</span>
+                          <span className={`block text-[10px] leading-snug ${active ? "opacity-80" : "opacity-60"}`}>
+                            {opt.hint}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </Section>
+              )}
+
               {data.media.length > 0 && (
                 <Section title={`Manage media (${data.media.length})`}>
                   <p className="text-xs opacity-70">
@@ -825,12 +866,20 @@ export function EditPanel({
                                 : "border-black/10 hover:border-black/40"
                             }`}
                           >
-                            <div
-                              className="aspect-[4/3] bg-cover bg-center"
-                              style={{ backgroundImage: `url('${t.previewImage}')` }}
+                            {/* Type-scoped capture: a birthday customer sees
+                                each template's birthday shot, not its wedding
+                                one. Falls back to the shared preview. */}
+                            <TemplateThumb
+                              eventType={eventType}
+                              id={t.id}
+                              fallback={t.previewImage}
+                              alt={`${t.name} preview`}
+                              className="aspect-[4/3] w-full object-cover"
                             />
                             <div className="px-3 py-2">
-                              <p className="text-sm font-medium truncate">{t.name}</p>
+                              <p className="text-sm font-medium truncate">
+                                {templateLabelForType(t, eventType)}
+                              </p>
                               {active && (
                                 <p className="text-[10px] uppercase tracking-widest opacity-60 mt-0.5">
                                   Current

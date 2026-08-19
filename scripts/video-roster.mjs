@@ -3,21 +3,31 @@
 // never goes stale as templates change.
 //
 //   node scripts/video-roster.mjs wedding
-//   node scripts/video-roster.mjs corporate > roster.json
+//   node scripts/video-roster.mjs wedding -o blueprints/wedding-roster.json
+//   node scripts/video-roster.mjs corporate > roster.json   (avoid on PowerShell — writes UTF-16 LE + BOM)
 //
+// Prefer `-o <path>` on Windows: Node writes UTF-8 without BOM regardless of shell.
 // Pipe the JSON into the {{TEMPLATE_ROSTER}} slot of prompts/video-batch-prompt.md.
 
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const type = (process.argv[2] || "").trim();
+const argv = process.argv.slice(2);
+const type = (argv[0] || "").trim();
+let outPath = "";
+for (let i = 1; i < argv.length; i++) {
+  if ((argv[i] === "-o" || argv[i] === "--out") && argv[i + 1]) {
+    outPath = argv[i + 1];
+    i++;
+  }
+}
 const VALID = [
   "wedding", "engagement", "anniversary", "birthday", "party",
   "corporate", "product-launch", "award-ceremony", "networking-event",
 ];
 if (!VALID.includes(type)) {
-  console.error(`Usage: node scripts/video-roster.mjs <eventType>\n  eventType one of: ${VALID.join(", ")}`);
+  console.error(`Usage: node scripts/video-roster.mjs <eventType> [-o <file>]\n  eventType one of: ${VALID.join(", ")}`);
   process.exit(1);
 }
 
@@ -51,4 +61,12 @@ for (let i = 0; i < starts.length; i++) {
   });
 }
 
-console.log(JSON.stringify({ eventType: type, count: roster.length, templates: roster }, null, 2));
+const json = JSON.stringify({ eventType: type, count: roster.length, templates: roster }, null, 2);
+if (outPath) {
+  const abs = path.isAbsolute(outPath) ? outPath : path.join(root, outPath);
+  fs.mkdirSync(path.dirname(abs), { recursive: true });
+  fs.writeFileSync(abs, json, "utf8");
+  console.error(`Wrote ${roster.length} templates → ${abs}`);
+} else {
+  console.log(json);
+}

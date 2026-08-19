@@ -160,11 +160,20 @@ export function EventCountdown({
   variant = "fixed",
   design = "glass",
   position = "center",
+  heroTop,
+  heroHeight,
 }: {
   event: EventData;
   variant?: "floating" | "fixed" | "inline";
   design?: Design;
   position?: "left" | "center" | "right";
+  /** "fixed" variant only — measured geometry of the template's hero section,
+   *  so the timer sits at the bottom of the HERO rather than at the bottom of
+   *  the first viewport. Heroes taller than the viewport (a wrapped tile grid,
+   *  a stacked mobile layout) would otherwise get the timer dropped straight
+   *  onto their content. Falls back to the old viewport anchor when unmeasured. */
+  heroTop?: number | null;
+  heroHeight?: number | null;
 }) {
   const target = event.mainDate
     ? `${event.mainDate}T${event.mainStartTime || "18:00"}:00`
@@ -232,11 +241,19 @@ export function EventCountdown({
   }
 
   if (variant === "fixed") {
-    // Pinned to the bottom of the hero (first viewport), scrolls away with it.
+    // Pinned to the bottom of the hero and scrolls away with it. Geometry comes
+    // from a measurement of the hero when available (see props above).
+    const measured = typeof heroHeight === "number" && heroHeight > 0;
     return (
       <div
-        style={styleVar}
-        className={`pointer-events-none absolute inset-x-0 top-0 z-30 flex h-[100svh] items-end px-6 pb-6 sm:px-12 sm:pb-8 ${fixedJustify}`}
+        style={
+          measured
+            ? { ...styleVar, top: heroTop ?? 0, height: heroHeight }
+            : styleVar
+        }
+        className={`pointer-events-none absolute inset-x-0 z-30 flex items-end px-4 pb-5 sm:px-12 sm:pb-8 ${
+          measured ? "" : "top-0 h-[100svh]"
+        } ${fixedJustify}`}
       >
         <div className="pointer-events-auto max-w-full">{body}</div>
       </div>

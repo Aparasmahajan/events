@@ -12,6 +12,12 @@ const config: Config = {
         display: ["'Playfair Display'", "Georgia", "serif"],
         sans: ["Inter", "system-ui", "sans-serif"],
         script: ["'Great Vibes'", "cursive"],
+        condensed: ["'Bebas Neue'", "'Arial Narrow'", "sans-serif"],
+        marker: ["'Permanent Marker'", "'Comic Sans MS'", "cursive"],
+        hand: ["Caveat", "'Segoe Script'", "cursive"],
+        deco: ["'Poiret One'", "'Century Gothic'", "sans-serif"],
+        pixel: ["'Press Start 2P'", "'Courier New'", "monospace"],
+        deva: ["'Tiro Devanagari Hindi'", "Georgia", "serif"],
       },
       colors: {
         accent: "var(--accent)",

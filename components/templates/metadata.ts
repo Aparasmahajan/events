@@ -2418,6 +2418,548 @@ export const infinitycathedralMeta: TemplateMeta = {
   },
 };
 
+// ─── Wedding: handloom weave ─────────────────────────────────
+export const loomMeta: TemplateMeta = {
+  id: "loom",
+  name: "Woven Vows",
+  codename: "Loom",
+  description:
+    "The wedding as a handloom textile — two named threads cross and the cloth weaves itself as you scroll. For families whose day is about craft and heirlooms, not gold.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["traditional", "artistic", "romantic", "organic", "elegant"],
+  keywords: [
+    "banarasi", "handloom", "saree wedding", "textile", "weave", "heirloom wedding",
+    "craft wedding", "indian wedding", "patola", "kanjeevaram", "phulkari",
+    "artisanal", "varanasi", "south indian silk",
+  ],
+  icon: "🧵",
+  vibe: { label: "Handloom", color: "#a8323e" },
+  previewImage: "/template-previews/loom.jpg",
+  defaults: {
+    invitationMessage:
+      "Our families have been weaving toward this day for a long time. Come stand with us while the last thread goes in.",
+    tagline: "Two threads, one cloth",
+    accentColor: "#a8323e",
+    // Bridal silk in close detail — the textile this template is built around.
+    heroImage: "/samples/bridal-lehenga.jpg",
+    aboutStory:
+      "One loom, two names, and a pattern neither of us could have drawn alone. Every thread in it belongs to someone who got us here.",
+  },
+};
+
+// ─── Wedding: 35mm film ──────────────────────────────────────
+export const analogMeta: TemplateMeta = {
+  id: "analog",
+  name: "Shot on Film",
+  codename: "Analog",
+  description:
+    "A filmstrip that develops as you scroll — sprocket rails, a contact-sheet gallery, grease-pencil marks. For documentary-style city weddings and registry days.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["editorial", "artistic", "modern", "monochrome", "cinematic"],
+  keywords: [
+    "film photography wedding", "35mm", "analog", "documentary wedding",
+    "contact sheet", "grain", "city wedding", "photojournalistic",
+    "minimal wedding", "darkroom", "registry wedding", "courthouse",
+  ],
+  icon: "🎞",
+  vibe: { label: "Analog", color: "#c0392f" },
+  previewImage: "/template-previews/analog.jpg",
+  defaults: {
+    invitationMessage:
+      "No stage, no spectacle — just the people who matter in the room where we sign. Come be in the frame.",
+    tagline: "One roll, one day",
+    accentColor: "#c0392f",
+    // A quiet detail shot — the documentary register this template lives in.
+    heroImage: "/samples/wedding-shoes.jpg",
+    aboutStory:
+      "We are not the couple who plans. We are the couple who shows up with a loaded camera and lets the day happen. This is that day.",
+  },
+};
+
+// ─── Birthday: sweet-sixteen scrapbook ───────────────────────
+export const lockerMeta: TemplateMeta = {
+  id: "locker",
+  name: "Sweet Sixteen Locker",
+  codename: "Locker",
+  description:
+    "A school locker door covered in taped Polaroids you can peel, marker handwriting and ticket stubs. For teen birthdays that should look like the friends made it.",
+  eventTypes: ["birthday", "party"],
+  tags: ["playful", "vibrant", "whimsical", "bold", "cool"],
+  keywords: [
+    "sweet 16", "sweet sixteen", "16th birthday", "teen birthday", "18th birthday",
+    "scrapbook", "polaroid", "friends party", "high school", "collage",
+    "13th birthday", "terrace party", "sleepover",
+  ],
+  icon: "🔓",
+  vibe: { label: "Locker", color: "#ee4f8b" },
+  previewImage: "/template-previews/locker.jpg",
+  defaults: {
+    invitationMessage:
+      "Okay so — it's happening. Come loud, come late if you must, but come. Bring nothing except yourself and a song request.",
+    tagline: "the group chat has been planning this for weeks",
+    accentColor: "#ee4f8b",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Sixteen years of being the one who starts things. This is the party for everyone who joined in.",
+  },
+};
+
+// ─── Wedding: wedding by post ────────────────────────────────
+export const monsoonMeta: TemplateMeta = {
+  id: "monsoon",
+  name: "Letters in the Rain",
+  codename: "Monsoon Letters",
+  description:
+    "The wedding told in post — a telegram, an envelope that opens as you scroll, postcards for each day. For intimate, sentimental or monsoon-season weddings.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["romantic", "editorial", "traditional", "artistic", "decent"],
+  keywords: [
+    "intimate wedding", "monsoon wedding", "letters", "handwritten invitation",
+    "vintage postal", "long distance love", "telegram", "nostalgic wedding",
+    "small wedding", "elopement", "kerala", "rain",
+  ],
+  icon: "✉️",
+  vibe: { label: "Monsoon Post", color: "#1f4e79" },
+  previewImage: "/template-previews/monsoon.jpg",
+  defaults: {
+    invitationMessage:
+      "This is the last letter we send as two addresses. Come stand in the rain with us and watch it become one.",
+    tagline: "Eight years of letters",
+    accentColor: "#1f4e79",
+    heroImage: "/samples/wedding-flowers.jpg",
+    aboutStory:
+      "Two cities, one post office each, and a habit neither of us could break. Everything worth saying, we said on paper first.",
+  },
+};
+
+// ─── Wedding: courtyard house ────────────────────────────────
+export const courtyardMeta: TemplateMeta = {
+  id: "courtyard",
+  name: "The Courtyard House",
+  codename: "Nalukettu",
+  description:
+    "A traditional South Indian courtyard house where the sunlight crosses the floor as you scroll. For Kerala, Tamil and heritage-homestay weddings.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["traditional", "architectural", "organic", "elegant", "romantic"],
+  keywords: [
+    "kerala wedding", "south indian wedding", "tamil wedding", "nalukettu",
+    "heritage home", "courtyard wedding", "brass lamps", "destination wedding india",
+    "homestay wedding", "coastal wedding", "muhurtham", "sadya",
+  ],
+  icon: "🪔",
+  vibe: { label: "Courtyard", color: "#9c4a2f" },
+  previewImage: "/template-previews/courtyard.jpg",
+  defaults: {
+    invitationMessage:
+      "The house has seen every wedding in our family. Come sit on its veranda while it sees one more.",
+    tagline: "Four generations, one courtyard",
+    accentColor: "#9c4a2f",
+    heroImage: "/samples/diya-lamps.jpg",
+    aboutStory:
+      "Laterite walls, a jackwood roof, and a square of open sky in the middle. Every important thing our family has decided was decided in that square.",
+  },
+};
+
+// ─── Wedding: antique sea chart ──────────────────────────────
+export const spicerouteMeta: TemplateMeta = {
+  id: "spiceroute",
+  name: "The Spice Route",
+  codename: "Spice Route",
+  description:
+    "A hand-drawn sea chart where the route between two home ports draws itself as you scroll. For destination weddings and cross-city marriages.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["traditional", "artistic", "editorial", "cinematic", "elegant"],
+  keywords: [
+    "destination wedding", "travel wedding", "map wedding", "two cities",
+    "cross culture wedding", "nautical", "antique map", "voyage", "goa wedding",
+    "beach wedding", "compass", "journey",
+  ],
+  icon: "🧭",
+  vibe: { label: "Cartograph", color: "#2c6e73" },
+  previewImage: "/template-previews/spiceroute.jpg",
+  defaults: {
+    invitationMessage:
+      "Our families set out from opposite coasts. The chart says they meet here — come watch us make landfall.",
+    tagline: "Two ports, one crossing",
+    accentColor: "#2c6e73",
+    heroImage: "/samples/rings-roses.jpg",
+    aboutStory:
+      "Two cities, four airports and one very patient set of parents. Everything since has been a slow, deliberate voyage toward the same harbour.",
+  },
+};
+
+// ─── Wedding: lattice screen ─────────────────────────────────
+export const jaaliMeta: TemplateMeta = {
+  id: "jaali",
+  name: "Behind the Jaali",
+  codename: "Indigo Jaali",
+  description:
+    "A carved sandstone screen that opens as you scroll, over Jaipur blue-pottery arches. Cobalt and white geometry instead of the usual gold.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["architectural", "elegant", "traditional", "royal", "artistic"],
+  keywords: [
+    "nikah", "walima", "muslim wedding", "rajasthani wedding", "jaipur",
+    "blue pottery", "jaali", "mughal", "geometric wedding", "blue and white wedding",
+    "udaipur", "haveli",
+  ],
+  icon: "🕌",
+  vibe: { label: "Indigo Jaali", color: "#1f4b8f" },
+  previewImage: "/template-previews/jaali.jpg",
+  defaults: {
+    invitationMessage:
+      "With the blessings of both our families, we invite you to the courtyard — for the nikah, and for everything after it.",
+    tagline: "Light through carved stone",
+    accentColor: "#1f4b8f",
+    heroImage: "/samples/stained-glass.jpg",
+    aboutStory:
+      "Geometry, patience and a great deal of tea. Our families took their time; the pattern that came out of it fits perfectly.",
+  },
+};
+
+// ─── Birthday: first-year storybook ──────────────────────────
+export const popupbookMeta: TemplateMeta = {
+  id: "popupbook",
+  name: "First Year Storybook",
+  codename: "Pop-Up",
+  description:
+    "A paper pop-up book about the first year — spreads that stand up as you scroll, a card for every month. Gentle, grandparent-friendly, nothing that flashes.",
+  eventTypes: ["birthday"],
+  tags: ["playful", "pastel", "whimsical", "appealing", "decent"],
+  keywords: [
+    "first birthday", "1st birthday", "one year old", "baby birthday",
+    "naming ceremony", "storybook", "pop up book", "kids party", "second birthday",
+    "cake smash", "annaprasana", "toddler",
+  ],
+  icon: "📖",
+  vibe: { label: "Pop-Up", color: "#f3b8a0" },
+  previewImage: "/template-previews/popupbook.jpg",
+  defaults: {
+    invitationMessage:
+      "It has been a year of firsts, and we would like to spend the next few hours of it with the people who made it soft. Come for cake, stay for the nap.",
+    tagline: "One whole year of you",
+    accentColor: "#f3b8a0",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Twelve months, four teeth, one small person with very firm opinions about dogs. This is the short version, in paper.",
+  },
+};
+
+// ─── Birthday: prohibition speakeasy ─────────────────────────
+export const speakeasyMeta: TemplateMeta = {
+  id: "speakeasy",
+  name: "The Speakeasy",
+  codename: "Prohibition",
+  description:
+    "A hidden 1920s bar — the peephole slides open, the room fills in brass and velvet, the night runs as a jazz bill. For 21sts, 30ths and cocktail evenings.",
+  eventTypes: ["birthday", "party"],
+  tags: ["elegant", "luxurious", "premium", "bold", "cinematic"],
+  keywords: [
+    "21st birthday", "30th birthday", "speakeasy", "gatsby party", "art deco",
+    "roaring twenties", "cocktail party", "prohibition", "jazz age",
+    "black tie birthday", "whiskey", "basement bar",
+  ],
+  icon: "🥂",
+  vibe: { label: "Prohibition", color: "#c39a4d" },
+  previewImage: "/template-previews/speakeasy.jpg",
+  defaults: {
+    invitationMessage:
+      "There is a door with nothing written on it. Knock, say the name, and come down the stairs — the quartet starts at ten.",
+    tagline: "No sign on the door",
+    accentColor: "#c39a4d",
+    heroImage: "/samples/chandelier.jpg",
+    aboutStory:
+      "One night, one basement, one very good bartender. Dress like the decade and leave your phone in your pocket.",
+  },
+};
+
+// ─── Birthday: milestone broadsheet ──────────────────────────
+export const almanacMeta: TemplateMeta = {
+  id: "almanac",
+  name: "The Almanac",
+  codename: "Almanac",
+  description:
+    "A newspaper edition for a milestone birthday — masthead, halftone photographs, one spread per decade. For 40ths through 70ths and retirements.",
+  eventTypes: ["birthday"],
+  tags: ["editorial", "traditional", "monochrome", "decent", "elegant"],
+  keywords: [
+    "50th birthday", "60th birthday", "40th birthday", "70th birthday",
+    "milestone birthday", "retirement party", "newspaper", "born on this day",
+    "decades", "surprise party", "dad birthday", "mum birthday",
+  ],
+  icon: "📰",
+  vibe: { label: "Almanac", color: "#24405e" },
+  previewImage: "/template-previews/almanac.jpg",
+  defaults: {
+    invitationMessage:
+      "The family is throwing a lunch, and the guest of honour has been told it is a quiet one. Please arrive before he does.",
+    tagline: "Sixty years, one edition",
+    accentColor: "#24405e",
+    heroImage: "/samples/marble-columns.jpg",
+    aboutStory:
+      "He has fixed every bicycle on the street, argued with every neighbour about cricket, and never once missed a birthday. This is the paper's tribute.",
+  },
+};
+
+// ─── Birthday: manga volume ──────────────────────────────────
+export const mangaMeta: TemplateMeta = {
+  id: "manga",
+  name: "Birthday Arc",
+  codename: "Manga Arc",
+  description:
+    "The birthday as a manga volume — inked panels, screentone, speed lines and one spot of red. For teen and young-adult birthdays in the anime fandom.",
+  eventTypes: ["birthday", "party"],
+  tags: ["bold", "monochrome", "playful", "cool", "artistic"],
+  keywords: [
+    "anime birthday", "manga birthday", "teen birthday", "18th birthday",
+    "shonen", "otaku", "comic birthday", "cosplay party", "16th birthday",
+    "gaming birthday", "arcade", "ramen",
+  ],
+  icon: "💥",
+  vibe: { label: "Manga Arc", color: "#e6352b" },
+  previewImage: "/template-previews/manga.jpg",
+  defaults: {
+    invitationMessage:
+      "Every good arc has a filler episode. This is not one of them — show up, eat everything, lose at the tournament.",
+    tagline: "The arc begins",
+    accentColor: "#e6352b",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Eighteen volumes in and the protagonist still refuses to train. Somehow it keeps working out.",
+  },
+};
+
+// ─── Birthday: match day ─────────────────────────────────────
+export const matchdayMeta: TemplateMeta = {
+  id: "matchday",
+  name: "Match Day",
+  codename: "Match Day",
+  description:
+    "A stadium on the night of the big game, with the birthday name on the shirt and the age as the squad number. For football, cricket and sports-mad birthdays.",
+  eventTypes: ["birthday", "party"],
+  tags: ["bold", "vibrant", "cool", "modern", "appealing"],
+  keywords: [
+    "football birthday", "soccer party", "cricket birthday", "sports birthday",
+    "stadium", "kids football party", "jersey", "matchday", "30th birthday",
+    "team party", "ipl", "turf party",
+  ],
+  icon: "⚽",
+  vibe: { label: "Match Day", color: "#1f7a3f" },
+  previewImage: "/template-previews/matchday.jpg",
+  defaults: {
+    invitationMessage:
+      "One match, one cake, one trophy that cost very little. Boots optional, shouting encouraged.",
+    tagline: "Kick-off at five",
+    accentColor: "#1f7a3f",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Plays up front, refuses to pass, celebrates like it's a final every single time. Today he gets the whole stadium.",
+  },
+};
+
+// ─── Wedding: the family cookbook ────────────────────────────
+export const feastMeta: TemplateMeta = {
+  id: "feast",
+  name: "One Long Table",
+  codename: "Feast",
+  description:
+    "The wedding as a family cookbook — recipe cards, an ingredient rail, handwritten margin notes and a spice tin that turns as you scroll. For weddings where the food is the point.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["traditional", "organic", "artistic", "romantic", "appealing"],
+  keywords: [
+    "food wedding", "sadya", "thali", "family recipes", "cookbook", "feast",
+    "long table", "catering", "supper club", "indian wedding", "menu",
+    "banana leaf", "home cooking",
+  ],
+  icon: "🍲",
+  vibe: { label: "Kitchen Table", color: "#7a3b23" },
+  previewImage: "/template-previews/feast.jpg",
+  defaults: {
+    invitationMessage:
+      "Both our families argue about food and agree about very little else. Come eat with us while we settle it for good.",
+    tagline: "Handed down, never written down",
+    accentColor: "#7a3b23",
+    heroImage: "/samples/puja-offerings.jpg",
+    aboutStory:
+      "Her grandmother's rasam, his mother's kadhi, one shared kitchen and eleven years of borrowed pots. This is the menu that came out of it.",
+  },
+};
+
+// ─── Wedding: the almanac ────────────────────────────────────
+export const panchangMeta: TemplateMeta = {
+  id: "panchang",
+  name: "The Almanac Wedding",
+  codename: "Panchang",
+  description:
+    "Two twelve-house charts that slide together and lock into one, on a ruled palm-leaf almanac page. For traditional Hindu weddings built around the muhurat.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["traditional", "architectural", "editorial", "elegant", "artistic"],
+  keywords: [
+    "hindu wedding", "muhurat", "kundli", "panchang", "almanac", "horoscope match",
+    "vedic wedding", "pandit", "traditional indian wedding", "shubh muhurat",
+    "north indian wedding", "timings",
+  ],
+  icon: "🔯",
+  vibe: { label: "Almanac", color: "#b3271f" },
+  previewImage: "/template-previews/panchang.jpg",
+  defaults: {
+    invitationMessage:
+      "The pandit checked twice and the families checked four times. The hour is fixed — please be seated before it.",
+    tagline: "Written in the almanac",
+    accentColor: "#b3271f",
+    heroImage: "/samples/puja-offerings.jpg",
+    aboutStory:
+      "Two charts, one auspicious hour, and a great deal of paperwork. What the almanac calls a match, we had already decided.",
+  },
+};
+
+// ─── Wedding: Bombay café deco ───────────────────────────────
+export const iraniMeta: TemplateMeta = {
+  id: "irani",
+  name: "The Corner Café",
+  codename: "Irani",
+  description:
+    "A Bombay Irani café — mint walls, bentwood chairs, a chequered floor and a split-flap board that flips the schedule into place. For Parsi and city weddings with humour.",
+  eventTypes: ["wedding", "engagement", "anniversary"],
+  tags: ["editorial", "traditional", "bold", "artistic", "cool"],
+  keywords: [
+    "parsi wedding", "lagan", "irani cafe", "bombay", "mumbai wedding",
+    "art deco india", "cafe wedding", "city wedding", "bun maska", "vintage india",
+    "chequered floor", "small wedding",
+  ],
+  icon: "☕",
+  vibe: { label: "Café Deco", color: "#c0392b" },
+  previewImage: "/template-previews/irani.jpg",
+  defaults: {
+    invitationMessage:
+      "We have booked the whole café — bentwood chairs, chequered floor, one very old ceiling fan. Come for the lagan, stay for the berry pulao.",
+    tagline: "Est. this Saturday",
+    accentColor: "#c0392b",
+    heroImage: "/samples/wedding-cake.jpg",
+    aboutStory:
+      "We met at a corner table over bun maska and stayed until the cashier switched the lights off. Nine years later, the same table is reserved.",
+  },
+};
+
+// ─── Birthday: the board game ────────────────────────────────
+export const ludoMeta: TemplateMeta = {
+  id: "ludo",
+  name: "Board Game Party",
+  codename: "Ludo",
+  description:
+    "A printed board where the plan is the path — squares in sequence, dice that settle, and a counter that advances as you scroll. For kids' parties and games nights.",
+  eventTypes: ["birthday", "party"],
+  tags: ["playful", "vibrant", "whimsical", "appealing", "festive"],
+  keywords: [
+    "board game party", "ludo", "snakes and ladders", "games night", "kids birthday",
+    "family party", "10th birthday", "8th birthday", "dice", "tournament",
+    "indoor party", "carrom",
+  ],
+  icon: "🎲",
+  vibe: { label: "Board Game", color: "#d94a3d" },
+  previewImage: "/template-previews/ludo.jpg",
+  defaults: {
+    invitationMessage:
+      "Roll a six and you're in. There will be teams, there will be arguing about the rules, and there will be cake at the end.",
+    tagline: "Four players, one afternoon",
+    accentColor: "#d94a3d",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Undefeated at Ludo since the age of five, largely because he changes the rules mid-game. Come try your luck.",
+  },
+};
+
+// ─── Birthday: one-night tour ────────────────────────────────
+export const tourMeta: TemplateMeta = {
+  id: "tour",
+  name: "One Night Only",
+  codename: "The Tour",
+  description:
+    "A fly-poster tour announcement — stacked poster type on newsprint, a setlist instead of a schedule, and an access-all-areas pass on a lanyard.",
+  eventTypes: ["birthday", "party"],
+  tags: ["bold", "editorial", "cool", "modern", "monochrome"],
+  keywords: [
+    "music birthday", "gig poster", "tour poster", "concert birthday", "band party",
+    "30th birthday", "40th birthday", "setlist", "backstage", "rock",
+    "gig", "festival birthday",
+  ],
+  icon: "🎤",
+  vibe: { label: "Tour Poster", color: "#ff3b30" },
+  previewImage: "/template-previews/tour.jpg",
+  defaults: {
+    invitationMessage:
+      "Doors at nine, headliner at eleven, and no support act. Bring the pass, bring the shouting.",
+    tagline: "One night only",
+    accentColor: "#ff3b30",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Twenty-five years on the road, mostly in the same city, always the loudest person in the room. This is the anniversary show.",
+  },
+};
+
+// ─── Birthday: RPG save file ─────────────────────────────────
+export const newgameMeta: TemplateMeta = {
+  id: "newgame",
+  name: "New Game Plus",
+  codename: "Save File",
+  description:
+    "An RPG save screen — stat bars, a quest log, an inventory of photos, and a dialogue box that types the invitation out. For gamers of any age.",
+  eventTypes: ["birthday", "party"],
+  tags: ["tech", "playful", "cool", "bold", "interactive"],
+  keywords: [
+    "gaming birthday", "video game party", "rpg", "retro game", "pixel",
+    "level up", "lan party", "teen birthday", "16th birthday", "21st birthday",
+    "quest", "arcade night",
+  ],
+  icon: "🎮",
+  vibe: { label: "Save File", color: "#ffd166" },
+  previewImage: "/template-previews/newgame.jpg",
+  defaults: {
+    invitationMessage:
+      "A new save file has appeared. Bring snacks, bring a controller, and do not talk during the cutscenes.",
+    tagline: "Continue?",
+    accentColor: "#ffd166",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Level nineteen. Still has not finished the tutorial. Party members welcome.",
+  },
+};
+
+// ─── Birthday: race weekend ──────────────────────────────────
+export const pitlaneMeta: TemplateMeta = {
+  id: "pitlane",
+  name: "Full Throttle",
+  codename: "Pit Lane",
+  description:
+    "A race weekend — start lights go out and the car launches, road dashes stream past, and a second car drives down the pit-stop list as you scroll. For car-mad birthdays and karting parties.",
+  eventTypes: ["birthday", "party"],
+  tags: ["bold", "vibrant", "cool", "modern", "interactive"],
+  keywords: [
+    "car birthday", "racing party", "formula 1", "f1 birthday", "karting",
+    "go karting", "race track", "cars party", "motorsport", "kids car party",
+    "hot wheels", "pit stop", "8th birthday", "30th birthday", "car lover",
+  ],
+  icon: "🏁",
+  vibe: { label: "Pit Lane", color: "#d92b2b" },
+  previewImage: "/template-previews/pitlane.jpg",
+  defaults: {
+    invitationMessage:
+      "Helmets on. There will be karts, there will be a podium, and there will be an argument about who cut whose corner.",
+    tagline: "Lights out and away we go",
+    accentColor: "#d92b2b",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Knows every car on the road by its headlights. Has opinions about tyre compounds. Today he gets the whole circuit.",
+  },
+};
+
 export const TEMPLATES_META: TemplateMeta[] = [
   // Signature wedding experiences
   creatorscanvasMeta,
@@ -2447,6 +2989,15 @@ export const TEMPLATES_META: TemplateMeta[] = [
   mirageMeta,
   icepalaceMeta,
   galaxyoperaMeta,
+  loomMeta,
+  analogMeta,
+  monsoonMeta,
+  courtyardMeta,
+  spicerouteMeta,
+  jaaliMeta,
+  feastMeta,
+  panchangMeta,
+  iraniMeta,
   // Engagement
   infinityMeta,
   lovestarsMeta,
@@ -2481,6 +3032,16 @@ export const TEMPLATES_META: TemplateMeta[] = [
   robocityMeta,
   spacemissionMeta,
   jungleMeta,
+  lockerMeta,
+  popupbookMeta,
+  speakeasyMeta,
+  almanacMeta,
+  mangaMeta,
+  matchdayMeta,
+  ludoMeta,
+  tourMeta,
+  newgameMeta,
+  pitlaneMeta,
   // Corporate / Launch / Awards
   quantumMeta,
   neuralMeta,
@@ -2557,6 +3118,45 @@ export function sortTemplates(
     const rb = rank.has(b.id) ? (rank.get(b.id) as number) : Infinity;
     return ra !== rb ? ra - rb : byName(a, b);
   });
+}
+
+/** Words in a template name that describe an occasion. A multi-type template
+ *  keeps one name ("Pastel Wedding"), which reads wrong when it is being
+ *  offered for a different occasion — a birthday customer should not be shown
+ *  "Pastel Wedding" in their template switcher. */
+const OCCASION_WORDS: Record<string, EventType[]> = {
+  wedding: ["wedding"],
+  weds: ["wedding"],
+  bridal: ["wedding"],
+  engagement: ["engagement"],
+  anniversary: ["anniversary"],
+  birthday: ["birthday"],
+  // "party" is deliberately absent: a birthday IS a party, so "Board Game
+  // Party" reads perfectly well on a birthday event. Only words that claim a
+  // *different* occasion belong here.
+  corporate: ["corporate"],
+  launch: ["product-launch"],
+  awards: ["award-ceremony"],
+  award: ["award-ceremony"],
+};
+
+/** The name to show for `meta` when it is being offered for `eventType`.
+ *  Same name in the matching context; when the name mentions a *different*
+ *  occasion, prefer the codename, else drop the mismatched word. */
+export function templateLabelForType(
+  meta: TemplateMeta,
+  eventType?: EventType,
+): string {
+  if (!eventType) return meta.name;
+  const words = meta.name.split(/\s+/);
+  const mismatched = words.filter((w) => {
+    const types = OCCASION_WORDS[w.toLowerCase().replace(/[^a-z]/g, "")];
+    return types && !types.includes(eventType);
+  });
+  if (mismatched.length === 0) return meta.name;
+  if (meta.codename) return meta.codename;
+  const trimmed = words.filter((w) => !mismatched.includes(w)).join(" ").trim();
+  return trimmed || meta.name;
 }
 
 export function getTemplatesForEventType(eventType: EventType): TemplateMeta[] {

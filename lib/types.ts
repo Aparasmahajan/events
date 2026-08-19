@@ -124,6 +124,28 @@ export type EventData = {
   /** When false/unset the template's own appropriate timer is used. When true,
    *  the customer's timerStyle / timerDesign / timerPosition choices apply. */
   timerCustom?: boolean;
+
+  /** Decorative frame drawn over gallery photos by templates that offer one
+   *  (Toy Universe wraps each photo as a ribboned present). Only those
+   *  templates read it; the rest ignore it.
+   *  - unset / "auto" = the template's own default (gift wrap ON for Toy Universe)
+   *  - "none"         = plain photos, no overlay on the image
+   *  - "giftwrap"     = ribbon + bow over each photo
+   *  Customers pick this in the editor under "Photo frame". */
+  photoFrame?: "auto" | "none" | "giftwrap";
+};
+
+/** Templates that draw a decorative frame over gallery photos, and the frame
+ *  choices each offers. Keyed by templateId; the editor only shows the "Photo
+ *  frame" control for templates listed here. */
+export const PHOTO_FRAME_TEMPLATES: Record<
+  string,
+  { key: NonNullable<EventData["photoFrame"]>; label: string; hint: string }[]
+> = {
+  toybox: [
+    { key: "giftwrap", label: "Gift wrap", hint: "Ribbon and bow over every photo" },
+    { key: "none", label: "Plain photo", hint: "Just the photo in its frame" },
+  ],
 };
 
 export type SubEvent = {

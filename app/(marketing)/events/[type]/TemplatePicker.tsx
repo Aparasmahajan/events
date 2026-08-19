@@ -6,6 +6,7 @@ import {
   TAG_LABELS,
   scoreTemplateMatch,
   sortTemplates,
+  templateLabelForType,
   type TemplateSort,
 } from "@/components/templates/metadata";
 import { TemplateThumb } from "@/components/ui/TemplateThumb";
@@ -178,7 +179,7 @@ export function TemplatePicker({ eventType, initialTemplates, featuredIds }: Pro
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <h3 className="font-display text-2xl leading-tight truncate">
-                        {t.icon} {t.name}
+                        {t.icon} {templateLabelForType(t, eventType)}
                       </h3>
                       {t.codename && (
                         <p className="text-[11px] uppercase tracking-widest opacity-50 mt-1">

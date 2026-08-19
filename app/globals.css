@@ -1,8 +1,16 @@
+/* @import MUST stay above the @tailwind directives. Tailwind expands those in
+   place, so an @import written below them ends up after thousands of rules in
+   the compiled sheet — where the CSS spec says it is invalid and browsers drop
+   it silently (every template then falls back to Georgia / system faces). */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Great+Vibes&display=swap");
+/* Character faces used by individual templates: Bebas Neue (condensed film /
+   scoreboard printing), Permanent Marker + Caveat (hand-made scrapbook copy),
+   Poiret One (art-deco geometry). */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=Permanent+Marker&family=Poiret+One&family=Press+Start+2P&family=Tiro+Devanagari+Hindi&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Great+Vibes&display=swap");
 
 :root {
   --accent: #a3792c;
@@ -24,4 +32,22 @@ a {
 html,
 body {
   overflow-x: hidden;
+}
+
+/* ── Countdown clearance ────────────────────────────────────────────────────
+   The shell's "fixed" countdown is an overlay pinned to the bottom of the
+   template's hero. Templates format their heroes differently and some let
+   content run to the very edge, so the timer used to sit on top of the words.
+   The shell marks its wrapper with data-timer-clearance when that overlay is
+   live; this reserves the room inside the hero itself, whatever the template
+   did. Deliberately !important: it must win over the template's own padding.
+   Only the hero (first section) is touched. */
+[data-timer-clearance="1"] > * > section:first-of-type {
+  padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+@media (min-width: 640px) {
+  [data-timer-clearance="1"] > * > section:first-of-type {
+    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
 }

@@ -80,6 +80,25 @@ import { FuturecityTemplate } from "./futurecity";
 import { FestivalTemplate } from "./festival";
 import { NeonjungleTemplate } from "./neonjungle";
 import { MidnighttokyoTemplate } from "./midnighttokyo";
+import { LoomTemplate } from "./loom";
+import { AnalogTemplate } from "./analog";
+import { LockerTemplate } from "./locker";
+import { MonsoonTemplate } from "./monsoon";
+import { CourtyardTemplate } from "./courtyard";
+import { SpicerouteTemplate } from "./spiceroute";
+import { JaaliTemplate } from "./jaali";
+import { PopupbookTemplate } from "./popupbook";
+import { SpeakeasyTemplate } from "./speakeasy";
+import { AlmanacTemplate } from "./almanac";
+import { MangaTemplate } from "./manga";
+import { MatchdayTemplate } from "./matchday";
+import { FeastTemplate } from "./feast";
+import { PanchangTemplate } from "./panchang";
+import { IraniTemplate } from "./irani";
+import { LudoTemplate } from "./ludo";
+import { TourTemplate } from "./tour";
+import { NewgameTemplate } from "./newgame";
+import { PitlaneTemplate } from "./pitlane";
 import { CreatorsCanvasTemplate } from "./creatorscanvas";
 import { TimeFractureTemplate } from "./timefracture";
 import { GravityZeroTemplate } from "./gravityzero";
@@ -266,6 +285,44 @@ export function TemplateRouter({ templateId, ...rest }: Props) {
       return <NeonjungleTemplate {...rest} />;
     case "midnighttokyo":
       return <MidnighttokyoTemplate {...rest} />;
+    case "loom":
+      return <LoomTemplate {...rest} />;
+    case "analog":
+      return <AnalogTemplate {...rest} />;
+    case "locker":
+      return <LockerTemplate {...rest} />;
+    case "monsoon":
+      return <MonsoonTemplate {...rest} />;
+    case "courtyard":
+      return <CourtyardTemplate {...rest} />;
+    case "spiceroute":
+      return <SpicerouteTemplate {...rest} />;
+    case "jaali":
+      return <JaaliTemplate {...rest} />;
+    case "popupbook":
+      return <PopupbookTemplate {...rest} />;
+    case "speakeasy":
+      return <SpeakeasyTemplate {...rest} />;
+    case "almanac":
+      return <AlmanacTemplate {...rest} />;
+    case "manga":
+      return <MangaTemplate {...rest} />;
+    case "matchday":
+      return <MatchdayTemplate {...rest} />;
+    case "feast":
+      return <FeastTemplate {...rest} />;
+    case "panchang":
+      return <PanchangTemplate {...rest} />;
+    case "irani":
+      return <IraniTemplate {...rest} />;
+    case "ludo":
+      return <LudoTemplate {...rest} />;
+    case "tour":
+      return <TourTemplate {...rest} />;
+    case "newgame":
+      return <NewgameTemplate {...rest} />;
+    case "pitlane":
+      return <PitlaneTemplate {...rest} />;
     case "royal":
     default:
       return <RoyalTemplate {...rest} />;

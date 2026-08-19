@@ -101,7 +101,19 @@ function ToyTrain({ reduce, accent }: { reduce: boolean; accent: string }) {
   );
 }
 
-function PresentBox({ children, ribbon, i }: { children: React.ReactNode; ribbon: string; i: number }) {
+function PresentBox({
+  children,
+  ribbon,
+  i,
+  wrapped,
+}: {
+  children: React.ReactNode;
+  ribbon: string;
+  i: number;
+  /** Gift wrap over the photo. The customer turns this off in the editor
+   *  ("Photo frame" → Plain photo) when they want the picture unobscured. */
+  wrapped: boolean;
+}) {
   const reduce = useReducedMotion();
   return (
     <motion.div
@@ -115,15 +127,19 @@ function PresentBox({ children, ribbon, i }: { children: React.ReactNode; ribbon
     >
       <div className="relative">
         {children}
-        {/* Ribbon overlay */}
-        <div className="pointer-events-none absolute inset-y-0 left-1/2 w-6 -translate-x-1/2" style={{ background: ribbon, opacity: 0.85 }} />
-        <div className="pointer-events-none absolute inset-x-0 top-1/2 h-6 -translate-y-1/2" style={{ background: ribbon, opacity: 0.85 }} />
-        {/* Bow */}
-        <svg className="pointer-events-none absolute -top-3 left-1/2 -translate-x-1/2" width="60" height="40" viewBox="0 0 60 40">
-          <ellipse cx="18" cy="20" rx="14" ry="10" fill={ribbon} stroke={PALETTE.navy} strokeWidth="2.5" />
-          <ellipse cx="42" cy="20" rx="14" ry="10" fill={ribbon} stroke={PALETTE.navy} strokeWidth="2.5" />
-          <rect x="26" y="14" width="8" height="14" rx="2" fill={ribbon} stroke={PALETTE.navy} strokeWidth="2.5" />
-        </svg>
+        {wrapped && (
+          <>
+            {/* Ribbon overlay */}
+            <div className="pointer-events-none absolute inset-y-0 left-1/2 w-6 -translate-x-1/2" style={{ background: ribbon, opacity: 0.85 }} />
+            <div className="pointer-events-none absolute inset-x-0 top-1/2 h-6 -translate-y-1/2" style={{ background: ribbon, opacity: 0.85 }} />
+            {/* Bow */}
+            <svg className="pointer-events-none absolute -top-3 left-1/2 -translate-x-1/2" width="60" height="40" viewBox="0 0 60 40">
+              <ellipse cx="18" cy="20" rx="14" ry="10" fill={ribbon} stroke={PALETTE.navy} strokeWidth="2.5" />
+              <ellipse cx="42" cy="20" rx="14" ry="10" fill={ribbon} stroke={PALETTE.navy} strokeWidth="2.5" />
+              <rect x="26" y="14" width="8" height="14" rx="2" fill={ribbon} stroke={PALETTE.navy} strokeWidth="2.5" />
+            </svg>
+          </>
+        )}
       </div>
     </motion.div>
   );
@@ -204,6 +220,9 @@ export const ToyboxTemplate: TemplateComponent = ({ event, subEvents, media }) =
   const showGallery = !event.hideGallery && (galleryItems.length > 0 || editing);
 
   const ribbonColors = [PALETTE.cherry, PALETTE.orange, PALETTE.mint, PALETTE.yellow];
+  // Gift wrap is this template's default; "none" is the customer opting out
+  // (editor → Photo frame). Persisted on the Live sheet as PHOTO_FRAME.
+  const giftWrapped = (event.photoFrame ?? "auto") !== "none";
 
   return (
     <div
@@ -351,11 +370,16 @@ export const ToyboxTemplate: TemplateComponent = ({ event, subEvents, media }) =
             className="mb-12 text-center font-display text-4xl font-black sm:text-5xl"
             style={{ color: PALETTE.navy }}
           >
-            Memory <span style={{ color: accent }}>presents</span> 🎁
+            Memory <span style={{ color: accent }}>presents</span> {giftWrapped ? "🎁" : "📸"}
           </motion.p>
           <div className="grid gap-8 pt-6 sm:grid-cols-2 lg:grid-cols-3">
             {galleryItems.map((m, i) => (
-              <PresentBox key={`${m.fileName}-${i}`} ribbon={ribbonColors[i % ribbonColors.length]} i={i}>
+              <PresentBox
+                key={`${m.fileName}-${i}`}
+                ribbon={ribbonColors[i % ribbonColors.length]}
+                i={i}
+                wrapped={giftWrapped}
+              >
                 <img
                   src={m.publicUrl}
                   alt={m.caption ?? ""}

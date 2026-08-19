@@ -100,9 +100,13 @@ export const LIVE_COL = {
   TIMER_DESIGN: 59,
   TIMER_POSITION: 60,
   TIMER_CUSTOM: 61,
+  PHOTO_FRAME: 62,
 } as const;
 
-const LIVE_LAST_COL = LIVE_COL.RSVP_TYPE;
+// Derived, not hand-maintained: pinning this to a specific column meant every
+// column added after it (the whole timer block) was written to the sheet and
+// then never read back. Adding to LIVE_COL is now enough.
+const LIVE_LAST_COL = Math.max(...Object.values(LIVE_COL));
 const LIVE_RANGE_FULL = `Live!A2:${colLetter(LIVE_LAST_COL)}`;
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -348,6 +352,8 @@ function liveRowToEvent(r: string[]): EventData {
     timerPosition:
       (get(LIVE_COL.TIMER_POSITION) as EventData["timerPosition"]) || undefined,
     timerCustom: boolish(get(LIVE_COL.TIMER_CUSTOM)),
+    photoFrame:
+      (get(LIVE_COL.PHOTO_FRAME) as EventData["photoFrame"]) || undefined,
   };
 }
 
@@ -695,6 +701,55 @@ const ALL_SECTIONS: ResetSection[] = ["details", "story", "visibility", "subEven
  *  - First-time pre-fill at approval, so /manage opens looking complete.
  *  - Customer per-section Reset via the EditPanel.
  */
+/** Starter sub-events are copied from the template's demo bundle, which carries
+ *  the demo's own dates — that is where a stray "7 June" in a brand-new event's
+ *  schedule came from. Rebase them onto this event's date instead, keeping the
+ *  demo's day-to-day offsets so a multi-day starter (mehndi one day, ceremony
+ *  the next) keeps its shape. The customer edits these anyway; the point is that
+ *  they open on or around their own date, not a demo's.
+ *
+ *  @param demoMainDate the demo's main date — used as the anchor only when it
+ *    sits within the starter's own span (a few demos carry a main date unrelated
+ *    to their sub-events), otherwise the first day of the schedule is the anchor.
+ *  @param targetDate   this event's date. Missing/unparseable falls back to ~a
+ *    month out, so the countdown reads sensibly until a real date is set.
+ */
+export function rebaseStarterSubEvents(
+  subEvents: SubEvent[],
+  demoMainDate: string | undefined,
+  targetDate: string | undefined,
+): SubEvent[] {
+  const DAY = 86_400_000;
+  const parseDay = (value?: string): number | null => {
+    if (!value?.trim()) return null;
+    const t = Date.parse(`${value.trim().slice(0, 10)}T00:00:00Z`);
+    return Number.isNaN(t) ? null : t;
+  };
+
+  const dated = subEvents
+    .map((s) => parseDay(s.date))
+    .filter((t): t is number => t !== null);
+  if (dated.length === 0) return subEvents;
+
+  const earliest = Math.min(...dated);
+  const latest = Math.max(...dated);
+  const demoMain = parseDay(demoMainDate);
+  const anchor =
+    demoMain !== null && demoMain >= earliest - 14 * DAY && demoMain <= latest + 14 * DAY
+      ? demoMain
+      : earliest;
+
+  const target =
+    parseDay(targetDate) ?? Math.floor((Date.now() + 30 * DAY) / DAY) * DAY;
+  if (target === anchor) return subEvents;
+
+  const toISO = (t: number) => new Date(t).toISOString().slice(0, 10);
+  return subEvents.map((s) => {
+    const t = parseDay(s.date);
+    return t === null ? s : { ...s, date: toISO(target + (t - anchor)) };
+  });
+}
+
 export async function applyTemplateStarter(
   code: string,
   sections: ResetSection[] = ["all"],
@@ -707,6 +762,10 @@ export async function applyTemplateStarter(
   const templateId = get(LIVE_COL.TEMPLATE_ID) || "royal";
   const tentativeDate = get(LIVE_COL.TENTATIVE_DATE);
   const city = get(LIVE_COL.CITY);
+  // What the starter schedule gets anchored to: whatever date this event
+  // actually has. MAIN_DATE is the customer's own; TENTATIVE_DATE is the one
+  // they gave on the enquiry form.
+  const mainDate = get(LIVE_COL.MAIN_DATE) || tentativeDate;
 
   const meta = TEMPLATES_META.find((t) => t.id === templateId);
   // Look up the canonical demo bundle for this template (the visual reference
@@ -742,6 +801,8 @@ export async function applyTemplateStarter(
     updates.HIDE_EVENTS = "FALSE";
     updates.HIDE_GALLERY = "FALSE";
     updates.HIDE_VENUE = "FALSE";
+    // Blank = "auto" = back to the template's own frame default.
+    updates.PHOTO_FRAME = "";
   }
   // Preserve enquiry-derived bits whenever we touch the Live row, regardless
   // of which section was reset.
@@ -753,10 +814,11 @@ export async function applyTemplateStarter(
 
   if (active.has("subEvents")) {
     if (demo && demo.subEvents.length > 0) {
-      const rebound: SubEvent[] = demo.subEvents.map((s) => ({
-        ...s,
-        eventCode: code,
-      }));
+      const rebound: SubEvent[] = rebaseStarterSubEvents(
+        demo.subEvents,
+        demo.event.mainDate,
+        mainDate,
+      ).map((s) => ({ ...s, eventCode: code }));
       await replaceSubEventsForCode(code, rebound);
     } else {
       await replaceSubEventsForCode(code, []);
