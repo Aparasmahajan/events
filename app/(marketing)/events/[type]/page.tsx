@@ -3,20 +3,25 @@ import { notFound } from "next/navigation";
 import { EVENT_TYPES, getEventTypeConfig } from "@/config/eventTypes";
 import { TemplatePicker } from "./TemplatePicker";
 import { filterTemplates } from "@/components/templates/metadata";
+import { getFeaturedMap } from "@/lib/sheets";
 import type { EventType } from "@/lib/types";
 
 export function generateStaticParams() {
   return EVENT_TYPES.map((t) => ({ type: t.id }));
 }
 
+// Re-fetch the admin-curated featured order periodically (ISR).
+export const revalidate = 120;
+
 type Params = { type: string };
 
-export default function EventTypePage({ params }: { params: Params }) {
+export default async function EventTypePage({ params }: { params: Params }) {
   const isKnown = EVENT_TYPES.some((t) => t.id === params.type);
   if (!isKnown) notFound();
   const eventType = params.type as EventType;
   const config = getEventTypeConfig(eventType);
   const templates = filterTemplates({ eventType });
+  const featured = await getFeaturedMap();
 
   return (
     <main className="min-h-screen">
@@ -36,7 +41,11 @@ export default function EventTypePage({ params }: { params: Params }) {
           </p>
         </div>
 
-        <TemplatePicker eventType={eventType} initialTemplates={templates} />
+        <TemplatePicker
+          eventType={eventType}
+          initialTemplates={templates}
+          featuredIds={featured[eventType] ?? []}
+        />
       </section>
     </main>
   );
