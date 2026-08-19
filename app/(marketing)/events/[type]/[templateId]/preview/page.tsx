@@ -2,7 +2,9 @@ import { notFound } from "next/navigation";
 import { EVENT_TYPES } from "@/config/eventTypes";
 import { getTemplateMeta } from "@/components/templates/metadata";
 import { EditableShell } from "@/components/edit/EditableShell";
+import { DownloadVideoButton } from "@/components/ui/DownloadVideoButton";
 import { dummyForEventType } from "@/lib/dummyData";
+import { buildVideoProps } from "@/lib/videoProps";
 import type { EventType } from "@/lib/types";
 
 type Params = { type: string; templateId: string };
@@ -42,12 +44,27 @@ export default function TemplatePreviewPage({ params }: { params: Params }) {
     themeAccentColor: undefined,
   };
 
+  // Data for the live (client-side) video generator — built from this page's
+  // demo content (event DATE not a countdown, couple, schedule, venue, photos).
+  const videoProps = buildVideoProps({
+    event,
+    subEvents: bundle.subEvents,
+    media: bundle.media,
+    accent: meta.defaults.accentColor,
+    heroUrl: heroOverride,
+    tagline: event.tagline || meta.defaults.tagline,
+  });
+
   return (
-    <EditableShell
-      templateId={meta.id}
-      event={event}
-      subEvents={bundle.subEvents}
-      media={bundle.media}
-    />
+    <>
+      <EditableShell
+        templateId={meta.id}
+        event={event}
+        subEvents={bundle.subEvents}
+        media={bundle.media}
+      />
+      {/* Live, in-browser video built from this page's data. */}
+      <DownloadVideoButton templateId={meta.id} {...videoProps} />
+    </>
   );
 }

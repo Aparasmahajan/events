@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { getLiveByToken, getLiveEvent, getMedia, getSubEvents } from "@/lib/sheets";
 import { getTemplateMeta } from "@/components/templates/metadata";
 import { EditableShell } from "@/components/edit/EditableShell";
+import { DownloadVideoButton } from "@/components/ui/DownloadVideoButton";
+import { buildVideoProps } from "@/lib/videoProps";
 import { ManageHeader } from "./ManageHeader";
 
 export default async function ManagePage({
@@ -21,6 +23,16 @@ export default async function ManagePage({
 
   const meta = getTemplateMeta(event.templateId) ?? getTemplateMeta("royal");
   if (!meta) notFound();
+
+  // Build the animation video from the client's OWN event data.
+  const videoProps = buildVideoProps({
+    event,
+    subEvents,
+    media,
+    accent: event.themeAccentColor || meta.defaults.accentColor,
+    heroUrl: event.heroImageUrl || meta.defaults.heroImage,
+    tagline: event.tagline || meta.defaults.tagline,
+  });
 
   return (
     <>
@@ -45,6 +57,8 @@ export default async function ManagePage({
         }
         uploadEndpoint={`/api/manage/${params.token}/upload`}
       />
+      {/* Client portal: download an animation video of their own page. */}
+      <DownloadVideoButton templateId={meta.id} {...videoProps} />
     </>
   );
 }
