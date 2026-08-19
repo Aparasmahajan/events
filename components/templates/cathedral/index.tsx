@@ -160,6 +160,33 @@ export const CathedralTemplate: TemplateComponent = ({ event, subEvents, media }
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
   const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=1600&q=80";
   const names = [event.person1Name, event.person2Name].filter(Boolean).join(" & ");
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
+
+  // Deterministic star field for the hero (two vertical column-clusters + a
+  // scattered dust of pinpoints). Kept static so SSR + client render match.
+  const HERO_STARS = useMemo(
+    () => [
+      ...Array.from({ length: 14 }, (_, i) => ({
+        x: 4 + ((i * 37) % 60) / 12,
+        y: 6 + i * 6.2,
+        s: 0.9 + ((i * 7) % 3) * 0.4,
+        d: ((i * 53) % 100) / 40,
+      })),
+      ...Array.from({ length: 14 }, (_, i) => ({
+        x: 91 + ((i * 41) % 60) / 12,
+        y: 8 + i * 6,
+        s: 0.9 + ((i * 11) % 3) * 0.4,
+        d: ((i * 61 + 17) % 100) / 40,
+      })),
+      ...Array.from({ length: 12 }, (_, i) => ({
+        x: 20 + ((i * 71) % 600) / 10,
+        y: 14 + ((i * 47) % 550) / 10,
+        s: 0.7 + (i % 2) * 0.5,
+        d: ((i * 29 + 5) % 100) / 40,
+      })),
+    ],
+    [],
+  );
 
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -179,20 +206,239 @@ export const CathedralTemplate: TemplateComponent = ({ event, subEvents, media }
       <CathedralSky reduce={reduce} />
       <ScrollProgress color={accent} />
 
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden">
+      <section
+        ref={heroRef}
+        className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28"
+      >
+        {/* Base image — near-black cathedral vignette on top so the hero
+         *  reads as inky sky with faint architecture behind. */}
         <motion.div
           className="absolute inset-0"
-          initial={reduce ? { opacity: 0.28 } : { opacity: 0.05 }}
-          animate={{ opacity: 0.28 }}
+          initial={reduce ? { opacity: 0.22 } : { opacity: 0.04 }}
+          animate={{ opacity: 0.22 }}
           transition={{ duration: 3, ease: "easeOut" }}
         >
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#05060f] via-[#05060f]/50 to-[#101a3a]/40" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_38%,rgba(16,26,58,0.35)_0%,rgba(5,6,15,0.85)_60%,#05060f_100%)]" />
         </motion.div>
-        <StarField reduce={reduce} />
-        <GoldArch reduce={reduce} />
 
-        <motion.div style={reduce ? undefined : { y: heroTextY, opacity: heroOpacity }} className="relative z-10 px-6 text-center">
+        {/* SVG clip-path definitions for the two pointed-arch (Gothic)
+         *  stained-glass window frames. Path drawn in a 100x140 viewBox and
+         *  scaled with clipPathUnits="objectBoundingBox" so any frame ratio
+         *  inherits the shape. */}
+        <svg aria-hidden width="0" height="0" className="absolute">
+          <defs>
+            <clipPath id="cath-arch" clipPathUnits="objectBoundingBox">
+              <path d="M 0.5,0 C 0.78,0 1,0.22 1,0.5 L 1,1 L 0,1 L 0,0.5 C 0,0.22 0.22,0 0.5,0 Z" />
+            </clipPath>
+            <clipPath id="cath-arch-tall" clipPathUnits="objectBoundingBox">
+              <path d="M 0.5,0 C 0.82,0 1,0.16 1,0.36 L 1,1 L 0,1 L 0,0.36 C 0,0.16 0.18,0 0.5,0 Z" />
+            </clipPath>
+          </defs>
+        </svg>
+
+        {/* ~40 tiny deterministic star dots forming column-clusters left/right
+         *  plus a scatter across the hero. */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          {HERO_STARS.map((st, i) => (
+            <motion.span
+              key={`hs-${i}`}
+              className="absolute rounded-full bg-white"
+              style={{
+                left: `${st.x}%`,
+                top: `${st.y}%`,
+                width: st.s,
+                height: st.s,
+                boxShadow: "0 0 5px #ffffffb0",
+              }}
+              initial={reduce ? { opacity: 0.55 } : { opacity: 0 }}
+              animate={reduce ? { opacity: 0.55 } : { opacity: [0, 0.85, 0.35, 0.75] }}
+              transition={
+                reduce
+                  ? undefined
+                  : { duration: 5.5, delay: 0.4 + st.d, repeat: Infinity, repeatDelay: 1.2, times: [0, 0.15, 0.6, 1] }
+              }
+            />
+          ))}
+        </div>
+
+        {/* Two thin gold pointed-arch outlines behind the title — reader
+         *  stands inside the cathedral looking down the nave. */}
+        <svg
+          aria-hidden
+          viewBox="0 0 400 520"
+          preserveAspectRatio="xMidYMid meet"
+          className="pointer-events-none absolute left-1/2 top-1/2 z-[1] h-[86%] max-h-[620px] w-auto -translate-x-1/2 -translate-y-1/2"
+          fill="none"
+        >
+          <motion.path
+            d="M 40 520 L 40 220 Q 40 60 200 20 Q 360 60 360 220 L 360 520"
+            stroke={GOLD}
+            strokeWidth="1"
+            initial={reduce ? { pathLength: 1, opacity: 0.8 } : { pathLength: 0, opacity: 0.5 }}
+            animate={{ pathLength: 1, opacity: 0.85 }}
+            transition={{ duration: 2.4, delay: 0.5, ease: "easeInOut" }}
+          />
+          <motion.path
+            d="M 78 520 L 78 232 Q 78 92 200 56 Q 322 92 322 232 L 322 520"
+            stroke={GOLD}
+            strokeWidth="0.55"
+            initial={reduce ? { pathLength: 1, opacity: 0.4 } : { pathLength: 0, opacity: 0.2 }}
+            animate={{ pathLength: 1, opacity: 0.4 }}
+            transition={{ duration: 2.4, delay: 0.9, ease: "easeInOut" }}
+          />
+        </svg>
+
+        {/* Frame 1 — top-left pointed-arch stained-glass window with lead-lines */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -18, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-[5%] top-[10%] z-[2] hidden md:block"
+            style={{ filter: `drop-shadow(0 18px 32px rgba(0,0,0,0.55)) drop-shadow(0 0 22px ${GOLD}55)` }}
+          >
+            <div
+              className="relative"
+              style={{
+                width: "clamp(120px, 14vw, 200px)",
+                height: "clamp(170px, 20vw, 280px)",
+                background: `linear-gradient(180deg, ${GOLD}, #6d5324)`,
+                padding: 3,
+                clipPath: "url(#cath-arch)",
+              }}
+            >
+              <div className="relative h-full w-full overflow-hidden" style={{ clipPath: "url(#cath-arch)" }}>
+                <img
+                  src={frame1.publicUrl}
+                  alt={frame1.caption ?? ""}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+                {/* Lead-lines overlay — thin dark bars evoking stained-glass caming */}
+                <svg viewBox="0 0 100 140" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full">
+                  <line x1="0" y1="46" x2="100" y2="46" stroke="#0a0d18" strokeWidth="1.2" opacity="0.75" />
+                  <line x1="0" y1="86" x2="100" y2="86" stroke="#0a0d18" strokeWidth="1.2" opacity="0.75" />
+                  <line x1="0" y1="112" x2="100" y2="112" stroke="#0a0d18" strokeWidth="1" opacity="0.65" />
+                  <line x1="50" y1="0" x2="50" y2="140" stroke="#0a0d18" strokeWidth="1" opacity="0.6" />
+                </svg>
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(126,168,255,0.18),transparent_40%,rgba(255,139,176,0.12))]" />
+              </div>
+            </div>
+          </motion.figure>
+        )}
+
+        {/* Frame 2 — top-right taller/narrower pointed-arch with cross lead-lines
+         *  and glass-blue radial glow behind it */}
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 18, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute right-[5%] top-[14%] z-[2] hidden md:block"
+          >
+            <div
+              aria-hidden
+              className="absolute -inset-8 -z-10 rounded-full"
+              style={{ background: "radial-gradient(circle, #7ea8ff55, transparent 65%)", filter: "blur(24px)" }}
+            />
+            <div
+              className="relative"
+              style={{
+                width: "clamp(110px, 12.5vw, 180px)",
+                height: "clamp(190px, 22vw, 320px)",
+                background: `linear-gradient(180deg, ${GOLD}, #6d5324)`,
+                padding: 3,
+                clipPath: "url(#cath-arch-tall)",
+                filter: `drop-shadow(0 18px 32px rgba(0,0,0,0.55)) drop-shadow(0 0 22px ${GOLD}55)`,
+              }}
+            >
+              <div className="relative h-full w-full overflow-hidden" style={{ clipPath: "url(#cath-arch-tall)" }}>
+                <img
+                  src={frame2.publicUrl}
+                  alt={frame2.caption ?? ""}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+                {/* Cross lead-lines */}
+                <svg viewBox="0 0 100 160" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full">
+                  <line x1="50" y1="0" x2="50" y2="160" stroke="#0a0d18" strokeWidth="1.2" opacity="0.75" />
+                  <line x1="0" y1="70" x2="100" y2="70" stroke="#0a0d18" strokeWidth="1.2" opacity="0.75" />
+                  <line x1="0" y1="120" x2="100" y2="120" stroke="#0a0d18" strokeWidth="1" opacity="0.6" />
+                </svg>
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(126,168,255,0.2),transparent_50%,rgba(255,139,176,0.1))]" />
+              </div>
+            </div>
+          </motion.figure>
+        )}
+
+        {/* Frame 3 — bottom-left rose window (circular with 8-spoke divider) */}
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, scale: 0.85, rotate: -6 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1.2, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-[8%] bottom-[10%] z-[2] hidden lg:block"
+            style={{ filter: `drop-shadow(0 20px 40px rgba(0,0,0,0.6)) drop-shadow(0 0 26px ${GOLD}66)` }}
+          >
+            <div
+              className="relative rounded-full"
+              style={{
+                width: "clamp(150px, 16vw, 220px)",
+                height: "clamp(150px, 16vw, 220px)",
+                background: `linear-gradient(180deg, ${GOLD}, #6d5324)`,
+                padding: 4,
+              }}
+            >
+              <div className="relative h-full w-full overflow-hidden rounded-full">
+                <img
+                  src={frame3.publicUrl}
+                  alt={frame3.caption ?? ""}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+                {/* 8-spoke rose-window divider + inner ring */}
+                <svg viewBox="0 0 100 100" className="pointer-events-none absolute inset-0 h-full w-full">
+                  <circle cx="50" cy="50" r="49" fill="none" stroke={GOLD} strokeWidth="0.5" opacity="0.9" />
+                  <circle cx="50" cy="50" r="18" fill="none" stroke={GOLD} strokeWidth="0.7" opacity="0.85" />
+                  {Array.from({ length: 8 }).map((_, i) => {
+                    const a = (i * Math.PI) / 4;
+                    const x2 = 50 + Math.cos(a) * 49;
+                    const y2 = 50 + Math.sin(a) * 49;
+                    return (
+                      <line
+                        key={i}
+                        x1="50"
+                        y1="50"
+                        x2={x2}
+                        y2={y2}
+                        stroke="#0a0d18"
+                        strokeWidth="1"
+                        opacity="0.7"
+                      />
+                    );
+                  })}
+                </svg>
+                <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,transparent_35%,rgba(126,168,255,0.18)_75%,rgba(255,139,176,0.15))]" />
+              </div>
+            </div>
+          </motion.figure>
+        )}
+
+        {/* Title stack — centered, held between two gold arches */}
+        <motion.div
+          style={reduce ? undefined : { y: heroTextY, opacity: heroOpacity }}
+          className="relative z-10 px-6 text-center"
+        >
+          <motion.span
+            initial={reduce ? false : { opacity: 0, y: -6 }}
+            animate={{ opacity: 0.9, y: 0 }}
+            transition={{ delay: 1, duration: 1.2 }}
+            className="mb-4 block text-lg"
+            style={{ color: GOLD, textShadow: `0 0 10px ${GOLD}66` }}
+          >
+            ✦
+          </motion.span>
           <motion.p
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -233,13 +479,58 @@ export const CathedralTemplate: TemplateComponent = ({ event, subEvents, media }
             {event.mainStartTime && <span style={{ color: accent }}>{event.mainStartTime}</span>}
             {event.city && <span>{event.city}</span>}
           </motion.div>
+          <motion.span
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 0.85 }}
+            transition={{ delay: 2.9, duration: 1.2 }}
+            className="mt-6 block text-base"
+            style={{ color: GOLD, textShadow: `0 0 8px ${GOLD}55` }}
+          >
+            ☩
+          </motion.span>
+
+          {/* Mobile-only cluster — three pointed-arch thumbs under the title */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="mt-10 flex items-end justify-center gap-3 md:hidden">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`mob-arch-${i}`}
+                  initial={reduce ? false : { opacity: 0, y: 12, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.7, delay: 0.9 + i * 0.15 }}
+                  className="relative"
+                  style={{
+                    width: 66,
+                    height: 90,
+                    background: `linear-gradient(180deg, ${GOLD}, #6d5324)`,
+                    padding: 2,
+                    clipPath: "url(#cath-arch)",
+                    filter: `drop-shadow(0 8px 16px rgba(0,0,0,0.6))`,
+                  }}
+                >
+                  <div className="relative h-full w-full overflow-hidden" style={{ clipPath: "url(#cath-arch)" }}>
+                    <img
+                      src={f!.publicUrl}
+                      alt={f!.caption ?? ""}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                    <svg viewBox="0 0 100 140" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full">
+                      <line x1="0" y1="70" x2="100" y2="70" stroke="#0a0d18" strokeWidth="1.4" opacity="0.7" />
+                      <line x1="50" y1="0" x2="50" y2="140" stroke="#0a0d18" strokeWidth="1" opacity="0.6" />
+                    </svg>
+                  </div>
+                </motion.figure>
+              ))}
+            </div>
+          )}
         </motion.div>
 
         {!reduce && (
           <motion.div
             animate={{ y: [0, 8, 0], opacity: [0.25, 0.7, 0.25] }}
             transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em]"
+            className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em]"
             style={{ color: accent }}
           >
             Enter the nave

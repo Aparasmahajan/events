@@ -278,9 +278,21 @@ export const SkytempleTemplate: TemplateComponent = ({ event, subEvents, media }
     "Beyond the veil of clouds, where marble sanctuaries drift in golden light, we open our doors to you.";
   const aboutStory = event.aboutStory?.trim() || "";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
   const hero =
     event.heroImageUrl ||
     "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=80";
+
+  // Deterministic gold-bird flight paths across the hero
+  const HERO_BIRDS = [
+    { left: "8%", top: "18%", size: 18, rot: -12, delay: 0 },
+    { left: "22%", top: "62%", size: 14, rot: 8, delay: 1.2 },
+    { left: "38%", top: "10%", size: 20, rot: -6, delay: 2.4 },
+    { left: "55%", top: "48%", size: 12, rot: 14, delay: 0.6 },
+    { left: "68%", top: "22%", size: 16, rot: -10, delay: 3.0 },
+    { left: "82%", top: "58%", size: 14, rot: 6, delay: 1.8 },
+    { left: "90%", top: "14%", size: 12, rot: -4, delay: 2.2 },
+  ];
 
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroP } = useScroll({
@@ -315,33 +327,249 @@ export const SkytempleTemplate: TemplateComponent = ({ event, subEvents, media }
       <SkyField reduce={reduce} />
       <ScrollProgress color={accent} />
 
-      {/* ─── 01. DOORS OF LIGHT ─── */}
+      {/* ─── 01. TEMPLES ABOVE THE CLOUDS ─── */}
       <section
         ref={heroRef}
-        className="relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden"
+        className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28"
       >
-        <div className="absolute inset-0 opacity-40">
+        <div className="absolute inset-0">
           <HeroMedia
             imageSrc={hero}
             videoSrc={event.heroVideoUrl || undefined}
             alt={event.eventTitle}
-            className="opacity-90"
+            className="opacity-60"
           />
+          {/* Pale sky-blue vignette — light, never dark */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgba(223,234,246,0.5), rgba(200,218,232,0.75))",
+                "linear-gradient(180deg, rgba(250,247,240,0.55) 0%, rgba(223,234,246,0.35) 45%, rgba(200,218,232,0.7) 100%), radial-gradient(circle at 50% 42%, transparent 30%, rgba(200,218,232,0.35) 100%)",
             }}
           />
         </div>
 
-        <TempleDoors accent={accent} reduce={reduce} />
+        {/* ─── Gold birds — deterministic diagonal flights ─── */}
+        {!reduce &&
+          HERO_BIRDS.map((b, i) => (
+            <motion.svg
+              key={`bird-${i}`}
+              aria-hidden
+              className="pointer-events-none absolute z-[5]"
+              style={{ left: b.left, top: b.top, transform: `rotate(${b.rot}deg)` }}
+              width={b.size}
+              height={b.size * 0.55}
+              viewBox="0 0 24 14"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: [0, 0.9, 0.9, 0],
+                x: [0, 60, 120],
+                y: [0, -18, -6],
+              }}
+              transition={{
+                duration: 9 + (i % 3) * 2,
+                delay: b.delay,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <path
+                d="M1 8 Q6 1 12 7 Q18 1 23 8"
+                stroke="#c9a45a"
+                strokeWidth="1.7"
+                fill="none"
+                strokeLinecap="round"
+              />
+            </motion.svg>
+          ))}
+
+        {/* ─── Frame 1 · cloud-island (top-left) ─── */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -20, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.3, ease: EASE }}
+            className="pointer-events-none absolute left-[5%] top-[12%] hidden md:block w-40 h-48 lg:w-56 lg:h-64 z-[4]"
+          >
+            {/* Cloud-outline pane */}
+            <div
+              className="relative h-full w-full overflow-hidden"
+              style={{
+                borderRadius: "60% 40% 55% 45% / 45% 60% 40% 55%",
+                background: "rgba(250,247,240,0.92)",
+                border: `1px solid ${accent}88`,
+                boxShadow: `0 24px 60px -20px rgba(38,54,78,0.35), 0 0 0 8px rgba(255,255,255,0.55), 0 0 40px -12px ${accent}55`,
+                padding: 6,
+              }}
+            >
+              <motion.img
+                src={frame1.publicUrl}
+                alt={frame1.caption ?? ""}
+                loading="lazy"
+                className="h-full w-full object-cover"
+                style={{ borderRadius: "60% 40% 55% 45% / 45% 60% 40% 55%" }}
+                animate={reduce ? undefined : { y: [0, -8, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+            {frame1.caption && (
+              <figcaption
+                className="mt-2 text-center text-[9px] uppercase tracking-[0.35em]"
+                style={{ color: "#26364e", opacity: 0.7 }}
+              >
+                {frame1.caption}
+              </figcaption>
+            )}
+          </motion.figure>
+        )}
+
+        {/* ─── Frame 2 · temple-arch (top-right) ─── */}
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 20, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.55, ease: EASE }}
+            className="pointer-events-none absolute right-[6%] top-[18%] hidden md:block w-40 h-56 lg:w-52 lg:h-72 z-[4]"
+          >
+            <motion.div
+              className="relative h-full w-full"
+              animate={reduce ? undefined : { y: [0, 6, 0] }}
+              transition={{ duration: 8, delay: 1, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {/* Temple-arch SVG — two pillars + semi-circle capital */}
+              <svg
+                aria-hidden
+                viewBox="0 0 100 140"
+                preserveAspectRatio="none"
+                className="absolute inset-0 h-full w-full"
+              >
+                {/* Capital semi-circle */}
+                <path
+                  d="M8 40 Q50 -6 92 40 L92 44 Q50 4 8 44 Z"
+                  fill="rgba(250,247,240,0.95)"
+                  stroke={accent}
+                  strokeWidth="1.2"
+                />
+                {/* Left pillar */}
+                <rect x="6" y="40" width="6" height="96" fill="rgba(250,247,240,0.95)" stroke={accent} strokeWidth="0.8" />
+                {/* Right pillar */}
+                <rect x="88" y="40" width="6" height="96" fill="rgba(250,247,240,0.95)" stroke={accent} strokeWidth="0.8" />
+                {/* Base plinth */}
+                <rect x="2" y="132" width="96" height="6" fill="rgba(250,247,240,0.95)" stroke={accent} strokeWidth="0.8" />
+                {/* Small gold finial */}
+                <circle cx="50" cy="8" r="2.5" fill={accent} />
+              </svg>
+              {/* Photo inside the arch */}
+              <div
+                className="absolute overflow-hidden"
+                style={{
+                  left: "16%",
+                  right: "16%",
+                  top: "12%",
+                  bottom: "10%",
+                  borderRadius: "50% 50% 6% 6% / 22% 22% 6% 6%",
+                  boxShadow: `inset 0 0 0 1px ${accent}66, 0 12px 30px -12px rgba(38,54,78,0.35)`,
+                }}
+              >
+                <img
+                  src={frame2.publicUrl}
+                  alt={frame2.caption ?? ""}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </motion.div>
+            {frame2.caption && (
+              <figcaption
+                className="mt-2 text-center text-[9px] uppercase tracking-[0.35em]"
+                style={{ color: "#26364e", opacity: 0.7 }}
+              >
+                {frame2.caption}
+              </figcaption>
+            )}
+          </motion.figure>
+        )}
+
+        {/* ─── Frame 3 · stone-bridge tile (bottom-left, landscape) ─── */}
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 20, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.8, ease: EASE }}
+            className="pointer-events-none absolute left-[8%] bottom-[14%] hidden lg:block w-60 z-[4]"
+          >
+            <motion.div
+              className="relative"
+              animate={reduce ? undefined : { y: [0, -6, 0] }}
+              transition={{ duration: 9, delay: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {/* Landscape marble tile */}
+              <div
+                className="relative overflow-hidden rounded-md"
+                style={{
+                  background: "rgba(250,247,240,0.95)",
+                  border: `1px solid ${accent}88`,
+                  boxShadow: `0 24px 55px -22px rgba(38,54,78,0.4), 0 0 0 6px rgba(255,255,255,0.5)`,
+                  padding: 6,
+                }}
+              >
+                <img
+                  src={frame3.publicUrl}
+                  alt={frame3.caption ?? ""}
+                  loading="lazy"
+                  className="h-32 w-full rounded-sm object-cover"
+                />
+              </div>
+              {/* Bridge-arch SVG anchored to base */}
+              <svg
+                aria-hidden
+                viewBox="0 0 240 40"
+                className="mt-[-2px] block w-full"
+                preserveAspectRatio="none"
+                height={26}
+              >
+                <path
+                  d="M0 4 Q120 44 240 4 L240 40 L0 40 Z"
+                  fill="rgba(250,247,240,0.9)"
+                  stroke={accent}
+                  strokeWidth="1"
+                />
+                <path
+                  d="M0 4 Q120 44 240 4"
+                  fill="none"
+                  stroke={accent}
+                  strokeWidth="1"
+                  opacity="0.7"
+                />
+              </svg>
+            </motion.div>
+            {frame3.caption && (
+              <figcaption
+                className="mt-2 text-center text-[9px] uppercase tracking-[0.35em]"
+                style={{ color: "#26364e", opacity: 0.7 }}
+              >
+                {frame3.caption}
+              </figcaption>
+            )}
+          </motion.figure>
+        )}
 
         <motion.div
           style={reduce ? undefined : { y: heroTextY, opacity: heroTextOpacity }}
           className="relative z-10 px-6 text-center"
         >
+          {/* Top ornament */}
+          <div className="mb-6 flex items-center justify-center gap-4 opacity-85">
+            <span className="h-px w-10 sm:w-16" style={{ background: accent }} />
+            <span
+              className="text-lg"
+              style={{ color: accent, textShadow: `0 0 12px ${accent}88` }}
+            >
+              ❃
+            </span>
+            <span className="h-px w-10 sm:w-16" style={{ background: accent }} />
+          </div>
+
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -395,6 +623,48 @@ export const SkytempleTemplate: TemplateComponent = ({ event, subEvents, media }
               </>
             )}
           </motion.div>
+
+          {/* Bottom ornament */}
+          <div className="mt-8 flex items-center justify-center gap-4 opacity-75">
+            <span className="h-px w-14" style={{ background: accent }} />
+            <span
+              className="text-sm"
+              style={{ color: accent, textShadow: `0 0 10px ${accent}77` }}
+            >
+              ❋
+            </span>
+            <span className="h-px w-14" style={{ background: accent }} />
+          </div>
+
+          {/* Mobile cloud-outline thumbs */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="mt-8 flex items-center justify-center gap-3 md:hidden">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`sky-mob-${i}`}
+                  initial={reduce ? false : { opacity: 0, scale: 0.7 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.7, delay: 0.4 + i * 0.15 }}
+                  className="h-16 w-16 overflow-hidden"
+                  style={{
+                    borderRadius: "60% 40% 55% 45% / 45% 60% 40% 55%",
+                    background: "rgba(250,247,240,0.9)",
+                    border: `1px solid ${accent}88`,
+                    boxShadow: `0 8px 22px -8px rgba(38,54,78,0.4), 0 0 0 3px rgba(255,255,255,0.55)`,
+                    padding: 3,
+                  }}
+                >
+                  <img
+                    src={f!.publicUrl}
+                    alt={f!.caption ?? ""}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                    style={{ borderRadius: "60% 40% 55% 45% / 45% 60% 40% 55%" }}
+                  />
+                </motion.figure>
+              ))}
+            </div>
+          )}
         </motion.div>
       </section>
 

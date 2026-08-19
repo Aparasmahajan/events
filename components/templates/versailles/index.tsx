@@ -158,6 +158,18 @@ export const VersaillesTemplate: TemplateComponent = ({ event, subEvents, media 
   const aboutStory = event.aboutStory?.trim() || "Every love story deserves a palace. Ours began quietly and grew into something grand — and now the doors are thrown open, the mirrors polished, and the gardens in bloom, waiting for you.";
   const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1600&q=80";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
+
+  // Tiny drifting gilt sparkles around the hero — deterministic so SSR matches.
+  const HERO_SPARKLES = [
+    { x: 8, y: 18, s: 10, d: 0.2 },
+    { x: 22, y: 68, s: 8, d: 1.1 },
+    { x: 46, y: 12, s: 12, d: 0.6 },
+    { x: 62, y: 74, s: 9, d: 1.6 },
+    { x: 78, y: 24, s: 11, d: 0.4 },
+    { x: 90, y: 60, s: 8, d: 1.3 },
+    { x: 36, y: 84, s: 10, d: 0.9 },
+  ];
 
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -178,13 +190,157 @@ export const VersaillesTemplate: TemplateComponent = ({ event, subEvents, media 
     <div className="relative min-h-screen overflow-x-clip font-serif antialiased" style={{ background: IVORY, color: INK, "--accent": accent } as React.CSSProperties}>
       <ScrollProgress color={accent} />
 
-      <section ref={heroRef} className="relative flex h-[100svh] min-h-[640px] items-center justify-center overflow-hidden">
+      <section ref={heroRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-24 sm:pb-28">
         <div className="absolute inset-0">
           <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-40" />
-          <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${IVORY}e6 0%, ${IVORY}66 45%, ${IVORY} 96%)` }} />
+          {/* Warm ivory + gilt vignette — soft cream, never dark. */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(180deg, ${IVORY}f2 0%, ${IVORY}80 45%, ${IVORY} 96%), radial-gradient(circle at 50% 40%, ${GOLD}22 0%, transparent 55%)`,
+            }}
+          />
         </div>
         <Chandelier reduce={reduce} />
-        <motion.div style={reduce ? undefined : { y: heroY, opacity: heroOpacity }} className="relative z-10 px-6 pt-24 text-center">
+
+        {/* Drifting gilt sparkles */}
+        {!reduce && HERO_SPARKLES.map((sp, i) => (
+          <motion.svg
+            key={`sp-${i}`}
+            aria-hidden
+            className="pointer-events-none absolute z-10"
+            style={{ left: `${sp.x}%`, top: `${sp.y}%`, width: sp.s, height: sp.s }}
+            viewBox="0 0 20 20"
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: [0, 1, 0], scale: [0.6, 1.15, 0.6], y: [0, -12, 0] }}
+            transition={{ duration: 4.5, delay: sp.d, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <path d="M10 0 L11.4 8.6 L20 10 L11.4 11.4 L10 20 L8.6 11.4 L0 10 L8.6 8.6 Z" fill={GOLD} opacity="0.85" />
+          </motion.svg>
+        ))}
+
+        {/* Frame 1 — Oval golden-mirror (top-left) */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -18, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.35, ease: EASE }}
+            className="hidden md:block absolute left-[5%] top-[13%] w-44 h-56 lg:w-56 lg:h-72 z-10"
+          >
+            <motion.div
+              className="relative w-full h-full"
+              animate={reduce ? undefined : { y: [0, -8, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {/* Outer double gold border, elliptical */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  borderRadius: "50%",
+                  border: `3px solid ${GOLD}`,
+                  boxShadow: `0 20px 40px -12px ${GOLD}66, inset 0 0 0 6px ${IVORY}, inset 0 0 0 8px ${GOLD}aa`,
+                  background: IVORY,
+                }}
+              />
+              <div className="absolute inset-[10px] overflow-hidden" style={{ borderRadius: "50%" }}>
+                <img src={frame1.publicUrl} alt={frame1.caption ?? ""} loading="lazy" className="w-full h-full object-cover" />
+              </div>
+              {/* 4 corner flourish curls */}
+              <CornerCurl className="-left-3 -top-3" />
+              <CornerCurl className="-right-3 -top-3 -scale-x-100" />
+              <CornerCurl className="-left-3 -bottom-3 -scale-y-100" />
+              <CornerCurl className="-right-3 -bottom-3 -scale-x-100 -scale-y-100" />
+            </motion.div>
+          </motion.figure>
+        )}
+
+        {/* Frame 2 — Rectangular gold-frame portrait (top-right) */}
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: -12, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.55, ease: EASE }}
+            className="hidden md:block absolute right-[6%] top-[16%] w-40 h-56 lg:w-52 lg:h-72 z-10"
+          >
+            <motion.div
+              className="relative w-full h-full"
+              animate={reduce ? undefined : { y: [0, 8, 0] }}
+              transition={{ duration: 8, delay: 0.6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {/* Outer thick + inner thin gold border */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  border: `3px solid ${GOLD}`,
+                  boxShadow: `0 20px 40px -12px ${GOLD}66, inset 0 0 0 5px ${IVORY}, inset 0 0 0 6px ${GOLD}99`,
+                  background: IVORY,
+                }}
+              />
+              <div className="absolute inset-[9px] overflow-hidden">
+                <img src={frame2.publicUrl} alt={frame2.caption ?? ""} loading="lazy" className="w-full h-full object-cover" />
+              </div>
+              <CornerCurl className="-left-3 -top-3" />
+              <CornerCurl className="-right-3 -top-3 -scale-x-100" />
+              <CornerCurl className="-left-3 -bottom-3 -scale-y-100" />
+              <CornerCurl className="-right-3 -bottom-3 -scale-x-100 -scale-y-100" />
+            </motion.div>
+          </motion.figure>
+        )}
+
+        {/* Frame 3 — Crystal-chandelier medallion (bottom-left) */}
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 22, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.8, ease: EASE }}
+            className="hidden lg:block absolute left-[9%] bottom-[15%] w-44 z-10"
+          >
+            {/* Chandelier silhouette above the photo */}
+            <svg width="100%" height="60" viewBox="0 0 180 60" fill="none" className="mb-1">
+              <line x1="90" y1="0" x2="90" y2="12" stroke={GOLD} strokeWidth="1.4" />
+              <path d="M20 16 Q 90 8 160 16" stroke={GOLD} strokeWidth="1.6" fill="none" />
+              {[24, 48, 72, 96, 120, 144].map((cx, i) => (
+                <g key={i}>
+                  <line x1={cx} y1="16" x2={cx} y2={26 + (i % 2) * 6} stroke={GOLD} strokeWidth="0.9" />
+                  <path
+                    d={`M${cx - 3} ${26 + (i % 2) * 6} l3 10 l3 -10 z`}
+                    fill={POWDER}
+                    opacity="0.9"
+                  />
+                  <motion.circle
+                    cx={cx}
+                    cy={30 + (i % 2) * 6}
+                    r="1.6"
+                    fill="#fff59d"
+                    initial={{ opacity: 0.5 }}
+                    animate={reduce ? undefined : { opacity: [0.4, 1, 0.4] }}
+                    transition={{ duration: 2.2, delay: i * 0.3, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ filter: `drop-shadow(0 0 3px ${GOLD})` }}
+                  />
+                </g>
+              ))}
+            </svg>
+            <motion.div
+              className="relative mx-auto w-40 h-40 rounded-full overflow-hidden"
+              style={{
+                border: `3px solid ${GOLD}`,
+                boxShadow: `0 20px 40px -12px ${GOLD}55, inset 0 0 0 4px ${IVORY}, inset 0 0 0 5px ${GOLD}88`,
+              }}
+              animate={reduce ? undefined : { y: [0, -6, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img src={frame3.publicUrl} alt={frame3.caption ?? ""} loading="lazy" className="w-full h-full object-cover" />
+            </motion.div>
+          </motion.figure>
+        )}
+
+        <motion.div style={reduce ? undefined : { y: heroY, opacity: heroOpacity }} className="relative z-20 px-6 pt-24 text-center">
+          {/* Fleur-de-lis above */}
+          <div className="flex items-center justify-center gap-3 mb-4 opacity-90">
+            <span className="h-px w-10 sm:w-16" style={{ background: GOLD }} />
+            <span className="text-xl" style={{ color: GOLD }}>⚜</span>
+            <span className="h-px w-10 sm:w-16" style={{ background: GOLD }} />
+          </div>
           <motion.p
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -204,7 +360,11 @@ export const VersaillesTemplate: TemplateComponent = ({ event, subEvents, media 
           >
             {names || event.eventTitle}
           </motion.h1>
-          <div className="mx-auto mb-8 h-px w-40 sm:w-64" style={{ background: accent }} />
+          <div className="mx-auto mb-4 h-px w-40 sm:w-64" style={{ background: accent }} />
+          {/* Ornament below */}
+          <div className="flex items-center justify-center gap-3 mb-6 opacity-80">
+            <span className="text-base" style={{ color: GOLD }}>❦</span>
+          </div>
           {names && <p className="text-sm uppercase tracking-[0.4em]" style={{ color: `${INK}99` }}>{event.eventTitle}</p>}
           <motion.p
             initial={reduce ? false : { opacity: 0 }}
@@ -215,6 +375,34 @@ export const VersaillesTemplate: TemplateComponent = ({ event, subEvents, media 
           >
             {[dateLine, event.city].filter(Boolean).join(" · ")}
           </motion.p>
+
+          {/* Mobile: 3 oval gold-mirror thumbs */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="md:hidden mt-10 flex items-center justify-center gap-4">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`mob-${i}`}
+                  initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.15 }}
+                  className="relative w-16 h-20"
+                >
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      borderRadius: "50%",
+                      border: `2px solid ${GOLD}`,
+                      boxShadow: `0 8px 20px -8px ${GOLD}88, inset 0 0 0 3px ${IVORY}, inset 0 0 0 4px ${GOLD}88`,
+                      background: IVORY,
+                    }}
+                  />
+                  <div className="absolute inset-[4px] overflow-hidden" style={{ borderRadius: "50%" }}>
+                    <img src={f!.publicUrl} alt={f!.caption ?? ""} className="w-full h-full object-cover" />
+                  </div>
+                </motion.figure>
+              ))}
+            </div>
+          )}
         </motion.div>
       </section>
 

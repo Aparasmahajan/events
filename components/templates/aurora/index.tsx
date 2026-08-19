@@ -418,6 +418,10 @@ export const AuroraTemplate: TemplateComponent = ({ event, subEvents, media }) =
   const aboutStory = event.aboutStory?.trim() || defaults.aboutStory || "";
   const galleryItems = useMemo(() => media.filter((m) => m.section === "gallery"), [media]);
   const storyItems = galleryItems.slice(0, 2);
+  // Hero collage frames — up to 3 gallery photos overlay the base hero as a
+  // circular medallion (with a halo of stars), a moon-glow portrait, and a
+  // tilted 35mm film strip. Missing frames degrade gracefully.
+  const [frame1, frame2, frame3] = event.showHeroFrames ? galleryItems : [];
 
   const showStory = !event.hideStory;
   const showMoments = !event.hideGallery && (galleryItems.length > 0 || editing);
@@ -460,7 +464,11 @@ export const AuroraTemplate: TemplateComponent = ({ event, subEvents, media }) =
       <SideNav sections={sections} />
 
       {/* ─────────────── OPENING SCENE ─────────────── */}
-      <section id="opening" ref={heroRef} className="relative h-[100svh] min-h-[620px]">
+      <section
+        id="opening"
+        ref={heroRef}
+        className="relative min-h-[100svh] overflow-hidden pb-24 sm:pb-28"
+      >
         <motion.div
           style={reduce ? undefined : { scale: heroScale, borderRadius: heroRadius }}
           className="absolute inset-0 overflow-hidden"
@@ -471,7 +479,15 @@ export const AuroraTemplate: TemplateComponent = ({ event, subEvents, media }) =
             alt={event.eventTitle}
             className="opacity-80"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#06070d]/55 via-[#06070d]/25 to-[#06070d]" />
+          {/* Midnight-purple vignette — keeps the celestial mood consistent
+           *  across any customer photo. */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(12,8,32,0.55) 0%, rgba(9,6,24,0.3) 40%, rgba(6,7,13,0.9) 100%), radial-gradient(ellipse at 50% 35%, transparent 30%, rgba(20,10,48,0.45) 100%)",
+            }}
+          />
           {!reduce && (
             <motion.div
               aria-hidden
@@ -483,10 +499,168 @@ export const AuroraTemplate: TemplateComponent = ({ event, subEvents, media }) =
           )}
         </motion.div>
 
+        {/* ─── Frame 1 — top-left circular medallion with a halo of tiny stars.
+         *  Champagne-gold inner ring, slow float. */}
+        {frame1 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.4, ease: EASE }}
+            className="hidden md:block absolute left-[6%] top-[13%] z-[5] w-40 h-40 lg:w-52 lg:h-52"
+          >
+            {/* Halo of tiny stars around the circumference */}
+            <span aria-hidden className="absolute inset-[-14%]">
+              {Array.from({ length: 10 }).map((_, i) => {
+                const angle = (i / 10) * Math.PI * 2;
+                const r = 50; // % from center
+                const x = 50 + Math.cos(angle) * r;
+                const y = 50 + Math.sin(angle) * r;
+                return (
+                  <motion.span
+                    key={i}
+                    className="absolute h-1 w-1 rounded-full bg-[#e8cf8a]"
+                    style={{
+                      left: `${x}%`,
+                      top: `${y}%`,
+                      transform: "translate(-50%, -50%)",
+                      boxShadow: "0 0 6px rgba(232,207,138,0.9)",
+                    }}
+                    animate={reduce ? undefined : { opacity: [0.3, 1, 0.3] }}
+                    transition={
+                      reduce
+                        ? undefined
+                        : { duration: 2.4, delay: i * 0.18, repeat: Infinity, ease: "easeInOut" }
+                    }
+                  />
+                );
+              })}
+            </span>
+            <motion.div
+              className="relative h-full w-full overflow-hidden rounded-full"
+              style={{
+                border: `2px solid #e8cf8a`,
+                boxShadow: `0 0 0 4px rgba(232,207,138,0.15), 0 20px 40px -12px rgba(0,0,0,0.6), 0 0 60px -8px ${accent}77`,
+              }}
+              animate={reduce ? undefined : { y: [0, -8, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src={frame1.publicUrl}
+                alt={frame1.caption ?? ""}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <figcaption
+                className="absolute bottom-1 inset-x-0 text-center text-[10px] uppercase tracking-[0.3em] py-1"
+                style={{ color: "#e8cf8a", textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}
+              >
+                {frame1.caption ?? "Moonrise"}
+              </figcaption>
+            </motion.div>
+          </motion.figure>
+        )}
+
+        {/* ─── Frame 2 — top-right portrait frame with a moon-glow arc.
+         *  Rounded rectangle photo, soft radial-gradient "moon" behind the
+         *  top edge, subtle vertical float. */}
+        {frame2 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.6, ease: EASE }}
+            className="hidden md:block absolute right-[7%] top-[18%] z-[5] w-36 h-48 lg:w-44 lg:h-60"
+          >
+            {/* Moon-glow arc behind the top edge */}
+            <span
+              aria-hidden
+              className="absolute -top-10 left-1/2 -translate-x-1/2 h-28 w-40 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(232,207,138,0.55), rgba(155,107,255,0.15) 45%, transparent 70%)",
+                filter: "blur(4px)",
+              }}
+            />
+            <motion.div
+              className="relative h-full w-full overflow-hidden rounded-2xl"
+              style={{
+                border: `1px solid rgba(232,207,138,0.55)`,
+                boxShadow: `0 20px 40px -12px rgba(0,0,0,0.6), 0 0 50px -10px ${accent}66`,
+              }}
+              animate={reduce ? undefined : { y: [0, 6, 0] }}
+              transition={{ duration: 8, delay: 1.2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src={frame2.publicUrl}
+                alt={frame2.caption ?? ""}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <figcaption
+                className="absolute bottom-1 inset-x-0 text-center text-[10px] uppercase tracking-[0.3em] py-1"
+                style={{ color: "#e8cf8a", textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}
+              >
+                {frame2.caption ?? "Under the Moon"}
+              </figcaption>
+            </motion.div>
+          </motion.figure>
+        )}
+
+        {/* ─── Frame 3 — bottom-left 35mm film-strip frame, tilted -4°.
+         *  Thin black border with square sprocket holes along top + bottom;
+         *  cinematic caption underneath. */}
+        {frame3 && (
+          <motion.figure
+            initial={reduce ? false : { opacity: 0, rotate: -8, y: 30 }}
+            animate={{ opacity: 1, rotate: -4, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.85, ease: EASE }}
+            whileHover={reduce ? undefined : { rotate: -1, scale: 1.03 }}
+            className="hidden lg:block absolute left-[8%] bottom-[20%] z-[5] w-52"
+          >
+            <div
+              className="relative bg-[#0a0810] px-2 py-5"
+              style={{
+                boxShadow: `0 20px 40px -12px rgba(0,0,0,0.75), 0 0 40px -12px ${accent}55`,
+              }}
+            >
+              {/* Sprocket holes — top row */}
+              <span aria-hidden className="absolute top-1 left-0 right-0 flex justify-between px-2">
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <span key={`t-${i}`} className="h-1.5 w-2 rounded-[1px] bg-white/85" />
+                ))}
+              </span>
+              {/* Sprocket holes — bottom row */}
+              <span aria-hidden className="absolute bottom-1 left-0 right-0 flex justify-between px-2">
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <span key={`b-${i}`} className="h-1.5 w-2 rounded-[1px] bg-white/85" />
+                ))}
+              </span>
+              <img
+                src={frame3.publicUrl}
+                alt={frame3.caption ?? ""}
+                loading="lazy"
+                className="h-32 w-full object-cover"
+              />
+            </div>
+            <figcaption
+              className="mt-2 text-center font-script text-sm"
+              style={{ color: "#e8cf8a", textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}
+            >
+              {frame3.caption ?? "Scene I — a promise"}
+            </figcaption>
+          </motion.figure>
+        )}
+
         <motion.div
           style={reduce ? undefined : { opacity: heroTextOpacity, y: heroTextY }}
-          className="relative z-10 flex h-full flex-col items-center justify-center px-5 text-center"
+          className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-5 pb-24 sm:pb-28 text-center"
         >
+          {/* Top ornament — champagne gold hairlines with ✦ */}
+          <div className="flex items-center justify-center gap-3 mb-5 opacity-80">
+            <span className="h-px w-10 sm:w-16" style={{ background: "#e8cf8a" }} />
+            <span className="text-sm" style={{ color: "#e8cf8a" }}>✦</span>
+            <span className="h-px w-10 sm:w-16" style={{ background: "#e8cf8a" }} />
+          </div>
+
           <motion.p
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -520,6 +694,72 @@ export const AuroraTemplate: TemplateComponent = ({ event, subEvents, media }) =
               {event.city && ` · ${event.city}`}
             </motion.p>
           )}
+
+          {/* Bottom ornament — champagne gold hairlines with ✧ */}
+          <div className="flex items-center justify-center gap-3 mt-6 opacity-70">
+            <span className="h-px w-14 sm:w-20" style={{ background: "#e8cf8a" }} />
+            <span className="text-xs" style={{ color: "#e8cf8a" }}>✧</span>
+            <span className="h-px w-14 sm:w-20" style={{ background: "#e8cf8a" }} />
+          </div>
+
+          {/* Mobile-only cluster — 3 circular thumbs with the star-halo on
+           *  the middle one only. */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="md:hidden mt-8 flex items-center justify-center gap-3">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`mob-aurora-${i}`}
+                  initial={reduce ? false : { opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.15 }}
+                  className="relative h-16 w-16"
+                >
+                  {i === 1 && (
+                    <span aria-hidden className="absolute inset-[-20%]">
+                      {Array.from({ length: 8 }).map((_, j) => {
+                        const angle = (j / 8) * Math.PI * 2;
+                        const x = 50 + Math.cos(angle) * 50;
+                        const y = 50 + Math.sin(angle) * 50;
+                        return (
+                          <motion.span
+                            key={j}
+                            className="absolute h-1 w-1 rounded-full bg-[#e8cf8a]"
+                            style={{
+                              left: `${x}%`,
+                              top: `${y}%`,
+                              transform: "translate(-50%, -50%)",
+                              boxShadow: "0 0 4px rgba(232,207,138,0.9)",
+                            }}
+                            animate={reduce ? undefined : { opacity: [0.3, 1, 0.3] }}
+                            transition={
+                              reduce
+                                ? undefined
+                                : { duration: 2.2, delay: j * 0.2, repeat: Infinity, ease: "easeInOut" }
+                            }
+                          />
+                        );
+                      })}
+                    </span>
+                  )}
+                  <div
+                    className="relative h-full w-full overflow-hidden rounded-full"
+                    style={{
+                      border: `2px solid #e8cf8a`,
+                      boxShadow: `0 8px 20px -8px rgba(0,0,0,0.6)`,
+                    }}
+                  >
+                    <img
+                      src={f!.publicUrl}
+                      alt={f!.caption ?? ""}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </motion.figure>
+              ))}
+            </div>
+          )}
+
           {!event.hideTimer && !(event.timerCustom && event.timerStyle === "floating") && event.mainDate && (
             <motion.div
               initial={reduce ? false : { opacity: 0 }}
@@ -534,6 +774,42 @@ export const AuroraTemplate: TemplateComponent = ({ event, subEvents, media }) =
             </motion.div>
           )}
         </motion.div>
+
+        {/* ─── Faint horizontal photo-reel strip at the very bottom.
+         *  Sits behind the timer band; 4-5 tiny photo thumbs drift slowly. */}
+        {galleryItems.length > 0 && !reduce && (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-4 left-0 right-0 z-[1] overflow-hidden opacity-25"
+            style={{
+              maskImage:
+                "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+            }}
+          >
+            <motion.div
+              className="flex gap-3 px-6"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            >
+              {[...galleryItems.slice(0, 5), ...galleryItems.slice(0, 5)].map((m, i) => (
+                <div
+                  key={`reel-${i}`}
+                  className="h-10 w-16 shrink-0 overflow-hidden rounded-sm"
+                  style={{ border: "1px solid rgba(232,207,138,0.35)" }}
+                >
+                  <img
+                    src={m.publicUrl}
+                    alt=""
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        )}
 
         {!reduce && (
           <motion.div

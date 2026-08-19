@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { Countdown } from "@/components/ui/Countdown";
@@ -106,6 +106,9 @@ export const ObsidianTemplate: TemplateComponent = ({ event, subEvents, media })
   const invitationMessage = event.invitationMessage?.trim() || defaults.invitationMessage;
   const aboutStory = event.aboutStory?.trim() || defaults.aboutStory || "";
   const gallery = media.filter((m) => m.section === "gallery");
+  const [frame1, frame2, frame3] = event.showHeroFrames ? gallery : [];
+  const reduceMotion = useReducedMotion();
+  const BRONZE = "#b5763a";
 
   const showStory = !event.hideStory;
   const showMoments = !event.hideGallery && (gallery.length > 0 || editing);
@@ -130,38 +133,176 @@ export const ObsidianTemplate: TemplateComponent = ({ event, subEvents, media })
       <Grain opacity={0.05} />
       <ScrollProgress color="var(--accent)" />
 
-      {/* ── ACT I — TITLE ── */}
-      <Panel id="title" className="border-t-0">
+      {/* ── ACT I — TITLE (editorial collage) ── */}
+      <Panel id="title" className="border-t-0 min-h-[100svh] pb-24 sm:pb-28">
         <div ref={heroRef} className="absolute inset-0">
           <motion.div style={reduce ? undefined : { scale: heroScale, opacity: heroOpacity }} className="absolute inset-0">
-            <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-60 grayscale-[30%]" />
+            <HeroMedia imageSrc={hero} videoSrc={event.heroVideoUrl || undefined} alt={event.eventTitle} className="opacity-45 grayscale-[40%]" />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-[#0a0a0c]/40 to-[#0a0a0c]/70" />
+          {/* Extra-dark obsidian vignette */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(6,6,8,0.82) 0%, rgba(6,6,8,0.55) 35%, rgba(6,6,8,0.7) 65%, rgba(6,6,8,0.95) 100%), radial-gradient(ellipse at 50% 45%, transparent 20%, rgba(0,0,0,0.6) 100%)",
+            }}
+          />
         </div>
+
+        {/* Desktop editorial frames — magazine spread with numbered ACTs */}
+        {/* Frame 1: top-left, rectangular, slight tilt, bronze hairline */}
+        {frame1 && (
+          <motion.figure
+            initial={reduceMotion ? false : { opacity: 0, y: -18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden md:block absolute left-[5%] top-[11%] w-48 h-36 lg:w-64 lg:h-48 overflow-hidden"
+            style={{
+              transform: reduceMotion ? undefined : "rotate(-2deg)",
+              border: `1px solid ${BRONZE}`,
+              boxShadow: `0 30px 60px -20px rgba(0,0,0,0.9)`,
+            }}
+          >
+            <img
+              src={frame1.publicUrl}
+              alt={frame1.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover grayscale-[15%]"
+            />
+            <span
+              className="absolute top-2 left-2 text-[10px] uppercase tracking-[0.4em] px-1"
+              style={{ color: BRONZE, textShadow: "0 1px 4px rgba(0,0,0,0.95)" }}
+            >
+              01
+            </span>
+          </motion.figure>
+        )}
+
+        {/* Frame 2: top-right, tall portrait, double border (black 8px + bronze hairline) */}
+        {frame2 && (
+          <motion.figure
+            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden md:block absolute right-[6%] top-[22%] w-40 h-56 lg:w-52 lg:h-72 overflow-hidden"
+            style={{
+              border: `1px solid ${BRONZE}`,
+              boxShadow: `inset 0 0 0 8px #0a0a0c, 0 30px 60px -20px rgba(0,0,0,0.9)`,
+            }}
+          >
+            <img
+              src={frame2.publicUrl}
+              alt={frame2.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover grayscale-[15%]"
+            />
+            <span
+              className="absolute top-3 left-3 text-[10px] uppercase tracking-[0.4em] px-1"
+              style={{ color: BRONZE, textShadow: "0 1px 4px rgba(0,0,0,0.95)" }}
+            >
+              02
+            </span>
+          </motion.figure>
+        )}
+
+        {/* Frame 3: bottom-left, wide landscape, full-bleed detail with bronze underline */}
+        {frame3 && (
+          <motion.figure
+            initial={reduceMotion ? false : { opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.15, delay: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden lg:block absolute left-[7%] bottom-[14%] w-80 h-40 xl:w-96 xl:h-44 overflow-hidden"
+            style={{
+              border: `1px solid ${BRONZE}`,
+              boxShadow: `0 30px 60px -20px rgba(0,0,0,0.9)`,
+            }}
+          >
+            <img
+              src={frame3.publicUrl}
+              alt={frame3.caption ?? ""}
+              loading="lazy"
+              className="w-full h-full object-cover grayscale-[15%]"
+            />
+            <span
+              className="absolute top-2 left-2 text-[10px] uppercase tracking-[0.4em] px-1"
+              style={{ color: BRONZE, textShadow: "0 1px 4px rgba(0,0,0,0.95)" }}
+            >
+              03
+            </span>
+            <span
+              aria-hidden
+              className="absolute -bottom-[1px] left-0 h-px w-full"
+              style={{ background: BRONZE }}
+            />
+          </motion.figure>
+        )}
+
         <div className="relative z-10 flex min-h-[100svh] flex-col justify-between px-6 py-16 sm:px-12">
-          <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.4em] text-white/50">
-            <span>{tagline}</span>
+          <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.5em] text-white/50">
+            <span>— I —&nbsp;&nbsp;{tagline}</span>
             {event.mainDate && (
               <span>
                 {new Date(event.mainDate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
               </span>
             )}
           </div>
+
           <h1 className="font-display text-[clamp(3rem,15vw,13rem)] font-semibold uppercase leading-[0.86] tracking-tight">
             <SlicedTitle text={event.person1Name} className="block" />
             {event.person2Name && (
-              <span className="block">
-                <span className="text-[0.4em] text-[var(--accent)]">&amp;&nbsp;</span>
-                <SlicedTitle text={event.person2Name} className="inline-block" />
-              </span>
+              <>
+                {/* Bronze diagonal slash between the two lines */}
+                <span
+                  aria-hidden
+                  className="my-4 block h-px w-24 sm:w-40"
+                  style={{
+                    background: BRONZE,
+                    transform: "rotate(-8deg) translateX(1.5rem)",
+                    transformOrigin: "left center",
+                  }}
+                />
+                <SlicedTitle text={event.person2Name} className="block" />
+              </>
             )}
           </h1>
+
           <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-            <p className="max-w-sm text-sm leading-relaxed text-white/60">{event.city}</p>
+            <p className="max-w-sm text-[10px] uppercase tracking-[0.5em] text-white/60">
+              — II —&nbsp;&nbsp;{event.city}
+            </p>
             {!event.hideTimer && !(event.timerCustom && event.timerStyle === "floating") && event.mainDate && (
               <Countdown target={`${event.mainDate}T${event.mainStartTime || "18:00"}:00`} label="" />
             )}
           </div>
+
+          {/* Mobile-only: 3 small square thumbs in a row with numbered badges */}
+          {(frame1 || frame2 || frame3) && (
+            <div className="md:hidden mt-8 flex items-center justify-start gap-3">
+              {[frame1, frame2, frame3].filter(Boolean).slice(0, 3).map((f, i) => (
+                <motion.figure
+                  key={`obs-mob-${i}`}
+                  initial={reduceMotion ? false : { opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.45 + i * 0.12 }}
+                  className="relative w-20 h-20 overflow-hidden"
+                  style={{ border: `1px solid ${BRONZE}` }}
+                >
+                  <img
+                    src={f!.publicUrl}
+                    alt={f!.caption ?? ""}
+                    loading="lazy"
+                    className="w-full h-full object-cover grayscale-[15%]"
+                  />
+                  <span
+                    className="absolute top-1 left-1 text-[9px] uppercase tracking-[0.3em]"
+                    style={{ color: BRONZE, textShadow: "0 1px 3px rgba(0,0,0,0.95)" }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </motion.figure>
+              ))}
+            </div>
+          )}
         </div>
       </Panel>
 

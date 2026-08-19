@@ -48,9 +48,12 @@ export const PromiseTemplate: TemplateComponent = ({ event, subEvents, media }) 
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
 
-  // Signature motif: names slide from opposite edges toward center.
-  const leftX = useTransform(heroP, [0, 0.6], ["-22vw", "0vw"]);
-  const rightX = useTransform(heroP, [0, 0.6], ["22vw", "0vw"]);
+  // Signature motif: names slide from opposite edges toward center. Keep the
+  // travel modest (±10vw) so long names (e.g. the demo's "The Groom"/"The
+  // Bride") stay fully on-screen at the top instead of being clipped by the
+  // page's overflow-x-clip.
+  const leftX = useTransform(heroP, [0, 0.6], ["-6vw", "0vw"]);
+  const rightX = useTransform(heroP, [0, 0.6], ["6vw", "0vw"]);
   const dividerH = useTransform(heroP, [0, 0.6], ["70%", "0%"]);
   const dividerOpacity = useTransform(heroP, [0, 0.55, 0.6], [1, 1, 0]);
   const ampOpacity = useTransform(heroP, [0.4, 0.7], [0, 1]);
@@ -106,7 +109,7 @@ export const PromiseTemplate: TemplateComponent = ({ event, subEvents, media }) 
               <div className="relative flex w-full max-w-6xl items-center justify-center">
                 <motion.h1
                   style={reduce ? undefined : { x: leftX }}
-                  className="font-display text-[clamp(2.5rem,8vw,6.5rem)] leading-[0.95] tracking-tight text-right flex-1"
+                  className="min-w-0 font-display text-[clamp(2rem,6vw,5rem)] leading-[0.95] tracking-tight text-right flex-1"
                 >
                   {p1}
                 </motion.h1>
@@ -147,7 +150,7 @@ export const PromiseTemplate: TemplateComponent = ({ event, subEvents, media }) 
 
                 <motion.h1
                   style={reduce ? undefined : { x: rightX }}
-                  className="font-display text-[clamp(2.5rem,8vw,6.5rem)] leading-[0.95] tracking-tight text-left flex-1"
+                  className="min-w-0 font-display text-[clamp(2rem,6vw,5rem)] leading-[0.95] tracking-tight text-left flex-1"
                 >
                   {p2}
                 </motion.h1>

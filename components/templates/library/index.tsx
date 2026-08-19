@@ -1,12 +1,7 @@
 "use client";
 
 import { useMemo, useRef } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { HeroMedia } from "@/components/ui/HeroMedia";
 import { MapEmbed } from "@/components/ui/MapEmbed";
 import { MusicToggle } from "@/components/ui/MusicToggle";
@@ -102,10 +97,12 @@ function Flourish({ color }: { color: string }) {
   );
 }
 
-function OpeningBook({ title, accent, gold, reduce, scrollProgress }: { title: string; accent: string; gold: string; reduce: boolean; scrollProgress: ReturnType<typeof useScroll>["scrollYProgress"] }) {
-  const leftRotate = useTransform(scrollProgress, [0, 0.5], [0, -78]);
-  const rightRotate = useTransform(scrollProgress, [0, 0.5], [0, 78]);
-  const innerOpacity = useTransform(scrollProgress, [0.15, 0.45], [0, 1]);
+function OpeningBook({ title, accent, gold, reduce }: { title: string; accent: string; gold: string; reduce: boolean }) {
+  // Book opens automatically on mount — a one-shot cinematic reveal. Previously
+  // this was scroll-driven, but at scrollY=0 the book was closed and the
+  // hero looked like an empty burgundy rectangle. Now visitors see the
+  // title from the first frame; the reveal takes ~1.4s.
+  const openTiming = { duration: 1.4, delay: 0.3, ease: [0.16, 1, 0.3, 1] as const };
   return (
     <div className="relative mx-auto flex items-center justify-center" style={{ perspective: 1400, width: "min(90vw, 720px)", height: "min(70vw, 520px)" }}>
       <motion.div
@@ -114,13 +111,18 @@ function OpeningBook({ title, accent, gold, reduce, scrollProgress }: { title: s
         style={{
           background: "radial-gradient(ellipse at center, rgba(232,154,90,0.35), transparent 70%)",
           filter: "blur(30px)",
-          opacity: innerOpacity,
         }}
+        initial={reduce ? { opacity: 1 } : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ ...openTiming, delay: 0.7 }}
       />
       <div className="relative flex h-full w-full" style={{ transformStyle: "preserve-3d" }}>
         <motion.div
           className="relative h-full w-1/2 origin-right rounded-l-sm"
-          style={reduce ? { background: `linear-gradient(90deg, ${accent} 0%, #3a1a14 100%)` } : { rotateY: leftRotate, background: `linear-gradient(90deg, ${accent} 0%, #3a1a14 100%)`, boxShadow: "inset -8px 0 20px rgba(0,0,0,0.5)" }}
+          style={{ background: `linear-gradient(90deg, ${accent} 0%, #3a1a14 100%)`, boxShadow: "inset -8px 0 20px rgba(0,0,0,0.5)" }}
+          initial={reduce ? { rotateY: -78 } : { rotateY: 0 }}
+          animate={{ rotateY: -78 }}
+          transition={openTiming}
         >
           <div className="absolute inset-3 rounded-l-sm border" style={{ borderColor: gold, opacity: 0.5 }} />
           <div className="absolute inset-x-6 top-8 text-center" style={{ color: gold }}>
@@ -130,13 +132,18 @@ function OpeningBook({ title, accent, gold, reduce, scrollProgress }: { title: s
         </motion.div>
         <motion.div
           className="relative h-full w-1/2 origin-left rounded-r-sm"
-          style={reduce ? { background: `linear-gradient(270deg, ${accent} 0%, #3a1a14 100%)` } : { rotateY: rightRotate, background: `linear-gradient(270deg, ${accent} 0%, #3a1a14 100%)`, boxShadow: "inset 8px 0 20px rgba(0,0,0,0.5)" }}
+          style={{ background: `linear-gradient(270deg, ${accent} 0%, #3a1a14 100%)`, boxShadow: "inset 8px 0 20px rgba(0,0,0,0.5)" }}
+          initial={reduce ? { rotateY: 78 } : { rotateY: 0 }}
+          animate={{ rotateY: 78 }}
+          transition={openTiming}
         >
           <div className="absolute inset-3 rounded-r-sm border" style={{ borderColor: gold, opacity: 0.5 }} />
         </motion.div>
         <motion.div
           className="pointer-events-none absolute inset-0 flex items-center justify-center px-6"
-          style={{ opacity: reduce ? 1 : innerOpacity }}
+          initial={reduce ? { opacity: 1 } : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ ...openTiming, delay: 0.9, duration: 1 }}
         >
           <div className="text-center" style={{ color: "#f0e6d2" }}>
             <p className="text-[10px] uppercase tracking-[0.6em]" style={{ color: gold }}>Chronicles of</p>
@@ -262,7 +269,6 @@ export const LibraryTemplate: TemplateComponent = ({ event, subEvents, media }) 
   const hero = event.heroImageUrl || "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1600&q=80";
 
   const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
 
   const showStory = !event.hideStory;
   const showJourney = !event.hideEvents && subEvents.length > 0;
@@ -290,7 +296,7 @@ export const LibraryTemplate: TemplateComponent = ({ event, subEvents, media }) 
         </div>
         <div className="relative z-10 flex flex-col items-center">
           <p className="mb-6 text-[10px] uppercase tracking-[0.7em]" style={{ color: gold }}>{tagline}</p>
-          <OpeningBook title={event.eventTitle} accent={wine} gold={gold} reduce={reduce} scrollProgress={heroP} />
+          <OpeningBook title={event.eventTitle} accent={wine} gold={gold} reduce={reduce} />
           <div className="mt-10 flex flex-wrap justify-center gap-5 text-xs uppercase tracking-[0.4em]" style={{ color: parchment }}>
             {event.mainDate && (
               <span className="opacity-80">

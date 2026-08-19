@@ -80,12 +80,27 @@ import { FuturecityTemplate } from "./futurecity";
 import { FestivalTemplate } from "./festival";
 import { NeonjungleTemplate } from "./neonjungle";
 import { MidnighttokyoTemplate } from "./midnighttokyo";
+import { CreatorsCanvasTemplate } from "./creatorscanvas";
+import { TimeFractureTemplate } from "./timefracture";
+import { GravityZeroTemplate } from "./gravityzero";
+import { MemoryDimensionTemplate } from "./memorydimension";
+import { InfinityCathedralTemplate } from "./infinitycathedral";
 import type { TemplateProps } from "@/lib/types";
 
 type Props = TemplateProps & { templateId: string };
 
 export function TemplateRouter({ templateId, ...rest }: Props) {
   switch (templateId) {
+    case "creatorscanvas":
+      return <CreatorsCanvasTemplate {...rest} />;
+    case "timefracture":
+      return <TimeFractureTemplate {...rest} />;
+    case "gravityzero":
+      return <GravityZeroTemplate {...rest} />;
+    case "memorydimension":
+      return <MemoryDimensionTemplate {...rest} />;
+    case "infinitycathedral":
+      return <InfinityCathedralTemplate {...rest} />;
     case "empyrean":
       return <EmpyreanTemplate {...rest} />;
     case "prism":
