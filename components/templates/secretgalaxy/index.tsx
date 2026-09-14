@@ -14,6 +14,13 @@ import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent, SubEvent } from "@/lib/types";
 
+/** Rounded on purpose: raw trig output differs in the last float digit
+ *  between the server and client render, which React reports as a hydration
+ *  mismatch on the SVG attribute. */
+function snapCoord(n: number): number {
+  return Number(n.toFixed(3));
+}
+
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const VIOLET = "#0f0724";
@@ -24,7 +31,7 @@ const IVORY = "#f6f0ff";
 
 const RING_DOTS = Array.from({ length: 44 }, (_, i) => {
   const a = (i / 44) * Math.PI * 2;
-  return { x: Math.cos(a) * 46, y: Math.sin(a) * 46, i };
+  return { x: snapCoord(Math.cos(a) * 46), y: snapCoord(Math.sin(a) * 46), i };
 });
 
 const ASTEROIDS = [

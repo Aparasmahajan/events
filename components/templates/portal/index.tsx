@@ -145,9 +145,10 @@ function PortalRing({ reduce, cyan, magenta, scale }: { reduce: boolean; cyan: s
         fill="none"
         stroke={cyan}
         strokeWidth="1.5"
-        animate={reduce ? undefined : { opacity: [0.4, 0.9, 0.4], r: [118, 124, 118] }}
+        // Scale, not `r` — animating the radius attribute leaves it briefly undefined.
+        animate={reduce ? undefined : { opacity: [0.4, 0.9, 0.4], scale: [1, 1.05, 1] }}
         transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-        style={{ filter: `drop-shadow(0 0 16px ${cyan})` }}
+        style={{ filter: `drop-shadow(0 0 16px ${cyan})`, transformOrigin: "center" }}
       />
     </motion.svg>
   );

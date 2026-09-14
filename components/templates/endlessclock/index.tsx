@@ -14,6 +14,13 @@ import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent, SubEvent } from "@/lib/types";
 
+/** Rounded on purpose: raw trig output differs in the last float digit
+ *  between the server and client render, which React reports as a hydration
+ *  mismatch on the SVG attribute. */
+function snapCoord(n: number): number {
+  return Number(n.toFixed(3));
+}
+
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const ROMAN = ["XII", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"];
@@ -57,8 +64,8 @@ function ClockFace({
         return (
           <text
             key={i}
-            x={cx + Math.cos(angle) * tr}
-            y={cx + Math.sin(angle) * tr}
+            x={snapCoord(cx + Math.cos(angle) * tr)}
+            y={snapCoord(cx + Math.sin(angle) * tr)}
             textAnchor="middle"
             dominantBaseline="middle"
             fill={numeralColor}
@@ -78,10 +85,10 @@ function ClockFace({
         return (
           <line
             key={i}
-            x1={cx + Math.cos(angle) * inner}
-            y1={cx + Math.sin(angle) * inner}
-            x2={cx + Math.cos(angle) * outer}
-            y2={cx + Math.sin(angle) * outer}
+            x1={snapCoord(cx + Math.cos(angle) * inner)}
+            y1={snapCoord(cx + Math.sin(angle) * inner)}
+            x2={snapCoord(cx + Math.cos(angle) * outer)}
+            y2={snapCoord(cx + Math.sin(angle) * outer)}
             stroke={strokeColor}
             strokeWidth={isMajor ? 1.5 : 0.5}
             opacity={isMajor ? 0.9 : 0.5}
@@ -117,7 +124,7 @@ function Gear({ size, color, duration, reverse }: { size: number; color: string;
   const points = Array.from({ length: teeth * 2 }, (_, i) => {
     const angle = (i / (teeth * 2)) * Math.PI * 2 - Math.PI / 2;
     const r = i % 2 === 0 ? rOuter : rInner;
-    return `${cx + Math.cos(angle) * r},${cx + Math.sin(angle) * r}`;
+    return `${snapCoord(cx + Math.cos(angle) * r)},${snapCoord(cx + Math.sin(angle) * r)}`;
   }).join(" ");
   return (
     <motion.svg
@@ -259,10 +266,10 @@ function PortholePhoto({ url, caption, i }: { url: string; caption: string; i: n
                 return (
                   <line
                     key={k}
-                    x1={`${cx + Math.cos(angle) * inner}%`}
-                    y1={`${cy + Math.sin(angle) * inner}%`}
-                    x2={`${cx + Math.cos(angle) * outer}%`}
-                    y2={`${cy + Math.sin(angle) * outer}%`}
+                    x1={`${snapCoord(cx + Math.cos(angle) * inner)}%`}
+                    y1={`${snapCoord(cy + Math.sin(angle) * inner)}%`}
+                    x2={`${snapCoord(cx + Math.cos(angle) * outer)}%`}
+                    y2={`${snapCoord(cy + Math.sin(angle) * outer)}%`}
                     stroke="#f5eddb"
                     strokeWidth="1"
                     opacity="0.7"

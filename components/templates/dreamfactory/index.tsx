@@ -45,7 +45,9 @@ function Gear({ size, teeth, color }: { size: number; teeth: number; color: stri
   const points = Array.from({ length: teeth * 2 }, (_, i) => {
     const angle = (i / (teeth * 2)) * Math.PI * 2;
     const rad = i % 2 === 0 ? r : r - toothH;
-    return `${Math.cos(angle) * rad + r},${Math.sin(angle) * rad + r}`;
+    // Rounded: raw trig differs in the last float digit between the server
+    // and client render, which React reports as a hydration mismatch.
+    return `${(Math.cos(angle) * rad + r).toFixed(3)},${(Math.sin(angle) * rad + r).toFixed(3)}`;
   }).join(" ");
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden>

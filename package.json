@@ -12,7 +12,9 @@
     "render": "node scripts/render-pipeline.mjs",
     "render:dry": "node scripts/render-pipeline.mjs --dry-run",
     "render:batch": "node scripts/render-pipeline.mjs --batch",
-    "render:local": "node scripts/render-pipeline.mjs --backend playwright --voice none"
+    "render:local": "node scripts/render-pipeline.mjs --backend playwright --voice none",
+    "e2e": "node scripts/e2e.mjs",
+    "e2e:fast": "node scripts/e2e.mjs --fast"
   },
   "dependencies": {
     "framer-motion": "^11.3.19",

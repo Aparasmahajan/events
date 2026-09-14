@@ -204,7 +204,10 @@ function VenueMap({ accent }: { accent: string }) {
               r="12"
               fill={accent}
               opacity="0.3"
-              animate={{ r: [10, 22, 10], opacity: [0.35, 0, 0.35] }}
+              // Scale, not `r`: animating the radius attribute left it momentarily
+              // undefined and the browser refused the value.
+              style={{ transformOrigin: "200px 112px" }}
+              animate={{ scale: [0.85, 1.85, 0.85], opacity: [0.35, 0, 0.35] }}
               transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
             />
           )}

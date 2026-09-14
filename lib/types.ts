@@ -9,7 +9,12 @@ export type EventType =
   | "product-launch"
   | "award-ceremony"
   | "networking-event"
-  | "party";
+  | "party"
+  /** One-day occasions — Father's Day, Mother's Day, Rakhi, Valentine's,
+   *  Propose Day, a baby-bump announcement and the rest. One category; the
+   *  specific day is the `eventSubtype` (see CELEBRATION_DAYS in
+   *  config/eventTypes.ts), which is what templates read to adapt their copy. */
+  | "celebration-day";
 
 export type TemplateTag =
   | "cool"

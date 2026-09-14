@@ -522,7 +522,7 @@ const NEXUS_CODE = "DEMO-NEXUS";
 const nexus: DemoBundle = {
   event: {
     eventCode: NEXUS_CODE,
-    eventType: "product-launch",
+    eventType: "networking-event",
     templateId: "nexus",
     eventTitle: "Orion OS v3",
     person1Name: "Orion Technologies",
@@ -1051,7 +1051,7 @@ const UNVEIL_CODE = "DEMO-UNVEIL";
 const unveil: DemoBundle = {
   event: {
     eventCode: UNVEIL_CODE,
-    eventType: "product-launch",
+    eventType: "networking-event",
     templateId: "unveil",
     eventTitle: "Onyx — Reveal",
     person1Name: "Onyx Systems",
@@ -1561,7 +1561,7 @@ const quantum: DemoBundle = {
 const GENESIS_CODE = "DEMO-GENESIS";
 const genesis: DemoBundle = {
   event: {
-    eventCode: GENESIS_CODE, eventType: "product-launch", templateId: "genesis",
+    eventCode: GENESIS_CODE, eventType: "networking-event", templateId: "genesis",
     eventTitle: "Project Genesis", person1Name: "Genesis Labs",
     tentativeDate: "2026-10-24", city: "Cupertino", isActive: true, slug: GENESIS_CODE,
     heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"), tagline: "Watch it come together.",
@@ -2350,7 +2350,7 @@ const missioncontrol: DemoBundle = {
 const SECRETLAB_CODE = "DEMO-SECRETLAB";
 const secretlab: DemoBundle = {
   event: {
-    eventCode: SECRETLAB_CODE, eventType: "product-launch", templateId: "secretlab",
+    eventCode: SECRETLAB_CODE, eventType: "networking-event", templateId: "secretlab",
     eventTitle: "Project Vault", person1Name: "Vault Robotics",
     tentativeDate: "2026-10-29", city: "Berlin", isActive: true, slug: SECRETLAB_CODE,
     heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"), tagline: "Clearance: granted.",
@@ -2373,7 +2373,7 @@ const secretlab: DemoBundle = {
 const PORTAL_CODE = "DEMO-PORTAL";
 const portal: DemoBundle = {
   event: {
-    eventCode: PORTAL_CODE, eventType: "product-launch", templateId: "portal",
+    eventCode: PORTAL_CODE, eventType: "networking-event", templateId: "portal",
     eventTitle: "The Threshold", person1Name: "Portal Dynamics",
     tentativeDate: "2026-09-30", city: "San Francisco", isActive: true, slug: PORTAL_CODE,
     heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"), tagline: "It's coming through.",
@@ -2396,7 +2396,7 @@ const portal: DemoBundle = {
 const EVOLUTION_CODE = "DEMO-EVOLUTION";
 const evolution: DemoBundle = {
   event: {
-    eventCode: EVOLUTION_CODE, eventType: "product-launch", templateId: "evolution",
+    eventCode: EVOLUTION_CODE, eventType: "networking-event", templateId: "evolution",
     eventTitle: "Ascent Keynote", person1Name: "Ascent Technologies",
     tentativeDate: "2026-11-18", city: "London", isActive: true, slug: EVOLUTION_CODE,
     heroImageUrl: UNSPLASH("photo-1492684223066-81342ee5ff30"), tagline: "The next stage, revealed.",
@@ -3191,6 +3191,106 @@ const pitlane: DemoBundle = {
   ])],
 };
 
+// ---------- HANDPRINT — DEMO-HANDPRINT (Father's Day) ----------
+
+const HANDPRINT_CODE = "DEMO-HANDPRINT";
+const handprint: DemoBundle = {
+  event: {
+    eventCode: HANDPRINT_CODE, eventType: "celebration-day", eventSubtype: "Father's Day",
+    templateId: "handprint",
+    eventTitle: "Happy Father's Day, Papa", person1Name: "Papa", person2Name: "Ananya & Ishaan",
+    tentativeDate: "2027-06-20", city: "Lucknow", isActive: true, slug: HANDPRINT_CODE,
+    heroImageUrl: SAMPLES.indianFlowers, tagline: "For the man who fixed everything",
+    invitationMessage: "You never asked for a fuss, so this is a small one. Thank you for the lifts, the lectures and the bicycle repairs.",
+    aboutStory: "He taught us to check the tyre pressure, argue politely, and always carry cash. Twenty-six years of school runs and puncture repairs, and he still says it was nothing.",
+    mainDate: "2027-06-20", mainStartTime: "08:30", mainEndTime: "21:00",
+    themeAccentColor: "#e2574c",
+    contactName: "Ananya", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "+91-98xxxxxxx",
+  },
+  subEvents: [
+    { eventCode: HANDPRINT_CODE, order: 1, name: "Breakfast in Bed", date: "2027-06-20", startTime: "08:30", endTime: "09:30", venueName: "Home", description: "Poha, filter coffee, and the newspaper he actually wants.", icon: "☕" },
+    { eventCode: HANDPRINT_CODE, order: 2, name: "The Long Drive", date: "2027-06-20", startTime: "11:00", endTime: "14:00", venueName: "Wherever he points", description: "His playlist, his route, no complaints from the back seat.", icon: "🚗" },
+    { eventCode: HANDPRINT_CODE, order: 3, name: "Cricket, Loudly", date: "2027-06-20", startTime: "16:00", endTime: "18:30", venueName: "The Living Room", description: "Him explaining the field placement. Us pretending not to know.", icon: "🏏" },
+    { eventCode: HANDPRINT_CODE, order: 4, name: "Dinner He Didn't Cook", date: "2027-06-20", startTime: "19:30", endTime: "21:00", venueName: "The Terrace", description: "For once, he sits down first.", icon: "🍽" },
+  ],
+  media: [heroUrl(HANDPRINT_CODE, SAMPLES.indianFlowers), ...gallery(HANDPRINT_CODE, [
+    { url: PICSUM(`${HANDPRINT_CODE}-g1`, 1200, 900), caption: "the scooter years" },
+    { url: PICSUM(`${HANDPRINT_CODE}-g2`, 1200, 900), caption: "school gate, 6:40am" },
+    { url: SAMPLES.indianFlowers, caption: "his garden, his rules" },
+    { url: PICSUM(`${HANDPRINT_CODE}-g3`, 1200, 900), caption: "teaching me to drive" },
+    { url: PICSUM(`${HANDPRINT_CODE}-g4`, 1200, 900), caption: "the good shirt" },
+    { url: PICSUM(`${HANDPRINT_CODE}-g5`, 1200, 900), caption: "still fixing things" },
+  ])],
+};
+
+// ---------- MIXTAPE — DEMO-MIXTAPE (Friendship Day) ----------
+
+const MIXTAPE_CODE = "DEMO-MIXTAPE";
+const mixtape: DemoBundle = {
+  event: {
+    eventCode: MIXTAPE_CODE, eventType: "celebration-day", eventSubtype: "Friendship Day",
+    templateId: "mixtape",
+    eventTitle: "Fourteen Years of This", person1Name: "The Group Chat", person2Name: "Rhea",
+    tentativeDate: "2027-08-01", city: "Bengaluru", isActive: true, slug: MIXTAPE_CODE,
+    heroImageUrl: SAMPLES.confetti, tagline: "Chosen family, unpaid therapists",
+    invitationMessage: "Fourteen years, eleven cities and one group chat that has never once gone quiet. Same time, same table.",
+    aboutStory: "Nobody remembers who spoke first. Everybody remembers who showed up at 2am with food and no questions — which is the part that counts.",
+    mainDate: "2027-08-01", mainStartTime: "19:00", mainEndTime: "23:59",
+    themeAccentColor: "#ff7a45",
+    venueName: "The Usual Table, Koramangala", venueAddress: "Koramangala 5th Block, Bengaluru",
+    mapLink: "https://maps.google.com/?q=Koramangala+Bengaluru", latitude: 12.9345, longitude: 77.6266,
+    contactName: "Rhea", contactPhone: "+91-98xxxxxxx", socialLink: "https://open.spotify.com/",
+    rsvpEnabled: true, rsvpLinkOrContact: "https://forms.example/friendship",
+  },
+  subEvents: [
+    { eventCode: MIXTAPE_CODE, order: 1, name: "The Usual Table", date: "2027-08-01", startTime: "19:00", endTime: "20:00", venueName: "Koramangala", description: "Same order, placed without looking at the menu.", icon: "🍜" },
+    { eventCode: MIXTAPE_CODE, order: 2, name: "Old Photos, New Arguments", date: "2027-08-01", startTime: "20:00", endTime: "21:00", description: "Somebody brings the 2013 folder. Somebody regrets it.", icon: "📸" },
+    { eventCode: MIXTAPE_CODE, order: 3, name: "The Playlist Fight", date: "2027-08-01", startTime: "21:00", endTime: "22:00", description: "Aux cable changes hands four times.", icon: "🎧" },
+    { eventCode: MIXTAPE_CODE, order: 4, name: "Terrace, Quietly", date: "2027-08-01", startTime: "22:00", endTime: "23:00", venueName: "Upstairs", description: "The part where everyone says the real thing.", icon: "🌙" },
+    { eventCode: MIXTAPE_CODE, order: 5, name: "Last Round", date: "2027-08-01", startTime: "23:00", endTime: "23:59", description: "Nobody leaves. Somebody orders again.", icon: "🥤" },
+  ],
+  media: [heroUrl(MIXTAPE_CODE, SAMPLES.confetti), ...gallery(MIXTAPE_CODE, [
+    { url: PICSUM(`${MIXTAPE_CODE}-s1`, 1000, 1000), caption: "college, allegedly" },
+    { url: SAMPLES.confetti, caption: "someone's wedding" },
+    { url: PICSUM(`${MIXTAPE_CODE}-s2`, 1000, 1000), caption: "the road trip" },
+    { url: PICSUM(`${MIXTAPE_CODE}-s3`, 1000, 1000), caption: "the usual table" },
+    { url: PICSUM(`${MIXTAPE_CODE}-s4`, 1000, 1000), caption: "3am, unposted" },
+    { url: PICSUM(`${MIXTAPE_CODE}-s5`, 1000, 1000), caption: "still here" },
+  ])],
+};
+
+// ---------- BLOOMDAY — DEMO-BLOOMDAY (Mother's Day) ----------
+
+const BLOOMDAY_CODE = "DEMO-BLOOMDAY";
+const bloomday: DemoBundle = {
+  event: {
+    eventCode: BLOOMDAY_CODE, eventType: "celebration-day", eventSubtype: "Mother's Day",
+    templateId: "bloomday",
+    eventTitle: "Happy Mother's Day, Amma", person1Name: "Amma", person2Name: "Meera",
+    tentativeDate: "2027-05-09", city: "Coimbatore", isActive: true, slug: BLOOMDAY_CODE,
+    heroImageUrl: SAMPLES.indianLotus, tagline: "For the one who noticed everything",
+    invitationMessage: "You have been the first phone call for every good and bad day. Today the phone rings the other way.",
+    aboutStory: "She remembers every allergy, every exam and every heartbreak — including the ones I never mentioned. Today she is not allowed in the kitchen.",
+    mainDate: "2027-05-09", mainStartTime: "09:00", mainEndTime: "20:00",
+    themeAccentColor: "#b5566b",
+    contactName: "Meera", contactPhone: "+91-98xxxxxxx", rsvpEnabled: true, rsvpLinkOrContact: "meera@example.com",
+  },
+  subEvents: [
+    { eventCode: BLOOMDAY_CODE, order: 1, name: "Coffee, Brought to Her", date: "2027-05-09", startTime: "09:00", endTime: "09:30", venueName: "The Veranda", description: "Made exactly the way she makes it. Nearly.", icon: "☕" },
+    { eventCode: BLOOMDAY_CODE, order: 2, name: "The Flower Market", date: "2027-05-09", startTime: "10:30", endTime: "12:00", venueName: "R.S. Puram", description: "She picks, we carry, she re-picks.", icon: "💐" },
+    { eventCode: BLOOMDAY_CODE, order: 3, name: "Lunch She Didn't Make", date: "2027-05-09", startTime: "13:00", endTime: "15:00", venueName: "Home", description: "Recipe hers, execution ours, verdict pending.", icon: "🍲" },
+    { eventCode: BLOOMDAY_CODE, order: 4, name: "The Old Album", date: "2027-05-09", startTime: "17:00", endTime: "18:30", description: "Every photo comes with a correction to the story.", icon: "📖" },
+  ],
+  media: [heroUrl(BLOOMDAY_CODE, SAMPLES.indianLotus), ...gallery(BLOOMDAY_CODE, [
+    { url: SAMPLES.indianLotus, caption: "her jasmine" },
+    { url: PICSUM(`${BLOOMDAY_CODE}-b1`, 1200, 1600), caption: "1989, before us" },
+    { url: SAMPLES.pinkFlowers, caption: "the flower market" },
+    { url: PICSUM(`${BLOOMDAY_CODE}-b2`, 1200, 1600), caption: "her hands, always busy" },
+    { url: PICSUM(`${BLOOMDAY_CODE}-b3`, 1200, 1600), caption: "the veranda chair" },
+    { url: SAMPLES.indianFlowers, caption: "kept, pressed" },
+  ])],
+};
+
 // ---------- registry ----------
 
 export const DEMO_EVENTS: Record<string, DemoBundle> = {
@@ -3297,6 +3397,9 @@ export const DEMO_EVENTS: Record<string, DemoBundle> = {
   [TOUR_CODE]: tour,
   [NEWGAME_CODE]: newgame,
   [PITLANE_CODE]: pitlane,
+  [HANDPRINT_CODE]: handprint,
+  [MIXTAPE_CODE]: mixtape,
+  [BLOOMDAY_CODE]: bloomday,
 };
 
 export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
@@ -3319,6 +3422,9 @@ export const DEMO_CODE_BY_TEMPLATE: Record<string, string> = {
   tour: TOUR_CODE,
   newgame: NEWGAME_CODE,
   pitlane: PITLANE_CODE,
+  handprint: HANDPRINT_CODE,
+  mixtape: MIXTAPE_CODE,
+  bloomday: BLOOMDAY_CODE,
   nexus: NEXUS_CODE,
   pinnacle: PINNACLE_CODE,
   luminary: LUMINARY_CODE,

@@ -97,7 +97,9 @@ function JungleField({ reduce }: { reduce: boolean }) {
             animate={reduce ? undefined : { rotate: [l.rot - 3, l.rot + 3, l.rot - 3], y: [0, -8, 0] }}
             transition={{ duration: l.dur, delay: l.delay, repeat: Infinity, ease: "easeInOut" }}
           >
-            <g transform={`translate(${l.x} ${l.y})`} opacity={0.55}>
+            {/* percent values are invalid in an SVG transform — the viewBox is
+                    0 0 100 100, so the same fractions work as user units */}
+            <g transform={`translate(${parseFloat(l.x)} ${parseFloat(l.y)})`} opacity={0.55}>
               <svg width={l.size} height={l.size} viewBox="0 0 100 100" style={{ overflow: "visible" }}>
                 <path d={l.d} fill="none" stroke={l.color} strokeWidth={1.4} filter="url(#njungle-glow)" style={{ filter: `drop-shadow(0 0 8px ${l.color})` }} />
                 <path d={l.d} fill={l.color} opacity={0.06} />
@@ -126,7 +128,7 @@ function JungleField({ reduce }: { reduce: boolean }) {
             animate={reduce ? undefined : { opacity: [0.35, 0.9, 0.35] }}
             transition={{ duration: 2.4 + i * 0.6, delay: i * 0.4, repeat: Infinity, ease: "easeInOut" }}
           >
-            <g transform={`translate(${a.x} ${a.y})`}>
+            <g transform={`translate(${parseFloat(a.x)} ${parseFloat(a.y)})`}>
               <svg width={a.size} height={a.size} viewBox="0 0 100 100" style={{ overflow: "visible" }}>
                 <path d={a.d} fill="none" stroke={a.color} strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" style={{ filter: `drop-shadow(0 0 10px ${a.color}) drop-shadow(0 0 20px ${a.color})` }} />
               </svg>

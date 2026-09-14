@@ -20,10 +20,13 @@ const PARTICLES = Array.from({ length: 54 }, (_, i) => {
   const a = (i * 137.508) % 360;
   const r = 30 + ((i * 17) % 55);
   const rad = (a * Math.PI) / 180;
-  const sx = 50 + Math.cos(rad) * r;
-  const sy = 50 + Math.sin(rad) * r;
-  const tx = 50 + Math.cos(rad) * (6 + (i % 5) * 1.2);
-  const ty = 50 + Math.sin(rad) * (14 + (i % 7) * 1.4);
+  // Rounded: these end up in inline styles, and raw trig differs in the last
+  // float digit between the server and client render (hydration mismatch).
+  const round = (n: number) => Number(n.toFixed(3));
+  const sx = round(50 + Math.cos(rad) * r);
+  const sy = round(50 + Math.sin(rad) * r);
+  const tx = round(50 + Math.cos(rad) * (6 + (i % 5) * 1.2));
+  const ty = round(50 + Math.sin(rad) * (14 + (i % 7) * 1.4));
   const highlight = i % 9 === 0;
   return { sx, sy, tx, ty, size: highlight ? 3 : 1.6, highlight, delay: (i % 12) * 0.03 };
 });

@@ -276,6 +276,57 @@ Every template shows a countdown, controlled by five `Live` columns / `EventData
 - **`timerDesign`** (`Timer Design`) — one of `glass · minimal · flip · rings · neon · elegant`.
 - **`timerPosition`** (`Timer Position`) — `left · center · right` along the bottom of the hero (with edge margin; auto-centers on mobile so wide designs never overflow).
 
+### Tests
+
+    npm run dev            # in another terminal
+    npm run e2e            # full: every template x every event type
+    npm run e2e -- --fast  # a 12-template sample, for a quick check
+    npm run e2e -- --base http://localhost:3001 --concurrency 6
+
+`scripts/e2e.mjs` drives the real app in Chromium. Suites: domain logic, catalogue,
+category pickers, the template sweep, the enquiry funnel, and auth boundaries. Exit
+code is 0 only if everything passed, so it works as a pre-deploy gate.
+
+**Read-only by design.** Approving an enquiry or saving an event writes rows to the
+customer's live Google Sheet, so the suite never completes those flows. It asserts
+them at the boundary instead: the enquiry API is POSTed payloads it rejects during
+validation (before any write), and the admin/manage write endpoints are called
+without credentials to prove the middleware blocks them. Never "fix" a failing auth
+assertion by giving the suite real credentials.
+
+Every rendered page is held to one contract (`pageProblems()`): HTTP 200, no console
+or page errors, no horizontal overflow, alt text on every image, no broken images, an
+`h1`, and **no countdown overlapping hero text**.
+
+Pure logic that the UI can't reach is asserted by `GET /api/dev/selftest` — metadata
+invariants, starter-date rebasing, per-day copy, type-aware labels, event codes. It
+returns 404 when `NODE_ENV === "production"`, so it is not a public surface. Add a
+check there rather than loosening one when it fails.
+
+### Event categories (9)
+
+`EVENT_TYPES` in `config/eventTypes.ts` is the single source of truth — the landing
+page, the picker, code prefixes and the enquiry form all read it.
+
+Wedding · Birthday · Engagement · Anniversary · **Celebration Days** · Corporate ·
+Award Ceremony · Networking & Launches · Party.
+
+- **Product Launch** is no longer its own category: it lives inside **Networking &
+  Launches** as a subtype. Existing `product-launch` rows still resolve —
+  `RETIRED_TYPES` in the same file maps them to their successor, so
+  `getEventTypeConfig()` keeps working instead of throwing.
+- **Celebration Days** is one category covering the one-day occasions. The specific
+  day is the `eventSubtype`, listed in `CELEBRATION_DAYS`: Father's Day, Mother's Day,
+  Siblings Day / Rakhi, Grandparents Day, Friendship Day, Valentine's Day, Propose Day,
+  Baby Bump, Teachers' Day.
+- Templates in that category read the subtype through `celebrationDayCopy()`
+  (`lib/celebrationDay.ts`), which supplies the greeting, the label above the name and
+  the fallback copy per day. Every field is a *fallback* — customer text always wins.
+  Add a day to `CELEBRATION_DAYS` plus an entry in that helper and all three templates
+  speak it, with no template changes.
+- Day templates render the venue/map **only when a venue or map link exists** — a
+  Father's Day page usually has nowhere to go.
+
 ### Starter schedule dates
 
 When an enquiry is approved (or the customer resets the schedule), the starter

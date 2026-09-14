@@ -14,6 +14,13 @@ import { pastelMeta } from "@/components/templates/metadata";
 import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent } from "@/lib/types";
 
+/** Rounded on purpose: raw trig output differs in the last float digit
+ *  between the server and client render, which React reports as a hydration
+ *  mismatch on the SVG attribute. */
+function snapCoord(n: number): number {
+  return Number(n.toFixed(3));
+}
+
 const defaults = pastelMeta.defaults;
 
 // Scalloped circle mask — 10 semicircle bumps around the perimeter.
@@ -89,8 +96,8 @@ export const PastelTemplate: TemplateComponent = ({ event, subEvents, media }) =
               <circle cx="0.5" cy="0.5" r="0.42" fill="white" />
               {Array.from({ length: 10 }, (_, i) => {
                 const a = (i / 10) * Math.PI * 2;
-                const cx = 0.5 + Math.cos(a) * 0.42;
-                const cy = 0.5 + Math.sin(a) * 0.42;
+                const cx = snapCoord(0.5 + Math.cos(a) * 0.42);
+                const cy = snapCoord(0.5 + Math.sin(a) * 0.42);
                 return <circle key={i} cx={cx} cy={cy} r="0.07" fill="white" />;
               })}
             </mask>
@@ -241,8 +248,8 @@ export const PastelTemplate: TemplateComponent = ({ event, subEvents, media }) =
               >
                 {WREATH_LEAVES.map((l, i) => {
                   const rad = (l.angle * Math.PI) / 180;
-                  const cx = 100 + Math.cos(rad) * 92;
-                  const cy = 100 + Math.sin(rad) * 92;
+                  const cx = snapCoord(100 + Math.cos(rad) * 92);
+                  const cy = snapCoord(100 + Math.sin(rad) * 92);
                   return (
                     <g key={i} transform={`translate(${cx} ${cy}) rotate(${l.angle + 90}) ${l.flip ? "scale(-1,1)" : ""}`}>
                       {/* Leaf: an almond shape */}

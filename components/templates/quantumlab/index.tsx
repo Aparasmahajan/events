@@ -86,9 +86,13 @@ function LabField({ reduce, accent, cyan }: { reduce: boolean; accent: string; c
               return (
                 <motion.circle
                   key={`p-${i}`}
+                  cx={b.x1}
+                  cy={b.y1}
                   r="2.5"
                   fill={accent}
-                  animate={{ cx: [b.x1, b.x2, b.x1], cy: [b.y1, b.y2, b.y1] }}
+                  // x/y transforms instead of animating cx/cy attributes, which framer can
+                  // leave undefined mid-flight.
+                  animate={{ x: [0, b.x2 - b.x1, 0], y: [0, b.y2 - b.y1, 0] }}
                   transition={{ duration: 4 + (i % 3), delay: i * 0.5, repeat: Infinity, ease: "easeInOut" }}
                   style={{ filter: `drop-shadow(0 0 4px ${accent})` }}
                 />

@@ -99,6 +99,9 @@ import { LudoTemplate } from "./ludo";
 import { TourTemplate } from "./tour";
 import { NewgameTemplate } from "./newgame";
 import { PitlaneTemplate } from "./pitlane";
+import { HandprintTemplate } from "./handprint";
+import { MixtapeTemplate } from "./mixtape";
+import { BloomdayTemplate } from "./bloomday";
 import { CreatorsCanvasTemplate } from "./creatorscanvas";
 import { TimeFractureTemplate } from "./timefracture";
 import { GravityZeroTemplate } from "./gravityzero";
@@ -323,6 +326,12 @@ export function TemplateRouter({ templateId, ...rest }: Props) {
       return <NewgameTemplate {...rest} />;
     case "pitlane":
       return <PitlaneTemplate {...rest} />;
+    case "handprint":
+      return <HandprintTemplate {...rest} />;
+    case "mixtape":
+      return <MixtapeTemplate {...rest} />;
+    case "bloomday":
+      return <BloomdayTemplate {...rest} />;
     case "royal":
     default:
       return <RoyalTemplate {...rest} />;

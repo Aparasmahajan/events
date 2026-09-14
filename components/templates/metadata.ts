@@ -229,7 +229,7 @@ export const nexusMeta: TemplateMeta = {
   codename: "Nexus",
   description:
     "Neon cyan on midnight. Particles coalesce, a circuit-board timeline, holographic feature cards. For tech product reveals and futuristic launches.",
-  eventTypes: ["product-launch", "corporate"],
+  eventTypes: ["networking-event", "corporate"],
   tags: ["cyberpunk", "tech", "bold", "modern", "cinematic", "interactive"],
   keywords: [
     "product launch", "tech launch", "cyberpunk", "neon", "futuristic",
@@ -502,7 +502,7 @@ export const neuralMeta: TemplateMeta = {
   codename: "Neural",
   description:
     "Nodes, edges, streaming data lines and holographic panels. For AI conferences, tech summits and research symposia.",
-  eventTypes: ["corporate", "product-launch"],
+  eventTypes: ["corporate", "networking-event"],
   tags: ["tech", "modern", "cyberpunk", "bold", "cinematic", "interactive"],
   keywords: [
     "ai conference", "ai summit", "artificial intelligence", "ml conference",
@@ -530,7 +530,7 @@ export const unveilMeta: TemplateMeta = {
   codename: "Unveil",
   description:
     "Absolute black, a single spotlight, a slow deliberate reveal. For product announcements that want the room to hold its breath.",
-  eventTypes: ["product-launch", "corporate"],
+  eventTypes: ["networking-event", "corporate"],
   tags: ["cinematic", "bold", "premium", "editorial", "minimal", "modern"],
   keywords: [
     "product launch", "product reveal", "unveiling", "keynote", "announcement",
@@ -1016,7 +1016,7 @@ export const quantumMeta: TemplateMeta = {
   codename: "Quantum",
   description:
     "A smart-city conference — buildings visualize tracks, speakers appear as holographic skyscrapers, data streams flow through transparent roads. For the biggest tech conferences.",
-  eventTypes: ["corporate", "product-launch"],
+  eventTypes: ["corporate", "networking-event"],
   tags: ["tech", "premium", "modern", "architectural", "cyberpunk", "interactive"],
   keywords: [
     "quantum computing", "tech conference", "developer conference",
@@ -1045,7 +1045,7 @@ export const genesisMeta: TemplateMeta = {
   codename: "Genesis",
   description:
     "The product assembling itself in real time — raw particles becoming components, each scroll adding a layer, cinematic suspense to the final reveal. Rivals the best product keynotes.",
-  eventTypes: ["product-launch", "corporate"],
+  eventTypes: ["networking-event", "corporate"],
   tags: ["cinematic", "tech", "bold", "premium", "modern", "interactive"],
   keywords: [
     "product launch", "keynote", "reveal", "flagship launch", "hardware launch",
@@ -1935,7 +1935,7 @@ export const quantumlabMeta: TemplateMeta = {
   codename: "The Lab",
   description:
     "An advanced research lab — floating holograms, glass interfaces, interactive experiments per section. For R&D showcases, science-forward corporate events and launches.",
-  eventTypes: ["corporate", "product-launch"],
+  eventTypes: ["corporate", "networking-event"],
   tags: ["tech", "glass", "modern", "minimal", "interactive", "premium"],
   keywords: [
     "research lab", "quantum", "holograms", "science event", "r&d",
@@ -1964,7 +1964,7 @@ export const missioncontrolMeta: TemplateMeta = {
   codename: "Houston",
   description:
     "NASA-style mission control — live countdown, control panels, satellite maps and a mission timeline. For launches and corporate events run like a flight program.",
-  eventTypes: ["corporate", "product-launch"],
+  eventTypes: ["corporate", "networking-event"],
   tags: ["tech", "cinematic", "bold", "interactive", "modern", "cool"],
   keywords: [
     "mission control", "nasa", "countdown", "launch event", "telemetry",
@@ -1993,7 +1993,7 @@ export const secretlabMeta: TemplateMeta = {
   codename: "The Vault",
   description:
     "An underground lab discovered section by section — robots assembling the product, a secret behind every door, a dramatic final reveal. For launches that want suspense.",
-  eventTypes: ["product-launch"],
+  eventTypes: ["networking-event"],
   tags: ["tech", "bold", "cinematic", "interactive", "modern", "cyberpunk"],
   keywords: [
     "secret lab", "underground", "vault", "classified", "product reveal",
@@ -2022,7 +2022,7 @@ export const portalMeta: TemplateMeta = {
   codename: "The Threshold",
   description:
     "A portal slowly opening in the void — unknown energy leaking through until the product arrives from another dimension. For launches that want pure mystery.",
-  eventTypes: ["product-launch"],
+  eventTypes: ["networking-event"],
   tags: ["cinematic", "bold", "tech", "cyberpunk", "modern", "premium"],
   keywords: [
     "portal", "threshold", "mystery launch", "dimension", "teaser",
@@ -2051,7 +2051,7 @@ export const evolutionMeta: TemplateMeta = {
   codename: "Ascent",
   description:
     "The evolution of technology told as one scroll — primitive to industrial to digital to AI, with the product as the destination. For launches with a lineage story.",
-  eventTypes: ["product-launch", "corporate"],
+  eventTypes: ["networking-event", "corporate"],
   tags: ["editorial", "tech", "cinematic", "artistic", "modern", "bold"],
   keywords: [
     "evolution", "timeline", "history of technology", "industrial",
@@ -2960,6 +2960,91 @@ export const pitlaneMeta: TemplateMeta = {
   },
 };
 
+// ─── Celebration Days: the homemade card ─────────────────────
+export const handprintMeta: TemplateMeta = {
+  id: "handprint",
+  name: "Little Hands",
+  codename: "Handprint",
+  description:
+    "A homemade card — kraft paper, crayon strokes that draw themselves, taped photos and fill-in-the-blank lines. For Father's Day, Mother's Day, Rakhi or Teachers' Day.",
+  eventTypes: ["celebration-day"],
+  tags: ["playful", "whimsical", "organic", "appealing", "artistic"],
+  keywords: [
+    "fathers day", "mothers day", "rakhi", "raksha bandhan", "siblings day",
+    "grandparents day", "teachers day", "friendship day", "handmade card",
+    "crayon", "scrapbook", "kids drawing", "thank you page",
+  ],
+  icon: "🖍",
+  vibe: { label: "Handmade", color: "#e2574c" },
+  previewImage: "/template-previews/handprint.jpg",
+  defaults: {
+    invitationMessage:
+      "You never asked for a fuss, so this is a small one. Thank you for the lifts, the lectures and the bicycle repairs.",
+    tagline: "For the man who fixed everything",
+    accentColor: "#e2574c",
+    heroImage: "/samples/wedding-flowers.jpg",
+    aboutStory:
+      "He taught us to check the tyre pressure, argue politely, and always carry cash. This page is the thank-you note he never let us say out loud.",
+  },
+};
+
+// ─── Celebration Days: the mixtape ───────────────────────────
+export const mixtapeMeta: TemplateMeta = {
+  id: "mixtape",
+  name: "Side A, Side B",
+  codename: "Mixtape",
+  description:
+    "A cassette J-card whose reels turn as you scroll — Side A and Side B tracklists instead of a schedule, liner notes instead of a story. For friends, siblings and valentines.",
+  eventTypes: ["celebration-day"],
+  tags: ["editorial", "cool", "monochrome", "modern", "artistic"],
+  keywords: [
+    "friendship day", "valentines day", "siblings day", "fathers day",
+    "mixtape", "cassette", "playlist", "music", "tracklist", "retro",
+    "propose day", "nostalgic",
+  ],
+  icon: "📼",
+  vibe: { label: "Mixtape", color: "#ff7a45" },
+  previewImage: "/template-previews/mixtape.jpg",
+  defaults: {
+    invitationMessage:
+      "Fourteen years, eleven cities and one group chat that has never once gone quiet. Same time, same table.",
+    tagline: "Chosen family, unpaid therapists",
+    accentColor: "#ff7a45",
+    heroImage:
+      "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1600&q=80",
+    aboutStory:
+      "Nobody remembers who spoke first. Everybody remembers who showed up — which is the part that counts.",
+  },
+};
+
+// ─── Celebration Days: one stem, opening ─────────────────────
+export const bloomdayMeta: TemplateMeta = {
+  id: "bloomday",
+  name: "In Bloom",
+  codename: "Bloomday",
+  description:
+    "A single stem drawn down the page as you scroll, opening into a flower at the end. Quiet and elegant — for Mother's Day, Valentine's, Grandparents Day or a baby-bump reveal.",
+  eventTypes: ["celebration-day"],
+  tags: ["romantic", "botanical", "elegant", "pastel", "decent"],
+  keywords: [
+    "mothers day", "valentines day", "baby bump", "pregnancy announcement",
+    "grandparents day", "propose day", "flowers", "botanical", "elegant",
+    "gratitude", "maternity", "gender reveal",
+  ],
+  icon: "🌸",
+  vibe: { label: "In Bloom", color: "#b5566b" },
+  previewImage: "/template-previews/bloomday.jpg",
+  defaults: {
+    invitationMessage:
+      "You have been the first phone call for every good and bad day. Today the phone rings the other way.",
+    tagline: "For the one who noticed everything",
+    accentColor: "#b5566b",
+    heroImage: "/samples/wedding-flowers.jpg",
+    aboutStory:
+      "She remembers every allergy, every exam, every heartbreak. Today she gets to be looked after for a change.",
+  },
+};
+
 export const TEMPLATES_META: TemplateMeta[] = [
   // Signature wedding experiences
   creatorscanvasMeta,
@@ -3042,6 +3127,10 @@ export const TEMPLATES_META: TemplateMeta[] = [
   tourMeta,
   newgameMeta,
   pitlaneMeta,
+  // Celebration days (Father's Day, Rakhi, Valentine's, baby bump …)
+  handprintMeta,
+  mixtapeMeta,
+  bloomdayMeta,
   // Corporate / Launch / Awards
   quantumMeta,
   neuralMeta,
@@ -3135,7 +3224,8 @@ const OCCASION_WORDS: Record<string, EventType[]> = {
   // Party" reads perfectly well on a birthday event. Only words that claim a
   // *different* occasion belong here.
   corporate: ["corporate"],
-  launch: ["product-launch"],
+  // Launches live under Networking & Launches now.
+  launch: ["networking-event"],
   awards: ["award-ceremony"],
   award: ["award-ceremony"],
 };

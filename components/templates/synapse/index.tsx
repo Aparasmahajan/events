@@ -80,10 +80,12 @@ function NeuronGraph({ reduce, accent }: { reduce: boolean; accent: string }) {
           return (
             <motion.circle
               key={i}
+              cx={n1.x}
+              cy={n1.y}
               r="0.45"
               fill="#ff5eac"
-              initial={{ cx: n1.x, cy: n1.y, opacity: 0 }}
-              animate={{ cx: [n1.x, n2.x], cy: [n1.y, n2.y], opacity: [0, 1, 0] }}
+              initial={{ opacity: 0 }}
+              animate={{ x: [0, n2.x - n1.x], y: [0, n2.y - n1.y], opacity: [0, 1, 0] }}
               transition={{ duration: 2.4 + (i % 4) * 0.4, delay: i * 0.35, repeat: Infinity, ease: "linear" }}
               style={{ filter: "drop-shadow(0 0 1px #ff5eac)" }}
             />
@@ -183,8 +185,8 @@ function MeetingNucleus({ reduce, accent }: { reduce: boolean; accent: string })
         </radialGradient>
       </defs>
       {rays.map((a, i) => {
-        const x = Math.cos(a) * 90;
-        const y = Math.sin(a) * 90;
+        const x = Number((Math.cos(a) * 90).toFixed(3));
+        const y = Number((Math.sin(a) * 90).toFixed(3));
         return (
           <g key={i}>
             <line x1={x} y1={y} x2="0" y2="0" stroke={accent} strokeWidth="0.6" strokeOpacity="0.35" />
@@ -197,9 +199,11 @@ function MeetingNucleus({ reduce, accent }: { reduce: boolean; accent: string })
         cx="0" cy="0"
         r="14"
         fill={accent}
-        animate={reduce ? undefined : { r: [14, 18, 14], opacity: [0.85, 1, 0.85] }}
+        // Scale, not `r` — animating the radius attribute leaves it briefly
+        // undefined and the browser rejects the value.
+        animate={reduce ? undefined : { scale: [1, 1.29, 1], opacity: [0.85, 1, 0.85] }}
         transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-        style={{ filter: `drop-shadow(0 0 12px ${accent})` }}
+        style={{ filter: `drop-shadow(0 0 12px ${accent})`, transformOrigin: "center" }}
       />
       <circle cx="0" cy="0" r="7" fill="#f4c060" />
     </svg>

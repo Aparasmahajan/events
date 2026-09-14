@@ -24,7 +24,7 @@ for (let i = 1; i < argv.length; i++) {
 }
 const VALID = [
   "wedding", "engagement", "anniversary", "birthday", "party",
-  "corporate", "product-launch", "award-ceremony", "networking-event",
+  "celebration-day", "corporate", "award-ceremony", "networking-event",
 ];
 if (!VALID.includes(type)) {
   console.error(`Usage: node scripts/video-roster.mjs <eventType> [-o <file>]\n  eventType one of: ${VALID.join(", ")}`);

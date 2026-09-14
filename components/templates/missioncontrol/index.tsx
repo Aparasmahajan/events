@@ -239,7 +239,9 @@ function SatelliteMap({ accent, reduce }: { accent: string; reduce: boolean }) {
         cy="100"
         r="2.5"
         fill={COLORS.amber}
-        animate={reduce ? undefined : { opacity: [0.4, 1, 0.4], r: [2.5, 3.5, 2.5] }}
+        // Scale, not `r` — animating the radius attribute leaves it briefly undefined.
+        style={{ transformOrigin: "center" }}
+        animate={reduce ? undefined : { opacity: [0.4, 1, 0.4], scale: [1, 1.4, 1] }}
         transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
       />
       <text x="252" y="96" fill={COLORS.ivory} fontSize="7" fontFamily="monospace" opacity="0.7">TGT-01</text>

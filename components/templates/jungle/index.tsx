@@ -75,7 +75,7 @@ function TempleSilhouette({ y }: { y: import("framer-motion").MotionValue<number
       viewBox="0 0 900 500"
       className="absolute inset-x-0 bottom-0 z-[1] w-full opacity-[0.55]"
       style={{ y }}
-      preserveAspectRatio="xMidYEnd meet"
+      preserveAspectRatio="xMidYMax meet"
     >
       <defs>
         <linearGradient id="templeGrad" x1="0" x2="0" y1="0" y2="1">
@@ -210,10 +210,18 @@ function StoneTablet({
           color: "#2b2418",
         }}
       >
-        <svg aria-hidden className="pointer-events-none absolute inset-0 h-full w-full" preserveAspectRatio="none">
-          <path d="M 0 8 L 10 2 L 24 10 L 40 3 L 60 9 L 80 4 L 100% 8 L 100% 0 L 0 0 Z" fill="#efe1c4" />
-          <path d="M 0 100% L 14 96% L 30 100% L 50 96% L 74 100% L 94 96% L 100% 100% L 100% 100% L 0 100% Z" fill="#efe1c4" />
-          <path d="M 12 26 L 20 34 M 68 18 L 74 24 M 40 60 L 46 66 M 88 70 L 94 76" stroke="#a8935e" strokeWidth="0.8" opacity="0.55" />
+        {/* viewBox + preserveAspectRatio="none" stretches these to the card.
+            Percentages are invalid inside path data — the edges used to be
+            dropped by the parser entirely. */}
+        <svg
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <path d="M 0 8 L 10 2 L 24 10 L 40 3 L 60 9 L 80 4 L 100 8 L 100 0 L 0 0 Z" fill="#efe1c4" />
+          <path d="M 0 100 L 14 96 L 30 100 L 50 96 L 74 100 L 94 96 L 100 100 L 100 100 L 0 100 Z" fill="#efe1c4" />
+          <path d="M 12 26 L 20 34 M 68 18 L 74 24 M 40 60 L 46 66 M 88 70 L 94 76" stroke="#a8935e" strokeWidth="0.8" opacity="0.55" vectorEffect="non-scaling-stroke" />
         </svg>
 
         <div className="relative flex items-start gap-3">

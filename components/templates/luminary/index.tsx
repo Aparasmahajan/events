@@ -47,8 +47,10 @@ function StarField({ reduce }: { reduce: boolean }) {
           {Array.from({ length: c.points }).map((_, j) => (
             <motion.circle
               key={j}
-              cx={`calc(${c.cx} + ${Math.sin(j * (Math.PI * 2 / c.points)) * 8}%)`}
-              cy={`calc(${c.cy} + ${Math.cos(j * (Math.PI * 2 / c.points)) * 8}%)`}
+              // Rounded: the raw value differs in the last float digit between
+              // server and client render (hydration mismatch on cx/cy).
+              cx={`calc(${c.cx} + ${(Math.sin(j * ((Math.PI * 2) / c.points)) * 8).toFixed(3)}%)`}
+              cy={`calc(${c.cy} + ${(Math.cos(j * ((Math.PI * 2) / c.points)) * 8).toFixed(3)}%)`}
               r="1.5"
               fill="var(--accent)"
               initial={{ opacity: 0 }}

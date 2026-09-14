@@ -14,6 +14,13 @@ import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { useEditMode } from "@/components/edit/EditContext";
 import type { TemplateComponent, SubEvent } from "@/lib/types";
 
+/** Rounded on purpose: raw trig output differs in the last float digit
+ *  between the server and client render, which React reports as a hydration
+ *  mismatch on the SVG attribute. */
+function snapCoord(n: number): number {
+  return Number(n.toFixed(3));
+}
+
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const GEARS = [
@@ -38,7 +45,7 @@ function Gear({
   const toothH = r * 0.16;
   const points = Array.from({ length: teeth }, (_, i) => {
     const a = (i * 2 * Math.PI) / teeth;
-    return { x: r + Math.cos(a) * (inner + toothH), y: r + Math.sin(a) * (inner + toothH), a };
+    return { x: snapCoord(r + Math.cos(a) * (inner + toothH)), y: snapCoord(r + Math.sin(a) * (inner + toothH)), a };
   });
   return (
     <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size}>
@@ -115,10 +122,10 @@ function ClockDial({ accent, reduce }: { accent: string; reduce: boolean }) {
           return (
             <line
               key={i}
-              x1={200 + Math.cos(a) * r1}
-              y1={200 + Math.sin(a) * r1}
-              x2={200 + Math.cos(a) * r2}
-              y2={200 + Math.sin(a) * r2}
+              x1={snapCoord(200 + Math.cos(a) * r1)}
+              y1={snapCoord(200 + Math.sin(a) * r1)}
+              x2={snapCoord(200 + Math.cos(a) * r2)}
+              y2={snapCoord(200 + Math.sin(a) * r2)}
               stroke="#3a2a1a"
               strokeWidth={long ? 2 : 1}
               opacity={long ? 0.8 : 0.35}
@@ -130,8 +137,8 @@ function ClockDial({ accent, reduce }: { accent: string; reduce: boolean }) {
           return (
             <text
               key={n}
-              x={200 + Math.cos(a) * 138}
-              y={200 + Math.sin(a) * 138 + 8}
+              x={snapCoord(200 + Math.cos(a) * 138)}
+              y={snapCoord(200 + Math.sin(a) * 138 + 8)}
               textAnchor="middle"
               fill="#3a2a1a"
               fontFamily="Georgia, serif"

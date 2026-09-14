@@ -59,7 +59,7 @@ function ParkSkyline({ accent, reduce }: { accent: string; reduce: boolean }) {
     <svg
       aria-hidden
       viewBox="0 0 1200 340"
-      preserveAspectRatio="xMidYEnd meet"
+      preserveAspectRatio="xMidYMax meet"
       className="absolute inset-x-0 bottom-0 h-[62%] w-full opacity-90"
     >
       <defs>
@@ -87,8 +87,9 @@ function ParkSkyline({ accent, reduce }: { accent: string; reduce: boolean }) {
           <circle r="88" fill="none" stroke={accent} strokeWidth="1.5" opacity="0.5" />
           {Array.from({ length: 12 }).map((_, i) => {
             const a = (i / 12) * Math.PI * 2;
-            const x = Math.cos(a) * 110;
-            const y = Math.sin(a) * 110;
+            // Rounded: unrounded trig here produced a hydration mismatch on y2.
+            const x = Number((Math.cos(a) * 110).toFixed(3));
+            const y = Number((Math.sin(a) * 110).toFixed(3));
             return (
               <g key={i}>
                 <line x1="0" y1="0" x2={x} y2={y} stroke={accent} strokeWidth="1.5" opacity="0.7" />
